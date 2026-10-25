@@ -61,6 +61,36 @@ func TestRulePreferencesDefaultsPreservationAndRestart(t *testing.T) {
 	}
 }
 
+func TestNonBattleshipPreferenceDefaultAndRestart(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "preferences.json")
+	if err := os.WriteFile(path, []byte(`{"flagship_transfer":true,"hero_movement":true,"future_key":42}`), 0600); err != nil {
+		t.Fatal(err)
+	}
+	options, err := readRulePreferences(path)
+	if err != nil || options.NonBattleshipFlagship {
+		t.Fatal("舊偏好應預設關閉", err)
+	}
+	g := &game.Game{}
+	g.SetRuleOptions(options)
+	a := &app{g: g, preferencesPath: path}
+	a.ruleSettingsClick(ruleOptionRects[2].Min.Add(image.Pt(4, 4)))
+	loaded, err := readRulePreferences(path)
+	if err != nil || !loaded.NonBattleshipFlagship || !g.RuleOptions().NonBattleshipFlagship {
+		t.Fatal("新開關未保存／套用", err)
+	}
+	b, _ := os.ReadFile(path)
+	var kept map[string]json.RawMessage
+	if json.Unmarshal(b, &kept) != nil || string(kept["future_key"]) != "42" {
+		t.Fatal("未知偏好遺失")
+	}
+	if err := os.WriteFile(path, []byte(`{"non_battleship_flagship":null}`), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := readRulePreferences(path); err == nil {
+		t.Fatal("接受非開關偏好")
+	}
+}
+
 func TestRulePreferenceFailureLeavesGameAndFile(t *testing.T) {
 	path := filepath.Join(t.TempDir(), "preferences.json")
 	if err := os.WriteFile(path, []byte(`{"soundfont":`), 0600); err != nil {

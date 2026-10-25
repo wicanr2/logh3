@@ -127,6 +127,8 @@ type FleetEditor struct {
 
 	// Kind ＝ `ds:984A`：反白的那一列艦種，放格子時放這一種。
 	Kind int
+	// User-selected remake extension, spec150. Zero value preserves original kinds.
+	NonBattleshipFlagship bool
 
 	// Slots ＝ `ds:977A`：索引是隊形槽，nil 是空位。
 	Slots [EditorSlots]*FleetGroup
@@ -240,7 +242,7 @@ func (e *FleetEditor) Place(slot int) EditResult {
 	if slot < 0 || slot >= EditorSlots {
 		return EditNoop
 	}
-	if slot == FlagshipSlot3 && e.Kind != 0 && e.Kind != 1 {
+	if slot == FlagshipSlot3 && !FlagshipKindAllowed(e.Kind, e.NonBattleshipFlagship) {
 		return EditFlagshipKind
 	}
 	if e.Available(e.Kind) == 0 {

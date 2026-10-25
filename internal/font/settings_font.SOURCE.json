@@ -4,7 +4,7 @@
   "face_index": 8,
   "family": "Noto Sans Mono CJK TC Regular",
   "license": "SIL Open Font License 1.1",
-  "glyph_count": 493,
+  "glyph_count": 495,
   "native_size": [
     12,
     12,
@@ -28,9 +28,9 @@
   "generator": "tools/scripts/settings_font.py",
   "generator_sha256": "8baf6330c802106b8efdc1d5e048c6d8cb4ec214c48670ae43526537fc064dc0",
   "files": {
-    "settings_font_12.png": "1700f1f34616026d9905090929c23efa4268b6a5759f79c4d884fe44caad7f1b",
-    "settings_font_36.png": "a0a40a8380a1070ebb8f3f850a65ce5fb2b49782c1b86e38abb2f44b4045f9c5",
-    "settings_font.json": "7d0724883c5f980297bab0a07a0df0cfbd8663ef32083625d877698c7813da89",
+    "settings_font_12.png": "1765b07c050664fe242ee5d56a1110a6013ad1cd8f52e8d3b7528c9946a32e94",
+    "settings_font_36.png": "7b79299540b597c6436a802367bff435dda10abda9c68a99586c7c7badc4bbfc",
+    "settings_font.json": "ecf8a4a09ab14f45cbde15b3d4d6efc203263af0c1099062288e2835af06d21f",
     "settings_font.LICENSE.txt": "5bb218343ded506b258d86186d460fc47d9b6b28f0e642cf32676c396b7df763"
   }
 }

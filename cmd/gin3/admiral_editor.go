@@ -470,6 +470,10 @@ func (a *app) drawAdmiralEditor(fb *gfx.Framebuffer) {
 }
 
 func (a *app) editorText(fb *gfx.Framebuffer, r image.Rectangle, text string, size int, left bool, ink uint8) {
+	group := fb.BeginGroup()
+	defer func() {
+		fb.EndGroup(group, gfx.DrawCommand{Kind: gfx.DrawText, Text: text, X: r.Min.X, Y: r.Min.Y, W: r.Dx(), H: r.Dy(), Clip: r, Colour: ink, TextLeft: left})
+	}()
 	width := 0
 	for _, c := range text {
 		if c < 128 {

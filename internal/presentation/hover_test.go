@@ -50,3 +50,27 @@ func TestHoverControlRestoresAndRespectsOcclusion(t *testing.T) {
 		t.Fatal("被遮住的底層控制仍然反光")
 	}
 }
+
+func TestLegacyButtonAndMenuRowHover(t *testing.T) {
+	r := themeTestRenderer(t)
+	f := gfx.NewFramebuffer(0)
+	f.InterfaceTheme = "alliance"
+	var p gfx.Palette
+	p[1] = [3]byte{10, 15, 20}
+	start := f.BeginGroup()
+	f.FillRect(40, 40, 68, 20, 1)
+	f.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawPanel, X: 40, Y: 40, W: 68, H: 20})
+	f.SurfaceRect(42, 40, 64, 20, 1)
+	base := bytes.Clone(r.Render(f, p).Pix)
+	f.HoverControl = image.Rect(42, 40, 74, 60)
+	if bytes.Equal(base, r.Render(f, p).Pix) {
+		t.Fatal("無角色的正式按鈕或內部文字底色仍抹除hover")
+	}
+	f.HoverControl = image.Rect(140, 120, 188, 140)
+	f.HoverMenu = true
+	row := bytes.Clone(r.Render(f, p).Pix)
+	f.HoverMenu = false
+	if bytes.Equal(row, r.Render(f, p).Pix) {
+		t.Fatal("正式下拉選單文字列沒有變色")
+	}
+}

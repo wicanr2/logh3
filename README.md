@@ -4,37 +4,15 @@
 
 選擇銀河帝國或自由行星同盟，從財政、生產與提督任命安排戰略，再親自指揮艦隊迎戰。從亞姆力札會戰重新下令，讓你的戰術改變局勢。
 
-**最新版本：[v.1.5.0-20261019](https://github.com/wicanr2/logh3/releases/tag/v.1.5.0-20261019)。** GitHub 提供三平台引擎與程式來源，玩家須自備合法取得的原版遊戲資料。含遊戲資料的完整版與推廣影片僅保留本機，不加入 Git 或 Release 附件。
+**目前開發版已接入定案銀河海報。** 三組人物海報與上下銀河連接，上方休伯利安、下方伯倫希爾保持固定船體，循環短光束。中央遊戲與滑鼠命中同步縮放。Linux正常入口、三組、五語及存讀已驗證；本機已打包版本仍為v.1.6.2-20261025，尚未包含這次構圖。[定案與驗證](docs/playtest/137-approved-poster-frame.md) · [海報與語系](#海報與語系)
 
-**新版加入[提督能力編輯器](#提督能力編輯器)。** 可調整十三項能力及四項特殊能力，包含光線砲、飛彈、戰鬥機與坎普／波布蘭的戰鬥機攻擊加成。設定全局共用，新遊戲與讀檔也套用。[新版封包與驗收](docs/playtest/131-admiral-editor-delivery.md)
+**Windows更新：v.1.6.1-20261025。** 改善滑鼠移動的重繪延遲，修正按鈕與下拉選項的hover變色。滑鼠移至頂端後，可從工具列直接切換思源黑體等既有字型及戰略AI。更新包沿用v1.6.0素材與存檔。[更新與驗收](docs/playtest/134-pointer-toolbar.md)
 
-**系統設定已整合全部選項。** 縮小字型並將「顯示敵軍」、AI 模式、音色庫與兩項可選規則收進對話框。顯示敵軍預設關閉；轉移旗艦與名將移動加成預設開啟。Windows 直接雙擊會從執行檔旁讀取資料，修正找不到 `GRAPH.IMG` 的問題。三平台完整版與引擎均已重新打包。[新版功能與驗收](docs/playtest/128-v140-release-and-promo.md)
+GitHub 公開引擎仍為 [v.1.5.0-20261019](https://github.com/wicanr2/logh3/releases/tag/v.1.5.0-20261019)，玩家須自備合法取得的原版遊戲資料。新版完整版與含原版音畫的推廣影片保留本機，不加入公開 Release 附件。
 
-目前原始碼已加入 **Roland MT-32／GeneralUser GS 音色選擇**，設定中的 MIDI I/F 列改為音色庫，支援取消、靜音保持與重開保存選擇。[音色選擇與曲庫使用方式](docs/playtest/121-landing-and-soundfont.md)
+前線駐留後再出擊會從提督所在地領船、退船及編成。參謀／副官選人視窗的重複繪製已改善；新增預設關閉的「非戰艦旗艦」，開啟後修護艦E與運補艦T仍不能擔任旗艦。[前線與旗艦驗收](docs/playtest/132-garrison-flagship-promo.md)
 
-**登陸、反擊與占領已完成正常流程驗收。** S3同盟保留獨立分段、各階段擁有者與戰損，支援原版／HD、F7及實際音效。公開六表存讀符合完整載入重算；HD左右圖段基底錯配已修正。[交戰整合驗收](docs/playtest/124-engagement-integration.md)
-
-**要塞砲演出已完成。** 支援發射通知、射程橢圓、首次開火動畫、逐分隊中彈與戰損、下方方塊及音效等待。伊謝爾倫正常操作、原版／HD、動畫關閉、F7及演出後六表存讀已驗收。[要塞砲驗收與操作路徑](docs/playtest/123-fortress-presentation.md)
-
-**戰術存檔成功後會回到原戰場。** 保留當前回合、鏡頭與命令，原版／HD正常操作已驗收。讀檔後重建同一戰場仍待完成；原版可直接續戰的證據已保存。[保存返回驗收](docs/playtest/125-battle-save-return.md)
-
-## 海報寬螢幕預覽
-
-以下為 **v.1.6.0-20261024 本機完整版**的正常遊玩實錄。開啟海報後，左側為帝國、右側為同盟，中央保留完整4:3遊戲畫面；海報預設關閉。
-
-### v1：萊因哈特與楊威利
-
-![v1雙主角海報，左右下方為隨語系切換的斜體名言](docs/images/readme-v160-poster-v1.png)
-
-### v2：帝國與同盟將領
-
-![v2兩軍將領群像海報](docs/images/readme-v160-poster-v2.png)
-
-### v3：英雄身邊的人
-
-![v3親友群像，左含安妮羅潔與齊格飛，右含菲列特利加、尤里安與夥伴](docs/images/readme-v160-poster-v3.png)
-
-三圖均保留完整1280×720視窗，沒有裁切或重畫。[截圖來源與SHA-256](docs/images/readme-v160-posters.json)。公開引擎下載仍為下方v1.5.0，完整版與原版音畫留在本機。
+戰術存檔成功後可回原戰場，讀檔重建同一戰場仍待完成。HD與新增規則不宣稱全遊戲DOS同狀態一致。[驗證範圍](#驗證範圍)
 
 ## 故事背景
 
@@ -62,42 +40,50 @@
 
 | 本機內容 | 路徑 |
 |---|---|
-| 三平台 v.1.5.0 完整版與啟動器 | `dist-all/v.1.5.0-20261019/full/` |
+| 三平台 v.1.6.2 完整版，Linux為AppImage | `dist-all/v.1.6.2-20261025/full/` |
+| v.1.6.2 海報循環實錄預覽 | `dist-all/v.1.6.2-20261025/promo/` |
+| 三平台 v.1.6.1 完整版，Linux為AppImage | `dist-all/v.1.6.1-20261025/full/` |
+| Windows v.1.6.1 引擎更新包 | `dist-all/v.1.6.1-20261025/release/` |
+| 三平台 v.1.6.0 完整版與啟動器 | `dist-all/v.1.6.0-20261024/full/` |
 | 三平台 v.1.5.0 公開引擎、來源與校驗檔 | `dist-all/v.1.5.0-20261019/release/` |
-| 新版連續配樂推廣片與聲畫驗證資料 | `dist-all/v.1.5.0-20261019/promo/` |
+| v.1.6.0三組海報與五語介面推廣片 | `dist-all/v.1.6.0-20261024/promo/` |
 
-新版推廣片加入正式包的提督編輯與三武器實戰，展示四項特殊能力及參謀加成。全片使用同一首 BGM_0F，剪接處不換曲或重啟，交火音效獨立混音；部分交火及要塞砲沿用前版已驗完整場次，片中明列來源。本機檔名為 `LOGH3-v.1.5.0-20261019-promo.mp4`。[影片與音軌驗收](docs/playtest/131-admiral-editor-delivery.md)
+Linux AppImage包含完整素材，設為可執行後即可啟動；存檔沿原本的XDG設定目錄。沒有FUSE時可加`--appimage-extract-and-run`。[Linux操作與相容範圍](docs/playtest/135-v161-full-appimage.md)
+
+完整推廣片以帝國與同盟國徽作底圖，從百年對峙、雙主角與亞姆力札危局，接到玩家的前線部署。三組海報、五語、提督編輯與駐地領船出擊取自v1.6.0實際完整版新錄；主角動畫、兩軍戰場、要塞砲與三種武器交火沿用已驗來源，串成同一支故事片。全片使用同一首BGM_0F連續配樂，剪接處不換曲或重啟，戰鬥音效另依實際演出重混。本機檔名為 `LOGH3-v.1.6.0-20261024-promo.mp4`。[影片、來源與音軌驗收](docs/playtest/133-poster-five-language-delivery.md)
 
 ## 主要特點
 
 - **保留原版操作。** 維持 4:3 畫面、立體框線、按鈕位置與原版字形，支援滑鼠停留反光。
+- **三組海報與五語介面。** 可選雙主角、兩軍將領及親友群像。v1底部斜體名言跟隨語系，左右海報不接受遊戲操作；中央完整4:3，海報預設關閉。
+- **上下單艦裝飾。** 海報開啟時，上方休伯利安朝左，下方伯倫希爾朝右，與兩側人物共用銀河背景。船體固定，只循環短光束；關閉動畫時保留靜態構圖。
 - **兩套陣營 HD。** 帝國採藍金配色，同盟採赤焰戰線；戰略星圖重繪星球與徽章，保留星球名稱及航路。戰術地圖、人物與艦影支援 HD，部隊圖示保留原版細節。
-- **隨時切換畫面。** F7 切換原版／HD，F1 開啟說明；滑鼠移到頂端可顯示功能列。顯示敵軍從設定選單切換，預設關閉。
+- **隨時切換畫面。** F7 切換原版／HD，F1 開啟說明；滑鼠移到頂端可顯示功能列，直接調整介面字型與戰略AI。顯示敵軍從設定選單切換，預設關閉。
 - **強化戰略與戰術 AI。** 可選原版規則模式或四級強化難度；強化 AI 會集結兵力、協同移動並尋找包圍方向。
-- **轉移旗艦。** 旗艦分隊被擊毀時，謬拉必定轉移，其餘提督約 25%。須有存活戰艦或高速戰艦，轉往艘數最多的分隊，保留提督與副官。可在系統設定關閉。
+- **轉移旗艦。** 旗艦分隊被擊毀時，謬拉必定轉移，其餘提督約25%。預設須有存活戰艦或高速戰艦；開啟「非戰艦旗艦」後可轉至其他存活艦種，E／T仍排除。轉往艘數最多的候選分隊，保留提督與副官。可在系統設定關閉。
 - **名將協同。** 楊威利採牽制與雙翼包抄，萊因哈特採集中突擊與側後封鎖。僅強化模式，兩人作為存活帶隊提督參戰時，所屬陣營全部艦隊的新移動額度為 1.5 倍，離場即解除。「名將移動加成」可獨立關閉，仍保留名將戰術 AI。
 - **提督能力編輯。** 可編輯十三項能力與四項特殊能力。兩位名將全軍攻擊預設+30%；坎普、波布蘭任提督或參謀時，本艦隊戰鬥機攻擊預設+30%。攻擊加成限強化模式，數值可調整並全局保存。
 - **三個額外劇本。** 取進度保留 S1「亞姆力札會戰」、S2「諸神的黃昏」、S3「巴米利恩會戰」，可正常載入及存讀。
-- **四款字型。** 設定可選原版點陣、原版強化、思源宋體及思源黑體，預設原版強化。原版顯示固定使用原字形；新字集需另匯入，本機完整版已附。
+- **四款字型。** 工具列或設定可選原版點陣、原版強化、思源宋體及思源黑體，預設原版強化。原版顯示固定使用原字形；新字集需另匯入，本機完整版已附。
 - **原曲 HD 音色。** 本機完整版保留原曲，升級 11 首配樂的音色與混音；設定可切 HD／FM 或靜音。強化啟動器預設 HD，原版規則啟動器預設原音色。
 - **啟動進度。** 小視窗顯示實際載入階段與人物圖張數，缺檔時顯示錯誤。
 - **有聲交火。** 支援遊戲配樂、艦隊音效與普通速度戰鬥動畫。引擎包需另匯入自有音訊與 HD 素材；原版規則模式、動畫時鐘及存檔格式保持。
 
 ## 系統設定與可選規則
 
-從「系統指令 → 設定」調整敵軍顯示、AI 模式、音色與可選規則。對話框另有「編輯提督」入口。顯示敵軍預設關閉，下圖為預設狀態。「轉移旗艦」與「名將移動加成」預設開啟，退出重開後保留選擇。
+從「系統指令 → 設定」調整敵軍顯示、AI模式、音色與可選規則。左上Lang切換語系，右上海報鈕切換組別，另有「編輯提督」入口。顯示敵軍、海報與非戰艦旗艦預設關閉；轉移旗艦與名將移動加成預設開啟，退出重開後保留選擇。
 
 **設定頁小字與邊框已強化。** 設定頁採專用黑體字形，HD 使用高解析遮罩，移除小字陰影，選取項目改用深字配亮底。視窗新增可見金屬外緣，內側保留立體陰影。「介面字型」仍可切換其他遊戲畫面的四款字型。三平台 v.1.4.0 完整版與引擎包均已納入本次更新。[字型與邊框驗收](docs/playtest/129-clear-settings-font.md)
 
-以下設定頁與編輯器取自 v.1.5.0 實際 Linux 完整 ZIP 解壓後的正常操作，保留完整960×720視窗。點圖可放大。[正式包截圖來源與雜湊](docs/images/readme-v150.json)
+以下兩張設定頁更新為v1.6.0實際Linux完整ZIP的正常操作，手動開啟海報，保留完整1280×720視窗。點圖可放大。[新版截圖來源與雜湊](docs/images/readme-v160.json)
 
 | 帝國清晰設定頁 | 同盟清晰設定頁 |
 |---|---|
-| [![帝國新版設定頁，新增編輯提督入口，顯示敵軍預設關閉](docs/images/readme-v150-settings-empire.png)](docs/images/readme-v150-settings-empire.png) | [![同盟新版設定頁，保留陣營配色與金屬外框](docs/images/readme-v150-settings-alliance.png)](docs/images/readme-v150-settings-alliance.png) |
+| [![帝國v1.6.0設定頁，左上語系、右上海報選項](docs/images/readme-v160-settings-empire.png)](docs/images/readme-v160-settings-empire.png) | [![同盟v1.6.0設定頁，海報開啟，中央保留4:3](docs/images/readme-v160-settings-alliance.png)](docs/images/readme-v160-settings-alliance.png) |
 
-![新版正式包的AI原版與強化0至3選單](docs/images/readme-v150-ai.png)
+![v1.5.0正式包的AI原版與強化0至3選單](docs/images/readme-v150-ai.png)
 
-下方為新版正式包錄影前手動開啟顯示敵軍的實際戰場。[來源與功能驗收](docs/playtest/131-admiral-editor-delivery.md)
+下方為v1.5.0正式包錄影前手動開啟顯示敵軍的實際戰場。[來源與功能驗收](docs/playtest/131-admiral-editor-delivery.md)
 
 ![新版同盟戰場，手動開啟顯示敵軍後可見敵方分隊](docs/images/readme-v150-battle-alliance.png)
 
@@ -107,10 +93,47 @@
 |---|---|---|
 | 轉移旗艦 | 旗艦分隊被擊毀後，謬拉100%、其他提督約25%機率轉移。須有同艦隊存活的戰艦或高速戰艦，選艘數最多的分隊，保留提督與副官 | 沿原本旗艦全滅判定，不額外擲轉移機率 |
 | 名將移動加成 | 僅強化模式，存活帶隊的萊因哈特或楊威利參戰時，所屬陣營的新移動額度為1.5倍 | 恢復一般新移動額度，仍保留兩人的戰術AI |
+| 非戰艦旗艦 | 編成與擊破轉移可選B／H／C／A／D，修護艦E與運補艦T排除 | 旗艦仍限戰艦與高速戰艦；預設關閉 |
 
 轉移旗艦每次擊毀只判定一次，失敗不重擲。轉移使用現有分隊，不增加艦艇、不回補彈藥。新旗艦若再次被擊毀，才有下一次轉移機會。這是可選的 remake 擴充規則。
 
-兩項設定保存於玩家存檔目錄的 `preferences.json`，不改原版六表存檔格式。名將移動開關影響之後取得的新額度，不回溯改動本回合已取得的額度。
+這些選項保存於玩家存檔目錄的 `preferences.json`，不改原版六表存檔格式。名將移動開關影響之後取得的新額度，不回溯改動本回合已取得的額度。
+
+## 海報與語系
+
+設定頁右上的海報鈕依序切換「關閉 → v1 → v2 → v3」。首次啟動預設關閉，組別與語系會保存。缺少圖片時保留可用組別；海報全部不可用時回到原本4:3。
+
+目前來源程式已套用核准構圖。以下三圖取自Linux來源程式的正常遊玩入口，保留完整1280×720視窗。這次構圖尚未重打三平台套件。[定案HTML](docs/spec/157-poster-galaxy-frame.html) · [正常操作驗證與限制](docs/playtest/137-approved-poster-frame.md) · [來源與雜湊](docs/internals/data/poster-approved.json)
+
+![定案v1，左右主角、圖內名言、上方休伯利安及下方伯倫希爾](docs/images/poster-runtime-v1.png)
+
+| v2兩軍將領 | v3雙方親友 |
+|---|---|
+| [![定案v2將領群像與連續銀河](docs/images/poster-runtime-v2.png)](docs/images/poster-runtime-v2.png) | [![定案v3親友群像與連續銀河](docs/images/poster-runtime-v3.png)](docs/images/poster-runtime-v3.png) |
+
+| 組別 | 左側帝國 | 右側同盟 |
+|---|---|---|
+| v1 | 萊因哈特 | 楊威利 |
+| v2 | 萊因哈特、齊格飛、米達麥亞、羅嚴塔爾、奧貝斯坦 | 楊威利、亞典波羅、卡介倫、先寇布、波布蘭 |
+| v3 | 萊因哈特、安妮羅潔、齊格飛、希爾德 | 楊威利、菲列特利加、尤里安、卡介倫、亞典波羅、先寇布 |
+
+![v1雙主角海報，底部斜體名言，中央完整4:3](docs/images/readme-v160-poster-v1.png)
+
+| v2兩軍將領 | v3雙方親友 |
+|---|---|
+| [![v2將領群像](docs/images/readme-v160-poster-v2.png)](docs/images/readme-v160-poster-v2.png) | [![v3親友群像，含安妮羅潔與齊格飛、菲列特利加與尤里安](docs/images/readme-v160-poster-v3.png)](docs/images/readme-v160-poster-v3.png) |
+
+左上Lang按鈕切換 `zh-TW`、`zh-CN`、`ja`、`en`、`ko`。五語共用操作位置、遊戲資料與存檔；v1名言同步切換。譯表為[UTF-8 TSV](internal/localize/ui.tsv)，完整版可編輯 `data/ui-locales.tsv` 後重啟。圖片內商標、故事圖片及未收錄原文保留，不把這些內容宣稱為完整翻譯。
+
+| 简体中文 | 日本語 |
+|---|---|
+| [![簡體中文介面與名言](docs/images/readme-v160-locale-zh-CN.png)](docs/images/readme-v160-locale-zh-CN.png) | [![日文介面與名言](docs/images/readme-v160-locale-ja.png)](docs/images/readme-v160-locale-ja.png) |
+
+| English | 한국어 |
+|---|---|
+| [![英文介面與名言](docs/images/readme-v160-locale-en.png)](docs/images/readme-v160-locale-en.png) | [![韓文介面與名言](docs/images/readme-v160-locale-ko.png)](docs/images/readme-v160-locale-ko.png) |
+
+以上皆為v1.6.0實際完整版正常操作，未縮放完整視窗。人物造型參考經典動畫官方資料，海報為重構美術；四語名言為本專案翻譯，非官方字幕。[規格與來源](docs/spec/152-poster-sets-and-quotes.md) · [截圖來源與雜湊](docs/images/readme-v160.json) · [GitHub三組海報索引](docs/images/readme-v160-posters.json)
 
 ## 提督能力編輯器
 
@@ -135,11 +158,17 @@
 
 點數值可直接輸入，也可用「−／+」微調。「套用變更」會保存全局設定，立即套用目前遊戲，並於重啟、新遊戲及讀檔後繼續套用。只有編輯過的能力持續覆寫，其餘保留劇本、存檔與升級結果。「取消」放棄未套用修改；「還原本提督」恢復該人的預設能力。設定保存在存檔目錄的 `preferences.json`，原版六表格式保持。
 
-以下為新版正式包正常入口的完整960×720視窗實錄。[功能驗收](docs/playtest/130-admiral-editor.md) · [封包驗收](docs/playtest/131-admiral-editor-delivery.md) · [畫面與來源雜湊](docs/images/readme-v150.json)
+以下基本與特殊能力畫面更新為v1.6.0正式包，完整1280×720視窗含海報。內部能力與個別將領畫面保留v1.5.0實錄。[功能驗收](docs/playtest/130-admiral-editor.md) · [新版來源雜湊](docs/images/readme-v160.json) · [v1.5.0來源雜湊](docs/images/readme-v150.json)
 
 | 基本能力 | 三項內部能力 |
 |---|---|
-| ![可分別編輯光線砲、飛彈、戰鬥機等十項基本能力](docs/images/readme-v150-editor-basic.png) | ![三項內部能力的用途標籤與數值編輯](docs/images/readme-v150-editor-internal.png) |
+| ![可分別編輯光線砲、飛彈、戰鬥機等十項基本能力](docs/images/readme-v160-editor-basic.png) | ![三項內部能力的用途標籤與數值編輯](docs/images/readme-v150-editor-internal.png) |
+
+| v1.6.0特殊能力 | English |
+|---|---|
+| ![新版特殊能力與海報](docs/images/readme-v160-editor-special.png) | ![英文提督能力編輯](docs/images/readme-v160-editor-en.png) |
+
+![韓文提督基本能力編輯](docs/images/readme-v160-editor-ko.png)
 
 | 帝國提督編輯 | 同盟提督編輯 |
 |---|---|
@@ -169,11 +198,21 @@
 
 ![實際七階段載入進度與人物圖張數](docs/images/readme-v130-loading.png)
 
-以下陣營介面、劇本與交火畫面，更新為v.1.5.0 Linux正式包正常S1遊玩，保留完整960×720視窗。交火圖取自同次原速實錄，沒有重畫或裁切遊戲內容。[截圖來源與雜湊](docs/images/readme-v150.json)
+以下兩張星圖為v1.6.0 Linux完整ZIP正常S1遊玩，保留完整1280×720視窗。[新版截圖來源與雜湊](docs/images/readme-v160.json)
 
 | 帝國藍金介面與星圖 | 同盟赤焰戰線介面與星圖 |
 |---|---|
-| ![帝國HD戰略星圖，保留星球名稱與航路](docs/images/readme-v150-map-empire.png) | ![同盟HD戰略星圖與艦隊清單](docs/images/readme-v150-map-alliance.png) |
+| ![帝國HD戰略星圖，保留星球名稱與航路](docs/images/readme-v160-map-empire.png) | ![同盟HD戰略星圖與艦隊清單](docs/images/readme-v160-map-alliance.png) |
+
+以下三張取自同一局前線駐留後的實際操作，依序改選提督、查看當地船艦並完成編成。母星船艦庫存保持，重新組成的艦隊從駐地出發。[操作與存檔驗收](docs/playtest/133-poster-five-language-delivery.md)
+
+| 駐地改選提督 | 當地船艦庫存 |
+|---|---|
+| ![從前線駐地改選提督](docs/images/readme-v160-garrison-commander.png) | ![編成讀取駐地船艦庫存](docs/images/readme-v160-garrison-stock.png) |
+
+![第3艦隊在駐地完成巡航艦旗艦編成](docs/images/readme-v160-garrison-fleet.png)
+
+以下劇本、戰術與交火保留v1.5.0正式包的完整960×720實錄，交火取自同次原速錄影。[v1.5.0截圖來源與雜湊](docs/images/readme-v150.json)
 
 | 三個額外劇本 | 強化模式戰術戰場 |
 |---|---|
@@ -222,6 +261,9 @@ Linux 也可直接指定既有原版資料目錄：
 | 系統指令 → 設定 → 轉移旗艦 | 開關旗艦擊毀後的轉移規則，預設開啟 |
 | 系統指令 → 設定 → 名將移動加成 | 開關強化模式的名將陣營移動加成，預設開啟 |
 | 系統指令 → 設定 → 編輯提督 | 修改十三項能力與四項特殊能力，全局保存 |
+| 系統指令 → 設定 → 非戰艦旗艦 | 開關B／H以外旗艦，E／T排除，預設關閉 |
+| 系統指令 → 設定 → 海報 | 關閉、v1、v2、v3循環，預設關閉 |
+| 系統指令 → 設定 → Lang | 繁體、簡體、日文、英文、韓語循環，介面與名言同步 |
 
 Windows 存檔位於 `%APPDATA%\logh3\save`；Linux 位於 `$XDG_CONFIG_HOME/logh3/save`，未設定時使用 `~/.config/logh3/save`；macOS 位於 `~/Library/Application Support/logh3/save`。兩種 AI 模式共用存檔。轉移旗艦、名將移動加成與 GeneralUser GS／Roland MT-32 音色選擇保存於同目錄的 `preferences.json`，不改原版六表格式。字型與 HD／FM 切換僅本次執行有效，可用 `-font original|classic|serif|sans` 與 `-music-quality original|hd` 指定啟動值；HD 曲目放在配樂目錄的 `hd/`。
 

@@ -19,12 +19,39 @@ const (
 // Framebuffer 是一張色號陣列。**不存 RGB**——顏色由 Palette 決定，
 // 兩者分開才對得上原版「改調色盤就整片變色」的行為。
 type Framebuffer struct {
-	Pix            []uint8         // 長度 Width*Height，值 0–15
-	Artwork        []Artwork       // 可選圖片顯示層；不改變色號或遊戲資料。
-	Commands       []DrawCommand   // 正式高解析度顯示依實際畫序重播。
-	InterfaceTheme string          // 可選顯示識別；不參與色號、規則或存檔。
-	HoverControl   image.Rectangle // 正式命中區的HD回饋，不改索引像素。
-	mute           int
+	Pix              []uint8         // 長度 Width*Height，值 0–15
+	Artwork          []Artwork       // 可選圖片顯示層；不改變色號或遊戲資料。
+	Commands         []DrawCommand   // 正式高解析度顯示依實際畫序重播。
+	InterfaceTheme   string          // 可選顯示識別；不參與色號、規則或存檔。
+	HoverControl     image.Rectangle // 正式命中區的HD回饋，不改索引像素。
+	HoverMenu        bool            // 正式下拉選單的文字列，沒有獨立按鈕框。
+	CursorBackground *Framebuffer    // 靜態模態視窗的無游標背景，只供顯示快取。
+	mute             int
+}
+
+// SaveCursorBackground保留游標寫入前的完整顯示資料；原畫布與畫序不改。
+func (f *Framebuffer) SaveCursorBackground() {
+	base := *f
+	base.Pix = append([]uint8(nil), f.Pix...)
+	base.Commands = append([]DrawCommand(nil), f.Commands...)
+	base.Artwork = append([]Artwork(nil), f.Artwork...)
+	for i := range base.Artwork {
+		base.Artwork[i].Visible = append([]uint8(nil), f.Artwork[i].Visible...)
+	}
+	base.CursorBackground = nil
+	f.CursorBackground = &base
+}
+
+// CursorLayers只分離最後的游標，保留較早被視窗遮住的畫序。
+func (f *Framebuffer) CursorLayers() (*Framebuffer, *DrawCommand) {
+	if f.CursorBackground == nil || len(f.Commands) == 0 || f.Commands[len(f.Commands)-1].Kind != DrawCursor {
+		return f, nil
+	}
+	base := *f.CursorBackground
+	base.InterfaceTheme, base.HoverControl, base.HoverMenu = f.InterfaceTheme, f.HoverControl, f.HoverMenu
+	base.CursorBackground = nil
+	cursor := f.Commands[len(f.Commands)-1]
+	return &base, &cursor
 }
 
 // NewFramebuffer 造一張全部填 c 的畫布。

@@ -1,0 +1,674 @@
+{
+  "version": "v.1.6.1-20261025",
+  "scope": "滑鼠顯示回應、hover及工具列字型／AI。remake正常玩家路徑，不新增DOS parity。",
+  "archive": {
+    "path": "release/LOGH3-v.1.6.1-20261025-windows-amd64-patch.zip",
+    "bytes": 10766673,
+    "sha256": "c7835ce570ffdc14b6ea35aa6ead260cd9bf58f3adf4147c31f941263ca84b41"
+  },
+  "build_sha256": "11f70914ce762a1f6964c8bf2ba26f3d19ba2c29e91f75f4dd04da4398c5728c",
+  "binary_sha256": "7bb10fbfae213ea537aef068eb7fa90491be68b2afd34388533e9bd8bac364b2",
+  "source_files": 1616,
+  "source_nonvendor": 638,
+  "source": "workplace/pointer-patch-v.1.6.1-20261025/source",
+  "source_head": "44a8cae1875a9af39ff9f23e645d7b8f96eeb5ff",
+  "linux_validation_build": {
+    "path": "dist-all/v.1.6.1-20261024/BUILD.json",
+    "sha256": "03ecc607ef297ef5cb0fe6503b9513dda1b4eefc536023f504511be5d8383d45",
+    "version": "v.1.6.1-20261024",
+    "source_identical": true
+  },
+  "standards": {
+    "path": "workplace/pointer152/standard-final.log",
+    "sha256": "28d214540bab36a6e6e61e69c2ffb8d5c6aaaad19b363050cc7a8014f87f5b5a",
+    "passed": 16,
+    "no_tests": 4
+  },
+  "drivers": [
+    {
+      "path": "workplace/pointer152/driver-final.py",
+      "sha256": "887368827dd42e8e74fc9854e29c13aa761462f35fa7babb418932649a6c901e"
+    },
+    {
+      "path": "workplace/pointer152/driver-final-v2.py",
+      "sha256": "f87f2b13d2adf7087617e4eb3a530428e8e6fc4eedd583c89fc85b4c9c50faa1"
+    }
+  ],
+  "version_output": {
+    "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/VERSION.txt",
+    "sha256": "d535b23a59c363d3945e3e7123957d6f18d26823e7ee17a5b593dc468ab7fdaa"
+  },
+  "gui": {
+    "linux-alliance": {
+      "path": "workplace/pointer152/final-linux",
+      "result_sha256": "3b734b1716b69defe7efbe112b2abaefd1b0988cd870c5a9700dc32ccfef3bbc",
+      "binary_sha256": "1cc0660abc46a7189732bec103091baae9d20f048fbd3ac686c5345e956d12e4",
+      "performance": {
+        "samples": 24,
+        "latency_median_ms": 110.39550700000001,
+        "draw_median_ms": 11.925134499999999,
+        "frame_median_ms": 9.766019499999999,
+        "uploads_before": 20,
+        "uploads_after": 20,
+        "scope": "同容器下X11指標事件至唯讀draw_start觀測，非硬體端到端延遲"
+      },
+      "saved": {
+        "ADMIRAL.DT0": "482a24048a9f553ae568560ad2a3ae21e2764c3783032a1ce0d204aecf2273c7",
+        "FLEET.DT0": "744d5df992c0c3f3fb13fcd5f17a6b3504842e8596db36b547136fbe32462d76",
+        "PLANET.DT0": "12d2e1ef8835fc8103e171a29cc9cb61814bd483c4d5358267c9010f5e4eb02b",
+        "SHIP.DT0": "0115127c1860283942928a6adbc6d83c97bb2418f452c89e655c0251ee95ed53",
+        "STELLAR.DT0": "c6ddd9ea1932d3ad13da01af7a7329bbe290da83ed433933f42589b1a421c017",
+        "WORK.DT0": "d506a292df0326408b634074e56c001552882b3c852588f539ae4c4337e5a46d"
+      },
+      "screenshots": [
+        {
+          "name": "main",
+          "path": "workplace/pointer152/final-linux/main.png",
+          "sha256": "810daaeb3b5f5713a8b3fb6735a2ede5e146e3b2d9004d860149d9a05ffcabc7"
+        },
+        {
+          "name": "map-off",
+          "path": "workplace/pointer152/final-linux/map-off.png",
+          "sha256": "97984a40f5b41a43757374a21770339410e79dcdc53caf84790335e111d899d8"
+        },
+        {
+          "name": "button-hover",
+          "path": "workplace/pointer152/final-linux/button-hover.png",
+          "sha256": "438460a15662d11447dab0e680a8e4db24df19bcd774f8b586320d535c5200ab"
+        },
+        {
+          "name": "menu-off",
+          "path": "workplace/pointer152/final-linux/menu-off.png",
+          "sha256": "2b5341d1f48ec02f64ef8efadbc541e4661762884acc14f3dd8cd0e340018470"
+        },
+        {
+          "name": "menu-hover",
+          "path": "workplace/pointer152/final-linux/menu-hover.png",
+          "sha256": "2325700bf6486d7543f27c1ec1f9032accf0eeb0f91830e4c4a7fc5a79bb53bc"
+        },
+        {
+          "name": "toolbar-font",
+          "path": "workplace/pointer152/final-linux/toolbar-font.png",
+          "sha256": "d799b2f5ca3f1170fb721dd1e380e8fceb38f4b7f348d78bc40b2a66e51c9438"
+        },
+        {
+          "name": "map-sans",
+          "path": "workplace/pointer152/final-linux/map-sans.png",
+          "sha256": "a9da0a60db7d46f0c53e386390aba167a5940541d0aba3ed7f993762b96e3c94"
+        },
+        {
+          "name": "settings-sans",
+          "path": "workplace/pointer152/final-linux/settings-sans.png",
+          "sha256": "4a4965eb6cb85c32519c3c36e2e7af87b604cf4ab2460f43c7f2d97314d2dddd"
+        },
+        {
+          "name": "toolbar-ai",
+          "path": "workplace/pointer152/final-linux/toolbar-ai.png",
+          "sha256": "00ecb3ad44585bd1cfcf4ac365306130e21ed767eb6987dad0eb888b58d03a57"
+        },
+        {
+          "name": "settings-ai3",
+          "path": "workplace/pointer152/final-linux/settings-ai3.png",
+          "sha256": "673f45d4521b53d3598da0371dd4bd2cf9d325fe7343502b36e4b1b75b1a5398"
+        },
+        {
+          "name": "font-zh-TW",
+          "path": "workplace/pointer152/final-linux/font-zh-TW.png",
+          "sha256": "19d69b6d0f0c0b76d03bb24f3c62224b78f812c94d8557f5df15a1b67b9428df"
+        },
+        {
+          "name": "ai-zh-TW",
+          "path": "workplace/pointer152/final-linux/ai-zh-TW.png",
+          "sha256": "7e218fa5df9a115ad2dbc4bd16427a028a35fdb62c99a0e0718f3d7befe9c362"
+        },
+        {
+          "name": "font-zh-CN",
+          "path": "workplace/pointer152/final-linux/font-zh-CN.png",
+          "sha256": "fc96ee19393acf8d7ca808ddc56abf4e9ea27000bcadd9687214874a5556dd06"
+        },
+        {
+          "name": "ai-zh-CN",
+          "path": "workplace/pointer152/final-linux/ai-zh-CN.png",
+          "sha256": "17da83505ca91dc30cb0ab973e399f40fcb742cef0913cc63d08a11a900f30ca"
+        },
+        {
+          "name": "font-ja",
+          "path": "workplace/pointer152/final-linux/font-ja.png",
+          "sha256": "61fbb8a0875bf3204ffb521d57e6e1b9125eeac572922d2ba247f557ddc280cd"
+        },
+        {
+          "name": "ai-ja",
+          "path": "workplace/pointer152/final-linux/ai-ja.png",
+          "sha256": "f35cca2f0f66a2d2508941128c56afc124c3d45cff1d901db4f958377a80a0ec"
+        },
+        {
+          "name": "font-en",
+          "path": "workplace/pointer152/final-linux/font-en.png",
+          "sha256": "c1ed5a712641b560a47658dd0fcb81df2a9364089c99eb0700d8efb1a3a25796"
+        },
+        {
+          "name": "ai-en",
+          "path": "workplace/pointer152/final-linux/ai-en.png",
+          "sha256": "bec3a70a6ddcb2e2d83101d0aeb8881f9eeae68fa5fad06b0ed3cff849f3ae98"
+        },
+        {
+          "name": "font-ko",
+          "path": "workplace/pointer152/final-linux/font-ko.png",
+          "sha256": "357b01eda36c4734fbcb9a2e286d9a4419c6bba3922ed4e39e0afed54e331448"
+        },
+        {
+          "name": "ai-ko",
+          "path": "workplace/pointer152/final-linux/ai-ko.png",
+          "sha256": "6f55c34e8b64505b253b463b1c36cd95de0bf6c4d7e44506d7095146c8f58c8a"
+        },
+        {
+          "name": "help",
+          "path": "workplace/pointer152/final-linux/help.png",
+          "sha256": "89643ee96c9eecab132031464bfece78ae8fdc5b8b7b70c98652fecbed68095a"
+        },
+        {
+          "name": "original-pointer",
+          "path": "workplace/pointer152/final-linux/original-pointer.png",
+          "sha256": "da72632461c8965d3bb6535d26fef9eb61cf7e400284893ab4d1108bebcb42fd"
+        },
+        {
+          "name": "original-off",
+          "path": "workplace/pointer152/final-linux/original-off.png",
+          "sha256": "c54d81aac05fde78a268583559fd7b2233b2cd08e43a073a30fef80a2d7cae6c"
+        },
+        {
+          "name": "original-button-hover",
+          "path": "workplace/pointer152/final-linux/original-button-hover.png",
+          "sha256": "020d38a06db63cf619bb379c680aec738c46c8b70adb7fa8339480b2d0421fdb"
+        },
+        {
+          "name": "original-menu-off",
+          "path": "workplace/pointer152/final-linux/original-menu-off.png",
+          "sha256": "f055efec2edb939fa953f8a5973b61eef958a789796d5d2a4b783cbaabc9ce3e"
+        },
+        {
+          "name": "original-menu-hover",
+          "path": "workplace/pointer152/final-linux/original-menu-hover.png",
+          "sha256": "3ffeecfe45316325b76e3031be266ce174b7e8c8a52ccbce213119aa7612ef63"
+        },
+        {
+          "name": "hd-pointer",
+          "path": "workplace/pointer152/final-linux/hd-pointer.png",
+          "sha256": "7567390cd7e450ddc330fe33a25e7fe03fc12956a914c5353224c0b8a131b62c"
+        },
+        {
+          "name": "poster-map",
+          "path": "workplace/pointer152/final-linux/poster-map.png",
+          "sha256": "37683f2e88ae5809aaf32e59b11ebeda892fc0b209ddfeddf422dcad3a4e10ac"
+        },
+        {
+          "name": "poster-hover",
+          "path": "workplace/pointer152/final-linux/poster-hover.png",
+          "sha256": "e7052e1b4555a36b106984aa8610babfb8adaaf7c5b5dd7c5687585b2d2946fb"
+        },
+        {
+          "name": "poster-toolbar",
+          "path": "workplace/pointer152/final-linux/poster-toolbar.png",
+          "sha256": "8348bbd1a41d1244578d69a41b1dff0e21eadfec5d1c61553ab9453325b310f7"
+        },
+        {
+          "name": "loaded",
+          "path": "workplace/pointer152/final-linux/loaded.png",
+          "sha256": "37683f2e88ae5809aaf32e59b11ebeda892fc0b209ddfeddf422dcad3a4e10ac"
+        }
+      ]
+    },
+    "windows-alliance": {
+      "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows",
+      "result_sha256": "a2258d4f2b9427580be3095e965885c91f4984db91b721559e67d6d52c586cf3",
+      "binary_sha256": "7bb10fbfae213ea537aef068eb7fa90491be68b2afd34388533e9bd8bac364b2",
+      "performance": {
+        "samples": 24,
+        "latency_median_ms": 167.0583155,
+        "draw_median_ms": 9.5542,
+        "frame_median_ms": 7.47775,
+        "uploads_before": 18,
+        "uploads_after": 18,
+        "scope": "同容器下X11指標事件至唯讀draw_start觀測，非硬體端到端延遲"
+      },
+      "saved": {
+        "ADMIRAL.DT0": "482a24048a9f553ae568560ad2a3ae21e2764c3783032a1ce0d204aecf2273c7",
+        "FLEET.DT0": "744d5df992c0c3f3fb13fcd5f17a6b3504842e8596db36b547136fbe32462d76",
+        "PLANET.DT0": "12d2e1ef8835fc8103e171a29cc9cb61814bd483c4d5358267c9010f5e4eb02b",
+        "SHIP.DT0": "0115127c1860283942928a6adbc6d83c97bb2418f452c89e655c0251ee95ed53",
+        "STELLAR.DT0": "c6ddd9ea1932d3ad13da01af7a7329bbe290da83ed433933f42589b1a421c017",
+        "WORK.DT0": "d506a292df0326408b634074e56c001552882b3c852588f539ae4c4337e5a46d"
+      },
+      "screenshots": [
+        {
+          "name": "main",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/main.png",
+          "sha256": "57256fa2b0e6aba9742af1cbf3ac52a482461bd61e8971729f6321061108b12b"
+        },
+        {
+          "name": "map-off",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/map-off.png",
+          "sha256": "4f7c11ed21598d8abbb2ecb5d1f91d1ee186556aa9a3d87ad0bb3d6a1c89483c"
+        },
+        {
+          "name": "button-hover",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/button-hover.png",
+          "sha256": "8a62d7bb2b11d83b5825a9d69c2340c89ace1ff16f58118ededc28cb70830bdf"
+        },
+        {
+          "name": "menu-off",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/menu-off.png",
+          "sha256": "8d6f7c65fec176a034722152f77753e2b74832bcd027ab8116cb01d023ce24ec"
+        },
+        {
+          "name": "menu-hover",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/menu-hover.png",
+          "sha256": "367055e1d8fefac8b9184b219a6b1055c98788bda915b70c148c8969ac45071b"
+        },
+        {
+          "name": "toolbar-font",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/toolbar-font.png",
+          "sha256": "075918c99582a04e0ae6ad903d1f93dd40b77ca99956b48baeb46860ea7cfc3b"
+        },
+        {
+          "name": "map-sans",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/map-sans.png",
+          "sha256": "7820b05d5ca5549d32282cbeea9c4fb6fe4825fa8a800929dd37cfff90a3b06d"
+        },
+        {
+          "name": "settings-sans",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/settings-sans.png",
+          "sha256": "9f5215b736243aef914893efbdd935a94b314a9ab836ddcf834a99f0abe88881"
+        },
+        {
+          "name": "toolbar-ai",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/toolbar-ai.png",
+          "sha256": "bbb3a8c212251ddaf1b108558968b178742c6b82f7653ab19371d73556b463d1"
+        },
+        {
+          "name": "settings-ai3",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/settings-ai3.png",
+          "sha256": "993f8c880fa303287ee89b0b257506ed8dd5422651fbdd6a93bb3927150ae7a8"
+        },
+        {
+          "name": "font-zh-TW",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/font-zh-TW.png",
+          "sha256": "43b48615b8c50bcd6a0adbc956697c5cf104ca40c566edae0f5866d2f00dd17d"
+        },
+        {
+          "name": "ai-zh-TW",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/ai-zh-TW.png",
+          "sha256": "4f727f71c2d6cb011768dabfa2b296cd8115aba7e58c68a8d9ad34ba44e902c9"
+        },
+        {
+          "name": "font-zh-CN",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/font-zh-CN.png",
+          "sha256": "e65be868ff8591952a8258eb7bf35edb9fab0e33d5ea6f790419fd0835e115fa"
+        },
+        {
+          "name": "ai-zh-CN",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/ai-zh-CN.png",
+          "sha256": "3454e96fbcefba704d2e21474b58c1294c0c7dee18918a7927055a2d72d6bd03"
+        },
+        {
+          "name": "font-ja",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/font-ja.png",
+          "sha256": "461915b103dd010893649278e973bc9b48022d86d0fbe2314243043c038188ed"
+        },
+        {
+          "name": "ai-ja",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/ai-ja.png",
+          "sha256": "aa04a34c07adfc0e911e0ae685c432ccf6b898c68cbf1016a2ea5a685b8b1aef"
+        },
+        {
+          "name": "font-en",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/font-en.png",
+          "sha256": "0ef6b4e207353aeed4ddd7ee5f038b6f3199830279036381353de1d8027550c9"
+        },
+        {
+          "name": "ai-en",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/ai-en.png",
+          "sha256": "65e8b482440331b2afab04aa631be00e1cb8451485fcd20b06d5767fcf420370"
+        },
+        {
+          "name": "font-ko",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/font-ko.png",
+          "sha256": "ed0aeb4e7aafeac88a274cfe6b4330551f01f1aba36f87665b999f89eed140bf"
+        },
+        {
+          "name": "ai-ko",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/ai-ko.png",
+          "sha256": "d464e5041632cf379e3caed0e9b52a769d52efd20a7ed3ad12634cc844710091"
+        },
+        {
+          "name": "help",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/help.png",
+          "sha256": "0c042ee40afcf64a40bc43e2efd816f425256e2aa9af8d6c2dce913c56e624d1"
+        },
+        {
+          "name": "original-pointer",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/original-pointer.png",
+          "sha256": "8e0cb6182cc3ace1e41589aff7453f57de3bebc8149a4499bf491a18d28573d8"
+        },
+        {
+          "name": "original-off",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/original-off.png",
+          "sha256": "a7928e3da71b4c164be5ec8e400ddb62d342eec422aec0e97e49ab3330e7226a"
+        },
+        {
+          "name": "original-button-hover",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/original-button-hover.png",
+          "sha256": "b7b86dd042623574fbeb4f2d535849fb0c21c041bb1f27d6d1a310607bc19255"
+        },
+        {
+          "name": "original-menu-off",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/original-menu-off.png",
+          "sha256": "5a7f058ead0ae4fdc9a9f747b562159c79fc77b608039de6135d7b1e96e353b5"
+        },
+        {
+          "name": "original-menu-hover",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/original-menu-hover.png",
+          "sha256": "9d01ba6973679caca308521a6fadf4a143cd77c72e81e458a7f6434cefe677ed"
+        },
+        {
+          "name": "hd-pointer",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/hd-pointer.png",
+          "sha256": "900832b609c3af576e7b460a670107af8c658935bfd566670d0680533df3c4fc"
+        },
+        {
+          "name": "poster-map",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/poster-map.png",
+          "sha256": "7544df6b3297ca820f3404f17fca493bf86c8acc660e2397f455db6c7c4aa5df"
+        },
+        {
+          "name": "poster-hover",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/poster-hover.png",
+          "sha256": "57e0bad17ba2948c97bd738b96348e0756af412d20f951fe5ef08a18ff54ac11"
+        },
+        {
+          "name": "poster-toolbar",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/poster-toolbar.png",
+          "sha256": "0e53dc9900137c5e803ed215cf7bf0f93cad8a4c01695d657f87ca74e9f75ef2"
+        },
+        {
+          "name": "loaded",
+          "path": "workplace/music69-windows/pointer152/v.1.6.1-20261025/final-windows/loaded.png",
+          "sha256": "5157f09576c1fae79a32b614d60f6890604547426145e21b68e9ee8354fdac67"
+        }
+      ]
+    },
+    "linux-empire": {
+      "path": "workplace/pointer152/final-empire-fixed",
+      "result_sha256": "ecaa6e8a33ca029a1cc6cc867ac642665448a138896be6d643df8642fb39d74e",
+      "binary_sha256": "1cc0660abc46a7189732bec103091baae9d20f048fbd3ac686c5345e956d12e4",
+      "performance": {
+        "samples": 24,
+        "latency_median_ms": 42.235757,
+        "draw_median_ms": 6.166424,
+        "frame_median_ms": 5.04314,
+        "uploads_before": 20,
+        "uploads_after": 20,
+        "scope": "Python啟動xdotool前至唯讀draw_start觀測，包含程序啟動與排程，非硬體端到端延遲"
+      },
+      "saved": {
+        "ADMIRAL.DT0": "482a24048a9f553ae568560ad2a3ae21e2764c3783032a1ce0d204aecf2273c7",
+        "FLEET.DT0": "744d5df992c0c3f3fb13fcd5f17a6b3504842e8596db36b547136fbe32462d76",
+        "PLANET.DT0": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b",
+        "SHIP.DT0": "0115127c1860283942928a6adbc6d83c97bb2418f452c89e655c0251ee95ed53",
+        "STELLAR.DT0": "1238cc5bf1920d6b7444d3da2c5dd387206416f88de418073b29865f06c4eb39",
+        "WORK.DT0": "9170fbaf4becd6b8966b2d13cf63c08eb9e4f8213d46d15f1943cdf2d3dabbc1"
+      },
+      "screenshots": [
+        {
+          "name": "main",
+          "path": "workplace/pointer152/final-empire-fixed/main.png",
+          "sha256": "810daaeb3b5f5713a8b3fb6735a2ede5e146e3b2d9004d860149d9a05ffcabc7"
+        },
+        {
+          "name": "map-off",
+          "path": "workplace/pointer152/final-empire-fixed/map-off.png",
+          "sha256": "d3ea21c323dadf797621df9d5796e677ffbe1e3d710ade044fa4840c57a22caa"
+        },
+        {
+          "name": "button-hover",
+          "path": "workplace/pointer152/final-empire-fixed/button-hover.png",
+          "sha256": "1671c1638af221cd1f4b5d20881897cb6d95429837475d526cbfb00c1ecccc80"
+        },
+        {
+          "name": "menu-off",
+          "path": "workplace/pointer152/final-empire-fixed/menu-off.png",
+          "sha256": "d521b468df351b2b455f2e7b90278b7c8ee03d2067eecfc458e9b37c78406fde"
+        },
+        {
+          "name": "menu-hover",
+          "path": "workplace/pointer152/final-empire-fixed/menu-hover.png",
+          "sha256": "0191e66b79d20a84396a277570f75cf937f7f08d291f27d108d97bf2f06e2b1b"
+        },
+        {
+          "name": "toolbar-font",
+          "path": "workplace/pointer152/final-empire-fixed/toolbar-font.png",
+          "sha256": "243a688b2ae837abe5a411e6bc39c009971fff550da3aa6e44ea19d6cf951bf3"
+        },
+        {
+          "name": "map-sans",
+          "path": "workplace/pointer152/final-empire-fixed/map-sans.png",
+          "sha256": "7c0e145f341a620f79bb2a80ad94914532e1e356242723efa09fb36544a10a3f"
+        },
+        {
+          "name": "settings-sans",
+          "path": "workplace/pointer152/final-empire-fixed/settings-sans.png",
+          "sha256": "ff13db388edd8d3e7aaa3c1d82ab0d24423b20ea33bbb35892bd7400b14ae27f"
+        },
+        {
+          "name": "toolbar-ai",
+          "path": "workplace/pointer152/final-empire-fixed/toolbar-ai.png",
+          "sha256": "6d71b6e5b93100adcb024fb69128e8458516d9c649a87b2a1ce1468c7c3c49bc"
+        },
+        {
+          "name": "settings-ai3",
+          "path": "workplace/pointer152/final-empire-fixed/settings-ai3.png",
+          "sha256": "dab8bcf6e0b72c7faad62d0e7eefb58e1fed5ee06bd2676d3a4448eacd1f1b93"
+        },
+        {
+          "name": "font-zh-TW",
+          "path": "workplace/pointer152/final-empire-fixed/font-zh-TW.png",
+          "sha256": "8c897215a87e26461b0005fd94eb0524500d8b4350207babec5738083404ab16"
+        },
+        {
+          "name": "ai-zh-TW",
+          "path": "workplace/pointer152/final-empire-fixed/ai-zh-TW.png",
+          "sha256": "d15c838fde784baab362d65b4cf0e18d775dade2f58ba089170252a1c5435d36"
+        },
+        {
+          "name": "font-zh-CN",
+          "path": "workplace/pointer152/final-empire-fixed/font-zh-CN.png",
+          "sha256": "e54dccc30d5346bc8c6912e0fceda8af060e086473ad50652761933ffc7969fa"
+        },
+        {
+          "name": "ai-zh-CN",
+          "path": "workplace/pointer152/final-empire-fixed/ai-zh-CN.png",
+          "sha256": "13eb5c5a12a835d90207ffcbd4fffc4b6a65db5dafeff305de8a2027c45b949e"
+        },
+        {
+          "name": "font-ja",
+          "path": "workplace/pointer152/final-empire-fixed/font-ja.png",
+          "sha256": "b1259411911181937a399ce7917f3368537a2b7382e057f5f60e30c4441c6efc"
+        },
+        {
+          "name": "ai-ja",
+          "path": "workplace/pointer152/final-empire-fixed/ai-ja.png",
+          "sha256": "2efcaa45c7ff5b5f9861fc9d18902bc314f7019d55e925337bac8ec74c901dc1"
+        },
+        {
+          "name": "font-en",
+          "path": "workplace/pointer152/final-empire-fixed/font-en.png",
+          "sha256": "a0ee753f35468836411e18abde0bc0fb2512a5ffb630b8c003f1e3a5e06545c7"
+        },
+        {
+          "name": "ai-en",
+          "path": "workplace/pointer152/final-empire-fixed/ai-en.png",
+          "sha256": "b4a622f4769e1264f0670cb97a61229621d4977e25896f9213580787ae07b306"
+        },
+        {
+          "name": "font-ko",
+          "path": "workplace/pointer152/final-empire-fixed/font-ko.png",
+          "sha256": "0e3c5cf81e5009a5a5d31aee8b9797c4e983d4dec9bd65fa46a2f921f0a57af8"
+        },
+        {
+          "name": "ai-ko",
+          "path": "workplace/pointer152/final-empire-fixed/ai-ko.png",
+          "sha256": "a0c5183681b96df2cf59bd455fd397c12674338ee688a25a1e1ea9df25130834"
+        },
+        {
+          "name": "help",
+          "path": "workplace/pointer152/final-empire-fixed/help.png",
+          "sha256": "0abf27aa403a9b532e18d9d4b971bbf29a4813a1d747fd366ffd2e4ec4b3b883"
+        },
+        {
+          "name": "original-pointer",
+          "path": "workplace/pointer152/final-empire-fixed/original-pointer.png",
+          "sha256": "4e94e00dc7480237f88eb36398bcab8bb97945f2c1ea30d703901ce977479539"
+        },
+        {
+          "name": "original-off",
+          "path": "workplace/pointer152/final-empire-fixed/original-off.png",
+          "sha256": "2cdfdbac920c9da51b168b1e487eb3907597b5106baa39b1ea9f8148ab4a9300"
+        },
+        {
+          "name": "original-button-hover",
+          "path": "workplace/pointer152/final-empire-fixed/original-button-hover.png",
+          "sha256": "35e2518252757f3f677b7900cbc09d9f49ec44556c1cad688c3479a93ae503cd"
+        },
+        {
+          "name": "original-menu-off",
+          "path": "workplace/pointer152/final-empire-fixed/original-menu-off.png",
+          "sha256": "2cddca3111eaebd7f3b54df303e8701c4528b70cd63d4e3c4317e3dfe4d3ce5d"
+        },
+        {
+          "name": "original-menu-hover",
+          "path": "workplace/pointer152/final-empire-fixed/original-menu-hover.png",
+          "sha256": "3f13815585816401328aecdcea858aab1eb831937892d5e278178f15903885cf"
+        },
+        {
+          "name": "hd-pointer",
+          "path": "workplace/pointer152/final-empire-fixed/hd-pointer.png",
+          "sha256": "39c7a47efff442bd414fbfb71237fd7b72516a785cff112a5d7e19ae507fb192"
+        },
+        {
+          "name": "poster-map",
+          "path": "workplace/pointer152/final-empire-fixed/poster-map.png",
+          "sha256": "dc491dffc7ab1d6ae2af71e7aa7892b66278eef67dca071ce27bf0bc80d82b86"
+        },
+        {
+          "name": "poster-hover",
+          "path": "workplace/pointer152/final-empire-fixed/poster-hover.png",
+          "sha256": "ee5a66f711e8cbc190db1b03fdb286c1856110fa02a4d65051adee832653d861"
+        },
+        {
+          "name": "poster-toolbar",
+          "path": "workplace/pointer152/final-empire-fixed/poster-toolbar.png",
+          "sha256": "f923470629003f5054dee86aecd5d1cf3d404993c36ec86f2f090b4a106a0528"
+        },
+        {
+          "name": "loaded",
+          "path": "workplace/pointer152/final-empire-fixed/loaded.png",
+          "sha256": "dc491dffc7ab1d6ae2af71e7aa7892b66278eef67dca071ce27bf0bc80d82b86"
+        }
+      ]
+    }
+  },
+  "baseline": {
+    "path": "workplace/pointer152/baseline-linux-r2",
+    "result_sha256": "d0af6c9fad7349e4dcb4330f2a3f44d75db8508d4c03aa848c47ad4682de28c7",
+    "performance": {
+      "samples": 24,
+      "latency_median_ms": 55.3383385,
+      "draw_median_ms": 32.8485965,
+      "frame_median_ms": 5.330883,
+      "uploads_before": null,
+      "uploads_after": null,
+      "scope": "同容器下X11指標事件至唯讀draw_start觀測，非硬體端到端延遲"
+    }
+  },
+  "hover": {
+    "logical_rois": {
+      "button": [
+        565,
+        122,
+        607,
+        138
+      ],
+      "menu": [
+        565,
+        162,
+        590,
+        178
+      ]
+    },
+    "window_scale": 1.5,
+    "changed_pixels": {
+      "baseline": {
+        "hd-button": 0,
+        "hd-menu": 0
+      },
+      "linux-alliance": {
+        "hd-button": 916,
+        "hd-menu": 398,
+        "original-button": 1512,
+        "original-menu": 912
+      },
+      "windows-alliance": {
+        "hd-button": 916,
+        "hd-menu": 398,
+        "original-button": 1512,
+        "original-menu": 912
+      },
+      "linux-empire": {
+        "hd-button": 916,
+        "hd-menu": 398,
+        "original-button": 1512,
+        "original-menu": 912
+      }
+    }
+  },
+  "poster_centers": {
+    "linux-alliance": {
+      "pixels": 691200,
+      "different": 0,
+      "poster_crop": [
+        160,
+        0,
+        1120,
+        720
+      ]
+    },
+    "windows-alliance": {
+      "pixels": 691200,
+      "different": 0,
+      "poster_crop": [
+        160,
+        0,
+        1120,
+        720
+      ]
+    },
+    "linux-empire": {
+      "pixels": 691200,
+      "different": 0,
+      "poster_crop": [
+        160,
+        0,
+        1120,
+        720
+      ]
+    }
+  },
+  "limits": [
+    "Windows採Wine，未作Windows真機或硬體端到端延遲驗收。",
+    "GUI收據latency_ms從Python啟動xdotool前計時，包含程序啟動與排程。原scope文字過強，不能作輸入延遲改善證據。",
+    "Draw耗時是隔離環境抽樣，受排程與負載影響；正式樣本以本索引gui及baseline欄位為準。",
+    "字型與AI沿既有本次執行設定，不新增永久偏好；原版顯示固定原字形。",
+    "設定頁沿專用黑體，工具列字型影響其他HD遊戲文字。",
+    "未發布GitHub Release，先前v1.6.0三平台包及影片保持。"
+  ]
+}

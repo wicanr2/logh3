@@ -34,6 +34,32 @@ func TestFlagshipTransferChoiceAndChance(t *testing.T) {
 	}
 }
 
+func TestNonBattleshipFlagshipPolicyAndTransaction(t *testing.T) {
+	for _, enabled := range []bool{false, true} {
+		for kind := 0; kind < 8; kind++ {
+			want := kind < 2 || enabled && kind < 5
+			units := []BattleUnit{{Fleet: 0, Squadron: 0, Ships: 0}, {Fleet: 0, Squadron: 1, Kind: kind, Ships: 90}}
+			if got := FlagshipTransferTargetWithPolicy(units, 0, enabled); (got == 1) != want {
+				t.Fatalf("開關%v 艦種%d候選=%d", enabled, kind, got)
+			}
+			s := transferSlotFixture()
+			s.ShipAt(12)[shipKind] = byte(kind)
+			s.Fleet[fleetSlots+8+2] = byte(kind)
+			beforeFleet, beforeShip := bytes.Clone(s.Fleet), bytes.Clone(s.Ship)
+			err := s.TransferFlagshipWithPolicy(0, 2, enabled)
+			if (err == nil) != want {
+				t.Fatalf("開關%v 艦種%d交易=%v", enabled, kind, err)
+			}
+			if !want && (!bytes.Equal(beforeFleet, s.Fleet) || !bytes.Equal(beforeShip, s.Ship)) {
+				t.Fatal("拒絕艦種仍改寫資料")
+			}
+			if want && (s.FleetGroupShips(0)[0] != 12 || s.ShipAt(12)[shipKind] != byte(kind)) {
+				t.Fatal("交易遺失旗艦種類或池引用")
+			}
+		}
+	}
+}
+
 func transferSlotFixture() *Slot {
 	s := &Slot{Fleet: make([]byte, FleetCount*FleetRecord), Ship: make([]byte, ShipCount*ShipRecord)}
 	r := s.Fleet[:FleetRecord]

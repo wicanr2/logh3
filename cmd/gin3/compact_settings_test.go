@@ -24,7 +24,7 @@ func TestCompactSettingsControlsStayVisible(t *testing.T) {
 			t.Fatal("選項文字放不下", c.ID, c.Label)
 		}
 	}
-	for _, id := range []string{"enemies", "ai", "flagship", "movement", "soundfont"} {
+	for _, id := range []string{"enemies", "ai", "flagship", "movement", "soundfont", "non-battleship", "poster"} {
 		if compactControlBounds(id).Empty() {
 			t.Fatal("必要控制項不存在", id)
 		}

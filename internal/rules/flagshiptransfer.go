@@ -7,6 +7,16 @@ import (
 
 // These are user-selected remake rules (spec146), not original-game parity.
 func FlagshipTransferTarget(units []BattleUnit, destroyed int) int {
+	return FlagshipTransferTargetWithPolicy(units, destroyed, false)
+}
+
+// FlagshipKindAllowed follows user-selected spec150. T/E and non-ship kinds
+// remain ineligible even when non-battleship flagships are enabled.
+func FlagshipKindAllowed(kind int, nonBattleship bool) bool {
+	return kind >= 0 && (kind <= 1 || nonBattleship && kind <= 4)
+}
+
+func FlagshipTransferTargetWithPolicy(units []BattleUnit, destroyed int, nonBattleship bool) int {
 	if destroyed < 0 || destroyed >= len(units) {
 		return -1
 	}
@@ -16,7 +26,7 @@ func FlagshipTransferTarget(units []BattleUnit, destroyed int) int {
 	}
 	best := -1
 	for i, u := range units {
-		if u.Fleet != flag.Fleet || u.Faction != flag.Faction || u.Squadron <= 0 || u.Out || u.Ships <= 0 || (u.Kind != 0 && u.Kind != 1) {
+		if u.Fleet != flag.Fleet || u.Faction != flag.Faction || u.Squadron <= 0 || u.Out || u.Ships <= 0 || !FlagshipKindAllowed(u.Kind, nonBattleship) {
 			continue
 		}
 		if best < 0 || u.Ships > units[best].Ships || u.Ships == units[best].Ships && u.Squadron < units[best].Squadron {
@@ -33,6 +43,10 @@ func FlagshipTransferSucceeds(admiral, roll int) bool {
 // TransferFlagship swaps pool references without moving ships or reviving losses.
 // All validation precedes mutation; the caller supplies current damage first.
 func (s *Slot) TransferFlagship(index, squadron int) error {
+	return s.TransferFlagshipWithPolicy(index, squadron, false)
+}
+
+func (s *Slot) TransferFlagshipWithPolicy(index, squadron int, nonBattleship bool) error {
 	if s == nil || len(s.Fleet) != FleetCount*FleetRecord || len(s.Ship) != ShipCount*ShipRecord || index < 0 || index >= FleetCount {
 		return fmt.Errorf("旗艦轉移缺現行艦隊／艦艇表")
 	}
@@ -52,7 +66,7 @@ func (s *Slot) TransferFlagship(index, squadron int) error {
 	a, b := fleetSlots, fleetSlots+4*squadron
 	oldPool, newPool := int(binary.LittleEndian.Uint16(r[a:])), int(binary.LittleEndian.Uint16(r[b:]))
 	old, next := s.ShipAt(oldPool), s.ShipAt(newPool)
-	if binary.LittleEndian.Uint16(old[shipAlive:]) != 0 || binary.LittleEndian.Uint16(next[shipAlive:]) == 0 || next[shipKind] > 1 || next[0x1e]&0x80 != 0 {
+	if binary.LittleEndian.Uint16(old[shipAlive:]) != 0 || binary.LittleEndian.Uint16(next[shipAlive:]) == 0 || !FlagshipKindAllowed(int(next[shipKind]), nonBattleship) || next[0x1e]&0x80 != 0 {
 		return fmt.Errorf("旗艦轉移的死亡狀態或候選艦種無效")
 	}
 	var group [4]byte

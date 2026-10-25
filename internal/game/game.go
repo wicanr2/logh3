@@ -7,6 +7,7 @@ package game
 import (
 	"bytes"
 	"fmt"
+	"image"
 	"os"
 	"path/filepath"
 	"strings"
@@ -596,9 +597,11 @@ const occupyOffset = 11
 
 // Game 是一局遊戲的狀態。
 type Game struct {
-	res           *Resources
-	leftHeld      leftRepeatHold
-	standbyScroll int
+	res               *Resources
+	leftHeld          leftRepeatHold
+	standbyScroll     int
+	personnelBase     *gfx.Framebuffer
+	personnelBuilding bool
 
 	// pendingFlips 是還沒給玩家看的易主報告，afterFlips 是全部看完之後
 	// 要接回去的那條路（`docs/spec/034`）。
@@ -1055,6 +1058,7 @@ type Game struct {
 	// repairShipsRepairable 是規格125的可選規則：修護艦可被其他修護艦修理。執行期偏好，不進存檔。
 	repairShipsRepairable bool
 	flagshipTransfer      bool
+	nonBattleshipFlagship bool
 	heroMovementDisabled  bool
 	flagshipTransferTried map[int]bool
 
@@ -2273,6 +2277,9 @@ const mouseDY = ui.MouseDY
 // 單純的移動會順便重算左下角那塊寫哪一格（`refreshHoverRegion`）；
 // 點擊帶著的那次移動**不算**，所以 `Click`／`RightClick` 走 `moveMouse`。
 func (g *Game) MoveMouse(x, y int) {
+	if (g.state == StateFleetAdjutant || g.adj.menuOn) && g.adjMenuRowAt(g.mouseX, g.mouseY) != g.adjMenuRowAt(x, y) {
+		g.personnelBase = nil
+	}
 	g.moveMouse(x, y)
 	g.fleetCombatMouse(x, y)
 	g.refreshHoverRegion()
@@ -2421,6 +2428,7 @@ func (g *Game) forcedLeftRegion(s State) int {
 // **主選單只從事件回呼收按下**（`docs/re/08`）——那是原版的實作細節，
 // 在這裡的意義是：點擊要落在某一列上才算數，不是點到視窗內就好。
 func (g *Game) Click(x, y int) {
+	g.personnelBase = nil
 	g.LeftRelease()
 	g.moveBeforePress(x, y)
 	action := g.leftRepeatAt(x, y)
@@ -2630,7 +2638,7 @@ func (g *Game) click(x, y int) {
 				}
 			case "cancel":
 				// 「中止」整支作廢：編輯器先把存量倒回進來那一刻（`0FF4:1127`），
-				// 旗艦那一組再退回首都、回戰略地圖，不是回艦隊編成
+				// 旗艦那一組再退回所在地、回戰略地圖，不是回艦隊編成
 				// （收據 `fcmd-fok-cancel`：地圖、清單空、存量 78000）。
 				if g.editor != nil {
 					g.editor.Cancel()
@@ -2646,10 +2654,10 @@ func (g *Game) click(x, y int) {
 				// 艦隊建成，回戰略地圖（收據 `dec1`）。艦隊記錄怎麼填
 				// 見 `docs/internals/33`。
 				if g.commandSpec(StateCommandPhase) != nil {
-					region := rules.CapitalRegion(g.faction)
+					region := g.sortieRegion()
 					adjutant := rules.Adjutant(g.admiralRecord(g.detailAdmiral))
 					// 編制與 AI 建艦隊走同一支 `297B:0066`：旗艦那一組從
-					// 首都的待命部隊扣出來；玩家這一支沒有類別鍵
+					// 所在地的待命部隊扣出來；玩家這一支沒有類別鍵
 					// （`+0x09` ＝ 0xFF），所以進編輯器時只有旗艦那一組
 					// （收據 `fcmd-win` 的 `fleet0.bin`：`+0x0F` ＝ 1、
 					// `+0x10` ＝ `00 00 00 14`，`docs/re/312`）；之後放的
@@ -2689,8 +2697,8 @@ func (g *Game) click(x, y int) {
 							rules.AdmiralLevel(g.admiralRecord(g.detailAdmiral))),
 						// 同一支 `297B:0066` 也寫 `+0x3C = 100`。
 						Morale: rules.NewFleetMorale,
-						// 編成完停在自己的首都，還沒有移動命令
-						// （`docs/re/70` 的收據 `dec1` 就是這個狀態）。
+						// 編成完停在提督所在地，還沒有移動命令。
+						// 開局收據`dec1`的所在地恰好是首都。
 						Region: region,
 						Target: rules.NoTarget,
 						Move:   fleetMoveParked,
@@ -2719,13 +2727,13 @@ func (g *Game) click(x, y int) {
 					// 立即呼叫 `090A:0E6D`；命令階段當下的治安色不能等到
 					// 下一次「實行」才更新（`docs/re/304`）。
 					g.recomputeUnrest(g.turn)
-					// 右下角清單跟著看首都那一格——剛編成的艦隊停在
+					// 右下角清單跟著看編成所在地，剛編成的艦隊停在
 					// 那裡，回到地圖之後「艦隊」分頁要多出一列
 					// （收據 `dec1`，`docs/re/70`）。
 					//
 					// 左下角那塊不看這個：`dec1` 的游標按完「決定」停在
 					// (510,350)，不在星圖上，所以整塊是空的。
-					g.selectedRegion = rules.CapitalRegion(g.faction)
+					g.selectedRegion = region
 					// 清單重建（`073F:0522`）：艦隊與提督兩頁位移歸零，選著的分頁不變
 					// （收據 `fcmd-tab-fleet2`：出擊完提督分頁還在、少了那一位）。
 					g.listRefresh()
@@ -2935,6 +2943,7 @@ func (g *Game) click(x, y int) {
 // **座標目前不影響結果**——實測 (300,240) 那一點在報告視窗上與在地圖上
 // 都關得掉；哪裡按不算數還沒量過。
 func (g *Game) RightClick(x, y int) {
+	g.personnelBase = nil
 	g.LeftRelease()
 	g.moveBeforePress(x, y)
 	g.rightClick(x, y)
@@ -3181,6 +3190,7 @@ func (g *Game) rightClick(x, y int) {
 // 所以 Enter 只要求「有打東西」。`Answer()` 留著給文件與測試看，
 // 不參與判斷。
 func (g *Game) Key(c byte) {
+	g.personnelBase = nil
 	if g.state == StateIntro {
 		g.SkipIntro()
 		return
@@ -3442,12 +3452,19 @@ func readOrig(dir, name string) []byte {
 
 // Frame 畫出目前的畫面。
 func (g *Game) Frame() (result *gfx.Framebuffer) {
+	if !g.personnelBuilding && (g.staff.on() || g.adjOpen() || g.state == StateFleetOrg || g.state == StateFleetAdjutant || g.state == StateFleetChangeAdj) {
+		return g.personnelFrame()
+	}
 	defer func() {
 		if result == nil {
 			return
 		}
 		result.InterfaceTheme = ""
 		result.HoverControl = g.hoverControlBounds()
+		if result.HoverControl.Empty() {
+			result.HoverControl = gfx.VisibleButtonAt(result.Commands, image.Pt(g.mouseX, g.mouseY))
+		}
+		result.HoverMenu = menuOf(g.state) >= 0
 		switch g.state {
 		case StateIntro, StateTitle, StateMainMenu, StateCopyProtection, StateEnding:
 			return
@@ -3995,7 +4012,7 @@ func (g *Game) drawFleetComposition(fb *gfx.Framebuffer) {
 	if g.state != StateFleetComposition && g.state != StateFormation {
 		return
 	}
-	region := rules.CapitalRegion(g.faction)
+	region := g.sortieRegion()
 	o := region * rules.RegionRecord
 	if region < 0 || o+rules.RegionRecord > len(g.res.Stellar) {
 		return
@@ -4054,11 +4071,17 @@ func compositionViewGroups(comp []rules.FleetGroup) []screen.CompositionGroup {
 	return out
 }
 
-// takeProvisional 進艦隊組成時把旗艦那一組從首都的待命部隊扣出來。
+// sortieRegion 是出擊提督的所在星域（ADMIRAL +0x0A）。駐留後艦艇留在
+// 當地，重新編成必須沿用該星域，見規格015與研究215、329。
+func (g *Game) sortieRegion() int {
+	return rules.AdmiralRegion(g.admiralRecord(g.detailAdmiral))
+}
+
+// takeProvisional 進艦隊組成時把旗艦那一組從所在星域的待命部隊扣出來。
 // 有艦種表就走 `newComposition`（與 AI 同一支）；畫面測試那種沒帶規則表的
 // 資源就只算旗艦一組：艦種 ＝ 提督 `+0x08` 低四位、艘數 ＝ min(滿編, 存量)。
 func (g *Game) takeProvisional() []rules.FleetGroup {
-	region := rules.CapitalRegion(g.faction)
+	region := g.sortieRegion()
 	if comp := g.newComposition(g.faction, region, g.detailAdmiral, rules.NoClassKey); comp != nil {
 		return comp
 	}
@@ -4080,14 +4103,14 @@ func (g *Game) takeProvisional() []rules.FleetGroup {
 	return []rules.FleetGroup{grp}
 }
 
-// refundProvisional 把進艦隊組成時扣掉的那幾組還回首都的待命部隊
+// refundProvisional 把進艦隊組成時扣掉的那幾組還回所在星域的待命部隊
 // （`rules.ReturnRegionShips`，艦種 7 不走存量）。
 func (g *Game) refundProvisional() {
 	g.sortieSlots(false)
 	if g.provisional == nil {
 		return
 	}
-	if rec := g.regionRecord(rules.CapitalRegion(g.faction)); rec != nil {
+	if rec := g.regionRecord(g.sortieRegion()); rec != nil {
 		for _, gp := range g.provisional {
 			if gp.Kind != rules.ShipKindStandalone {
 				rules.ReturnRegionShips(rec, g.faction, gp.Kind, gp.Ships)
@@ -4103,11 +4126,11 @@ func (g *Game) fleetOrgConfirm() {
 		return
 	}
 	g.selectedRow = 0
-	// 旗艦那一組在**進艦隊組成**這一刻就從首都的待命部隊扣出來
+	// 旗艦那一組在**進艦隊組成**這一刻就從所在地的待命部隊扣出來
 	// （原版首都戰艦 78000 → 75000，`fcx-peek-stock-300`／`-350`），
 	// 「決定」不再扣、「中止」退回（`docs/re/316` §四）。
 	g.provisional = g.takeProvisional()
-	g.openFleetEditor(rules.CapitalRegion(g.faction), g.faction,
+	g.openFleetEditor(g.sortieRegion(), g.faction,
 		rules.FleetSlots(rules.AdmiralLevel(g.admiralRecord(g.detailAdmiral))),
 		g.provisional)
 	g.state = StateFleetComposition

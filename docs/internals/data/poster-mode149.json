@@ -1,0 +1,166 @@
+{
+  "passed": true,
+  "version": "v.1.5.3-20261024",
+  "archive": {
+    "path": "full/LOGH3-v.1.5.3-20261024-windows-amd64-poster-update.zip",
+    "bytes": 14586513,
+    "sha256": "e296296cc23cc9027c1d1b37ca58ed7c9eab0fb9ae66356d561b81eccdbedd3a"
+  },
+  "binary_sha256": "67e3713eaeb1492d693079056d34cc5468658617896be46f8a69f63a7f86207c",
+  "build_sha256": "841e706998aaefe9d3b87268e18e5bf95dd4a1ec2b7e2a918efbe4c342927dbb",
+  "frozen_files": 1595,
+  "product_files": 617,
+  "gui": [
+    {
+      "path": "workplace/poster149/gui-linux-r1",
+      "result_sha256": "4d91340ed170dda090e271345ddd235ae8a30bbd4ca3187c01097720324cd16b",
+      "binary_sha256": "cef89207198863b0328bac9d156b20254f97629038f4c399d6ae7760d1a69abd",
+      "captures": 13,
+      "center": {
+        "pixels": 691200,
+        "different": 0
+      },
+      "side_checks": [
+        "settings-on",
+        "side-clicks-ignored",
+        "original-on",
+        "help-on",
+        "loaded-on",
+        "restart-on",
+        "typing-from-side"
+      ],
+      "saved": {
+        "ADMIRAL.DT0": "482a24048a9f553ae568560ad2a3ae21e2764c3783032a1ce0d204aecf2273c7",
+        "FLEET.DT0": "744d5df992c0c3f3fb13fcd5f17a6b3504842e8596db36b547136fbe32462d76",
+        "PLANET.DT0": "12d2e1ef8835fc8103e171a29cc9cb61814bd483c4d5358267c9010f5e4eb02b",
+        "SHIP.DT0": "0115127c1860283942928a6adbc6d83c97bb2418f452c89e655c0251ee95ed53",
+        "STELLAR.DT0": "c6ddd9ea1932d3ad13da01af7a7329bbe290da83ed433933f42589b1a421c017",
+        "WORK.DT0": "d506a292df0326408b634074e56c001552882b3c852588f539ae4c4337e5a46d"
+      }
+    },
+    {
+      "path": "workplace/music69-windows/poster149/gui-windows-r1",
+      "result_sha256": "c75a1fa1449aa7a6698de085a407680ac8440c70f670096aa8bb15b1ab3693c4",
+      "binary_sha256": "67e3713eaeb1492d693079056d34cc5468658617896be46f8a69f63a7f86207c",
+      "captures": 13,
+      "center": {
+        "pixels": 691200,
+        "different": 0
+      },
+      "side_checks": [
+        "settings-on",
+        "side-clicks-ignored",
+        "original-on",
+        "help-on",
+        "loaded-on",
+        "restart-on",
+        "typing-from-side"
+      ],
+      "saved": {
+        "ADMIRAL.DT0": "482a24048a9f553ae568560ad2a3ae21e2764c3783032a1ce0d204aecf2273c7",
+        "FLEET.DT0": "744d5df992c0c3f3fb13fcd5f17a6b3504842e8596db36b547136fbe32462d76",
+        "PLANET.DT0": "12d2e1ef8835fc8103e171a29cc9cb61814bd483c4d5358267c9010f5e4eb02b",
+        "SHIP.DT0": "0115127c1860283942928a6adbc6d83c97bb2418f452c89e655c0251ee95ed53",
+        "STELLAR.DT0": "c6ddd9ea1932d3ad13da01af7a7329bbe290da83ed433933f42589b1a421c017",
+        "WORK.DT0": "d506a292df0326408b634074e56c001552882b3c852588f539ae4c4337e5a46d"
+      }
+    }
+  ],
+  "compared_center_pixels": 2073600,
+  "preview": {
+    "path": "dist-all/v.1.5.3-20261024/full/LOGH3-v.1.5.3-20261024-poster-preview.png",
+    "sha256": "8a14398fa9ac86802587c1bc5ed392cd4ac87e20ae4a18fef4f7154dd1c5e7eb",
+    "size": [
+      1280,
+      720
+    ]
+  },
+  "art": {
+    "generator": "built-in image_gen",
+    "classification": "identity-preserve",
+    "requests": [
+      {
+        "key": "empire",
+        "prompt": "Edit the provided classic Legend of the Galactic Heroes official key visual into ONE tall vertical decorative poster for the LEFT side of a retro game widescreen bezel. Character identity reference: Reinhard von Lohengramm, the blond man in the key visual and the attached official close-up. Keep the recognizable classic OVA facial features, golden wavy long hair, blue eyes, black imperial uniform with silver piping, golden epaulettes and white cape. ONLY Reinhard, no other people. He stands upright head to polished boots fully visible, calm and dignified, looking slightly toward the RIGHT (toward the central game). Compose as a very narrow 2:9 full-height side-panel poster: full figure slender and centered, including cape gathered mostly behind the body, within the CENTER 28 PERCENT OF IMAGE WIDTH so a centered narrow crop never cuts face, arms or boots. Dark blue starfield matching the supplied official space background, quiet background without UI, planets, labels or logos. Clean hand-painted cel-anime finish with restrained highlights, preserve the classic character design rather than the modern remake designs. Important: FULL BODY and generous top/bottom breathing room, portrait orientation, no text. The final is a project asset, not a mockup: no game window or frame drawn in the image.",
+        "refs": [
+          "/home/anr2/cht/logh3/workplace/poster149/references/classic-key-visual.png",
+          "/home/anr2/cht/logh3/workplace/poster149/references/reinhard.jpg"
+        ]
+      },
+      {
+        "key": "alliance",
+        "prompt": "Edit the provided classic Legend of the Galactic Heroes official key visual into ONE tall vertical decorative poster for the RIGHT side of a retro game widescreen bezel. Character identity reference: Yang Wen-li, the dark-haired man in the key visual and the attached official close-up. Keep the recognizable classic OVA face, slightly tousled dark hair, dark green beret and olive-green Alliance military jacket with orange ribbon, cream trousers and black shoes. ONLY Yang, no other people. He stands head to polished boots fully visible in a relaxed, thoughtful posture, looking slightly toward the LEFT (toward the central game). One hand may rest in his trouser pocket, keep the other arm resting close to the torso so both arms fit a narrow side-panel. Compose as a very narrow 2:9 full-height side-panel poster: full figure slender and centered within the CENTER 28 PERCENT OF IMAGE WIDTH so a centered narrow crop never cuts face, arms or boots. Dark blue starfield matching the supplied official space background, quiet background without UI, planets, labels or logos. Clean hand-painted cel-anime finish with restrained highlights, preserve the classic character design rather than modern remake designs. Important: FULL BODY and generous top/bottom breathing room, portrait orientation, no text. The final is a project asset, not a mockup: no game window or frame drawn in the image.",
+        "refs": [
+          "/home/anr2/cht/logh3/workplace/poster149/references/classic-key-visual.png",
+          "/home/anr2/cht/logh3/workplace/poster149/references/yang.jpg"
+        ]
+      }
+    ],
+    "references": [
+      {
+        "file": "classic-key-visual.png",
+        "url": "https://ginei.club/images/animation/205/ginei_ctw_KV.png",
+        "bytes": 444759,
+        "sha256": "0da2b532ef8e70fa96a2e4474d439a2c13e525029ff2cec77a5f2dcd2e3e1ebd"
+      },
+      {
+        "file": "reinhard.jpg",
+        "url": "https://ginei.jp/img/char/g01.jpg",
+        "bytes": 20452,
+        "sha256": "78ec904346b7de9d8f1c2da417e88aee0cb8eb638a8f3c889e58b91753354cef"
+      },
+      {
+        "file": "yang.jpg",
+        "url": "https://ginei.jp/img/char/d01.jpg",
+        "bytes": 17091,
+        "sha256": "b4db318e478c03eb10eed59d8626bc8e0e0dd5f893f6207ada299e4c333c402d"
+      }
+    ],
+    "files": [
+      {
+        "file": "assets/hd/poster/empire.png",
+        "generated_file": "exec-c73d9bb4-8658-43a6-85ad-8348fe76fa4b.png",
+        "sha256": "557e75505266217ff8c50f3884c69115ea77cb5d70cce019259abc4142d272bf",
+        "size": [
+          836,
+          1881
+        ]
+      },
+      {
+        "file": "assets/hd/poster/alliance.png",
+        "generated_file": "exec-1bd015e2-2f76-4309-8756-279c783b9c8c.png",
+        "sha256": "b1dafc87eab39167afc53acbfa2d7f344f623a2550de9f88a1c4db51aa82b4bf",
+        "size": [
+          836,
+          1881
+        ]
+      }
+    ],
+    "use": "本機海報外框，無公開散布權聲明"
+  },
+  "prompts": {
+    "path": "workplace/poster149/PROMPTS.json",
+    "sha256": "1ad3167484049dfe1c866c29960764ed555016110b5871aa148e403db7e5d23c"
+  },
+  "tests": {
+    "command": "tools/gui.sh test ./internal/... ./cmd/...",
+    "passed": 15,
+    "no_tests": 4,
+    "sha256": "20188e94e310ec16723494d65356d5c8ddeaa941e1b39d16765597e6ddaadb1c"
+  },
+  "native_diagnostic": {
+    "path": "workplace/poster149/native-diagnostic/RESULT.json",
+    "sha256": "2d910cbdf2082ec4acce14205072c43830859d343229eaef24ee5d1afeb13433"
+  },
+  "native_gui": {
+    "path": "workplace/poster149/gui-native-r1/RESULT.json",
+    "sha256": "fb38419a0b97e5949070f4dd1ea157b916a34f2bb6c90e599dbacdc4488bdd87"
+  },
+  "scope": "使用者指定顯示外框，中央remake前後像素比較；無新增DOS parity、Windows真機或macOS真機聲明",
+  "rights": "新海報為官方參考經image_gen重構，本機使用；不加入Git或公開引擎包。既有交付保持。",
+  "generators": {
+    "tools/scripts/poster_mode_receipt.py": "7a9add7548ce4490be4811d7ef91340bd923d8c4d0dfc34c9d2970b77a7d91fb",
+    "tools/scripts/poster_mode_gui.py": "b22c564cb8004be7b8be7fce5e28094d1b217f73ad7829b11a7973a9a6cf99a4",
+    "tools/scripts/personnel_windows_patch.py": "8366cc99c4a26ceb22aee4d2ff6201528a3bbaa05fb07b1a6868a33031f192f4"
+  }
+}

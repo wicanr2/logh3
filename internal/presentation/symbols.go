@@ -203,6 +203,7 @@ func (r *Renderer) polygon(points []point, ink color.RGBA, clip image.Rectangle)
 			for j, v := range [3]byte{ink.R, ink.G, ink.B} {
 				r.frame.Pix[o+j] = byte((int(v)*a + int(r.frame.Pix[o+j])*(4-a) + 2) / 4)
 			}
+			r.frame.Pix[o+3] = byte((255*a + int(r.frame.Pix[o+3])*(4-a) + 2) / 4)
 		}
 	}
 }
@@ -240,4 +241,11 @@ func (r *Renderer) cursor(c gfx.DrawCommand) bool {
 		r.polygon(shape, ink, clip)
 	}
 	return true
+}
+
+// CursorSprite沿正式HD游標的相同向量及覆蓋率，供前端獨立合成。
+func CursorSprite() *image.RGBA {
+	r := &Renderer{frame: image.NewRGBA(image.Rect(0, 0, 13*Scale, 16*Scale))}
+	r.cursor(gfx.DrawCommand{W: 13, H: 16, Clip: image.Rect(0, 0, 13, 16)})
+	return r.frame
 }

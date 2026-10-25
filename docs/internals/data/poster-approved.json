@@ -41,5 +41,233 @@
     "fade": 100
   },
   "scope": "公開保存使用者核准的HTML及截圖，作正式實作基準；原始遊戲檔與完整版不在此次提交範圍",
-  "classification": "remake美術與介面定案，不是DOS或動畫逐形證據"
+  "classification": "remake美術與介面定案，不是DOS或動畫逐形證據",
+  "implementation": {
+    "status": "Linux-normal-path-and-approved-art-verified",
+    "proof": {
+      "empire": {
+        "path": "workplace/poster164/empire/RESULT.json",
+        "sha256": "2dad0262a19ff7a60aa452dde93e0a258ab878660158517c64fb2e342cc808f0",
+        "screenshots": 23,
+        "binary_sha256": "953f0fdde32980fba6c1045390c59dbf9b32e9d74896d89bde6f8b993eb81f35",
+        "passed": true
+      },
+      "alliance": {
+        "path": "workplace/poster164/alliance/RESULT.json",
+        "sha256": "a3d927382d5081b9d6fba63a0d3fbe3afc4614d0bd1d56514a306f5bb45dd12b",
+        "screenshots": 23,
+        "binary_sha256": "953f0fdde32980fba6c1045390c59dbf9b32e9d74896d89bde6f8b993eb81f35",
+        "passed": true
+      },
+      "final-seams": {
+        "path": "workplace/poster164/final-seams/RESULT.json",
+        "sha256": "7153a2bd5351a9fc40e1444b582f1c1c9a7c105207626e7dbc0095aca79302cb",
+        "screenshots": 5,
+        "binary_sha256": "ca622c1844637af5eb0c7887b3b7cab02a615b4d5358481274428ec24201a686",
+        "passed": true
+      },
+      "v1": {
+        "path": "docs/images/poster-runtime-v1.png",
+        "sha256": "6d26a7376751a7bca0752f309dcecacca1e1971e506c42795441f1b32cad23e3",
+        "bytes": 1274190
+      },
+      "v2": {
+        "path": "docs/images/poster-runtime-v2.png",
+        "sha256": "26492ba94b1ef6b35735aff8e97dea68b576643c946d14bae6c86cf616fd5c78",
+        "bytes": 1305774
+      },
+      "v3": {
+        "path": "docs/images/poster-runtime-v3.png",
+        "sha256": "53acd1c86ff8c15a03ee60f53ada3a5b952238e9fd599f7150820d33467a44e3",
+        "bytes": 1319893
+      },
+      "art": {
+        "path": "workplace/poster164/ART-CHECK.json",
+        "sha256": "c90c42a232c428ce58ffb9add1606fcaabdda091a470e367a4c9c9c973f5d763",
+        "result": {
+          "passed": true,
+          "comparison": "approved-remake-art; not DOS parity",
+          "proposal_sha256": "ac843a911fce876e67292940285d22f19c988e092465fe09ab0746f6bf34c202",
+          "excluded": {
+            "live_game_content": [
+              216,
+              96,
+              1064,
+              597
+            ],
+            "upper_short_beam": [
+              300,
+              40,
+              380,
+              60
+            ],
+            "lower_short_beam": [
+              974,
+              672,
+              1045,
+              691
+            ],
+            "observed_game_cursor": [
+              995,
+              612,
+              1030,
+              646
+            ]
+          },
+          "sampling": "exact 2:1 odd-pixel nearest sampling used by Ebitengine",
+          "rows": [
+            {
+              "set": "v1",
+              "actual_sha256": "6d26a7376751a7bca0752f309dcecacca1e1971e506c42795441f1b32cad23e3",
+              "reference_sha256": "a4342aeac4f97481a8d14c15dd3a0bf5f4a8bef7ce7c9c473ea38c38c1966ed4",
+              "diff_sha256": "6ce40170fbc271c9e8e8ddf113156baaa1d8ec00f7f21eff981a46075d783484",
+              "all_art": {
+                "pixels": 492613,
+                "different": 101947,
+                "max_channel": 3,
+                "bbox": [
+                  0,
+                  0,
+                  1280,
+                  720
+                ]
+              },
+              "opaque": {
+                "pixels": 343632,
+                "different": 0,
+                "max_channel": 0,
+                "bbox": null
+              },
+              "alpha_composited": {
+                "pixels": 148791,
+                "different": 101947,
+                "max_channel": 3,
+                "bbox": [
+                  0,
+                  0,
+                  1280,
+                  720
+                ]
+              },
+              "fractional_viewport_edge": {
+                "pixels": 190,
+                "different": 0,
+                "max_channel": 0,
+                "bbox": null
+              }
+            },
+            {
+              "set": "v2",
+              "actual_sha256": "26492ba94b1ef6b35735aff8e97dea68b576643c946d14bae6c86cf616fd5c78",
+              "reference_sha256": "72c2103c9c3652508700bfeb951aed2c0f084079846f2220fbb98e9c6a9c7bff",
+              "diff_sha256": "2373e3ef3045d4a316c1ae988be3651e5d95955aab4515d542926133458c358c",
+              "all_art": {
+                "pixels": 492613,
+                "different": 57797,
+                "max_channel": 2,
+                "bbox": [
+                  217,
+                  0,
+                  1006,
+                  720
+                ]
+              },
+              "opaque": {
+                "pixels": 399442,
+                "different": 0,
+                "max_channel": 0,
+                "bbox": null
+              },
+              "alpha_composited": {
+                "pixels": 92905,
+                "different": 57796,
+                "max_channel": 2,
+                "bbox": [
+                  246,
+                  0,
+                  1006,
+                  720
+                ]
+              },
+              "fractional_viewport_edge": {
+                "pixels": 266,
+                "different": 1,
+                "max_channel": 1,
+                "bbox": [
+                  217,
+                  626,
+                  218,
+                  627
+                ]
+              }
+            },
+            {
+              "set": "v3",
+              "actual_sha256": "53acd1c86ff8c15a03ee60f53ada3a5b952238e9fd599f7150820d33467a44e3",
+              "reference_sha256": "239877245dae383354b3c556dc66febc0d2fdf2148600ed9e96ed702fa9f0787",
+              "diff_sha256": "2373e3ef3045d4a316c1ae988be3651e5d95955aab4515d542926133458c358c",
+              "all_art": {
+                "pixels": 492613,
+                "different": 57797,
+                "max_channel": 2,
+                "bbox": [
+                  217,
+                  0,
+                  1006,
+                  720
+                ]
+              },
+              "opaque": {
+                "pixels": 399442,
+                "different": 0,
+                "max_channel": 0,
+                "bbox": null
+              },
+              "alpha_composited": {
+                "pixels": 92905,
+                "different": 57796,
+                "max_channel": 2,
+                "bbox": [
+                  246,
+                  0,
+                  1006,
+                  720
+                ]
+              },
+              "fractional_viewport_edge": {
+                "pixels": 266,
+                "different": 1,
+                "max_channel": 1,
+                "bbox": [
+                  217,
+                  626,
+                  218,
+                  627
+                ]
+              }
+            }
+          ],
+          "static_loop": {
+            "pixels": 277045,
+            "different": 0,
+            "max_channel": 0,
+            "bbox": null
+          },
+          "toolchain": "logh3-hd-preview:20261011-r1; Chromium1194 via playwright:v1.56.1-noble"
+        }
+      },
+      "runtime_manifest": {
+        "path": "assets/hd/poster/approved/manifest.json",
+        "sha256": "1c658fa51168033a5247ac644ed9b9bea24b2813e519cc3c10abff03412e88a8"
+      },
+      "exporter": {
+        "path": "tools/scripts/poster_approved_export.mjs",
+        "sha256": "4637a747f9600c2ccc5ee8767567b5d3220da18c1d37b07fb300a03f1f881fc1"
+      }
+    },
+    "limitations": [
+      "未重打三平台，未變更版號或Release",
+      "後續五組名言來源標準待使用者決定，僅DRAFT預覽"
+    ]
+  }
 }

@@ -31,3 +31,7 @@ dist-all/
 
 # Python 產物
 __pycache__/
+
+# 只公開使用者定案proposal的衍生藝術層，其餘海報素材留本機。
+/assets/hd/poster/*
+!/assets/hd/poster/approved/

@@ -1,0 +1,12 @@
+{
+  "version": "v.1.6.2-20261025",
+  "normal_entry": true,
+  "state_injection": false,
+  "source": "workplace/poster154/player-linux/decor-v1.png",
+  "sha256": "a43b1b73e7840ec39ca991ac8d20e4e09ddd9c50a0fdfac2ce9db46b9f6b3b88",
+  "player_result": {
+    "path": "workplace/poster154/player-linux/RESULT.json",
+    "sha256": "970110fa130174925e98a430a339551f2b33c79e301734318ed76c7a1ccef8de"
+  },
+  "scope": "正式AppImage正常同盟入口，v1海報與上下循環裝飾；非DOS parity"
+}

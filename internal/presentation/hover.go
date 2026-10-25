@@ -20,22 +20,23 @@ func (r *Renderer) hoverControl(fb *gfx.Framebuffer, pal gfx.Palette) {
 				cursors = append(cursors, c)
 				continue
 			}
-			if c.Kind == gfx.DrawPanel && (c.Key == "ui/button" || c.Key == "ui/primary") {
+			if c.Kind == gfx.DrawPanel {
 				v := image.Rect(c.X, c.Y, c.X+c.W, c.Y+c.H)
-				if b.In(v) {
+				button := c.Key == "ui/button" || c.Key == "ui/primary" || c.Key == "" && v.Min.Y == b.Min.Y && v.Max.Y == b.Max.Y
+				if button && b.In(v) {
 					box = v
 					continue
 				}
 			}
 			// 後畫的不透明面板或圖像遮住控制時，不把反光畫回上層。
 			switch c.Kind {
-			case gfx.DrawFill:
+			case gfx.DrawFill, gfx.DrawSurface:
 				v := image.Rect(c.X, c.Y, c.X+c.W, c.Y+c.H)
 				// 分頁鈕會在框畫好後補文字底色；框內的補畫仍屬同一顆按鈕。
 				if !box.Empty() && !v.In(box) && !box.Intersect(v).Empty() {
 					box = image.Rectangle{}
 				}
-			case gfx.DrawPanel, gfx.DrawSurface, gfx.DrawImage, gfx.DrawTerrain, gfx.DrawMinimap:
+			case gfx.DrawPanel, gfx.DrawImage, gfx.DrawTerrain, gfx.DrawMinimap:
 				if !box.Empty() && !box.Intersect(image.Rect(c.X, c.Y, c.X+c.W, c.Y+c.H)).Empty() {
 					box = image.Rectangle{}
 				}
@@ -44,6 +45,9 @@ func (r *Renderer) hoverControl(fb *gfx.Framebuffer, pal gfx.Palette) {
 		}
 	}
 	visit(fb.Commands)
+	if fb.HoverMenu {
+		box = b
+	}
 	if box.Empty() {
 		return
 	}

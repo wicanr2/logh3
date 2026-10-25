@@ -20,6 +20,7 @@ func (r *Renderer) renderKey(fb *gfx.Framebuffer, pal gfx.Palette) [32]byte {
 	w.bytes(fb.Pix)
 	w.bytes([]byte(fb.InterfaceTheme))
 	w.ints(fb.HoverControl.Min.X, fb.HoverControl.Min.Y, fb.HoverControl.Max.X, fb.HoverControl.Max.Y)
+	w.ints(boolInt(fb.HoverMenu))
 	for _, c := range pal {
 		_, _ = h.Write(c[:])
 	}
@@ -69,6 +70,8 @@ func (w *renderHasher) commands(commands []gfx.DrawCommand) {
 			c.Clip.Min.X, c.Clip.Min.Y, c.Clip.Max.X, c.Clip.Max.Y,
 			c.WorldX, c.WorldY, int(c.OpenEdges))
 		w.bytes([]byte(c.Key))
+		w.bytes([]byte(c.Text))
+		w.ints(boolInt(c.TextLeft))
 		w.bytes(c.Source)
 		w.bytes(c.Base)
 		w.bytes(c.Regions)

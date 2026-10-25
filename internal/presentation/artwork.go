@@ -46,6 +46,10 @@ type Renderer struct {
 	ships          map[string]*image.RGBA
 	shipHashes     map[string][32]byte
 	frameKey       [32]byte
+	classicPixels  map[[32]byte][]classicPixel
+	cursorBaseKey  [32]byte
+	cursorBasePix  []byte
+	cursorBaseMask []uint8
 	frameValid     bool
 	generation     uint64
 }
@@ -186,6 +190,9 @@ func (r *Renderer) Count() int { return len(r.images) }
 
 // Render 使用原圖的可見像素覆蓋範圍，後畫內容即使同色也不被 HD 圖覆寫。
 func (r *Renderer) Render(fb *gfx.Framebuffer, pal gfx.Palette) *image.RGBA {
+	if fb.CursorBackground != nil && r.theme && len(fb.Commands) > 0 && fb.Commands[len(fb.Commands)-1].Kind == gfx.DrawCursor {
+		return r.renderPersonnelCursor(fb, pal)
+	}
 	key := r.renderKey(fb, pal)
 	if r.frameValid && key == r.frameKey {
 		return r.frame

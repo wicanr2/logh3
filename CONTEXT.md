@@ -1,10 +1,50 @@
-<!-- 第139輪：緊湊設定與AI選單、三平台封包已驗；#48正式讀回重建與DOS整段同態仍未完成。 -->
+<!-- 第154輪：v1.6.2三平台完整版與海報上下交戰循環完成；Linux為AppImage。#48正式讀回重建與DOS整段同態仍未完成。 -->
 # CONTEXT — 銀河英雄傳說III SP 專案目前真相
 
 本檔保存目前真相；剩餘工作的權威是 GitHub 上的 `worklist` Issue。
 流水帳在 `WORKLOG.md`；協作規範在 `AGENTS.md`。
 
 ## 現況一覽
+
+**目前工作（2026-10-25，第164輪）**：163定案proposal已原樣提交並推送GitHub功能分支，正式程式已接88%遊戲畫面與輸入逆映射、三組連續銀河、固定單艦及五語圖內文字。兩陣營正常入口各23張、存讀／重啟／F1／F7／動畫與背景上傳保持已驗，最後補三組小數邊緣修正；20產品套件16PASS／4無測試。157限來源Linux及核准藝術層CONFORMED，未改版號或重新打包。新增五組名言60秒輪替目前是附來源DRAFT預覽，尖端逐字unknown，來源標準等待答覆。[唯一狀態表164](docs/goal/2026-10-25-approved-poster-implementation-round-164.md)及[驗證137](docs/playtest/137-approved-poster-frame.md)。
+
+**目前提案（2026-10-25，第163輪）**：workplace/poster163/proposal.html已完成，38666416 bytes；修162楊威利切線，改用原PNG天然留邊越過原裁切位置再向外融合，星空在上下獨立層延伸，原人物側欄不淡出。新增三組切換，v2／v3沿正式narrow原PNG；三組×88%／100%六樣本、左右交界及下方近照均已擷取，對照圖已目視。Chromium原圖外側融合、艦艇輪廓、本體固定、五語、控制與手機無溢出通過，零外網請求；三組中央各363268像素、v1臉腳四區零差，素材及艦艇幾何保持。中途SVG中央裁切的取樣差異已以獨立星空層修正。正式程式、README與舊交付保持，仍為HTML提案。[唯一狀態表163](docs/goal/2026-10-25-three-poster-seams-html-round-163.md)連結三組對照、近照與收據。
+
+**目前提案（2026-10-25，第162輪）**：workplace/poster162/proposal.html已完成，12722427 bytes；只修人物腳邊與下方銀河的切面。移除舊四角矩形覆蓋，改成海報全高720像素內緣透明遮罩，預設28像素漸層，不再於底框上緣突然切換。完整構圖與腳邊近照已目視，Chromium全高漸層、艦首艦尾安全、五語、控制下載及手機無溢出通過，零外網請求；所有內嵌素材及船體幾何保持，中央363268像素零差。正式程式、舊稿與交付保持，仍為HTML提案。[唯一狀態表162](docs/goal/2026-10-25-poster-seam-html-round-162.md)連結HTML、腳邊近照與收據。
+
+**目前提案（2026-10-25，第161輪）**：workplace/poster161/proposal.html已完成，12721788 bytes；只修伯倫希爾艦尾截斷感，寬度100%改92%並移除向左16像素偏移，保留往下24像素。實際456305個alpha像素左右範圍245.868至1034.244，避開裁切與漸層；艦尾圓弧及艦首已目視。原有瀏覽器抽驗通過，與160相比下方以外668400像素零差，所有內嵌素材保持。正式程式、休伯利安及銀河設計與舊交付保持，仍為HTML提案。[唯一狀態表161](docs/goal/2026-10-25-brunhild-stern-html-round-161.md)連結HTML、截圖與收據。
+
+**目前提案（2026-10-25，第160輪）**：workplace/poster160/proposal.html已完成，12721766 bytes；伯倫希爾相較159實際下移24像素。休伯利安依使用者兩張原作參考重繪，替換尖叉艦首與大型紅色結構，方形艦首、兩組3×4圓孔與144M可辨識。上下及四角改共用人物海報星空紋理，與人物相同星點尺度鏡像鋪設及漸層融合，兩側人物原PNG保持。Chromium單艦、共享銀河、本體固定、五語、控制下載及桌面／手機無溢出通過，零外網請求；中央底圖、人物與伯倫希爾素材相較159完全相同。仍是HTML提案，休伯利安65%寬度及88%／100%遊戲大小可調，未核准接正式；名言紙本查證限制保持。[唯一狀態表160](docs/goal/2026-10-25-galaxy-frame-html-round-160.md)連結HTML、截圖、素材與完整提示。
+
+**目前提案（2026-10-25，第159輪）**：workplace/poster159/proposal.html已完成，12051863 bytes；依使用者指定，移除隊列與後景，上方僅休伯利安朝左，下方僅伯倫希爾朝右、白色船體橫跨下緣，艦首尖端可見。伯倫希爾依使用者提供圖經imagegen重構，保留原透明輸出與完整提示。四角漸層、圖片內姓名名言、本體固定、五語、控制與設定下載及桌面／手機無溢出通過Chromium抽驗，零外網請求。仍為可檢視HTML，遊戲88%／100%比較未核准接正式；名言紙本查證限制沿158。正式程式、舊稿與交付保持。[唯一狀態表159](docs/goal/2026-10-25-single-flagships-html-round-159.md)連結HTML、截圖、素材提示與收據。
+
+**目前提案（2026-10-25，第158輪）**：workplace/poster158/proposal.html已完成，14458666 bytes；上方休伯利安朝左仰視，下方伯倫希爾及帝國後景艦首朝上。主旗艦完整船體、四角同底色漸層、圖片內名言姓名與固定本體通過Chromium抽驗，五語、設定下載及桌面／手機無溢出，零外網請求。新增88%／100%遊戲大小比較，維持4:3，尚未核准接正式版。新視角是依HD圖生成的提案重構；名言已附舊版轉錄及語錄來源，缺紙本逐字／頁碼核對，不能宣稱尖端原書已證實。舊提案與正式程式保持。[唯一狀態表158](docs/goal/2026-10-25-flagship-readable-html-round-158.md)連結HTML、截圖、素材提示與查證限制。
+
+**目前提案（2026-10-25，第157輪）**：上方同盟旗艦朝左、下方帝國旗艦朝右，移除戰機，以大小、錯位與遮擋表現隊列由深到淺；兩側人物圖延伸到底，名言及楊威利／萊因哈特姓名全部疊入圖內下緣。workplace/poster157/proposal.html已完成，13061896 bytes，預設上下各6艘；可調景深、間距、取景、人物文字位置及五種海報語系。Chromium方向、遠近順序、本體固定、五語文字安全範圍、控制項、下載與手機版通過，外網請求0；正式程式與既有交付保持。[唯一狀態表157](docs/goal/2026-10-25-flagship-depth-html-round-157.md)記錄來源、雜湊及截圖入口。
+
+**目前提案（2026-10-25，第156輪）**：使用者否決155的小艦列陣，指定大船與大戰機的局部特寫，左帝國、右同盟，允許艦尾／機翼出框。自包含HTML提案workplace/poster156/proposal.html已完成，3593006 bytes；可調整大小、上下取景、主旗艦與後景、光束／飛彈、暫停及下載設定。Chromium離線、固定本體、控制項、下載與桌面1600／手機390版通過，外網請求0；SOURCE與BROWSER綁相同HTML雜湊。正式程式與封包不改，待使用者檢視提案。[唯一狀態表156](docs/goal/2026-10-25-poster-closeup-html-round-156.md)記錄來源及截圖入口。
+
+**目前工作（2026-10-25，第155輪）**：使用者認為v1.6.2不夠高雅，改為本體固定、只有飛彈或光線活動。沿154凍結來源的隔離原型已完成正常入口1280×720截圖與18秒預覽，深藏藍、雙主艦置中及28種艦影固定；542400個非留白像素與230400個側欄像素零差，前後固定構圖相同，影片確認有武器活動。最新素材與CHECK.json在workplace/poster155/preview-r2及其上層，待構圖確認後才接正式程式；v1.6.2與歷史收據保持。[唯一狀態表155](docs/goal/2026-10-25-poster-elegance-round-155.md)記錄範圍。
+
+**目前交付（2026-10-25，第154輪）**：[156限定CONFORMED](docs/spec/156-poster-combat-decoration.md)，海報上下留白加入兩軍戰機與28種旗艦的輕量循環，下方同時16艘、每12秒換批；沿動畫開關保留靜態，不改遊戲時鐘或存檔。v.1.6.2-20261025三平台完整版完成，Linux AppImage452856312、Windows ZIP452991276、macOS通用ZIP462850221 bytes；1620項凍結來源含642項非vendor、618項共用檔一致。標準16 PASS／4無測試，實際AppImage兩陣營及Windows Wine共69張正常操作、三組／五語、工具列、F1／F7、靜態、六表存讀及重啟通過。非留白3254400像素、側欄2764800像素零差，背景上傳均20至20，同盟六表跨平台及既有基準相同。18秒無聲實錄、README原圖及來源已保存；macOS雙架構11.0／SDK15.5與ARM4092頁簽章通過，未真機，Linux未驗FUSE。Xvfb抽樣不作實機FPS或輸入延遲聲明。前版及完整故事推廣片保持，未commit、push或發布。[唯一狀態表154](docs/goal/2026-10-25-poster-header-footer-round-154.md)、[驗收136](docs/playtest/136-poster-combat-decoration.md)、[交付收據](docs/internals/data/poster-decoration154.json)記錄雜湊與限制。
+
+**目前交付（2026-10-25，第153輪）**：使用者更正此次v1.6.0試玩平台為Linux。v.1.6.1-20261025三平台完整版完成，Linux AppImage451459576、Windows ZIP451581535、macOS通用ZIP461418440 bytes，放同版本full目錄。1616項來源含638項非vendor與152全同，615項共用素材三平台相同；沿16 PASS／4無測試。固定Type-2 runtime、741項AppDir及15個ALSA／X11相依，實際AppImage自行找素材及預設XDG存檔；Linux與實際Windows ZIP各31張正常操作、五語工具列、hover、F1／F7、海報防誤觸、六表存讀及各三診斷啟動通過，六表與v1.6.0基準全同，海報中央各691200像素零差。macOS兩架構11.0／SDK15.5及ARM4083頁簽章通過，未真機；AppImage採extract-and-run，未驗桌面FUSE。[唯一狀態表153](docs/goal/2026-10-25-full-appimage-round-153.md)、[驗收135](docs/playtest/135-v161-full-appimage.md)、[交付索引](docs/internals/data/v161-full-delivery.json)保存範圍及雜湊。原更新包、v1.6.0與影片保持，未commit、push或發布。
+
+**目前修正（2026-10-25，第152輪）**：v.1.6.1-20261025本機Windows更新ZIP完成，10766673 bytes。游標與HD背景分層，修正主指令hover少40像素與無角色按鈕／下拉列未接反光；工具列直接選既有Noto／思源黑體及AI原版／強化0–3，與設定同步。1616項凍結來源含638項非vendor，20套件16 PASS／4無測試。正常Linux兩陣營與最終Windows Wine各31張、五語選單、24次移動、F1／F7、取消、海報防誤觸與六表存讀通過；三組中央各691200像素零差，同盟跨平台六表與v1.6.0基準相同。Linux抽樣Draw中位由32.85降至11.93ms，移動背景上傳20至20；不以xdotool程序計時宣稱硬體輸入延遲改善。跨日前候選只作Linux驗證，25日最終EXE已由實際ZIP解出重驗，兩份凍結來源全同。[唯一狀態表152](docs/goal/2026-10-24-pointer-toolbar-round-152.md)、[驗收134](docs/playtest/134-pointer-toolbar.md)及[交付索引](docs/internals/data/pointer-toolbar152.json)記錄版本、雜湊及限制。只需替換v1.6.0的gin3.exe，未重打三平台或影片，未作Windows真機；既有交付與公開版本保持，未commit、push或發布。
+
+**目前交付（2026-10-24，第151輪）**：依使用者要求，v1.6.0推廣片沿舊手法重剪為雙國徽故事、1988主角動畫、新版海報／五語／駐地整軍與完整原速實戰。現行同路徑影片35段123.566667秒1080p60、7414格、18336447 bytes，單曲連續、40處音效、34剪接點、SNR36.30dB、零黑段、82文字安全矩形與目視通過；150初版及收據10檔保存在151的previous映射。三平台ZIP與18張README原圖、1610項凍結來源保持。另依追加明確授權發布[README三組海報預覽](https://github.com/wicanr2/logh3#海報寬螢幕預覽)，五檔提交`44a8cae1875a9af39ff9f23e645d7b8f96eeb5ff`及線上下載雜湊通過；僅README、三PNG及三圖索引，其他產品修改未提交。主工作樹HEAD同步該提交，既有未提交內容保持；未改tag或Release。[唯一狀態表151](docs/goal/2026-10-24-story-promo-round-151.md)、[驗收133追加](docs/playtest/133-poster-five-language-delivery.md)及[現行交付索引](docs/internals/data/v160-delivery.json)記錄身份與來源。既有實戰與動畫不冒稱v1.6新拍，影片限本機。
+
+**目前交付（2026-10-24，第150輪）**：v.1.6.0-20261024三平台完整版完成，Windows 451562109、Linux 451686846、macOS通用461380729 bytes。1610項凍結來源、632項非vendor、615項共用素材一致；最終標準20套件16 PASS／4無測試。[152](docs/spec/152-poster-sets-and-quotes.md)與[153](docs/spec/153-interface-localization.md)限定CONFORMED，三組海報、五語主要介面及斜體名言、762項譯表及5368字形已接線，海報預設關閉。實際ZIP兩平台各54張正常五語及各19張駐地整軍，另帝國與原版renderer各8張；中央6912000像素零差、六表跨平台相同。新片91.883333秒1080p60全新實錄，單曲連續、19剪接點、無黑段、字幕及目視通過；README新增18張正式原圖。[唯一狀態表150](docs/goal/2026-10-24-poster-v160-round-150.md)、[驗收133](docs/playtest/133-poster-five-language-delivery.md)及[交付索引](docs/internals/data/v160-delivery.json)保存範圍與雜湊。原版圖片文字與未收錄原文保留，不冒稱全遊戲每行皆翻譯或DOS parity。Windows採Wine、macOS雙架構與ARM簽章通過但未真機；先前交付、公開v1.5.0與#48保持，未commit、push或發布。
+
+**目前交付（2026-10-24，第149輪）**：[151限定CONFORMED](docs/spec/151-poster-widescreen.md)。左右海報選項預設關閉，左帝國萊因哈特、右同盟楊威利，中央完整4:3；官方參考經image_gen重構，素材與提示限本機。Linux與Windows Wine各13張正常操作、Linux無HD另5張通過；中央三組2073600像素零差，側欄防誤觸、F1／F7、縮放、六表存讀、偏好重啟及缺圖退回已驗。標準19套件15 PASS／4無測試。v.1.5.3-20261024本機Windows更新ZIP14586513 bytes，1595項凍結及617項非vendor來源一致，最終EXE與實際Wine驗證相同；含兩張PNG及更新說明，合併到既有v1.5.x完整資料夾。[唯一狀態表149](docs/goal/2026-10-24-poster-widescreen-round-149.md)及[來源索引](docs/internals/data/poster-mode149.json)保存雜湊、預覽與限制。未驗Windows／macOS真機，沒有新增DOS parity；既有交付及公開版本保留，未commit、push或發布。
+
+**工作區清理（2026-10-24，第148輪）**：依使用者要求清除74項可重建內容，淨釋放17131577344 bytes，約15.96GiB，workplace由66.17降至50.21GiB。18個Go快取、5個無玩家資料Wine環境及已核對的14個安裝副本、10個common、27個壓縮副本已清除；正式dist-all、原版、來源、獨有音畫及研究證據保留。v1.5.2根SHA256SUMS全部通過，壓縮與解壓副本還原抽驗通過。[唯一狀態表148](docs/goal/2026-10-24-workspace-cleanup-round-148.md)及[清理收據](docs/internals/data/workspace-cleanup148.json)記錄對照。重跑舊包驗證器前，按workplace/cleanup148/PLAN.json的ID，以清理工具restore還原已清安裝副本；歷史收據雜湊不改。未改產品程式、Git修改或公開版本。
+
+**目前交付（2026-10-24，第147輪）**：v.1.5.2-20261024三平台完整ZIP已完成，Windows amd64 417534032 bytes、Linux amd64 417671677 bytes、macOS通用424656460 bytes，含前線及人事修正、預設關閉的非戰艦旗艦。1593項凍結來源、615項產品與146一致，三平台598項共用素材及資料相同。實際ZIP兩平台6條自動路徑／啟動器診斷，以及各96步、19張正常鍵鼠、六表讀回及重啟通過；macOS雙架構、最低11.0／SDK15.5／系統依賴及ARM3261頁簽章通過，未真機。來源與驗收見[唯一狀態表147](docs/goal/2026-10-24-full-platform-round-147.md)及[交付索引](docs/internals/data/v152-full-delivery.json)。原替換包、87秒影片及公開版保留，完整版限本機，未commit、push或發布。
+
+**目前交付（2026-10-24，第146輪）**：[150限定CONFORMED](docs/spec/150-non-battleship-flagship.md)，非戰艦旗艦預設關閉，開啟後手動及擊破轉移可選B／H／C／A／D，E／T仍排除，沿原轉移成功率及六表格式。標準19套件15 PASS／4無測試；Linux與最終Windows EXE的Wine各96步、19個正常GUI檢查點，駐地改選提督、領船、C旗艦編成、出發抵達、保存讀回及開關重啟通過。v.1.5.2-20261024 Windows替換包8044560 bytes，1593項凍結與615項現行產品一致；新片87秒1080p60，單曲連續、7剪接點、零黑段、字幕邊界及目視通過。Windows真機及人耳未驗，無新增DOS parity聲明。[唯一狀態表146](docs/goal/2026-10-24-garrison-flagship-promo-round-146.md)、[驗收132](docs/playtest/132-garrison-flagship-promo.md)及[來源索引](docs/internals/data/garrison-flagship146.json)保存交付。產物限本機，前輪交付與公開版本保持，未commit、push或發布。
+
+**目前修正（2026-10-24，第145輪）**：Windows v1.5試玩回報的前線再次出擊已修正為提督所在地取船，兩陣營取消退船、確認位置與六表保存讀回通過。人事選單加入有界字模、靜態背景及游標快取，四項探針約8至10ms；虛擬顯示的短脈衝限制另記，不保證所有80ms事件都會取樣。最終19套件15 PASS／4無測試，Linux兩陣營與Windows Wine同盟84張完整視窗、58060800像素零差。`v.1.5.1-20261024` Windows替換包8048235 bytes已核對，只換`gin3.exe`、原素材與存檔沿用；[唯一狀態表145](docs/goal/2026-10-24-frontline-personnel-round-145.md)與[來源收據](docs/internals/data/personnel-frontline145.json)保存交付與限制。未commit、push或發布，公開版本仍為下方v1.5，沒有修改既有Release。
 
 **目前公開版本（2026-10-20，第144輪）**：[v.1.5.0-20261019](https://github.com/wicanr2/logh3/releases/tag/v.1.5.0-20261019)已發布並設為最新版，main與新tag已推送。README更新19張新版正式包實錄及下載連結。三平台引擎、來源、校驗五附件36625876 bytes已實際下載核SHA-256，新tag的612項凍結產品來源全同；既有三個Release保持，完整版及影片留本機。[唯一狀態表144](docs/goal/2026-10-19-release-round-144.md)與[公開收據](docs/internals/data/v150-release.json)保存結果；使用者已准本次主機gh發布及下載核對。
 

@@ -28,6 +28,7 @@ func (g *Game) openFleetEditor(region, faction, expected int, comp []rules.Fleet
 	g.editor = rules.NewFleetEditor(rules.BuildInput{
 		Region: rec, Faction: faction, Kinds: g.res.ShipKinds, Tables: g.res.Composition,
 	}, g.res.EditorTables, expected, comp)
+	g.editor.NonBattleshipFlagship = g.nonBattleshipFlagship
 	g.selectedRow = 0
 	g.editor.Kind = 0
 }
@@ -98,6 +99,10 @@ func (g *Game) fleetEditorRightClick(spec *screen.MainGameSpec, x, y int) {
 func (g *Game) editorMessage(r rules.EditResult) {
 	if name := r.MessageName(); name != "" {
 		g.showMessage(name)
+		if r == rules.EditFlagshipKind && g.nonBattleshipFlagship && g.msgOn {
+			// Spec150 remake text: 修護艦與運補艦不能當旗艦。 Big5, not original bytes.
+			g.msgRaw = []byte{0xad, 0xd7, 0xc5, 0x40, 0xc4, 0xa5, 0xbb, 0x50, 0xb9, 0x42, 0xb8, 0xc9, 0xc4, 0xa5, 0xa4, 0xa3, 0xaf, 0xe0, 0xb7, 0xed, 0xba, 0x58, 0xc4, 0xa5, 0xa1, 0x43}
+		}
 	}
 }
 

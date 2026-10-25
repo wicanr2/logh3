@@ -1,0 +1,379 @@
+{
+  "version": "v.1.5.1-20261024",
+  "platform": "Windows amd64，Wine驗證，未作Windows真機驗收",
+  "scope": "remake前線來源修正、人事靜態背景／字模／游標快取，不新增DOS同狀態聲明",
+  "archive": {
+    "path": "release/LOGH3-v.1.5.1-20261024-windows-amd64-patch.zip",
+    "bytes": 8048235,
+    "sha256": "104d549cfa0f938603b49a1fd486540d4ce6c9ddb1f13627c2b3cbf244ee1407"
+  },
+  "binary_sha256": "621a196ac70349dae1c0f709b77c656af4eba446be6cb446b7190a3da5ddca4a",
+  "build_sha256": "9e5993e81152f7c39d4572611a589578e2f845873863b909f2443c24f5c5139a",
+  "version_output_sha256": "2d1f07c1ca93a6e9ec3deac7d6073ed0c66f15341663ee834ec1aa86ea90f4a1",
+  "source_files": 1592,
+  "gui": [
+    {
+      "path": "workplace/personnel145-alliance-verified",
+      "result_sha256": "998fc11ccbbef9465a4612774c5471f400fb7fe5f7da67ee3fa70a06eb8acb3d",
+      "binary_sha256": "237f2ace8c54c5b7494e087e6192476c847dc7a55badde0b4f2a2b4334eef01a",
+      "acknowledged": true,
+      "captures": [
+        {
+          "name": "staff-list-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-detail-0-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-cancel-0-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-detail-1-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-cancel-1-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-detail-2-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-cancel-2-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-detail-3-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-cancel-3-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-detail-4-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-cancel-4-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-decided-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-list-0-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-detail-0-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-cancel-0-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-list-1-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-detail-1-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-cancel-1-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-list-2-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-detail-2-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-cancel-2-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-list-3-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-detail-3-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-cancel-3-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-list-4-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-detail-4-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-cancel-4-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-decided-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        }
+      ]
+    },
+    {
+      "path": "workplace/personnel145-empire-verified",
+      "result_sha256": "8f49171b9f2af21c87e76e019356d0ff072559a1dc6901b4580c459278117e25",
+      "binary_sha256": "237f2ace8c54c5b7494e087e6192476c847dc7a55badde0b4f2a2b4334eef01a",
+      "acknowledged": true,
+      "captures": [
+        {
+          "name": "staff-list-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-detail-0-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-cancel-0-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-detail-1-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-cancel-1-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-detail-2-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-cancel-2-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-detail-3-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-cancel-3-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-detail-4-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-cancel-4-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "staff-decided-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-list-0-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-detail-0-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-cancel-0-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-list-1-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-detail-1-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-cancel-1-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-list-2-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-detail-2-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-cancel-2-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-list-3-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-detail-3-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-cancel-3-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-list-4-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-detail-4-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-cancel-4-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        },
+        {
+          "name": "adj-decided-x11-comparison.json",
+          "sha256": "8fe7d8fb73bae8126b30ea189eaaeea6e9795c504cc7610c0938b7b801dcf659"
+        }
+      ]
+    },
+    {
+      "path": "workplace/music69-windows/personnel145/alliance-verified",
+      "result_sha256": "ceebfbc42eea28b7e39af337d04e0cbb8d48bbde06f020018017a2b6b742b622",
+      "binary_sha256": "621a196ac70349dae1c0f709b77c656af4eba446be6cb446b7190a3da5ddca4a",
+      "acknowledged": true,
+      "captures": [
+        {
+          "name": "staff-list-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "staff-detail-0-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "staff-cancel-0-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "staff-detail-1-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "staff-cancel-1-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "staff-detail-2-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "staff-cancel-2-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "staff-detail-3-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "staff-cancel-3-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "staff-detail-4-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "staff-cancel-4-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "staff-decided-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-list-0-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-detail-0-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-cancel-0-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-list-1-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-detail-1-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-cancel-1-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-list-2-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-detail-2-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-cancel-2-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-list-3-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-detail-3-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-cancel-3-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-list-4-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-detail-4-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-cancel-4-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        },
+        {
+          "name": "adj-decided-x11-comparison.json",
+          "sha256": "f9b4f84ee12085af6160b8d4f0b454e6eb215b4a842ec78ba6b7b2b0994ef53e"
+        }
+      ]
+    }
+  ],
+  "total_compared_pixels": 58060800,
+  "tests": "tools/gui.sh test ./internal/... ./cmd/...：19套件，15 PASS／4無測試",
+  "installation": "只用本包gin3.exe替換既有v1.5同名檔案；原資料與存檔格式保持"
+}

@@ -1,14 +1,198 @@
 package game
 
 import (
+	"bytes"
+	"fmt"
 	"os"
 	"path/filepath"
+	"reflect"
 	"testing"
+	"time"
 
 	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/presentation"
 	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
 )
+
+// 診斷fixture只把已編成艦隊放到非首都，再走正式駐留解散處理。
+// 重新出擊、編輯、取消與決定均由玩家點擊進入，兩陣營共用。
+func TestFrontlineGarrisonSortieStock(t *testing.T) {
+	for faction := 0; faction < 2; faction++ {
+		for _, cancel := range []bool{true, false} {
+			t.Run(fmt.Sprintf("faction%d/cancel%v", faction, cancel), func(t *testing.T) {
+				g := reachConfiguredAI(t, -1, faction)
+				reachFleetOrgFrom(t, g)
+				g.Click(480, 350)
+				g.Click(176, 240)
+				g.Click(510, 350)
+				if len(g.fleets) != 1 {
+					t.Fatal("未建立初始艦隊")
+				}
+				front := 1
+				admiral := g.fleets[0].Admiral
+				g.fleets[0].Region = front
+				for _, a := range []int{admiral, g.fleets[0].Adjutant} {
+					if r := g.admiralRecord(a); r != nil {
+						r[0x0A] = byte(front)
+					}
+				}
+				g.disbandFleet(0)
+				home := bytes.Clone(g.regionRecord(rules.CapitalRegion(faction)))
+				stock := rules.RegionShips(g.regionRecord(front), faction)
+				// 用全陣營待命清單找到同一位提督，避免依賴固定列號。
+				g.Click(352, 125)
+				g.Click(400, 125)
+				g.setListRows(g.commandSpec(g.state))
+				idx := -1
+				for i, a := range g.listIndex {
+					if a == admiral {
+						idx = i
+						break
+					}
+				}
+				if idx < 0 || idx >= 16 {
+					t.Fatal("駐留後提督未回到待命清單")
+				}
+				g.Click(400, 85+20*idx)
+				g.Click(488, 330)
+				g.Click(480, 350)
+				wantState(t, g, StateFleetComposition, "前線重新編成")
+				if g.editor == nil || !bytes.Equal(g.editor.In.Region, g.regionRecord(front)) {
+					t.Fatal("編輯器未使用前線庫存")
+				}
+				g.Click(176, 240) // 再放一組，取消時兩組都必須退回前線。
+				if cancel {
+					g.Click(510, 320)
+				} else {
+					g.Click(510, 350)
+				}
+				wantState(t, g, StateCommandPhase, "完成前線編成操作")
+				if !bytes.Equal(home, g.regionRecord(rules.CapitalRegion(faction))) {
+					t.Fatal("前線編成改動首都記錄")
+				}
+				if cancel {
+					if len(g.fleets) != 0 || !reflect.DeepEqual(stock, rules.RegionShips(g.regionRecord(front), faction)) {
+						t.Fatal("中止未完整退還前線艦艇")
+					}
+				} else {
+					if len(g.fleets) != 1 || g.fleets[0].Region != front || g.selectedRegion != front {
+						t.Fatal("新艦隊或清單未留在前線")
+					}
+					remaining := rules.RegionShips(g.regionRecord(front), faction)
+					for kind, before := range stock {
+						ships := remaining[kind]
+						for _, gp := range g.fleets[0].Composition {
+							if gp.Kind == kind {
+								ships += gp.Ships
+							}
+						}
+						if ships != before {
+							t.Fatalf("艦種%d不守恆：%d != %d", kind, ships, before)
+						}
+					}
+					dir := t.TempDir()
+					if err := g.SaveSlot(dir, 0); err != nil {
+						t.Fatal(err)
+					}
+					read := func(name string) []byte {
+						b, err := os.ReadFile(filepath.Join(dir, name+".DT0"))
+						if err != nil {
+							t.Fatal(err)
+						}
+						return b
+					}
+					loaded, err := rules.LoadSlot(rules.SlotFiles{Stellar: read("STELLAR"), Planet: read("PLANET"), Admiral: read("ADMIRAL"), Fleet: read("FLEET"), Ship: read("SHIP"), Work: read("WORK"), PlanetHeader: g.slot.Planets.Data[:rules.PlanetHeader]})
+					if err != nil {
+						t.Fatal(err)
+					}
+					found := false
+					for _, f := range loaded.Fleets(g.res.Weights) {
+						if f.Admiral == admiral && f.Faction == faction {
+							found = f.Region == front && len(f.Composition) == len(g.fleets[0].Composition)
+						}
+					}
+					if !found {
+						t.Fatal("存讀後前線艦隊遺失")
+					}
+				}
+			})
+		}
+	}
+}
+
+// 使用實際HD素材量測疊窗，移動游標以避開整張畫面快取。
+func TestPersonnelRenderTiming(t *testing.T) {
+	if os.Getenv("LOGH3_PERSONNEL_TIMING") == "" {
+		t.Skip("按需效能診斷")
+	}
+	var r *presentation.Renderer
+	for _, name := range []string{"staff-list", "staff-detail", "adj-list", "adj-detail"} {
+		t.Run(name, func(t *testing.T) {
+			var g *Game
+			if name == "staff-list" || name == "staff-detail" {
+				g = reachInfoScreen(t)
+				g.Click(543, 388)
+				if name == "staff-detail" {
+					g.Click(450, 92)
+				}
+			} else {
+				g = reachFleetChangeAdj(t)
+				g.Click(430, 340)
+				g.Click(430, 350)
+				if name == "adj-detail" {
+					g.Click(450, 102)
+				}
+			}
+			if r == nil {
+				var err error
+				r, err = presentation.Load(filepath.Join(root, "assets/hd"), g.res.Faces)
+				if err != nil {
+					t.Fatal(err)
+				}
+			}
+			g.res.Faces.ArtworkPrefix = "face"
+			start := time.Now()
+			for i := 0; i < 30; i++ {
+				g.MoveMouse(550+i%20, 100+i%10)
+				r.Render(g.Frame(), g.Palette())
+			}
+			t.Logf("每幀 %.2f ms", float64(time.Since(start).Microseconds())/30000)
+		})
+	}
+}
+
+func TestPersonnelBackgroundAndCursor(t *testing.T) {
+	g := reachInfoScreen(t)
+	g.Click(543, 388)
+	for _, pos := range [][2]int{{450, 92}, {600, 440}, {450, 112}} {
+		g.MoveMouse(pos[0], pos[1])
+		got := g.Frame()
+		g.personnelBuilding = true
+		fresh := g.Frame()
+		g.personnelBuilding = false
+		if !bytes.Equal(got.Pix, fresh.Pix) {
+			t.Fatal("人事快取改變原色畫面")
+		}
+		if got.CursorBackground == nil {
+			t.Fatal("沒有靜態背景")
+		}
+	}
+	before := g.personnelBase
+	g.Click(450, 92)
+	g.Frame()
+	if before == g.personnelBase {
+		t.Fatal("選人後沿用舊背景")
+	}
+	g.Click(448, 330)
+	g.Frame()
+	before = g.personnelBase
+	g.applyLeftRepeat(leftRepeatAction{kind: leftRepeatStaff, dir: 1})
+	g.Frame()
+	if before == g.personnelBase {
+		t.Fatal("長按捲動未更新背景")
+	}
+}
 
 // TestFleetOrgMatchesOracle 提督詳細資料按「出擊」開出艦隊編成
 // （收據 `fleet1e`／`fleet2e`，`docs/spec/013`）。

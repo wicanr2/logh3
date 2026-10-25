@@ -2,6 +2,7 @@ package game
 
 import (
 	"bytes"
+	"fmt"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -9,6 +10,65 @@ import (
 
 	"github.com/wicanr2/logh3/internal/rules"
 )
+
+func TestNonBattleshipTransferGameAndSave(t *testing.T) {
+	for _, enabled := range []bool{false, true} {
+		for _, kind := range []int{2, 5, 6} {
+			t.Run(fmt.Sprintf("on%v-kind%d", enabled, kind), func(t *testing.T) {
+				g, old, target := flagshipGame(t, 5)
+				options := g.RuleOptions()
+				options.NonBattleshipFlagship = enabled
+				g.SetRuleOptions(options)
+				fleet := g.battleUnits[old].Fleet
+				for i := range g.battleUnits {
+					u := &g.battleUnits[i]
+					if u.Fleet != fleet || u.Squadron <= 0 {
+						continue
+					}
+					k := 5
+					if i == target {
+						k = kind
+					}
+					u.Kind = k
+					g.slot.ShipAt(g.battleUnitPool(*u))[4] = byte(k)
+					g.slot.Fleet[fleet*rules.FleetRecord+0x12+u.Squadron*4] = byte(k)
+					f := g.fleetByIndex(fleet)
+					f.Composition[u.Squadron].Kind = k
+					f.Composition[u.Squadron].Slot2 = k
+				}
+				beforeShip, beforeFleet := bytes.Clone(g.slot.Ship), bytes.Clone(g.slot.Fleet)
+				want := enabled && kind == 2
+				if got := g.tryFlagshipTransfer(old); got != want {
+					t.Fatalf("transfer=%v want%v err=%v", got, want, g.saveErr)
+				}
+				if !want {
+					if !bytes.Equal(beforeShip, g.slot.Ship) || !bytes.Equal(beforeFleet, g.slot.Fleet) {
+						t.Fatal("拒絕後改寫原池")
+					}
+					return
+				}
+				if g.fleetByIndex(fleet).Composition[0].Kind != 2 {
+					t.Fatal("巡航艦未接任旗艦")
+				}
+				if err := g.cleanupBattleFleet(fleet); err != nil {
+					t.Fatal(err)
+				}
+				dir := t.TempDir()
+				if err := g.SaveSlot(dir, 0); err != nil {
+					t.Fatal(err)
+				}
+				ship, err := os.ReadFile(filepath.Join(dir, "SHIP.DT0"))
+				if err != nil {
+					t.Fatal(err)
+				}
+				pool := g.slot.FleetGroupShips(fleet)[0]
+				if ship[pool*rules.ShipRecord+4] != 2 {
+					t.Fatal("保存遺失巡航旗艦")
+				}
+			})
+		}
+	}
+}
 
 func flagshipGame(t *testing.T, admiral int) (*Game, int, int) {
 	t.Helper()

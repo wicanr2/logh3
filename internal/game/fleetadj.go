@@ -136,6 +136,7 @@ func admiralScrollAt(spec *screen.MainGameSpec, x, y int) int {
 
 // adjListScroll 每次一列（`0C0A:01D7`／`0235`），保持速度依規格089。
 func (g *Game) adjListScroll(dir int) {
+	g.personnelBase = nil
 	page := g.adjListPage()
 	last := len(g.adj.list) - page
 	if last < 0 {

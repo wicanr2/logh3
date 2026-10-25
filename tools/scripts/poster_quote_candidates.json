@@ -1,0 +1,42 @@
+{
+  "status": "DRAFT-source-decision-pending",
+  "interval_seconds": 60,
+  "notice": "五組網路轉錄候選，尚未核對尖端舊版逐字及頁碼。新增譯文為本專案翻譯，不稱官方字幕；未接正式程式。",
+  "pairs": [
+    {
+      "id": "stars-peace",
+      "reinhard": {"zh-TW":"嗯！星星好美啊！","zh-CN":"嗯！星星好美啊！","ja":"ああ、星はいい……","en":"Hmm! The stars are beautiful!","ko":"음! 별이 참 아름답군!"},
+      "yang": {"zh-TW":"我想最好的還是和平吧。","zh-CN":"我想最好的还是和平吧。","ja":"いちばんよいのは平和だと思います。","en":"I think peace is best.","ko":"가장 좋은 것은 평화라고 생각해."},
+      "sources": ["docs/spec/157-poster-galaxy-frame.html"],
+      "verification": "沿已核准首組文字；原proposal仍為唯一首組字形／譯文基準，尖端紙本unknown"
+    },
+    {
+      "id": "prudence-choice",
+      "reinhard": {"zh-TW":"太過慎重就會變成優柔寡斷。","zh-CN":"太过慎重就会变成优柔寡断。","ja":"慎重すぎれば、優柔不断になる。","en":"Too much caution becomes indecision.","ko":"지나치게 신중하면 우유부단해진다."},
+      "yang": {"zh-TW":"我不選『最好的』，只想選『較好的』。","zh-CN":"我不选『最好的』，只想选『较好的』。","ja":"「最善」ではなく、「よりよいもの」を選びたい。","en":"I do not choose the best; I choose the better.","ko":"나는 ‘최선’보다 ‘더 나은 것’을 고르고 싶어."},
+      "sources": ["https://zh.wikiquote.org/zh-tw/銀河英雄傳說", "https://www.ptt.cc/bbs/TANAKA/M.1193411691.A.C7C.html"],
+      "verification": "secondary transcription；楊句轉錄標野望篇第五章，尖端逐字unknown"
+    },
+    {
+      "id": "victory-tea",
+      "reinhard": {"zh-TW":"我要勝利，但不是因為敵人軟弱。","zh-CN":"我要胜利，但不是因为敌人软弱。","ja":"勝利は欲しい。だが、敵が弱いからではない。","en":"I want victory, but not because the enemy is weak.","ko":"나는 승리를 원한다. 하지만 적이 약해서 얻는 승리는 아니다."},
+      "yang": {"zh-TW":"咖啡是野蠻人的飲料。","zh-CN":"咖啡是野蛮人的饮料。","ja":"コーヒーは野蛮人の飲み物だ。","en":"Coffee is a barbarian’s drink.","ko":"커피는 야만인의 음료야."},
+      "sources": ["https://gineipaedia.com/wiki/Reinhard_von_Lohengramm", "https://www.ptt.cc/bbs/TANAKA/M.1193411691.A.C7C.html"],
+      "verification": "secondary transcription；萊句繁中為本專案譯文候選，楊句轉錄標外傳擊碎星辰之人第八章；尖端逐字unknown"
+    },
+    {
+      "id": "universe-state",
+      "reinhard": {"zh-TW":"朕能征服整個宇宙，卻不能征服一人。","zh-CN":"朕能征服整个宇宙，却不能征服一人。","ja":"宇宙を征服できても、ひとりを征服することはできない。","en":"I can conquer the universe, yet cannot conquer one man.","ko":"우주를 정복할 수 있어도 한 사람은 정복할 수 없구나."},
+      "yang": {"zh-TW":"國家這一個東西充其量只不過是一個工具。","zh-CN":"国家这一个东西充其量只不过是一个工具。","ja":"国家というものは、しょせんひとつの道具にすぎない。","en":"The state is, at most, a tool.","ko":"국가라는 것은 기껏해야 하나의 도구일 뿐이야."},
+      "sources": ["https://zh.wikipedia.org/wiki/銀河英雄傳說角色列表", "https://blog.csdn.net/HisSystem2088/article/details/102157805"],
+      "verification": "secondary transcription；萊句簡繁字形轉換，楊句轉錄標飛翔篇第二章；尖端逐字unknown"
+    },
+    {
+      "id": "rebirth-democracy",
+      "reinhard": {"zh-TW":"不死鳥會從灰燼中復生。","zh-CN":"不死鸟会从灰烬中复生。","ja":"不死鳥は灰の中からよみがえる。","en":"The phoenix rises from the ashes.","ko":"불사조는 잿더미에서 되살아난다."},
+      "yang": {"zh-TW":"民主政治不就是從否定國家及權力機構的無謬性而出發的嗎？","zh-CN":"民主政治不就是从否定国家及权力机构的无谬性而出发的吗？","ja":"民主政治は、国家や権力機構が無謬だという考えを否定するところから始まるのではないか？","en":"Doesn’t democracy begin by denying the infallibility of the state and its institutions?","ko":"민주정치는 국가와 권력기관이 무오류라는 생각을 부정하는 데서 출발하지 않나?"},
+      "sources": ["https://zh.wikiquote.org/zh-tw/銀河英雄傳說", "https://home.gamer.com.tw/artwork.php?sn=6265178"],
+      "verification": "secondary transcription；萊句為原句首句摘錄，楊句轉錄標怒濤篇第二章；尖端逐字unknown"
+    }
+  ]
+}

@@ -35,10 +35,10 @@ func (a *app) presentationClick(x, y int) bool {
 }
 
 func (a *app) frame() *gfx.Framebuffer {
-	fb := a.g.Frame()
 	if a.g.State() != game.StateSettings || a.toolbar.font == nil {
-		return fb
+		return a.g.Frame()
 	}
+	fb := a.g.FrameWithoutCursor()
 	a.drawCompactSettings(fb)
 	a.drawAdmiralEditor(fb)
 	x, y := a.g.MousePosition()

@@ -132,6 +132,7 @@ func (g *Game) LeftHold(x, y int, elapsed time.Duration) {
 }
 
 func (g *Game) applyLeftRepeat(a leftRepeatAction) {
+	g.personnelBase = nil
 	switch a.kind {
 	case leftRepeatList:
 		g.listScreenStep(a.dir)

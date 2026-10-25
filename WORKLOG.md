@@ -11415,3 +11415,305 @@ README沿19張v150正式包實錄，將三平台引擎、來源、SHA連結及�
 主機gh實際下載公開五附件到workplace/admiral144/release-download。既有v140_release_verify.py指定v150、新批次及獨立v150-release.json，在Docker核對五附件大小／SHA、四筆校驗及tag的612項非vendor凍結來源全部通過。另核最新Release身份、草稿／公開附件id相同，以及三個既有Release的tag、本文、狀態、發布時間與附件id／大小／雜湊保持。沒有上傳完整版或影片，沒有覆寫舊tag或Release，沒有改遠端Issue。
 
 公開收據保存於docs/internals/data/v150-release.json，README及唯一狀態表144掛入入口，CONTEXT更新公開現況；本機交付索引保持凍結。README／狀態表連結、git diff --check、下載及收據UID/GID1000:1000通過，實際輸出目錄無root-owned檔或誤建.md目錄。產品程式未改，沿已驗來源及標準19套件15 PASS／4無測試，不冒稱重跑。Docker本專案容器均清空，其他專案保持。此收尾紀錄與公開收據另提交推送main，不再次移動發行tag。
+
+## 2026-10-24 第145輪：前線重新出擊與Windows人事視窗
+
+使用者回報v1.5同盟駐留前線後領不到當地艦艇，並補充參謀／副官常要點幾次，平台為Windows。載入remake技能、文件職責、正常試玩、dist-all、版號及Windows ZIP路由。主機gh憑證有效，開工及收尾均抓Issue快照；102張、#48 OPEN，282條verify零失效。工作樹原有「銀河英雄傳說 III SP remake 2026.txt」未動，未寫GitHub Issue。
+
+玩家出擊的旗艦取船、編輯器來源、取消退船、新艦隊位置與清單選區多處寫死CapitalRegion。按015及既有215／329證據改用ADMIRAL+0x0A。兩陣營以明示非首都診斷局面走正式駐留解散與公開點擊，確認／取消均守恆，首都不變，六表保存讀回保持前線艦隊。沒有新增DOS原版收據或全面parity聲明。
+
+人事CPU取樣定位重複字模及整張介面重建。有界字模快取先將詳細畫面約93ms降到37ms，但真實短脈衝仍能漏接，因此補靜態人事背景、游標與副官小選單快取。點擊、鍵盤、捲動及選單反白換列均使背景失效；冷／熱字模與修正前純量逐像素相同，原色背景與完整重畫、HD背景與完整重播通過。正式HD人物四項探針8.25／8.58／10.48／9.27ms，實際靜態畫面游標重播約2至3ms。參謀原路徑重畫兩次游標，窗外27像素抗鋸齒差異按064上層游標契約修正；舊基準與差分保留，不冒稱新舊全圖相同。
+
+中途失敗依序分類：測試助手函式名錯、缺船訊息框擋住測試點擊、誤用test ./...掃到workplace研究副本、Xvfb螢幕不足、Bash包裝器誤用sh、基準漏HD人物標記、擷取早於呈現、Wine映像缺xdotool及視窗超出螢幕。修正驗證入口後用相同內容條件重跑。短脈衝收據確實保留漏取樣，不能把它寫成已全面解決；最終採既有事件回授法，一次按下、程式觀測後放開，沒有重送。Linux兩陣營及最終Windows EXE的Wine同盟各28張完整視窗零差，共58060800像素。原色及HD無遮罩或排除區；Windows真機點擊手感仍由使用者驗收。
+
+最終tools/gui.sh test ./internal/... ./cmd/...為19套件15 PASS／4無測試，gofmt、Python語法與git diff --check通過。Windows從凍結來源乾淨建為v.1.5.1-20261024，未發布的中間候選保留在workplace稽核目錄。替換ZIP在dist-all/v.1.5.1-20261024/release/，8048235 bytes，SHA-256為104d549cfa0f938603b49a1fd486540d4ce6c9ddb1f13627c2b3cbf244ee1407。只含gin3.exe、授權及說明，原1.5素材與存檔沿用；逐檔manifest、實際EXE版本、PE amd64、UTF-8 BOM／CRLF與ZIP來源邊界通過。獨立核對器驗凍結／現行產品來源、ZIP及84張收據，結果保存於docs/internals/data/personnel-frontline145.json，掛入唯一狀態表145與CONTEXT。015及135限定CONFORMED，不擴大原版聲明。
+
+整工作根find未見root-owned檔或誤建.md目錄，輸出抽查1000:1000；本輪Docker容器均已退出自刪，其他工作階段及專案未動。沒有建新映像、全域清理、commit、push、tag或Release。原公開v1.5與既有交付保持。HEAD為0bd8cc2296579004020d4b91c6e6f58d5b287a3c，本輪修改尚未提交。
+
+## 2026-10-24：第146輪，非戰艦旗艦與駐地再出擊影片
+
+使用者要求重錄影片，包含換提督、從駐地選船及出發，新增預設關閉的非戰艦旗艦選項；隨後明確排除修護艦E及運補艦T。命中復古remake、推廣片、Windows替換包路由，載入既有remake方法、grilling、文件職責、dist-all、版號及FFmpeg推廣片入口。沿使用者已決定的分支直接實作，不另請核准。開工及收尾Issue快照102張、#48 OPEN，282條verify零失效，沒有GitHub Issue寫入。
+
+150先READY再實作，最後限定CONFORMED。旗艦艦種政策由編輯器、轉移候選及低階Slot交易共用，關閉只允許B／H，開啟允許B／H／C／A／D；T／E及P排除。轉移主開關、提督成功率、每次擊破只擲一次、池交換及清理保持。偏好新增non_battleship_flagship，缺鍵預設false，保存保留未知鍵。沿原設定框加入一列並重生缺少的「非」字遮罩，字型重生核對通過。訊息「修護艦與運補艦不能當旗艦。」是使用者指定的remake文案，不稱為原版bytes。沒有更動六表格式或強制改寫既有旗艦。
+
+新艦種矩陣、手動編成及退船、交易拒絕不寫入、遊戲C旗艦轉移及保存、偏好重啟與框內控制通過。標準tools/gui.sh test ./internal/... ./cmd/...：19套件15 PASS／4無測試。新增唯讀StrategicObservation與既有可選frame-trace接線，只複製觀測值，不注入局面、seed或輸入。測試涵蓋規則及整合，不新增DOS同狀態或Windows真機聲明。
+
+輸入模型從同盟新局開始，兩支艦隊由母星駐留星系19，執行回合後解散並留下船艦及提督。再改選提督40至41派特，編成第3艦隊。T與E中央放置均被拒絕；換C成功，加入B、D後確認，從駐地移動至18並在下一回合真正抵達。駐地庫存由9000／3000／16000／2000／12000／3000／1000變為6000／3000／12000／2000／9000／3000／1000，母星庫存保持102000／30000／104000／36000／9000／6000／5000。正常存進度及取進度保留C旗艦、艦隊號、提督及所在地，退出重啟保留新開關。這是改選待命提督再編成，不宣稱既存艦隊的人事替換。
+
+Linux真實視窗錄影279.85秒，與最終Windows EXE的Wine各96步、19檢查點，共38張正常畫面。每次鍵鼠按下被程式觀測後才放開，無重送。中途錯誤屬工具入口與收據：預覽映像需指定既有Xvfb腳本、選中星系再點會開資訊、Groups JSON欄位為小寫。Windows首次重啟超過90秒時仍在載入人物圖，保留原紀錄；以180秒載入上限及中間檢查點重跑完整通過。獨立核對器一度把編輯器完成檢查點當成正式艦隊，改驗按「決定」後的fleet-ready，並驗兩者編制及庫存相同，無產品修改。
+
+新片8段87秒、5220格、1920×1080 60fps，完整遊戲畫布保留，來源127.5至197.5秒的設定、改選、編成與出發連續呈現，回合等待剪去並有字幕。沿遊戲BGM_0F單曲連續離線混音，不含音效。首次RMS 0.00953偏低，保留候選後只重做配樂；逐張驗字幕及字卡SHA不變，各鏡頭保持。最終RMS 0.07944、peak 0.46027、AAC SNR 41.04dB，7個剪接點連續通過，零黑段，76項文字邊界通過。目視8段縮圖及3張完整畫面；凍結偵測的首尾字卡、介面停留及局部編成更新另分類，最長8秒區間54／60秒畫面有124174個不同像素，不能稱全片零凍結。未作人耳驗收。
+
+v.1.5.2-20261024替換ZIP位於dist-all同版release/，8044560 bytes，SHA-256 c8fb79e0b8e60e46cc6929af48b874d2751ce3eefe50cd71d524f6c2390ecc05。影片位於同版promo/，7638278 bytes，SHA-256 bc622d1e53b5f7ce328a04fe044060c0833ad6652562016fcce5544b8e0c8803。1593項凍結來源與615項現行產品一致，PE amd64、實際版本、逐檔manifest及UTF-8 BOM／CRLF通過。只替換原v1.5的gin3.exe，沿用資料、素材與存檔。獨立核對收據docs/internals/data/garrison-flagship146.json已掛進唯一狀態表146、150、驗收132及CONTEXT。
+
+gofmt、Python語法及git diff --check通過，整工作根未見root-owned檔或誤建.md目錄，輸出1000:1000。既有Docker映像沿用，任務容器退出自刪，沒有全域清理或動其他專案。原使用者文字檔、v1.5.1交付及公開v1.5.0保持，未commit、push、tag或發布。HEAD仍為0bd8cc2296579004020d4b91c6e6f58d5b287a3c。
+
+## 2026-10-24：第147輪，三平台v1.5.2本機完整版
+
+使用者要求三平台重新打包完整版。命中跨平台打包、dist-all、版號、Windows ZIP及文件職責路由，載入remake技能與驗證交接reference。外部dist-all入口已改列full-local／patch，但專案AGENTS與既有交付明確使用full／release，沿較優先的專案結構。本輪不改玩法、產品程式或素材，不需新增產品裁決。主機gh憑證有效，開工快照102張Issue、#48 OPEN，282條verify零失效，沒有Issue寫入。
+
+新增full_platform_repack.py，沿既有v140_platform_delivery.py、local_test_macos_build.sh及tools/macos.sh，補建v.1.5.2-20261024/full三包。從146已驗來源逐檔核對後建立1593項凍結輸入，615項非vendor與目前產品一致。原版、HD、曲庫、音效、音色庫及授權取已驗v1.5.0完整包，data由目前bootstrap白名單及screen規格產生，598項共用檔案三平台逐檔相同。說明更新前線來源、人事視窗及預設關閉的非戰艦旗艦；E／T排除、轉移主開關與成功率保持，原使用者存檔目錄保持。沒有打包玩家preferences.json。
+
+Windows與Linux在既有logh3-ebiten:2、Go1.24.13從vendor乾淨建置；Windows新EXE SHA-256 ac86b2d440785ae9c40941da555fd861c8e299daf03f2ebeacf10c9c96a68eaa，與146已驗替換包相同。macOS沿wizardry7-osxcross:go1.24.13-python3.13.15-15.5-r1及固定映像身份，建立amd64／arm64與通用Mach-O，最低11.0、SDK15.5、僅系統依賴，ARM3261頁ad-hoc簽章全同。沒有建立新工具映像。
+
+三個完整ZIP為Windows 417534032 bytes／603檔、Linux 417671677 bytes／603檔、macOS通用424656460 bytes／605檔。獨立full_platform_receipt.py重新驗每個ZIP檔名、CRC、逐檔manifest、SHA-256、UTF-8旗標、Unix權限、Windows README BOM／CRLF、啟動器ASCII及版號，核對共同素材、PE／ELF／Mach-O架構與完整macOS簽章。SHA-256與來源身份保存於dist-all/v.1.5.2-20261024/full/SHA256SUMS.txt、full/BUILD.json及docs/internals/data/v152-full-delivery.json，掛入唯一狀態表147及CONTEXT。
+
+full_package_smoke.py從實際ZIP解壓驗證兩平台直接執行與原版／強化啟動器，共6條診斷入口。從/tmp啟動且不傳orig／data／art／music，確認從包內自動找資料、HD、GM及MT-32可用、新選項預設關閉、AI等級-1／1及強化HD配樂設定正確。Windows解壓路徑含中文與空格。另沿146正常X11鍵鼠器各96步、19張檢查點，驗駐留、改選提督、當地領船、E／T拒絕、C旗艦編成、抵達、六表保存讀回與重啟保留，共38張。正常GUI沿146的/orig唯讀掛載，核對它與完整ZIP內original所有檔案相同，data與art取實際解壓包；兩平台安裝檔案驗後未改寫。目視新包Linux C旗艦及Windows設定頁，無新UI裁切。診斷與正常操作分開聲明，不新增Windows／macOS真機、人耳或DOS parity聲明。
+
+產品來源未改，沿146同來源的標準19套件15 PASS／4無測試，不重跑相同產品測試。原BUILD.json、替換ZIP、87秒影片及全部promo證據雜湊保持；根SHA256SUMS.txt只追加三完整版與新manifest，原清單逐位元組備份在工作區previous-SHA256SUMS.txt，供146舊收據回查。沒有額外建立引擎包、來源包或重錄影片。Python語法與git diff --check通過；輸出1000:1000，整工作根無root-owned檔或誤建.md目錄，任務容器均退出自刪。未commit、push、tag或發布，公開v1.5.0與先前交付保留，使用者文字檔未動。
+
+## 2026-10-24：第148輪，清理workspace可重建副本
+
+使用者要求先清理workspace，硬碟空間不足。命中文件與歷程路由，載入文件職責規則，沿既有remake資料保留邊界。開工Issue快照102張、#48 OPEN，282條verify零失效。工作樹、未提交來源與使用者文字檔保留，不寫Issue。只處理本專案workplace，不動其他專案、Docker映像、dist-all或原版素材。
+
+盤點workplace為71045984256 bytes，約66.17GiB，Windows研究區約24GiB。workspace_cleanup.py先列計畫，再逐筆檢查可清內容：Go建置快取、無logh3存檔的Wine環境，以及與正式ZIP相同的安裝、common及壓縮副本。整包副本必須檔案集合、大小及SHA-256相同，common每個檔案必須存在於正式包且相同；來源ZIP通過CRC及manifest核對並綁定SHA-256。沒有相同正式ZIP的49個歷史候選保留；oracle、decomp、模組下載、原始與獨有音畫跳過。
+
+最初使用Python slim盤點時發現映像缺git，沒有修改內容；改用既有logh3-ebiten:2及Docker包裝器，未建新映像。計畫存於workplace/cleanup148/PLAN.json，74項刪除前再驗UID／GID與內容指紋，任何改動即停止。先以tar備份5個Wine環境的registry與使用者分支，978747 bytes，沒有遊戲存檔；再清18個Go快取、5個Wine環境、14個解壓副本、10個common及27個壓縮副本。
+
+清理後workplace為53914406912 bytes，約50.21GiB；淨釋放17131577344 bytes，約15.96GiB。全74項目標不存在，正式v1.5.2根SHA256SUMS的三平台完整版、替換包、影片及manifest全部通過。抽驗ID4壓縮副本與ID29解壓副本從保留ZIP還原、逐檔核SHA-256，通過後再移除抽驗副本。未修改歷史收據；重跑需要安裝副本的舊驗證器前，依PLAN項目ID用workspace_cleanup.py restore還原。Go及Wine環境由既有工具鏈重生，Go模組下載與各版凍結source保留。
+
+清理收據docs/internals/data/workspace-cleanup148.json已掛入唯一狀態表148及CONTEXT，147補上還原前置條件。沒有產品程式變更，不重跑產品測試，以免立即重建剛清除的快取。Python語法、git diff --check、輸出擁有權及容器清理通過；無root-owned檔或誤建.md目錄。未commit、push、tag或發布，HEAD仍為0bd8cc2296579004020d4b91c6e6f58d5b287a3c。
+
+## 2026-10-24：第149輪，左右人物海報寬螢幕
+
+使用者要求模仿Zeliard呈現方式增加海報選項，隨後指定左帝國、右同盟、人物分站兩側，並要求上網找圖再修改。命中復古remake、規格閘門、文件分工、版號、dist-all及Windows ZIP路由，載入既有remake方法、grilling及imagegen技能。沿使用者已決定的構圖實作，預設關閉；未再要求重複裁決。開工Issue快照102張、#48 OPEN，282條verify零失效，無Issue寫入。
+
+Zeliard參考目錄僅唯讀，查得其原生畫面與HD呈現分層，未查得poster／bezel／widescreen命名的側欄實作，因此採同類外層合成，不宣稱移植既有海報函式。網路參考為ginei.jp官方帝國及同盟人物頁、ginei.club經典動畫主視覺。下載三張參考後先檢視，以內建image_gen分別重構萊因哈特、楊威利全身直幅。兩張836×1881 PNG原樣保存於assets/hd/poster/，完整提示、參考網址與雜湊記於SOURCES.json及來源索引；加入忽略規則，限本機，不擴大公開素材或發行權利聲明。
+
+151先READY再實作，驗後限定CONFORMED。海報開啟為2560×1440，中央1920×1440、左右各320×1440；圖片一次載入、裁切及GPU材質重用。原版與HD均沿中央畫布，滑鼠扣除左側寬度後轉回原生座標；側欄左右鍵不點穿，鍵盤、F1及F7保留。設定標題右側加入海報開關，不擠壓原有規則與按鈕；新增兩字沿既有清晰設定字型生成器，重生及獨立check通過。poster_mode預設false，原子保存並保留未知偏好鍵，失敗不套用；缺圖灰顯並退回4:3。切換保持視窗高度，不改六表格式。舊診斷截圖旗標仍只輸出中央，寬螢幕驗證取正常X11視窗。
+
+標準tools/gui.sh test ./internal/... ./cmd/...共19套件15 PASS／4無測試，另驗邊界座標、設定命中、偏好重啟、錯誤不寫入及缺圖分支。Linux與最終Windows EXE的Wine各13張正常鍵鼠畫面，從主選單同盟新局進入，驗海報開關、兩側左右鍵、中央輸入、F1／F7、視窗縮放、六表保存讀回及重啟。游標停在左海報時仍可輸入回合數；缺圖明確要求開啟仍安全退回。另以無HD renderer走正常入口取得5張，避免只驗HD路徑。三組中央2073600像素零差；兩平台各7個同尺寸檢查點海報側欄相同。共31張正常操作證據，沒有局面或seed注入，診斷入口另列。Windows未真機，macOS未驗，無新增DOS parity聲明。
+
+Wine映像缺Pillow，將實際截圖交由既有HD容器獨立核對，不為一次工具缺件新增映像。Wine視窗驗證加入可選LOGH3_WINE_SCREEN，預設維持原設定。首次候選包的素材說明未帶BOM／CRLF，保留未發布候選及來源後修正說明編碼，從乾淨來源重建；EXE與兩張PNG保持，最終包與已驗Windows程式逐位元組相同。產品來源未再改，不重複標準測試。
+
+本機更新包dist-all/v.1.5.3-20261024/full/LOGH3-v.1.5.3-20261024-windows-amd64-poster-update.zip為14586513 bytes，SHA-256 e296296cc23cc9027c1d1b37ca58ed7c9eab0fb9ae66356d561b81eccdbedd3a。1595項凍結來源、617項非vendor來源與目前產品相同，ZIP逐檔、manifest、PE amd64、素材SHA-256及兩份README的UTF-8 BOM／CRLF通過。把gin3.exe及art合併到原v1.5.x完整資料夾即可使用。1280×720預覽直接取正常Linux視窗原圖。獨立poster_mode_receipt.py產生docs/internals/data/poster-mode149.json，掛入唯一狀態表149、151及CONTEXT；來源索引包含完整生成提示及參考來源。
+
+gofmt、腳本語法及git diff --check通過，整個工作根無root-owned檔或誤建.md目錄，輸出1000:1000。沿既有工具映像，任務容器退出自刪，未清理其他專案資源。原使用者文字檔、三平台v1.5.2完整版、87秒影片及公開v1.5.0保留；本輪只新增海報Windows更新包，未commit、push、tag或發布，HEAD仍為0bd8cc2296579004020d4b91c6e6f58d5b287a3c。
+
+## 2026-10-24：第150輪，三組海報、五語介面與v1.6.0完整版
+
+使用者指定三組海報、v1下方斜體名言，並明確回答五語包含海報名言與遊戲介面；另要求重新錄片、三平台完整版及README新截圖。命中remake、規格閘門、語系顯示與語意隔離、字型、跨平台交付、Windows ZIP、推廣片及文件分工路由，載入對應入口，沿已讀remake、grilling及imagegen技能。已決定的需求直接實作，不重問授權。開工與收尾主機gh快照均102張、#48 OPEN，282條verify零失效、1項manual、126一致、155歷史文件。未寫Issue。
+
+152及153先READY再實作，驗後限定CONFORMED。設定左上語系鈕循環zh-TW／zh-CN／ja／en／ko，右上海報依關閉／v1／v2／v3循環；海報預設關閉，語系預設繁中。偏好保留未知鍵、原子保存，失敗不套用。原版存檔、Big5資料、索引、規則與AI保留；只在顯示紀錄轉Unicode並匹配唯一UTF-8 TSV，原版及HD均沿安全裁切及字型遮罩呈現。譯表762項、Noto CJK子集5368字形及合法字型授權已納入。設定、主選單、主要戰略及編輯介面、名言與姓名有翻譯；圖片內原文及未收錄文字保留，未走完的其他戰術及長篇原文不冒稱全部翻譯完成。
+
+官方ginei.jp帝國及同盟人物頁作經典造型參考，下載14張人物圖後先檢視，以內建image_gen分別生成四張群像，再依初稿編輯四張窄幅修訂，臉部留在側欄中央。v1沿149主角原圖，v2兩側各五位將領，v3左萊因哈特、安妮羅潔、齊格飛、希爾德；右楊威利、菲列特利加、尤里安、卡介倫、亞典波羅、先寇布。所有原圖、完整提示、參考及生成映射留於本機assets/hd/poster/的SOURCES、SETS.SOURCE、NARROW.SOURCE JSON與工作區PROMPTS，未加入Git。六張活躍圖片一次載入並快取，缺某組跳過，全部缺圖退回4:3。v1底部留名言安全區，以斜體繪製；短引文經官方訪談及可回查台詞引述查證，四語翻譯為本專案所作，來源見152及QUOTE-SOURCES.json，不稱官方字幕。
+
+最終標準tools/gui.sh test ./internal/... ./cmd/...共20套件16 PASS、4無測試，保存standard-final.log。另驗TSV格式、key、五語非空、字形覆蓋、顯示複本不回寫、短欄裁切、快取、偏好循環與失敗、缺圖分支。產品來源凍結後沒有再改Go、TSV或字型，不因文件及擷取器修正重跑相同產品測試。
+
+同一1610項來源含632項非vendor，沿logh3-ebiten:2建Windows／Linux，沿既有wizardry7-osxcross:go1.24.13-python3.13.15-15.5-r1建macOS Intel／Apple Silicon通用版。第一次macOS包裝器沒有執行位元，改以bash tools/macos.sh呼叫，未另建映像。三平台615項共用檔相同，含三組海報、譯表、字型與完整資料。獨立poster_delivery.py核ZIP CRC、精確檔案集合、manifest、SHA-256、UTF-8、BOM／CRLF、權限及PE／ELF／Mach-O；macOS最低11.0、SDK15.5、系統依賴及ARM全部簽章頁通過。三ZIP為451562109／451686846／461380729 bytes，放dist-all/v.1.6.0-20261024/full/，雜湊見full/BUILD.json與v160-delivery.json。完整版限本機，未另建公開引擎包或發布Release。
+
+實際ZIP解出後，Linux與Windows Wine各54張正常鍵鼠，五語設定／星圖／F1／編輯／三組海報、英韓F7、側欄防誤觸、公開存讀與重啟通過；帝國與無HD另各8張。兩平台十組中央6912000像素零差，無遮罩，六表逐檔相同。首次帝國擷取點錯主選單列，從data/screen-main-menu.json讀唯一幾何後重跑，初次FAILED收據保留。Windows首次獨立像素檢查發現日文一張殘留前一星球hover，保留player-windows-stale-hover整份；擷取時明確先移鄰點再回固定位置後重跑完整54張，十組零差。這些屬擷取腳本問題，沒有修改產品或遮掉差異。
+
+兩平台駐地整軍各96步、19張，正常入口且無script、局面或seed注入，遙測只讀。改選派特、編成第3艦隊、C旗艦、E／T拒絕、當地領船、Region19出發抵達18、六表讀回及非戰艦旗艦偏好重啟通過。當地庫存由9000,3000,16000,2000,12000,3000,1000降為6000,3000,12000,2000,9000,3000,1000；母星102000,30000,104000,36000,9000,6000,5000保持，兩平台六表相同。第一次Wine缺PLAN輸入，先複製已知雜湊計畫後乾淨重跑；診斷第一次漏--windows，保留空目錄後補旗標，未列作產品缺陷。兩平台另6條從/tmp啟動的直接／原版／強化診斷驗自動資料路徑、HD、GM、MT-32及預設關閉，與正常GUI分開聲明。
+
+全新正式Linux ZIP正常操作錄影剪為20段91.883333秒1080p60、5513格，從改選提督、當地領船編成至出發保持原速連續，駐留及下回合抵達等待有剪輯。新片13375916 bytes，SHA-256 22c0e7c855d8c99a2d10da81fb4a09a13d4847e3ca646658744fa4c832ba7f0d，全片BGM_0F單曲連續，AAC SNR40.75dB、19剪接點、非靜音及峰值通過。初次concat毫秒時長使平均幀率不精確，保留候選後重整固定60fps；重混遇既有參考wav拒寫，補有界audit-only沿相同鏡頭及字卡雜湊只做驗收，不重新錄遊戲。無黑段、52項字幕安全矩形通過；凍結偵測保留並分類字卡及真實介面停留。已目視20格CONTACT及完整04／11／16格，字幕僅占中央黑色上下留白，無遮人物、名言或遊戲畫面。不冒稱人耳驗收。
+
+README新增18張新版完整1280×720正常實錄，全部與正式收據逐張SHA-256相同；兩陣營設定／星圖、三組海報、四外語、提督編輯及駐地改選／領船／編成已更新。舊戰術交火仍標v1.5.0。總交付索引docs/internals/data/v160-delivery.json、驗收133、152／153及唯一狀態表150互相掛接；根SHA256SUMS涵蓋三ZIP、建置清單及所有promo。獨立receipt與check核實際安裝檔未被GUI改寫，來源、影片、音源、截圖與收據雜湊相同。
+
+Python語法、git diff --check、輸出1000:1000及整工作根無root-owned檔或誤建.md目錄通過。沿既有映像，任務容器退出自刪，未碰其他專案容器或映像，工作磁碟尚餘約337GiB。Windows採Wine，macOS未真機；無新增DOS parity，#48正式戰術讀回重建保持OPEN。前輪所有交付、使用者文字檔及公開v1.5.0保留，未commit、push、tag或發布，HEAD仍為0bd8cc2296579004020d4b91c6e6f58d5b287a3c。
+
+## 2026-10-24：第151輪，國徽故事推廣片與GitHub海報實錄
+
+使用者要求新版影片一開始以帝國及同盟國徽作底圖，追加故事鋪陳，並明示要核對先前拍攝手法串成完整推廣片。製作期間另明確要求GitHub README增加海報截圖。命中推廣影片、README、文件職責及dist-all路由，載入對應入口，沿已讀remake技能；這是已授權的本機剪輯與限定README發布，不改玩法或資料。主機gh auth及Issue快照通過，102張中#48 OPEN，282條verify零失效、1項manual、126一致、155歷史文件，未寫Issue。
+
+先讀126雙旗故事產生器、140影片規格與143正式PLAN，目視舊雙國徽BACKGROUND及v1.5 CONTACT，確認先前做法包含雙國徽底圖、1988動畫雙主角、正常部署、要塞砲及三武器完整原速交火。直接沿workplace/hd127/promo-final/BACKGROUND.png，不重繪國徽，字幕置於上下安全區，微量逐幀星點沿舊風格。故事從帝國與同盟百年對峙、萊因哈特與楊威利不同志向、亞姆力札補給危局，引出玩家在前線重新下令，最後以雙國徽及「下一頁歷史，由你下令」收束。
+
+依文件職責沿workplace/poster151，開工唯一狀態表151先READY。重剪前複製150初版promo五檔、現行交付索引、根SHA256SUMS與三支舊產生器，共10檔，逐檔雜湊一致。previous/MAPPING.json記錄原路徑及保存位置；舊收據中的原路徑可依映射回查，歷史位元組不改。影片仍交付到dist-all/v.1.6.0-20261024/promo/，沒有自創第二個現行入口。
+
+poster_story_promo.py建立35段123.566667秒分鏡。0至14秒為國徽故事、1988主角與亞姆力札；14至33秒為三組海報、四外語加繁中及提督編輯；33至80.88秒為駐留、非戰艦旗艦、改選提督、當地領船、E／T拒絕、C旗艦編成、出發與抵達；接兩軍戰術部署、7.6秒完整要塞砲及28.083333秒完整三武器交火，最後4秒國徽收束。新版操作沿150正式ZIP新錄，從改選提督至下達出發保持連續原速。主角動畫與實戰沿既有已驗來源，不冒稱全片v1.6.0新拍；動畫原字幕及水印保留。舊PLAN、SOURCE-PLAYBACK、RAW、TRACE、FRAMES及PLAYBACK-AUDIT逐項綁SHA-256，所選場次已見結果且無漏格。
+
+新片1920×1080、60fps、7414格、18336447 bytes，SHA-256 2ce661ff5fa66ac2498718e39a5cf81443db6adfe6f7b26b2b457a0540f78314。全片同首BGM_0F從零連續播放，無循環或剪接重啟，另按played觀測重混40處遊戲音效；不混入片段內其他配樂。AAC雙聲道44100Hz，RMS0.08160、peak0.52711、參考混音SNR36.30dB，34剪接點通過。零黑段、82項文字安全矩形通過；凍結偵測保留，分類為國徽／字幕停留、微量星點及來源相同的介面停留，不宣稱零凍結。已目視35格CONTACT與完整00／01／03／15／32／34格，國徽、故事銜接、新版名言、E／T拒絕、實戰與片尾無裁切。沒有新增人耳或DOS parity聲明。
+
+publish先核舊promo與保存副本相同，再安裝新片、PLAN、AUDIT、CONTACT、SOUNDTRACK、FFPROBE、SOURCE-PLAYBACK及SAMPLES。poster_delivery.py增加限定--refresh-promo，要求舊交付索引已保存且雜湊相同，除影片、產生器及校驗外的產品、三ZIP、字型、18張原圖與正常GUI欄位必須全同。更新後receipt --check獨立通過，根SHA256SUMS與docs/internals/data/v160-delivery.json同步。1610項來源、632項非vendor、615項共用資料保持，沒有再改Go／TSV／字型或重建三平台程式，沿150最終16 PASS／4無測試，不重跑未變產品。
+
+使用者追加GitHub README授權後，先確認遠端main仍為0bd8cc2296579004020d4b91c6e6f58d5b287a3c。從該版本README建立單一海報預覽段落，加入三組完整1280×720正常實錄與docs/images/readme-v160-posters.json，明列v1.6.0本機完整版及公開引擎仍v1.5.0。用獨立暫存Git索引建立五檔提交44a8cae1875a9af39ff9f23e645d7b8f96eeb5ff並非強制推送main，未夾帶其他未提交程式、原始海報、完整版或影片。GitHub工具讀回提交精確五檔，遠端main核對相同；再於Docker實際HTTP下載README、三PNG及JSON，五檔SHA-256均與本機相同，PNG解碼1280×720通過，記於workplace/poster151/GITHUB-README.json。線上入口為https://github.com/wicanr2/logh3#海報寬螢幕預覽。
+
+確認主索引無使用者暫存內容後，只同步HEAD與Git索引至上述文件提交，不寫工作檔；本機完整README與既有全部未提交產品修改保持。暫存Git索引已刪除，未建多餘工作樹。README產品入口、CONTEXT、唯一狀態表151與133同步，150初版數字保留歷史身份。Python語法、相對連結、索引正對照、git diff --check與全工作根衛生通過，無root-owned檔或誤建.md目錄，輸出1000:1000，任務容器退出自刪；未清理其他專案資源。未改任何tag／Release、未發布完整包或影片，#48保持OPEN。
+
+## 2026-10-25：第152輪，游標、hover與工具列字型／AI
+
+本輪24日開始，25日收尾。使用者回報v1.6.0滑鼠遲鈍與按鈕／選項沒有hover，要求工具列調字型及戰略AI，並明確選擇現有Noto／思源黑體，不新增圓體。命中remake、正常玩家路徑、字型、規格閘門、Windows ZIP、版號、dist-all及文件分工路由，載入對應入口，沿已讀remake與grilling技能。154先READY，驗後限定CONFORMED；152狀態表、134與pointer-toolbar152.json互相掛接。開工與收尾主機gh快照均102張、#48 OPEN；282條verify零失效、1項manual、126一致、155歷史文件，未寫Issue。
+
+已證實軟體游標參與HD背景鍵，每次移動都觸發整張CPU重播及1920×1440材質上傳。現在保存最上層游標前的完整像素、命令及Artwork遮罩，背景渲染後GPU繪製游標，沿原裁切與畫序。設定改用無游標背景，避免重複游標。正式Game.Frame、原色重播、1:1座標、點擊及時鐘保持。透明合成最多2階整數混色差，背景像素精確一致。
+
+主指令hover原沿JSON舊座標，比正式commandBar少40像素；空角色DrawPanel與系統下拉列又未接反光。現在沿正式點擊幾何、列高及既有可見按鈕角色，文字底色不抹掉反光，上層視窗仍遮擋。原版顯示以GPU疊色反光，不改索引像素。工具列新增字型及AI，共用既有FontStyle與SetAILevel，與系統設定同步，保留本次執行契約，沒有新增永久偏好。四款字型沿v1.6.0實際完整包，設定頁專用黑體與原版字形保持；五語沿既有譯表。選擇、Esc及右鍵取消攔截至放鍵，不點穿遊戲。
+
+最終標準20套件16 PASS、4無測試。游標背景、別名、較早游標、裁切、快取失效、透明合成、按鈕遮擋／邊界及工具列輸入測試通過。正常Linux兩陣營與最終Windows Wine各31張完整視窗、24次移動，五語、思源黑體、AI3與設定同步、取消、F1／F7、原版hover、海報側欄及六表存讀通過。沒有script、direct-entry、局面或seed注入，遙測只讀。同盟跨平台六表與v1.6.0基準逐檔全同。三條路徑海報中央各691200像素零差，無遮罩。排除游標ROI的基準反光0／0，修正HD916／398、原版1512／912；英文及韓語選單完整目視無裁切。
+
+帝國初次驗證器以y188點讀檔陣營而停在StateLoadFaction。正式首列由loadfaction.go原點181加JSON highlight_dy19開始；改沿battle-command-menus.json的列內幾何後，乾淨重跑final-empire-fixed通過。保留原FAILED與trace，未改產品。跨日首次建置遇X server未就緒，未產生封包；同一命令重跑成功，分類為環境問題。
+
+基準Draw中位32.85ms，正式Linux11.93ms、Windows9.55ms，移動時背景上傳分別20至20、18至18。早期4.30ms只作探查。latency_ms從Python啟動xdotool前計時，包含程序啟動與排程；舊scope文字過強，134與索引明確勘誤，舊位元組保持，不作硬體輸入延遲改善證據。驗證器正文已更正，兩份完整快照綁各自SHA-256。
+
+台北時間跨日前候選未交付，跨日後從乾淨來源重建v.1.6.1-20261025。兩份1616項來源含638項非vendor全同，只改建置版本字串及更新說明日期。25日ZIP實際解出的Windows EXE已重新通過31張GUI及-version；Linux沿24日相同來源候選，索引明列版本。正式更新ZIP10766673 bytes，SHA-256 c7835ce570ffdc14b6ea35aa6ead260cd9bf58f3adf4147c31f941263ca84b41，放dist-all/v.1.6.1-20261025/release/。只含引擎與授權，替換v1.6.0的gin3.exe，原素材、海報、啟動器及存檔沿用。獨立receipt核ZIP集合、CRC、manifest、PE amd64、BOM／CRLF、來源、93張PNG、hover、中央及六表通過。產品來源凍結後未再改Go、譯表或字型，不因日期、文件與驗證器變更重複產品測試。
+
+README只在本機更新穩定功能與入口。沿既有Go、HD及Wine映像與poster150 Wine環境，沒有建立重複工具鏈。Windows採Wine，未作真機或新增DOS parity聲明；#48正式戰場讀回仍OPEN。未重打三平台或影片，既有修改、使用者文字檔及交付保持，HEAD仍44a8cae1875a9af39ff9f23e645d7b8f96eeb5ff，未commit、push、tag或發布。
+
+收尾receipt --check通過。首次回讀比較器將JSON陣列與Python tuple直接比對，修正為同型列表後原收據位元組保持，重跑通過；屬驗證器問題。腳本AST、gofmt、相對連結、索引正對照及git diff --check通過，整個工作根無root-owned檔或誤建.md目錄，抽查輸出與文件均1000:1000。任務Go、HD與Wine容器退出自刪，沒有殘留本輪執行中或已停止容器，未清理其他專案資源。
+
+## 2026-10-25：第153輪，三平台完整版與Linux AppImage
+
+使用者確認剛才v1.6.0試玩平台是Linux，要求重新打包三平台，Linux需AppImage。較早1.5平台回覆曾為Windows，152據此準備的Windows更新包保留，但不能把這次1.6.0試玩記為Windows。命中remake、三平台交付、版號、Windows ZIP、正常玩家路徑及文件分工路由，載入對應入口；沿已讀remake技能。開工主機gh auth與快照通過，102張Issue、#48 OPEN，282條verify零失效、1項manual、126一致、155歷史文件。沒有Issue寫入。
+
+先建立唯一狀態表153，AppImage新入口以155先READY再封裝，驗後限定CONFORMED。從152輪已驗來源乾淨複製1616項含638項非vendor，當前產品逐檔全同；共用615項素材取已驗v1.6.0 Windows完整版，原版、三組海報、五語、四字型、音樂、音效及音色庫完整保持。未改遊戲Go、資料、譯表或字型，沿最近16 PASS／4無測試，不重複相同產品測試。
+
+新增full_appimage_release.py，沿poster_release及v140_platform_delivery共用封裝。Windows及Linux由logh3-ebiten:2同源重建，內部程式與152輪25日程式逐位元組相同。macOS沿wizardry7-osxcross:go1.24.13-python3.13.15-15.5-r1與既有macos.sh，amd64及arm64合為通用Mach-O；最低11.0、SDK15.5、系統依賴與ARM4083頁SHA-256臨時簽章通過，未真機。沒有Developer ID或Apple公證。Windows說明保留UTF-8 BOM／CRLF，啟動器ASCII／CRLF，ZIP非ASCII路徑UTF-8旗標及可執行權限通過。
+
+AppImage工具先查既有映像入口及來源，沿hr-appimage:runtime-recovery-r1，沒有新建映像。該映像ID為sha256:e961c807e7810d5fca6b2e880e9ebed49207074e9871683de926f646c28d41fa，runtime前綴944632 bytes、SHA-256 1cc49bcf1e2ccd593c379adb17c9f85a36d619088296504de95b1d06215aebbf。可重現來源在hr/tools/docker/Dockerfile.hr-appimage-r1。新tools/appimage.sh只控制有界Docker，AppRun依自身路徑找完整素材，預設960×720及原版AI，命令列可覆寫。附15個ALSA／X11函式庫及閉包、ALSA設定與授權，主機glibc、GPU／OpenGL及音效服務保持；實際ELF最高GLIBC_2.34需求。AppImage官方架構及extract-and-run契約已查證，runtime與五個靜態相依官方授權全文保存快照、URL及SHA-256，之後離線打包。
+
+SquashFS 4.0採zstd、固定時間及1000:1000所有權。完成AppImage後，由其自身--appimage-extract解出全部741項，內容、權限、.DirIcon符號連結與原AppDir全同。實際AppImage以extract-and-run正常啟動，沒有指定orig、data、art或save，僅隔離XDG_CONFIG_HOME；六表實際寫入config/logh3/save，正常介面保存及讀回通過，不寫唯讀AppDir。沒有容器FUSE裝置，未將此稱為桌面FUSE掛載驗收。
+
+實際AppImage及實際Windows ZIP各31張正常鍵鼠，含五語字型／AI選單、思源黑體、AI3與設定同步、hover、原版反光、Esc／右鍵取消、F1／F7、海報工具列與側欄防誤觸及六表存讀。沒有script、direct-entry、局面或seed注入，遙測只讀。兩平台六表與v1.6.0基準逐檔全同，海報中央各691200像素零差，沒有遮罩。另各三診斷啟動驗開場、原版／強化、自動素材、HD、GM／MT-32及預設關閉，與正常路徑分開聲明。AppImage三條均執行正式.AppImage，從/tmp啟動。Linux正常Draw中位9.06ms，24次移動背景上傳18至18；xdotool程序計時不作硬體端到端延遲聲明，沒有新增人耳或DOS parity。
+
+交付同一v.1.6.1-20261025/full：Windows ZIP451581535 bytes，SHA-256 74188509e4f0ea6a8359ee25edabc0a6ce4593394a4e81d2fdd1d073d8c617f9；macOS ZIP461418440 bytes，SHA-256 be121a49351e1c4018f7ae6804ff77009ea138f6663abf0b6564cef7b4a46345；Linux AppImage451459576 bytes，SHA-256 30980f616392356d52424984eee8e22508c78d5f98b13937f7112336b1dd442b。full_appimage_receipt.py獨立核ZIP精確集合、CRC、manifest、UTF-8、權限、來源、615共用檔、741項AppDir、架構、簽章、62張正常PNG、六表及兩平台各三診斷，保存full/BUILD.json與docs/internals/data/v161-full-delivery.json。full/SHA256SUMS與根校驗清單同步，保留原更新包列及位元組。
+
+README更新本機v1.6.1三平台入口與Linux使用方式，CONTEXT、153、155與135互相掛接。完整版、原版與海報衍生素材保留本機，未公開。舊v1.6.0三包、推廣片、152更新包、使用者文字檔及既有未提交修改保持，HEAD仍44a8cae1875a9af39ff9f23e645d7b8f96eeb5ff，未commit、push、tag或發布；#48正式戰術讀回重建保持OPEN。
+
+收尾獨立receipt --check、Python AST、shell語法、相對連結與索引正對照、git diff --check通過。目視實際AppImage完整工具列及海報工具列，字型、按鈕、側欄與名言無裁切。整工作根無root-owned檔或誤建.md目錄，交付與新文件均1000:1000；本輪Go、HD、AppImage、macOS及Wine容器均退出自刪，沒有殘留執行中或已停止容器，未碰其他專案資源。
+
+## 2026-10-25：第154輪，海報上下戰機與多旗艦循環
+
+使用者先要求海報上下裝飾，接著明確指定上方帝國與同盟戰機交戰、下方多艘名將旗艦，以及輕量循環動畫。前期通用金屬飾條A／B方向由新指示取代，不再要求選擇。沿復古遊戲、正常玩家路徑、版號、dist-all及文件分工路由，讀remake、grilling與imagegen技能；使用者已決定風格與動態，156先READY再實作。開工主機gh認證及快照102張Issue通過，#48 OPEN；282條verify零失效、1項manual、126一致、155歷史文件，沒有Issue寫入。
+
+前期效果稿第一次缺FontTools，未完成準備便啟動瀏覽器，舊式-v因來源不存在誤建空root目錄workplace/poster154。確認該目錄空且UID0後，只移除這個空目錄，再以1000:1000重建；沒有遞迴chown或碰其他工作。原型改沿Fontconfig，A／B未進產品。HTML擷取另受瀏覽器viewport與PNG gamma差異影響，不用它宣稱中央像素保存。
+
+旗艦沿flagships.json、engagement-panel.json的碼及現有HD atlas，去重為16種帝國與12種同盟外形，共28種；早期27種摘要已更正。各側首批優先布倫希爾德與休伯利安，不將同型名字冒稱不同新圖。Renderer.PosterShip只縮圖及去除純黑底，不改戰鬥圖集。戰機為image_gen生成的透明雙機圖，1536×1024，SHA-256 01775ce4b6e6860fae74634ed77c98ef4fa50929bf00ce002f11acfa5bf78635；原PNG、完整提示及來源保存assets/hd/poster/fighters.*。官方人物頁用於艦名，DNT頁只查戰機名稱，不作1988或DOS逐形證據。
+
+正式呈現只在海報開啟且有介面主題時，從實際無最上層游標背景找完整黑列，限制上8至48、下20至80邏輯像素。當前星圖為上0–40、下418–479；初次GUI腳本粗估40／416失敗，改讀真實邊界，沒有為腳本改renderer。主選單不畫；中央內容、工具列、名言、側欄與座標契約保持。上方每側四架小圖穿梭，下方每側八艘兩列相向，每12秒換批、短暫淡化與炮火；無新增音效、規則或偏好鍵，沿動畫設定關閉為靜態。
+
+最初相位沿Update次數，在Xvfb低更新率下18秒未換批。由同資產v1.6.1基準確認軟體繪圖本就只有約4次更新／秒，改用獨立單調時間的15Hz視覺相位，與遊戲時鐘、TimerTick、RNG及回合分離。小圖與GPU材質載入後重用，不加入HD背景快取鍵。標準20套件16 PASS／4無測試，留白、旗艦去重與遍歷、透明小圖及不改來源、相位與靜態分支測試通過。
+
+v.1.6.2-20261025從1620項來源含642項非vendor凍結，618項共用檔為153輪615項加三個戰機來源檔。poster_decoration_release.py沿153既有工具鏈重建三平台，AppImage包裝器只新增經完整regex檢查的版本及批次參數，舊預設保留。Linux仍為固定944632 bytes Type-2 runtime、15個ALSA／X11相依與最高GLIBC_2.34；實際解出744項AppDir內容／權限一致。macOS沿原Go1.24.13／SDK15.5工具鏈，最低11.0雙架構及ARM4092頁簽章通過，未真機。
+
+正常AppImage兩陣營各23張，三組海報、五語、F1／F7、工具列、靜態與六表存讀及重啟通過；沒有狀態、seed或診斷入口。每陣營原版／HD各542400個非留白像素零差，左右人物與名言四組保持相同；動畫關閉兩次擷取完全一致。正式AppImage18秒無聲視窗短片、README原PNG及來源已保存，短片只作功能預覽，v1.6.0完整故事推廣片保持。
+
+驗證環境的並行錄影使帝國18秒相位樣本不足，Windows Wine映像又未附FFmpeg。保留失敗輸出，錄影限定Linux；無錄影路徑保持同樣21種相位及至少兩批門檻，依實際幀率至少觀測18秒、最多90秒。已跑腳本分別保存r1、r2快照，收據綁每份實際SHA-256。這些是擷取能力與取樣條件修正，未改產品或放寬像素／相位門檻。
+
+最終Windows Wine亦完成23張正常操作，與兩陣營AppImage合計69張；原版／HD六組3254400個非留白像素、側欄2764800像素零差，靜態模式三組全圖相同。各21、22、27種相位與至少兩批，背景上傳均20至20；同盟跨平台六表與既有基準全同。Draw中位20.37、16.15、17.60ms僅作不同負載下的容器抽樣，不據此宣稱加速或固定實機FPS。獨立poster_decoration_receipt.py驗ZIP精確集合、CRC、SHA-256、來源、共用素材、AppDir、架構、UTF-8及權限、正常畫面與存檔後，保存docs/internals/data/poster-decoration154.json及full/BUILD.json。
+
+交付v.1.6.2-20261025/full：Linux AppImage452856312 bytes，SHA-256 e00f8fb3fd7e6eadd45c2ed265c1994a70c22b1ad5cd718da3c4b5a0bf2fb85a；Windows ZIP452991276 bytes，SHA-256 038d79f5f83319fc46cb636ce0dfa950cc212a301a9f0c02563fe1f1cd19324a；macOS通用ZIP462850221 bytes，SHA-256 d34125ce3f9e3103b63bc49fc5dc55dda1ed3ba56ec6912b9678edcb5538846f。根及full校驗清單已保存。promo新增18秒1280×720 H.264實錄預覽，15fps／270格／790160 bytes，刻意無音軌；SHA-256 656d5b0b669bf85733bd691573597fea92cf14fbba5deddd19aceaf2f52ccba0，0.5秒黑段與2秒凍結檢測均無事件，來源、FFprobe及檢測記錄完整。短片不取代v1.6.0故事推廣片。
+
+156限定CONFORMED，151追加授權留白差異，不改歷史零差收據。README本機入口、正式AppImage原截圖與來源、CONTEXT、唯一狀態表154及驗收136已更新並掛接。未新增DOS parity或真機聲明；Linux未驗FUSE，Windows採Wine，macOS未真機。原版及衍生素材、完整包與預覽限本機，舊交付、使用者文字檔與其他未提交修改保留。HEAD仍44a8cae1875a9af39ff9f23e645d7b8f96eeb5ff，未commit、push、tag或發布，#48保持OPEN。
+
+收尾獨立receipt --check通過，Go格式、Python AST、shell語法、相對連結與索引正對照及git diff --check通過。整工作根find無root-owned檔案或誤建.md目錄，新文件、正式圖與交付均1000:1000。Go、HD、AppImage、macOS及Wine容器已退出自刪，沒有本輪執行中或已停止容器；未建重複映像，未清理其他專案資源。
+
+## 2026-10-25：第155輪，固定艦體與克制交火原型
+
+使用者認為v1.6.2不夠高雅，要求本體不動，動畫只保留飛彈或光線。載入復古遊戲路由、remake與grilling技能及文件職責入口，依視覺取捨流程先做可丟棄原型；固定本體方向已由使用者明確決定，美術構圖仍待看圖確認。主機gh認證、102張Issue快照及其後verify通過，282條零失效、1項manual、126一致、155歷史文件；沒有Issue寫入。
+
+從154凍結來源複製workplace/poster155/source，只替換副本的drawBand；正式cmd／internal及v1.6.2未改。兩側各三架戰機固定，雙主旗艦置中，其餘艦影排兩側，16種帝國與12種同盟全留在畫面。移除穿梭、漂移與換批，只讓間歇細光束及短尾跡飛彈活動；採深藏藍與細金線。第一稿逐列漸層產生細條帶，第二稿改單一平面色；舊稿與來源保存，不冒稱已核准樣式。繪製來源為tools/scripts/poster_elegant_draw.go.txt，準備、正常擷取與檢查為poster_elegant_prototype.py、poster_elegant_capture.py及poster_elegant_check.py，均由155狀態表索引。
+
+既有Docker工具鏈建置副本，正常主選單、輸入138與設定開啟v1海報後錄製，沒有狀態或seed注入。第二稿preview-r2為1280×720、18秒、270格無聲實錄，SHA-256 e86d58375d737a3f1e05af91daf192419c395912957c334b2096ff6bc77d96b6；PNG SHA-256 bf8b12b6c9d37f02fe963b7f79385517fefb1eb629747cfbeccdc01cd579f194。非留白542400像素與兩側人物／名言230400像素零差，前後固定構圖在武器安全區以外零差；影片113格武器區有超過20階的變化，確認不是全靜態影片。CHECK.json綁來源、正常收據及音畫檔雜湊。這是原型可視審閱，不作新版本、正式功能或DOS parity聲明，未重跑未改動的全產品測試或打包。
+
+目前等待使用者審閱構圖後才進正式接線，沒有發布、commit或push。沿原有28種艦影與戰機，沒有額外生成圖片或擴張素材公開範圍。既有修改、使用者文字檔、正式README截圖與交付保持；唯一狀態表155與CONTEXT已掛接。原型輸出均1000:1000，隔離Go與HD容器退出自刪，沒有新增映像或碰其他專案容器。
+
+## 2026-10-25：第156輪，大型局部特寫HTML提案
+
+使用者明確否決155的小艦列陣，要求大船左帝國、右同盟，飛機也放大，不用整台入鏡，但需看見旗艦與戰機的形體，先整理成HTML供檢視。前稿把艦數當主角是理解錯誤，本輪依大型特寫方向重做提案。沿復古遊戲、視覺原型與文件分工路由，讀grilling及既有原型工具；主機gh認證、102張Issue快照及verify通過，282條零失效、1項manual、126一致、155歷史文件，沒有Issue寫入。
+
+從既有HD圖集993×396原始艦型格取六款旗艦，略過先前192×76小圖。以最大連通區及外擴3像素整理原型透明層，原始圖集與正式renderer未改；圖格、來源PNG及輸出雜湊記SOURCE.json。左右各一艘大型主旗艦、可開關兩艘大型後景艦；同盟鏡射朝中央。戰機沿既有透明原圖，一側一架放大並允許機翼出框。先目視不同上下取景，最後以-80px讓艦首在下緣留白可辨識；後景降亮度，本體固定，只在獨立武器層更新光束／飛彈。
+
+新增poster_closeup.html模板、poster_closeup_html.py生成與安全刷新入口，輸出workplace/poster156/proposal.html自包含單檔，3593006 bytes。背景為既有正式截圖，圖像全以data URL內嵌；沒有外網依賴，可離線開啟。包含完整16:9預覽、大小及上下取景、主旗艦選擇、後景開關、光束／飛彈／兩者／關閉、暫停、裁切示意、全螢幕及下載JSON設定。構圖說明與區域配置在HTML內，沒有變更正式版、版號、README交付或封包。
+
+沿已有mcr.microsoft.com/playwright:v1.56.1-noble映像的Chromium，以Node22原生WebSocket及CDP驗證，未安裝npm套件或重建映像。第一輪抓到武器選項的缺引號，回查路由及精確行列後修正；後續下載測試因同名檔覆寫而誤判，改各次明確下載目錄後用同一容器及命令重跑。這兩項是提案腳本與驗證器問題，沒有記成遊戲缺陷。最終零JavaScript例外、零外網請求，360px戰機與720px旗艦大圖、相位切換本體不移動、縮放、後景、三種武器狀態、裁切示意、實際下載內容及桌面1600／手機390無水平溢出均通過。完整頁面、構圖與手機截圖及BROWSER.json保存在同工作區。
+
+最終HTML SHA-256 70e8ec9ef7e88b129e015e3e3cc2ca66a81e49c087b0a37477b69fde96dbbdcf，SOURCE.json與BROWSER.json相同，正式poster_decoration.go雜湊保持。唯一狀態表156與CONTEXT已掛接所有模板、生成器、瀏覽器入口及證據。只交付使用者本輪要求的HTML提案，不作正式版、遊戲功能或DOS parity聲明；未新增生成圖像、發布、commit或push。
+
+收尾Python語法、shell語法、來源雜湊、索引正對照及git diff --check通過；整專案find無root-owned檔或誤建.md目錄，提案、截圖及新文件均1000:1000。Go／HD及瀏覽器容器均退出自刪，沒有本輪執行中或已停止容器，未清理其他專案資源。
+
+## 2026-10-25：第157輪，上下旗艦景深與圖片內名言姓名
+
+使用者改為移除戰鬥機，上方同盟旗艦並列朝左、下方帝國旗艦並列朝右，並澄清是隊列由深到淺。之後補充兩側名言、楊威利與萊因哈特姓名都要放進人物圖片內，避免獨立底部文字突兀。本輪繼續修改HTML提案，不接正式遊戲。沿復古遊戲、視覺原型與文件分工入口；主機gh認證、102張Issue快照及verify通過，282條零失效、1項manual、126一致、155歷史文件，沒有Issue寫入。
+
+poster_flagship_rows.py沿既有HD原始格及擷取器整理12種旗艦，自包含HTML沒有戰機資料或繪製節點。上排同盟鏡射朝左，下排帝國朝右，遠艦較小稍高、近艦較大，按遠至近順序合成遮擋；本體不隨相位移動，不將色彩深淺當成隊列景深。兩側改用原人物圖完整720高度覆蓋，名言及姓名同組疊在圖片下緣，淡漸層與文字描邊提高可讀，移除原獨立文字留白。名言及姓名沿ui.tsv五語，不新增未查證句子或新圖像。
+
+新增poster_flagship_rows.html模板與poster_flagship_rows_browser.mjs；既有poster_closeup_capture.sh只參數化批次與瀏覽器腳本，完整驗證參數並保留156預設。Chromium／原生CDP抽驗上下各6艘的陣營及方向、遠近大小順序、武器相位切換本體不移動；五語名言與姓名均有SVG文字邊界檢查，完整落在人物圖內。另驗隊列／文字位置調整、飛彈與關閉、實際JSON下載、桌面1600及手機390無水平溢出，零JavaScript例外、零外網請求。目視完整構圖，人物圖填滿側欄，名言署名位於下半部人物腿部圖像內，上同盟下帝國的旗艦隊列已呈現。
+
+交付workplace/poster157/proposal.html為13061896 bytes，SHA-256 4fadd1f487088c81edbdb26833029911e6cbe390125b4eab8b5cc3d05cb57bc1，SOURCE.json及BROWSER.json綁相同雜湊。完整頁面、構圖、手機截圖與下載樣本在同工作區，入口由157狀態表及CONTEXT掛接。正式poster.go與poster_decoration.go雜湊保持，156舊HTML、v1.6.2、使用者文字檔及其他既有修改保留；未打包、commit、push或發布，不作正式功能或DOS parity聲明。
+
+收尾Python及shell語法、來源雜湊、索引正對照與git diff --check通過；整專案find無root-owned檔或誤建.md目錄，新HTML、截圖及狀態文件均1000:1000。Go／HD及Chromium容器均退出自刪，沒有本輪執行中或已停止容器，未碰其他專案資源。
+
+## 2026-10-25：第158輪，完整主旗艦、上向帝國與四角漸層
+
+使用者要求伯倫希爾與休伯利安船體更明顯，上方同盟朝左、由艦底仰視；下方帝國經提問確認為艦首朝畫面上方。另要求上下飾框與左右人物四處以漸層銜接，名言查尖端當年譯文。沿復古遊戲、視覺原型、imagegen及文件職責入口；本輪仍是HTML提案。主機gh認證、102張Issue快照及verify通過，282條零失效、1項manual、126一致、155歷史文件，沒有Issue寫入。
+
+原上下範圍62／93像素不適合大型完整直向船體，先向使用者說明限制，HTML加入100%原大小與88%船體優先比較，維持4:3，不視為正式配置核准。兩側人物跟隨填滿側欄，兩艘主旗艦有獨立前景，後景仍各五艘由深到淺。下方原HD圖轉向朝上；休伯利安改用依157參考圖生成的艦底視角。內建imagegen兩張原始輸出存workplace/poster158/heroes-raw.png、heroes-layout.png；完整提示存hero-prompt.txt及layout-prompt.txt。後者分離裁出458×798伯倫希爾與1110×481休伯利安，透明層保持；來源與輸出雜湊記SOURCE.json。屬藝術重構，不宣稱動畫或DOS逐形證據，沒有擴張公開素材。
+
+poster_readable_html.py沿157模板產生自包含HTML，poster_readable_js.txt處理動態版面、完整主艦、上左下上與四角銜接。漸層遮罩重用上下飾框底色，避免末端形成異色色帶；名言及姓名在人物圖內上層，固定船體與人物，只更新武器。實際畫面檢查抓到共用.frame svg樣式覆蓋內層遊戲viewport，造成重複人物取景；修成只作用直接子SVG。新增幾何檢查最初用內層SVG的getBoundingClientRect誤量內容邊界，改檢查computed width／height，同容器與命令乾淨重跑通過；均為提案與驗證器問題，不記為遊戲缺陷。
+
+名言網路查證找到hkweb小說入口明列尖端二十冊舊版與BBS轉錄背景，萊因哈特採第一章「嗯！星星好美啊！」，楊威利採同站語錄第五章子句「我想最好的還是和平吧。」。小說轉錄與語錄均為二手來源，語錄頁未獨立標版次，不能推成原書驗證；未取得舊版書頁、版權頁與確定頁碼。HTML與158唯一狀態表附直接來源及此限制，其他四語是專案對應譯文，不稱尖端外語版。嚴格的尖端紙本逐字查證尚未完成。
+
+poster_readable_browser.mjs使用既有Chromium與原生CDP，驗上下各六艘、主旗艦完整落在範圍內、上左下上、景深順序、本體固定、五語圖片內文字、四角漸層開關、4:3大小、武器與實際設定下載。桌面1600／手機390無水平溢出，零JavaScript例外及外網請求，完整頁面與構圖已目視。最終HTML14458666 bytes，SHA-256 25de4f97b3d4ec7d6ae38bffd8a1f5ef626b054f25fdb5ad13428250fc65f301；SOURCE、BROWSER及AUDIT綁相同HTML。Python／shell語法、正式來源與157雜湊、輸出1000:1000、整專案find無root-owned或誤建.md目錄通過。
+
+158狀態表與CONTEXT已掛接提案、截圖、三份收據、工具及素材完整提示。正式poster.go、poster_decoration.go、157提案、README與既有交付保持，待使用者檢視；未打包、commit、push或發布。Go／HD與Chromium一次性容器退出自刪，沒有新建映像或清理其他專案資源。
+
+## 2026-10-25：第159輪，上下各一艘大型旗艦
+
+使用者否決158隊列，指定上方僅休伯利安，下方僅伯倫希爾，並提供伯倫希爾參考圖，要求下方反方向、橫跨整個下方。本輪把下方朝上裁決改為朝右，四角漸層及人物圖內文字保留，仍只更新HTML原型。沿復古遊戲、grilling、imagegen與文件分工路由，讀驗證交接reference；主機gh認證、102張Issue快照及verify通過，282條零失效、1項manual、126一致、155歷史文件，沒有Issue寫入。
+
+參考圖保存workplace/poster159/brunhild-reference.png，SHA-256 aa9772fdf23fd068862f11cd0d5782b6eb5291d43d848c690b031642053263e5。使用內建imagegen，依參考白色楔形船體、暗色艦橋、尾部雙軌、圓形機構與黃色圓盤，呈現朝右的橫幅船體。原輸出exec-6279f6f7-395a-428d-b993-93fd73b6a30e.png原樣複製至brunhild-right.png，2172×724 RGBA、alpha 0至255，SHA-256 f1e4aa6724d100ced524035836879cea2ea3d22c067a6f1f3efda746c544e085；完整提示brunhild-prompt.txt。休伯利安沿158仰視圖，沒有另生成。新圖是藝術重構，不作動畫或DOS逐形聲明，限本機提案。
+
+新增poster_single_html.py、poster_single_js.txt及poster_single_browser.mjs。沿158的底圖viewport、人物文字與同底色四角漸層，刪除全部後景與隊列資料及相關選項，改成上下各一艘。下方寬度100%、上方90%，按原比例等比放大與剛體取景，允許局部超出上下邊界，不拉伸素材。保留船體大小、上下取景、人物文字、五語、漸層、88%／100%遊戲大小、武器、暫停與下載。目視發現接合漸層蓋住下方尖端，將下方取景向左16像素，最終尖形艦首清楚可見，沒有回到多艦或小艦配置。
+
+Chromium原生CDP抽驗上下各一艘、正確主艦及上左下右、隊列移除、下方設定寬度跨滿、本體不隨武器相位移動、五語文字在圖片內、漸層開關、大小比較、武器與實際JSON下載；桌面1600／手機390無水平溢出，零JavaScript例外及外網請求。完整構圖已目視。最終HTML12051863 bytes，SHA-256 e1d74675fd15e6b12fcd2a6227e994989b0816b6d5f211a06ba068cf611be9c1，SOURCE、BROWSER與AUDIT相符；Python／shell語法、正式來源及158雜湊、1000:1000與整專案find無root-owned或誤建.md目錄通過。
+
+唯一狀態表159及CONTEXT已掛接HTML、截圖、工具、素材及完整提示，舊提案、正式程式、README、使用者文字檔與既有交付保持。未打包、commit、push或發布，不將此原型稱為正式功能；名言的尖端舊版紙本逐字及頁碼核對限制保持。Go／HD與Chromium一次性容器退出自刪，沒有新增映像或清理其他專案資源。
+
+## 2026-10-25：第160輪，休伯利安參考重繪與連續銀河
+
+使用者要求伯倫希爾再下移、修正休伯利安與原著差距，以及上下背景串接兩側楊威利與萊因哈特的銀河。途中提供整體構圖、原作艦首及全艦兩張參考，均保存於workplace/poster160。沿復古遊戲、grilling、imagegen及文件職責入口；主機gh認證、102張Issue快照及verify通過，282條零失效、1項manual、126一致、155歷史文件，沒有Issue寫入。
+
+先查官方壽屋KP771頁，圖片位址明列KP771_hyperion_ishiguroban，與另列Die Neue These的商品區分；官方縮圖下載403，未改用主機下載或冒稱取得。使用者兩圖成為本輪外形依據，159失真的尖叉及巨大紅色結構不再沿用。內建imagegen依參考重繪，保留方形艦首、上下兩組3×4圓孔、細長箱形艦身、天線及144M。初稿前方透視過大，另以原作全艦比例調整視角；採用hyperion-side.png，2146×733 RGBA，SHA-256 568093a586c348431fa86618bd7653365f04e1186800ed0da3887049867a1d93。兩次原始透明輸出與完整提示均保存在本輪，屬藝術重構，不宣稱動畫逐形或DOS完全一致，限本機。
+
+poster_galaxy_html.py沿159單檔提案，伯倫希爾預設bottomY改24，原圖及方向保持；休伯利安寬度預設65%以同時看見兩組圓孔，保留大小滑桿。人物原PNG上方無角色的836×282星空，以與人物相同尺度顯示為320×107.9426紋理，SVG鏡像鋪設讓上下及四角共用；保留漸層融合側欄，移除深色實心飾框。第一版將星空放大到全寬造成星點粗大，改回與人物相同尺度後目視通過。沒有用Python改寫圖像或重繪人物，兩側人物原圖保持。武器起點接回新艦首及下移位置，避免光束浮在舊位置。
+
+poster_galaxy_browser.mjs沿既有Chromium／CDP，驗共享銀河來源與四角填色、下移、上下各一艘及方向、包含群組變換在內的本體固定、五語圖內文字、漸層與大小控制、武器及實際設定下載；桌面1600／手機390無水平溢出，零JavaScript例外與外網請求。最終構圖已目視，休伯利安兩組圓孔可辨識，上下星空與兩側融合。AUDIT另核對159中央底圖、人物及伯倫希爾內嵌素材完全相同，休伯利安確實更換，伯倫希爾群組Y實際增加24像素。
+
+最終HTML12721766 bytes，SHA-256 e039b59fe2a9c8f77419c4308042ff3d1fe21289c7baf1a149e2942661099a05；SOURCE、BROWSER及AUDIT相符。Python／shell語法、正式程式與159雜湊、輸出1000:1000及整專案find無root-owned或誤建.md目錄通過。唯一狀態表160與CONTEXT已掛接HTML、截圖、工具、原圖、參考及完整提示。正式程式、README、舊提案、使用者文字檔與交付保持；未打包、commit、push或發布，名言尖端紙本核對限制保持。Go／HD與Chromium一次性容器退出自刪，沒有新增映像或清理其他專案資源。
+
+## 2026-10-25：第161輪，伯倫希爾艦尾取景修正
+
+使用者只剩伯倫希爾艦尾切斷感一項。本輪沿復古遊戲、既有HTML原型及文件職責入口，主機gh認證、102張Issue快照與verify通過，282條零失效、1項manual、126一致、155歷史文件，沒有Issue寫入。量測原船體左緣195.596，超出裁切左界217.6，且四角漸層覆蓋內側12像素，是左後方平直截斷的原因。
+
+poster_stern_html.py讀160原稿，伯倫希爾寬度改92%、移除向左16像素偏移，原24像素下移保留；滑桿改1%一步避免瀏覽器捨入。沒有重繪素材或改休伯利安、人物、銀河。poster_stern_browser.mjs解碼實際alpha像素並套用圖片與群組變換，456305個有效像素的左右範圍245.868至1034.244，完全落在235.6至1044.4安全區。目視左後方圓弧及艦首尖端清楚，上下仍是原有局部特寫，不宣稱整艦全部入鏡。
+
+原有共享銀河、下移、單艦方向、五語、本體固定、控制與實際設定下載、桌面1600／手機390無溢出通過，零JavaScript例外與外網請求。AUDIT確認所有內嵌素材完全相同，與160相比下方以外668400像素零差。最終HTML12721788 bytes，SHA-256 fc2d322e99f2f314dcc9c9e3658b76f371593ee303c73aadbf47e6eb6efa2111；SOURCE、BROWSER及AUDIT一致，Python／shell語法、來源與正式程式雜湊、1000:1000及整專案find無root-owned或誤建.md目錄通過。
+
+161狀態表與CONTEXT掛接提案、截圖及工具。HEAD仍44a8cae1875a9af39ff9f23e645d7b8f96eeb5ff；正式程式、README、舊稿與交付保持，未commit、push、打包或發布。既有Go／HD及Chromium容器退出自刪，沒有新建映像或清理其他專案資源。
+
+## 2026-10-25：第162輪，人物腳邊銀河切面
+
+使用者提供底框近照，澄清問題是萊因哈特與楊威利腳邊，人物海報和下方銀河有明顯直線切面。沿復古遊戲、既有HTML與文件職責入口，主機gh認證、102張Issue快照及verify通過，282條零失效、1項manual、126一致、155歷史文件，沒有Issue寫入。
+
+原因是原四角漸層覆蓋僅在上下飾框矩形範圍內，底框上緣突然開始覆蓋，人物原圖內側又硬裁切。poster_seam_html.py移除覆蓋矩形，改在兩個人物圖片群組加入720像素全高內緣透明遮罩，漸層不隨Y突然切換。預設28像素，左189.6至217.6、右1062.4至1090.4，以避開腳部主要輪廓；文字仍在獨立上層，船體及原PNG完全保持。滑桿改2像素一步，仍可調整或關閉。
+
+poster_seam_browser.mjs沿既有Chromium，驗全高遮罩、漸層座標、無覆蓋矩形及開關；原有alpha艦尾與艦首安全、共用銀河、方向、本體固定、五語、控制與JSON下載、桌面1600／手機390無溢出通過，零JavaScript例外及外網請求。新增proposal-footer.png與完整構圖已目視。AUDIT確認所有內嵌素材及船體幾何與161相同，中央363268像素零差；Python／shell語法、來源雜湊、1000:1000及整專案find無root-owned或誤建.md目錄通過。
+
+最終HTML12722427 bytes，SHA-256 ac72a7cbc1751b97aaf80a4897f284e3f361ebefb2c629dd256cb589418857b7，SOURCE、BROWSER及AUDIT一致。162狀態表與CONTEXT掛接HTML、腳邊近照、完整構圖及工具；正式程式、README、舊稿與交付保持，未commit、push、打包或發布。Go／HD及Chromium一次性容器退出自刪，沒有新增映像或清理其他專案資源。
+
+## 2026-10-25：第163輪，三組海報自然留邊銜接
+
+使用者指出162楊威利海報仍有切線，要求確認其他兩組。沿復古遊戲、既有原型與文件職責入口，讀152三組契約及正式素材選擇；主機gh認證、102張Issue快照與verify通過，282條零失效、1項manual、126一致、155歷史文件，沒有Issue寫入。162在原裁切線內以窄漸層混合不同星空，仍會顯出邊界；原PNG在裁切範圍外其實有自然星空可用。
+
+新增poster_sets_blend_html.py、poster_sets_blend_js.txt及poster_sets_blend_browser.mjs。原PNG按既有比例及位置向上下框延伸，在天然留邊內淡出，原人物側欄保持不透明。88%配置左右延伸44.056／50.2像素，100%為69.4／79像素；延伸區與原側欄重疊1像素，消除反鋸齒細線。星空底框先畫，原圖留邊在上下獨立層延伸，中央遊戲沿原繪製路徑。未拉伸、反射或補畫人物，沒有生成或修改PNG。預覽新增三組切換，v2/v3沿正式四張836×1882 narrow原圖，雜湊記SOURCE；只有v1顯示名言與姓名。
+
+最初以中央遊戲SVG裁切保護主畫面，中央截圖出現940像素取樣差異；保留頁首高度後仍718，依路由重查縮放與驗證契約。裁切開／關對照證明僅移除該裁切就與162零差，DIAGNOSTIC-CLIP.json保存原HTML及診斷圖片雜湊。改為上下星空獨立層，移除新增中央裁切後恢復零差。期間生成器殘留舊裁切名稱檢查，未成功重生HTML，下一次瀏覽器正確拒絕舊分層；修正後同容器及命令重跑。這些是原型工具與Chromium取樣問題，未記成遊戲缺陷或放寬零差門檻。
+
+最終Chromium逐組驗88%／100%兩種大小、融合範圍在原裁切線外且未越出原PNG、單艦方向、實際艦首艦尾安全、本體固定、v1五語、控制及實際JSON下載；桌面1600／手機390無水平溢出，零JavaScript例外及外網請求。保存六張完整圖、六張左右交界、三張下方及三組對照圖，原圖及最終構圖已目視。AUDIT核對三組中央各363268像素、v1兩人臉腳四區零差；既有內嵌素材、艦艇幾何及四張群像原PNG保持。
+
+最終HTML38666416 bytes，SHA-256 ac843a911fce876e67292940285d22f19c988e092465fe09ab0746f6bf34c202，SOURCE／BROWSER／AUDIT一致。Python／shell語法、來源雜湊、1000:1000及整專案find無root-owned或誤建.md目錄通過。163狀態表與CONTEXT掛接HTML、三組對照、交界近照及工具。正式程式、README、舊稿、使用者文字檔與既有交付保持，未commit、push、打包或發布。既有Go／HD及Chromium一次性容器退出自刪，沒有新增映像或清理其他專案資源。
+
+## 2026-10-25：第164輪，定案提案入庫及正式海報接線
+
+使用者明確定案163 proposal並要求進GitHub開工。沿spec閘門、正常入口驗證與文件職責路由，157先READY，再將38,666,416 bytes核准HTML及三組截圖原樣保存。93d362e4已推送feat/approved-poster-frame，沒有移動main、既有tag或Release。主機gh認證、102張Issue快照與verify通過，282條零失效、1項manual、126一致、155歷史文件；沒有Issue寫入。
+
+以既有鎖版Chromium1194匯出三張2560×1440背景、單艦透明層與五語文字透明層。初次分層匯出有圖樣引用漏層，追到克隆SVG的ID改名與模板字串正規表示式轉義；改用字串逐項替換url引用後，原圖層與中心銀河完整。九張圖共19,302,930 bytes，manifest1,607 bytes另計，載入時核尺寸、凍結HTML SHA及各PNG SHA。正式程式優先載入核准層，缺圖保留既有安全退回。
+
+遊戲與輸入共用88%幾何，實際背景黑列界定上下可補畫區。先畫背景與即時遊戲，再恢復空白區的背景及固定艦體，最後疊圖內名言、短光束與最上層游標／工具列／說明。原船體及人物沒有重新生成；六表格式與遊戲規則不因海報變動。必要的前輪海報、五語、hover、游標與工具列來源一併保留為可編譯依賴，沒有覆蓋使用者文字檔或其他未提交工具。
+
+Linux兩陣營各23張正常X11截圖，三組、五語、F1／F7、設定、動畫開關、公開六表存讀與重啟通過。18秒以上相位觀測不增加整張HD背景上傳，船體與背景固定。最初比較器誤用BOX縮小參考圖，獨立比對確認Ebitengine實際採2:1最近鄰奇數像素取樣；更正擷取方法後，定位到空白補畫未包含小數邊界的一像素切線。修正後同入口再跑三組5張，不透明藝術區v1共343632、v2／v3各399442像素零差；透明合成最大通道差3／2／2，小數遊戲邊緣最大0／1／1，分層記錄整數捨入，不宣稱全圖零差或DOS parity。
+
+標準20產品套件16PASS／4無測試；新增核准藝術完整載入、竄改拒絕、輸入命中與空白區保護測試通過。曾誤跑含workplace探針的./...，另一次HD影像沒有with-xvfb別名；均為驗證命令／工具環境問題，改回專案產品套件與既有GUI包裝器後乾淨重跑，沒有改產品規則遷就。157限定來源Linux與核准藝術層CONFORMED，137、唯一來源JSON、164狀態表及README連接實際截圖。未定新版號、重打包或發布，Windows／macOS這次未重建或真機驗證。
+
+使用者追加v1五組兩人名言、約60秒替換。查得網路轉錄及篇章線索，但尖端舊版逐字／頁碼仍unknown，依既有要求送出是否接受轉錄的單一來源問題，尚待答覆。五組五語候選及可操作HTML保留DRAFT，原首組完全沿核准HTML；長句向上排，保持姓名位置。25組語系／名言安全矩形及實際61秒第二組切換在鎖版Chromium通過，沒有外網依賴。未把未核來源文字接入production path。
+
+README、157、137與164相對連結完成Git索引檢查，以README到157作正對照。整專案find無root-owned檔案或誤建.md目錄，已抽查1000:1000；Go／HD／Chromium容器均退出自刪，沒有新增映像或清理其他專案資源。

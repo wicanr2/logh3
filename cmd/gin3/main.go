@@ -13,6 +13,7 @@ import (
 	"flag"
 	"fmt"
 	"image/color"
+	"math"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -26,6 +27,7 @@ import (
 	"github.com/wicanr2/logh3/internal/bootstrap"
 	"github.com/wicanr2/logh3/internal/game"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/localize"
 	"github.com/wicanr2/logh3/internal/presentation"
 	"github.com/wicanr2/logh3/internal/ui"
 )
@@ -44,9 +46,22 @@ type app struct {
 	soundFontError    string
 	preferencesPath   string
 	ruleSettingsError string
+	posters           *posterArt
+	posterMode        bool
+	posterError       string
+	posterDecor       *posterDecoration
+	posterPointer     *gfx.DrawCommand
+	posterTheme       string
+	windowReady       bool
+	language          *localize.Adapter
+	localePath        string
+	localeError       string
 	aiSettingsMenu    bool
 	admiralEditor     *admiralEditorState
 	cursor            *ui.Cursor
+	cursorTextures    [2]*ebiten.Image
+	cursorPalette     gfx.Palette
+	pointerFill       *ebiten.Image
 	musicState        game.State
 	effects           effectPlayback
 	buf               []byte
@@ -54,6 +69,7 @@ type app struct {
 	original          bool
 	hdScreen          *ebiten.Image
 	hdUploaded        uint64
+	backgroundUploads uint64
 	frameTrace        *os.File
 	animationTime     time.Time
 	toolbar           toolbar
@@ -160,6 +176,9 @@ func (a *app) Update() error {
 func (a *app) dump() error {
 	a.setPalette(a.g.Palette())
 	fb := a.frame()
+	if a.language != nil {
+		fb = a.language.Frame(fb)
+	}
 	if a.shot != "" {
 		var err error
 		if a.hd != nil && !a.original {
@@ -207,17 +226,45 @@ func (a *app) paletteSpec() gfx.Palette {
 }
 
 func (a *app) Draw(screen *ebiten.Image) {
+	if !a.posterMode {
+		a.drawGame(screen)
+		return
+	}
+	w, h := a.gameLayout()
+	if a.posters.viewport == nil || a.posters.viewport.Bounds().Dx() != w || a.posters.viewport.Bounds().Dy() != h {
+		a.posters.viewport = ebiten.NewImage(w, h)
+	}
+	a.posters.viewport.Clear()
+	a.drawGame(a.posters.viewport)
+	if a.usingApprovedPoster() {
+		a.drawApprovedPoster(screen, a.posters.viewport)
+	} else {
+		a.posters.draw(screen, a.posters.viewport)
+	}
+}
+
+func (a *app) drawGame(screen *ebiten.Image) {
 	started := time.Now()
 	fb := a.frame()
 	frameTime := time.Since(started)
+	fb, pointer := fb.CursorLayers()
+	a.posterPointer, a.posterTheme = pointer, fb.InterfaceTheme
+	if a.language != nil {
+		fb = a.language.Frame(fb)
+	}
 	if a.hd != nil && !a.original {
 		frame := a.hd.Render(fb, a.g.Palette())
 		if a.hdUploaded != a.hd.Generation() {
 			a.hdScreen.WritePixels(frame.Pix)
 			a.hdUploaded = a.hd.Generation()
+			a.backgroundUploads++
 		}
 		screen.DrawImage(a.hdScreen, nil)
-		a.drawToolbar(screen, fb.InterfaceTheme)
+		a.drawPosterDecoration(screen, fb, frame.Pix, frame.Stride, frame.Bounds().Dx(), frame.Bounds().Dy(), a.hd.Generation())
+		if !a.usingApprovedPoster() {
+			a.drawPointer(screen, pointer)
+			a.drawToolbar(screen, fb.InterfaceTheme)
+		}
 		a.traceFrame(fb, started, frameTime)
 		return
 	}
@@ -233,7 +280,12 @@ func (a *app) Draw(screen *ebiten.Image) {
 		options.GeoM.Scale(presentation.Scale, presentation.Scale)
 	}
 	screen.DrawImage(a.screen, options)
-	a.drawToolbar(screen, fb.InterfaceTheme)
+	a.drawPosterDecoration(screen, fb, a.buf, gfx.Width*4, gfx.Width, gfx.Height, 0)
+	a.drawNativeHover(screen, fb.HoverControl)
+	if !a.usingApprovedPoster() {
+		a.drawPointer(screen, pointer)
+		a.drawToolbar(screen, fb.InterfaceTheme)
+	}
 	a.traceFrame(fb, started, frameTime)
 }
 
@@ -247,6 +299,13 @@ func (a *app) toggleGraphics() bool {
 }
 
 func (a *app) Layout(int, int) (int, int) {
+	if a.posterMode {
+		return posterTotalW, posterHeight
+	}
+	return a.gameLayout()
+}
+
+func (a *app) gameLayout() (int, int) {
 	if a.hd != nil {
 		return gfx.Width * presentation.Scale, gfx.Height * presentation.Scale
 	}
@@ -254,7 +313,11 @@ func (a *app) Layout(int, int) (int, int) {
 }
 
 func (a *app) gamePosition(x, y int) (int, int) {
-	if a.hd == nil {
+	if a.posterMode {
+		v := a.posterViewport()
+		return int(math.Floor((float64(x) - v.X) * gfx.Width / v.W)), int(math.Floor((float64(y) - v.Y) * gfx.Height / v.H))
+	}
+	if a.hd == nil && !a.posterMode {
 		return x, y
 	}
 	divide := func(v int) int {
@@ -276,6 +339,9 @@ func main() {
 	graphics := flag.String("graphics", "original", "圖片顯示：original 或 hd")
 	artDir := flag.String("art", "assets/hd", "HD 圖片目錄")
 	fontStyle := flag.String("font", "classic", "HD字型：original原版點陣、classic原版強化、serif思源宋體、sans思源黑體")
+	poster := flag.Bool("poster", false, "左右海報16:9外框；中央遊戲保持4:3，未指定時沿玩家偏好")
+	posterSet := flag.String("poster-set", "", "海報組別：v1、v2、v3；未指定沿玩家偏好")
+	locale := flag.String("locale", "", "介面及海報語系：zh-TW、zh-CN、ja、en、ko")
 	musicQuality := flag.String("music-quality", "original", "配樂音色：original 或 hd；HD曲庫放在music/hd")
 	soundFont := flag.String("soundfont", "", "音色庫：gs 或 mt32；未指定沿玩家偏好")
 	frameTrace := flag.String("frame-trace", "", "可選顯示性能JSONL收據；僅觀測，不改遊戲狀態")
@@ -484,6 +550,57 @@ func main() {
 			}
 		}
 
+		a.posters, err = loadPosterArt(*artDir)
+		if err != nil && !os.IsNotExist(err) {
+			fmt.Fprintln(os.Stderr, "海報素材：", err)
+		}
+		codes := ""
+		if res.Engagement != nil {
+			codes = res.Engagement.Animation.FlagshipCodes
+		}
+		if a.posters != nil && a.posters.approved != nil {
+			a.posterDecor = &posterDecoration{}
+		} else {
+			a.posterDecor, err = loadPosterDecoration(*artDir, a.hd, codes)
+		}
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "海報裝飾：", err)
+		}
+		posterEnabled, posterErr := readPosterPreference(a.preferencesPath)
+		if posterErr != nil {
+			a.posterError = posterErr.Error()
+			fmt.Fprintln(os.Stderr, "海報偏好：", posterErr)
+		}
+		if explicit["poster"] {
+			posterEnabled = *poster
+		}
+		a.posterMode = posterEnabled && a.posters.available()
+		set, setErr := readPosterSetPreference(a.preferencesPath)
+		if *posterSet != "" {
+			set = *posterSet
+		}
+		if setErr != nil {
+			fmt.Fprintln(os.Stderr, setErr)
+		}
+		if set != "v1" && set != "v2" && set != "v3" {
+			a.close()
+			return nil, fmt.Errorf("invalid poster set: %s", set)
+		}
+		if a.posters != nil {
+			a.posters.selectSet(set)
+		}
+		a.localePath = filepath.Join(*data, "ui-locales.tsv")
+		lang, langErr := readLocalePreference(a.preferencesPath)
+		if langErr != nil {
+			fmt.Fprintln(os.Stderr, langErr)
+		}
+		if *locale != "" {
+			lang = *locale
+		}
+		if !a.selectLocale(lang, false) {
+			a.close()
+			return nil, fmt.Errorf("locale: %s", a.localeError)
+		}
 		a.setPalette(g.Palette())
 		report(7, "載入完成")
 		return a, nil
@@ -501,6 +618,11 @@ func main() {
 		a.close()
 	} else {
 		startup := newStartup(load, *scale)
+		lang, _ := readLocalePreference(filepath.Join(*saveDir, "preferences.json"))
+		if *locale != "" {
+			lang = *locale
+		}
+		startup.language, _ = localize.Load(filepath.Join(*data, "ui-locales.tsv"), lang)
 		err = ebiten.RunGame(startup)
 		a = startup.game
 		startup.close()

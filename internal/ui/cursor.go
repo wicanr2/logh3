@@ -59,6 +59,17 @@ func (c *Cursor) Draw(fb *gfx.Framebuffer, mouseX, mouseY int) {
 // 那在畫面上完全看不出來。
 func (c *Cursor) DrawClipped(fb *gfx.Framebuffer, mouseX, mouseY, cx, cy, cw, ch int) {
 	x0, y0 := mouseX+c.Offset[0], mouseY+c.Offset[1]
+	// 既有人事背景已保留完整畫面；其他畫面保存最後一次游標之前的內容。
+	keep := fb.CursorBackground != nil
+	for _, cmd := range fb.Commands {
+		if cmd.Kind == gfx.DrawCursor {
+			keep = false
+			break
+		}
+	}
+	if !keep {
+		fb.SaveCursorBackground()
+	}
 	start := fb.BeginGroup()
 	for y, row := range c.Rows {
 		for x, r := range row {

@@ -1,10 +1,37 @@
 package rules
 
 import (
+	"bytes"
 	"encoding/binary"
 	"path/filepath"
 	"testing"
 )
+
+func TestNonBattleshipFlagshipEditorPolicy(t *testing.T) {
+	for _, enabled := range []bool{false, true} {
+		for kind := 0; kind < 7; kind++ {
+			rec := editorRegion([7]int{9000, 9000, 12000, 6000, 9000, 9000, 3000})
+			before := bytes.Clone(rec)
+			e := NewFleetEditor(BuildInput{Region: rec, Faction: 0}, editorTables(t), 8, []FleetGroup{{Kind: 0, Ships: 3000, Full: 3000, Slot2: 0, Slot3: 20}})
+			e.NonBattleshipFlagship, e.Kind = enabled, kind
+			got := e.Place(FlagshipSlot3)
+			want := kind < 2 || enabled && kind < 5
+			if (got == EditOK) != want {
+				t.Fatalf("開關%v 艦種%d=%v", enabled, kind, got)
+			}
+			if !want && !bytes.Equal(before, rec) {
+				t.Fatal("拒絕後庫存改變")
+			}
+			if want && e.Groups()[0].Kind != kind {
+				t.Fatal("旗艦種類錯誤")
+			}
+			e.Cancel()
+			if !bytes.Equal(before, rec) {
+				t.Fatal("取消沒有完整還原庫存")
+			}
+		}
+	}
+}
 
 // 艦隊組成編輯器的規則（`docs/re/317`）。畫面層的同狀態對拍在
 // `internal/game/fleetedit_test.go`；這裡釘住規則本身的邊界。

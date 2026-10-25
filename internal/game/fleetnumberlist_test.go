@@ -48,6 +48,9 @@ func TestFleetNumberListPicksSlot(t *testing.T) {
 		t.Fatalf("建出來的在槽 %d、編號 %d；原版是槽 2、第３艦隊（收據 fcmd-fnum-decide 的艦隊表）",
 			f.Index, f.Number)
 	}
+	if slot := int(g.admiralRecord(g.fleets[0].Admiral)[9]) & 0x7f; slot != 2 {
+		t.Fatalf("提督指向槽%d，選取的是槽2", slot)
+	}
 	matches(t, g, "fcmd-fnum-decide")
 }
 

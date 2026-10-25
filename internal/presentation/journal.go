@@ -4,9 +4,11 @@ import (
 	"image"
 	"image/color"
 	"image/draw"
+	"strings"
 
 	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/localize"
 )
 
 // ThemeEnabled 表示載入了完整且通過雜湊檢查的正式字型圖集。
@@ -180,7 +182,11 @@ func (r *Renderer) replay(commands []gfx.DrawCommand, p gfx.Palette) {
 				r.markUIEdges(c)
 			}
 		case gfx.DrawGlyph:
-			if c.Key == font.SettingsGlyphKey {
+			if strings.HasPrefix(c.Key, localize.GlyphKey) {
+				if !r.localizedGlyph(c, p) {
+					r.replay(c.Fallback, p)
+				}
+			} else if c.Key == font.SettingsGlyphKey {
 				if !r.settingsGlyph(c, p) {
 					r.replay(c.Fallback, p)
 				}

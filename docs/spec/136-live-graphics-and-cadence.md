@@ -28,3 +28,5 @@
 時鐘根因為本機鎖版`github.com/hajimehoshi/ebiten/v2@v2.8.8/internal/clock/clock.go`的calcCountFromTPS：diff超過5／60秒時重設lastSystemTime，不補count。cmd/gin3原先每次Update固定傳1／60秒，實錄r5的HD來源格中位數213.58ms，原版139.19ms，超出原間隔。根因屬已證實的remake執行流程；不當作DOS硬體driver研究。
 
 入口：[計畫127](../goal/2026-10-11-map-icons-cadence-round-127.md)、[原畫面命令130](130-hd-drawing-journal.md)。
+
+2026-10-25追加：[154](154-pointer-and-toolbar.md)將app顯示的最上層游標獨立繪製。正式Game.Frame與完整renderer仍保留原游標命令；背景快取沿完整命令與hover驗證，單純移動最上層游標只更新GPU位置。這是136快取契約的分層補充，不改動畫時鐘、舊收據或DOS parity聲明。

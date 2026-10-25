@@ -1,0 +1,420 @@
+{
+  "version": "v.1.6.2-20261025",
+  "classification": "含原版與衍生素材，本機完整版，不公開",
+  "source_files": 1620,
+  "source_nonvendor": 642,
+  "common_files": 618,
+  "frozen_inputs": {
+    "path": "workplace/package92-v.1.6.2-20261025-release154/INPUTS.json",
+    "bytes": 425436,
+    "sha256": "c7ca5c6ab9c138f26cd3d22aa6a5f7cc687de5c281c4973fdd8b98a711291db6"
+  },
+  "standards": {
+    "path": "workplace/poster154/standard-final.log",
+    "bytes": 1090,
+    "sha256": "b99da0cf835af243e065dd3f7f162888b07617f111f6acd36fb13d29f9359d9f",
+    "passed": 16,
+    "no_tests": 4
+  },
+  "packages": [
+    {
+      "path": "full/LOGH3-v.1.6.2-20261025-windows-amd64.zip",
+      "bytes": 452991276,
+      "sha256": "038d79f5f83319fc46cb636ce0dfa950cc212a301a9f0c02563fe1f1cd19324a",
+      "binary_sha256": "1bd2647e93586054bc7c420131b1cc56370c51617b5bfc61a60d2e54df28f551",
+      "manifest_sha256": "db8d713e0794efcb586c66b7af359101f8d7b470c3a35acb3c7d4cd6752095f5"
+    },
+    {
+      "path": "full/LOGH3-v.1.6.2-20261025-macos-universal.zip",
+      "bytes": 462850221,
+      "sha256": "d34125ce3f9e3103b63bc49fc5dc55dda1ed3ba56ec6912b9678edcb5538846f",
+      "binary_sha256": "cf846c2d2f832f8c42e886cd31bfae281dacc3a17b430c6a9277469f4d02e96f",
+      "manifest_sha256": "f36936d297db0a3752b3c84fd3c1e3957c77dd9b0d6df5ea346a85d441b0f22a"
+    },
+    {
+      "path": "full/LOGH3-v.1.6.2-20261025-linux-x86_64.AppImage",
+      "bytes": 452856312,
+      "sha256": "e00f8fb3fd7e6eadd45c2ed265c1994a70c22b1ad5cd718da3c4b5a0bf2fb85a",
+      "binary_sha256": "d6f1248359863ff9ca377d1ad350a2ca8b8b26f50dd11e6f3f8495ffb19d5c18",
+      "appdir_files": 744,
+      "runtime_sha256": "1cc49bcf1e2ccd593c379adb17c9f85a36d619088296504de95b1d06215aebbf"
+    }
+  ],
+  "architectures": {
+    "windows-amd64": "PE64 amd64；實際ZIP解出後Wine正常操作",
+    "macos-universal": [
+      {
+        "architecture": "amd64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 4096,
+        "bytes": 17646104,
+        "sha256": "1ec5c85d2af853d5355d6a14c04adbf2ca42ef2a34c08b003b5747e2ae34a2e2"
+      },
+      {
+        "architecture": "arm64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [
+          {
+            "ad_hoc": true,
+            "flags": 131074,
+            "algorithm": "sha256",
+            "code_pages": 4092,
+            "code_limit": 16757600,
+            "all_page_hashes_match": true
+          }
+        ],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 17661952,
+        "bytes": 16888658,
+        "sha256": "153f51921d62ec782f20685f13fe957237c09ad294f57ca82b8376e4489c1a71"
+      }
+    ],
+    "linux-x86_64": "Type-2 AppImage；ELF64 x86_64；最大GLIBC_2.34；15項相依；extract-and-run正常操作"
+  },
+  "normal_player": [
+    {
+      "platform": "linux-x86_64",
+      "path": "workplace/poster154/player-linux/RESULT.json",
+      "bytes": 285253,
+      "sha256": "970110fa130174925e98a430a339551f2b33c79e301734318ed76c7a1ccef8de",
+      "screenshots": 23,
+      "pixel_checks": [
+        {
+          "off": "map-off",
+          "on": "decor-v1",
+          "bands": [
+            [
+              0,
+              0,
+              640,
+              41
+            ],
+            [
+              0,
+              418,
+              640,
+              480
+            ]
+          ],
+          "compared": 542400,
+          "outside_different": 0
+        },
+        {
+          "off": "original-off",
+          "on": "original-restored",
+          "bands": [
+            [
+              0,
+              0,
+              640,
+              41
+            ],
+            [
+              0,
+              418,
+              640,
+              480
+            ]
+          ],
+          "compared": 542400,
+          "outside_different": 0
+        }
+      ],
+      "driver": {
+        "path": "workplace/poster154/poster_decoration_gui-r1.py",
+        "bytes": 11669,
+        "sha256": "e0df2da1d4d1603289efa457507fae513352d3ac9ed23f674134dd0798a7ce45"
+      },
+      "loop": {
+        "path": "workplace/poster154/player-linux/loop.mp4",
+        "bytes": 790160,
+        "sha256": "656d5b0b669bf85733bd691573597fea92cf14fbba5deddd19aceaf2f52ccba0"
+      },
+      "pages": [
+        1,
+        2
+      ],
+      "phases": 21,
+      "background_uploads": [
+        20,
+        20
+      ],
+      "draw_median_ms": 20.36902,
+      "static_pixels_identical": true,
+      "side_pixels": 921600,
+      "side_different": 0,
+      "saved": {
+        "ADMIRAL.DT0": "482a24048a9f553ae568560ad2a3ae21e2764c3783032a1ce0d204aecf2273c7",
+        "FLEET.DT0": "744d5df992c0c3f3fb13fcd5f17a6b3504842e8596db36b547136fbe32462d76",
+        "PLANET.DT0": "12d2e1ef8835fc8103e171a29cc9cb61814bd483c4d5358267c9010f5e4eb02b",
+        "SHIP.DT0": "0115127c1860283942928a6adbc6d83c97bb2418f452c89e655c0251ee95ed53",
+        "STELLAR.DT0": "c6ddd9ea1932d3ad13da01af7a7329bbe290da83ed433933f42589b1a421c017",
+        "WORK.DT0": "d506a292df0326408b634074e56c001552882b3c852588f539ae4c4337e5a46d"
+      }
+    },
+    {
+      "platform": "windows-amd64",
+      "path": "workplace/music69-windows/full154/player-windows-r3/RESULT.json",
+      "bytes": 283670,
+      "sha256": "1576ed8500f1be26e07f0b66a1f50e796952fd5be60e1ea17111caf0f317144f",
+      "screenshots": 23,
+      "pixel_checks": [
+        {
+          "off": "map-off",
+          "on": "decor-v1",
+          "bands": [
+            [
+              0,
+              0,
+              640,
+              41
+            ],
+            [
+              0,
+              418,
+              640,
+              480
+            ]
+          ],
+          "compared": 542400,
+          "outside_different": 0
+        },
+        {
+          "off": "original-off",
+          "on": "original-restored",
+          "bands": [
+            [
+              0,
+              0,
+              640,
+              41
+            ],
+            [
+              0,
+              418,
+              640,
+              480
+            ]
+          ],
+          "compared": 542400,
+          "outside_different": 0
+        }
+      ],
+      "driver": {
+        "path": "tools/scripts/poster_decoration_gui.py",
+        "bytes": 12435,
+        "sha256": "98e2c4c7fbe09ed5efaa5476fea8eb60d70c3d48e9b035037763b7f1c3a1dcdc"
+      },
+      "loop": null,
+      "pages": [
+        1,
+        2
+      ],
+      "phases": 22,
+      "background_uploads": [
+        20,
+        20
+      ],
+      "draw_median_ms": 16.1477,
+      "static_pixels_identical": true,
+      "side_pixels": 921600,
+      "side_different": 0,
+      "saved": {
+        "ADMIRAL.DT0": "482a24048a9f553ae568560ad2a3ae21e2764c3783032a1ce0d204aecf2273c7",
+        "FLEET.DT0": "744d5df992c0c3f3fb13fcd5f17a6b3504842e8596db36b547136fbe32462d76",
+        "PLANET.DT0": "12d2e1ef8835fc8103e171a29cc9cb61814bd483c4d5358267c9010f5e4eb02b",
+        "SHIP.DT0": "0115127c1860283942928a6adbc6d83c97bb2418f452c89e655c0251ee95ed53",
+        "STELLAR.DT0": "c6ddd9ea1932d3ad13da01af7a7329bbe290da83ed433933f42589b1a421c017",
+        "WORK.DT0": "d506a292df0326408b634074e56c001552882b3c852588f539ae4c4337e5a46d"
+      }
+    },
+    {
+      "platform": "linux-empire",
+      "path": "workplace/poster154/player-empire-r2/RESULT.json",
+      "bytes": 282911,
+      "sha256": "7bf1b5d5ac86f6412e17c067e4399a78b9efefdbe93590cdc2363a03e7b0f9a9",
+      "screenshots": 23,
+      "pixel_checks": [
+        {
+          "off": "map-off",
+          "on": "decor-v1",
+          "bands": [
+            [
+              0,
+              0,
+              640,
+              41
+            ],
+            [
+              0,
+              418,
+              640,
+              480
+            ]
+          ],
+          "compared": 542400,
+          "outside_different": 0
+        },
+        {
+          "off": "original-off",
+          "on": "original-restored",
+          "bands": [
+            [
+              0,
+              0,
+              640,
+              41
+            ],
+            [
+              0,
+              418,
+              640,
+              480
+            ]
+          ],
+          "compared": 542400,
+          "outside_different": 0
+        }
+      ],
+      "driver": {
+        "path": "workplace/poster154/poster_decoration_gui-r2.py",
+        "bytes": 12026,
+        "sha256": "68d8052a25485edfd0b5ea7849907a34cf23e33678dc97a843651373166519a4"
+      },
+      "loop": null,
+      "pages": [
+        1,
+        2
+      ],
+      "phases": 27,
+      "background_uploads": [
+        20,
+        20
+      ],
+      "draw_median_ms": 17.598023,
+      "static_pixels_identical": true,
+      "side_pixels": 921600,
+      "side_different": 0,
+      "saved": {
+        "ADMIRAL.DT0": "482a24048a9f553ae568560ad2a3ae21e2764c3783032a1ce0d204aecf2273c7",
+        "FLEET.DT0": "744d5df992c0c3f3fb13fcd5f17a6b3504842e8596db36b547136fbe32462d76",
+        "PLANET.DT0": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b",
+        "SHIP.DT0": "0115127c1860283942928a6adbc6d83c97bb2418f452c89e655c0251ee95ed53",
+        "STELLAR.DT0": "1238cc5bf1920d6b7444d3da2c5dd387206416f88de418073b29865f06c4eb39",
+        "WORK.DT0": "9170fbaf4becd6b8966b2d13cf63c08eb9e4f8213d46d15f1943cdf2d3dabbc1"
+      }
+    }
+  ],
+  "appimage_metadata": {
+    "path": "dist-all/v.1.6.2-20261025/full/APPIMAGE.json",
+    "bytes": 4153,
+    "sha256": "dccf23e7aa9cbc9619d37df49c464046c7c586b9c3763de94489ff1cecddc764"
+  },
+  "fighters": {
+    "path": "assets/hd/poster/fighters.png",
+    "bytes": 1402619,
+    "sha256": "01775ce4b6e6860fae74634ed77c98ef4fa50929bf00ce002f11acfa5bf78635"
+  },
+  "flagships": [
+    16,
+    12
+  ],
+  "preview": {
+    "path": "dist-all/v.1.6.2-20261025/promo/LOGH3-v.1.6.2-20261025-poster-loop.mp4",
+    "bytes": 790160,
+    "sha256": "656d5b0b669bf85733bd691573597fea92cf14fbba5deddd19aceaf2f52ccba0",
+    "ffprobe": {
+      "path": "dist-all/v.1.6.2-20261025/promo/FFPROBE.json",
+      "bytes": 2129,
+      "sha256": "bd96f7a591db21fafe06b2e07df3703fed175df06fd39fa04332e9525782ef4b"
+    },
+    "metadata": {
+      "path": "dist-all/v.1.6.2-20261025/promo/PREVIEW.json",
+      "bytes": 674,
+      "sha256": "0e5ad1486aa72528073aeab8fba37aa8c54678fb4500b0dba4c8b0f0a99bbf5b"
+    },
+    "media_check": {
+      "path": "dist-all/v.1.6.2-20261025/promo/MEDIA-CHECK.txt",
+      "bytes": 1533,
+      "sha256": "5a038fc9f467191449cbbd4616919c38044f31865f9b18fc497620c5f33ca349"
+    },
+    "duration": 18,
+    "frames": 270,
+    "audio": false,
+    "black_segments_05s": 0,
+    "freezes_2s": 0
+  },
+  "generators": [
+    {
+      "path": "tools/scripts/poster_decoration_release.py",
+      "bytes": 4823,
+      "sha256": "d7a1bfc3b34df03f24413634adddfc2e6954fbbdf64d2278b0acacbd3713ce3f"
+    },
+    {
+      "path": "tools/scripts/poster_decoration_receipt.py",
+      "bytes": 13255,
+      "sha256": "82f2b90ca66dff1a034d6e7b1a0c31b3693316758d05573fa511e59bbf5587ea"
+    },
+    {
+      "path": "tools/scripts/poster_decoration_preview.py",
+      "bytes": 2195,
+      "sha256": "4c383ef9194721df1f40aa5f089b4abb661569338257234e2a5431760b573e60"
+    },
+    {
+      "path": "tools/scripts/poster_decoration_gui.py",
+      "bytes": 12435,
+      "sha256": "98e2c4c7fbe09ed5efaa5476fea8eb60d70c3d48e9b035037763b7f1c3a1dcdc"
+    },
+    {
+      "path": "tools/scripts/appimage_build.sh",
+      "bytes": 1037,
+      "sha256": "a7fdac2fb65c8461fd2eea2763f4dc1543613a6b863610baf6ff7963b2a4479b"
+    }
+  ],
+  "limits": [
+    "動畫與CPU耗時採Xvfb軟體繪圖抽樣，未證明實機FPS或硬體輸入延遲。",
+    "Linux採AppImage extract-and-run，未驗桌面FUSE。",
+    "Windows採Wine，macOS雙架構／依賴／ARM簽章通過但未真機。",
+    "新增remake裝飾，不作DOS畫面parity聲明；v1.6.0推廣片保留，循環短片只是實錄預覽。"
+  ]
+}

@@ -34,3 +34,30 @@ func TestControlHoverUsesVisibleMonthlyCoordinates(t *testing.T) {
 		}
 	}
 }
+
+func TestCommandMenuHoverSharesClickGeometry(t *testing.T) {
+	g, e := New(load(t))
+	if e != nil {
+		t.Fatal(e)
+	}
+	g.Click(300, 230)
+	for _, c := range []byte("138\r") {
+		g.Key(c)
+	}
+	g.RightClick(300, 240)
+	g.RightClick(300, 240)
+	g.MoveMouse(548, 125)
+	if g.Frame().HoverControl != image.Rect(544, 120, 608, 140) {
+		t.Fatal("主指令仍沿JSON的舊滑鼠y偏移")
+	}
+	g.Click(544, 125)
+	g.MoveMouse(560, 165)
+	f := g.Frame()
+	if !f.HoverMenu || f.HoverControl != image.Rect(544, 160, 592, 180) {
+		t.Fatal("存進度hover未沿commandBar正式列", f.HoverControl)
+	}
+	g.MoveMouse(532, 165)
+	if !g.Frame().HoverControl.Empty() {
+		t.Fatal("選單邊框不能點卻出現hover")
+	}
+}

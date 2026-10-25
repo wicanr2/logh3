@@ -22,6 +22,7 @@ const (
 	DrawCursor
 	DrawAnimation
 	DrawProjection
+	DrawText // Unicode display label; Fallback retains the original pixels and glyphs.
 )
 
 type DrawCommand struct {
@@ -41,6 +42,8 @@ type DrawCommand struct {
 	WorldX, WorldY         int
 	OpenEdges              uint8 // 左1、右2、上4、下8：相鄰世界格不是星雲。
 	Base, Regions, Colours []uint8
+	Text                   string
+	TextLeft               bool
 }
 
 // BeginGroup 隔開前後原像素寫入，避免後畫像素被併入較早的命令。

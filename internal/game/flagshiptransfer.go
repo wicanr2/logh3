@@ -13,7 +13,7 @@ func (g *Game) tryFlagshipTransfer(destroyed int) bool {
 	if !g.flagshipTransfer {
 		return false
 	}
-	target := rules.FlagshipTransferTarget(g.battleUnits, destroyed)
+	target := rules.FlagshipTransferTargetWithPolicy(g.battleUnits, destroyed, g.nonBattleshipFlagship)
 	if target < 0 {
 		return false
 	}
@@ -38,7 +38,7 @@ func (g *Game) tryFlagshipTransfer(destroyed int) bool {
 		}
 	}
 	work.ApplyBattleResult(units)
-	if err := work.TransferFlagship(flag.Fleet, survivor.Squadron); err != nil {
+	if err := work.TransferFlagshipWithPolicy(flag.Fleet, survivor.Squadron, g.nonBattleshipFlagship); err != nil {
 		g.saveErr = err
 		return false
 	}

@@ -10,6 +10,39 @@ import (
 func (g *Game) hoverControlBounds() image.Rectangle {
 	x, y := g.mouseX, g.mouseY
 	point := image.Pt(x, y)
+	if g.state == StateCommandPhase {
+		for _, bar := range commandBar {
+			r := image.Rect(bar.X, barRow, bar.X+bar.W, barRow+rowHeight)
+			if point.In(r) && g.commandSpec(bar.Menu) != nil {
+				return r
+			}
+		}
+		if spec := g.commandSpec(StateCommandPhase); spec != nil {
+			for _, w := range spec.Windows {
+				if w.Tabs == nil {
+					continue
+				}
+				for _, row := range w.Tabs.Rows {
+					for _, tab := range row.Items {
+						r := image.Rect(tab.X, row.Y, tab.X+tab.W, row.Y+w.Tabs.H)
+						if !tab.NoBox && point.In(r) {
+							return r
+						}
+					}
+				}
+			}
+		}
+	}
+	if i := menuOf(g.state); i >= 0 {
+		bar := commandBar[i]
+		for row, item := range bar.Items {
+			r := image.Rect(bar.X, barRow+row*rowHeight, bar.X+bar.ItemW, barRow+(row+1)*rowHeight)
+			if point.In(r) && (item == StateExecute || g.commandSpec(item) != nil) {
+				return r
+			}
+		}
+		return image.Rectangle{}
+	}
 	if g.state == StateCopyProtection && g.res.CopyProt != nil && g.res.CopyProt.InputBox != nil {
 		b := g.res.CopyProt.InputBox
 		r := image.Rect(b.X, b.Y, b.X+b.W, b.Y+b.H)

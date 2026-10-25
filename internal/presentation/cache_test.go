@@ -44,6 +44,37 @@ func TestRenderCacheKeepsSemanticOcclusion(t *testing.T) {
 	}
 }
 
+func TestPersonnelCursorCacheMatchesFullReplay(t *testing.T) {
+	newRenderer := func() *Renderer {
+		return &Renderer{theme: true, classic: true, frame: image.NewRGBA(image.Rect(0, 0, gfx.Width*Scale, gfx.Height*Scale))}
+	}
+	r, ref := newRenderer(), newRenderer()
+	p := gfx.Palette{}
+	p[1] = [3]uint8{63, 12, 7}
+	for step := 0; step < 5; step++ {
+		base := gfx.NewFramebuffer(0)
+		base.FillRect(10, 10, 80, 60, uint8(step%2))
+		fb := *base
+		fb.Pix = bytes.Clone(base.Pix)
+		fb.Commands = append([]gfx.DrawCommand(nil), base.Commands...)
+		cursor := gfx.DrawCommand{Kind: gfx.DrawCursor, X: 20 + step, Y: 20, W: 13, H: 16, Clip: image.Rect(0, 0, gfx.Width, gfx.Height)}
+		fb.Commands = append(fb.Commands, cursor)
+		fb.CursorBackground = base
+		got := bytes.Clone(r.Render(&fb, p).Pix)
+		fb.CursorBackground = nil
+		ref.frameValid = false
+		if !bytes.Equal(got, ref.Render(&fb, p).Pix) {
+			t.Fatal("背景快取與完整重播不同")
+		}
+		fb.CursorBackground = base
+		generation := r.Generation()
+		r.Render(&fb, p)
+		if generation != r.Generation() {
+			t.Fatal("游標靜止仍重建")
+		}
+	}
+}
+
 func TestRenderCacheTracksArtworkVisibilityAndTheme(t *testing.T) {
 	r := &Renderer{frame: image.NewRGBA(image.Rect(0, 0, gfx.Width*Scale, gfx.Height*Scale)), images: map[string]*image.RGBA{}}
 	fb := gfx.NewFramebuffer(0)

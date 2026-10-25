@@ -24,6 +24,8 @@ var compactControls = func() []compactControl {
 		controls = append(controls, compactControl{id, label, r, image.Pt(x, y)})
 	}
 	add("font", "", image.Rect(288, 68, 448, 84), 0, 0)
+	add("poster", "", image.Rect(384, 48, 448, 64), 0, 0)
+	add("locale", "", image.Rect(176, 48, 256, 64), 0, 0)
 	add("hd", "HD", image.Rect(288, 86, 338, 102), 0, 0)
 	add("fm", "FM", image.Rect(342, 86, 392, 102), 368, 110)
 	add("off", "關閉", image.Rect(396, 86, 448, 102), 416, 110)
@@ -40,8 +42,8 @@ var compactControls = func() []compactControl {
 	for i, s := range []string{"普通", "快速", "最快"} {
 		add(fmt.Sprintf("speed-%d", i), s, image.Rect(288+i*54, 270, 340+i*54, 286), 320+i*48, 350)
 	}
-	for i, s := range []string{"soundfont", "enemies", "ai", "flagship", "movement"} {
-		add(s, "", image.Rect(288, 288+i*18, 448, 304+i*18), 0, 0)
+	for i, s := range []string{"soundfont", "enemies", "ai", "flagship", "movement", "non-battleship"} {
+		add(s, "", image.Rect(288, 288+i*15, 448, 302+i*15), 0, 0)
 	}
 	add("close", "結束", image.Rect(360, 378, 448, 394), 0, 0)
 	add("admirals", "編輯提督", image.Rect(176, 378, 288, 394), 0, 0)
@@ -62,6 +64,8 @@ func aiSettingsRow(level int) image.Rectangle {
 }
 
 var compactRuneCodes = map[rune]uint16{
+	'海': 0xAEFC, '報': 0xB3F8,
+	'非': 0xAB44,
 	'世': 0xA540, '交': 0xA5E6, '介': 0xA4B6, '使': 0xA8CF, '來': 0xA8D3, '保': 0xAB4F, '全': 0xA5FE, '則': 0xAB68, '前': 0xAB65, '加': 0xA55B,
 	'動': 0xB0CA, '化': 0xA4C6, '原': 0xADEC, '名': 0xA657, '啟': 0xB1D2, '四': 0xA57C, '型': 0xABAC, '場': 0xB3F5, '夏': 0xAE4C, '夕': 0xA469,
 	'字': 0xA672, '存': 0xA673, '季': 0xA975, '宋': 0xA7BA, '定': 0xA977, '將': 0xB14E, '平': 0xA5AD, '度': 0xABD7, '庫': 0xAE77, '強': 0xB16A,
@@ -87,6 +91,10 @@ func compactTextWidth(text string) int {
 }
 
 func (a *app) compactText(fb *gfx.Framebuffer, r image.Rectangle, text string, ink uint8) {
+	group := fb.BeginGroup()
+	defer func() {
+		fb.EndGroup(group, gfx.DrawCommand{Kind: gfx.DrawText, Text: text, X: r.Min.X, Y: r.Min.Y, W: r.Dx(), H: r.Dy(), Clip: r, Colour: ink})
+	}()
 	x, y := r.Min.X+(r.Dx()-compactTextWidth(text))/2, r.Min.Y+(r.Dy()-12)/2
 	for _, c := range text {
 		if glyph, ok := font.SettingsGlyph(c); ok {
@@ -99,7 +107,7 @@ func (a *app) compactText(fb *gfx.Framebuffer, r image.Rectangle, text string, i
 				}
 			}
 			fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawGlyph, Key: font.SettingsGlyphKey,
-				X: x, Y: y, W: glyph.Width, H: 12, Colour: ink, Clip: r,
+				X: x, Y: y, W: glyph.Width, H: 12, Code: uint16(c), Half: c < 128, Colour: ink, Clip: r,
 				SourceW: glyph.Width * 3, SourceH: 36, Source: glyph.HD})
 			x += glyph.Width
 			continue
@@ -174,6 +182,10 @@ func (a *app) compactSettingsClick(x, y int) bool {
 			continue
 		}
 		switch c.ID {
+		case "poster":
+			a.cyclePoster()
+		case "locale":
+			a.cycleLocale()
 		case "font":
 			if a.hd != nil {
 				styles := a.hd.FontStyles()
@@ -201,7 +213,7 @@ func (a *app) compactSettingsClick(x, y int) bool {
 			a.g.ToggleEnemyVisibility()
 		case "ai":
 			a.aiSettingsMenu = true
-		case "flagship", "movement":
+		case "flagship", "movement", "non-battleship":
 			a.ruleSettingsClick(p)
 		case "close":
 			a.g.RightClick(x, y)
@@ -218,6 +230,7 @@ func (a *app) compactSettingsClick(x, y int) bool {
 }
 
 func (a *app) drawCompactSettings(fb *gfx.Framebuffer) {
+	fb.HoverControl, fb.HoverMenu = image.Rectangle{}, false
 	// 金屬外緣讓深色介面也能辨識左框，內層保留右上光源的陰影。
 	(ui.Frame{Role: "ui/window", Layers: []ui.Layer{
 		{Top: 15, Right: 15, Bottom: 15, Left: 15},
@@ -227,8 +240,12 @@ func (a *app) drawCompactSettings(fb *gfx.Framebuffer) {
 	for _, l := range []struct {
 		text string
 		y    int
-	}{{"介面字型", 68}, {"音源", 86}, {"平時配樂", 104}, {"戰鬥配樂", 190}, {"訊息速度", 234}, {"動畫效果", 252}, {"動畫速度", 270}, {"音色庫", 288}, {"顯示敵軍", 306}, {"AI強化", 324}, {"轉移旗艦", 342}, {"名將移動加成", 360}} {
-		a.compactText(fb, image.Rect(176, l.y, 284, l.y+16), l.text, 7)
+	}{{"介面字型", 68}, {"音源", 86}, {"平時配樂", 104}, {"戰鬥配樂", 190}, {"訊息速度", 234}, {"動畫效果", 252}, {"動畫速度", 270}, {"音色庫", compactControlBounds("soundfont").Min.Y}, {"顯示敵軍", compactControlBounds("enemies").Min.Y}, {"AI強化", compactControlBounds("ai").Min.Y}, {"轉移旗艦", compactControlBounds("flagship").Min.Y}, {"名將移動加成", compactControlBounds("movement").Min.Y}, {"非戰艦旗艦", compactControlBounds("non-battleship").Min.Y}} {
+		h := 16
+		if l.y >= compactControlBounds("soundfont").Min.Y {
+			h = compactControlBounds("soundfont").Dy()
+		}
+		a.compactText(fb, image.Rect(176, l.y, 284, l.y+h), l.text, 7)
 	}
 	music, display, options := a.g.MusicSettings(), a.g.DisplaySettings(), a.g.RuleOptions()
 	button := func(r image.Rectangle, label string, selected, enabled bool) {
@@ -249,6 +266,16 @@ func (a *app) drawCompactSettings(fb *gfx.Framebuffer) {
 	for _, c := range compactControls {
 		label, selected, enabled := c.Label, false, true
 		switch c.ID {
+		case "poster":
+			selected, enabled = a.posterMode, a.posters.available()
+			label = "海報 關"
+			if selected {
+				label = "海報 " + a.posters.setName()
+			} else if !enabled {
+				label = "海報 無"
+			}
+		case "locale":
+			label = "Lang " + a.localeCode()
 		case "font":
 			style := "original"
 			if a.hd != nil {
@@ -277,6 +304,8 @@ func (a *app) drawCompactSettings(fb *gfx.Framebuffer) {
 			selected = options.FlagshipTransfer
 		case "movement":
 			selected = options.HeroMovement
+		case "non-battleship":
+			selected = options.NonBattleshipFlagship
 		default:
 			for i := 0; i < 6; i++ {
 				if c.ID == fmt.Sprintf("bgm-%d", i) {
@@ -292,7 +321,7 @@ func (a *app) drawCompactSettings(fb *gfx.Framebuffer) {
 				}
 			}
 		}
-		if c.ID == "enemies" || c.ID == "flagship" || c.ID == "movement" {
+		if c.ID == "enemies" || c.ID == "flagship" || c.ID == "movement" || c.ID == "non-battleship" {
 			label = "關閉"
 			if selected {
 				label = "開啟"
@@ -301,7 +330,7 @@ func (a *app) drawCompactSettings(fb *gfx.Framebuffer) {
 		button(c.Bounds, label, selected, enabled)
 	}
 	a.compactText(fb, image.Rect(288, 234, 396, 250), fmt.Sprint(display.MsgSpeed), 7)
-	if a.ruleSettingsError != "" || a.soundFontError != "" {
+	if a.ruleSettingsError != "" || a.soundFontError != "" || a.posterError != "" || a.localeError != "" {
 		a.compactText(fb, image.Rect(292, 378, 356, 394), "設定失敗", 7)
 	}
 	if a.soundFontMenu {

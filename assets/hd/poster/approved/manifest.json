@@ -1,0 +1,56 @@
+{
+  "format": "logh3-approved-poster-v1",
+  "canvas": [
+    2560,
+    1440
+  ],
+  "proposal_sha256": "ac843a911fce876e67292940285d22f19c988e092465fe09ab0746f6bf34c202",
+  "game_scale": 88,
+  "files": {
+    "base-v1.png": {
+      "sha256": "fda6e25dd822040a14faaa7f0b722c79dbe886372659cf0aeeac6a84bf08ce53",
+      "width": 2560,
+      "height": 1440
+    },
+    "base-v2.png": {
+      "sha256": "a577fa63b05cb00d0ca035fa29d804f67f05693f9caeb638f5c7105f13e2e11f",
+      "width": 2560,
+      "height": 1440
+    },
+    "base-v3.png": {
+      "sha256": "f319b41ca46aa6dbf392d4f0d3c28d883eaa861a2fc7c831a162b8274dd0f0e7",
+      "width": 2560,
+      "height": 1440
+    },
+    "hulls.png": {
+      "sha256": "33622be1db1ae6983d426ca28ee9a036235e80430a4097d55fa145c4e34c62e1",
+      "width": 2560,
+      "height": 1440
+    },
+    "labels-en.png": {
+      "sha256": "27c315ea97680c43ac57150eff476612829d7c968b3d6342ca6e69148351d729",
+      "width": 2560,
+      "height": 1440
+    },
+    "labels-ja.png": {
+      "sha256": "02b7d26c2b4a0be5c688a20e2a33ca3e926e3a285c6671b946cfd1f20ca5a578",
+      "width": 2560,
+      "height": 1440
+    },
+    "labels-ko.png": {
+      "sha256": "87b60fabc8f75de50953c06429a21fbc8d55b1056eba25fdd5a08d7d448f2e70",
+      "width": 2560,
+      "height": 1440
+    },
+    "labels-zh-CN.png": {
+      "sha256": "c38778acb24e45b98438a0f248147b4c974208257a86e6ff2d2313a4796ef50c",
+      "width": 2560,
+      "height": 1440
+    },
+    "labels-zh-TW.png": {
+      "sha256": "5dc5efd3dfe31aa8710133a430bf8f6ce3beed9a0693aebdce90c75c68d9c31b",
+      "width": 2560,
+      "height": 1440
+    }
+  }
+}

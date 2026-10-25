@@ -15,6 +15,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/localize"
 	"github.com/wicanr2/logh3/internal/presentation"
 )
 
@@ -27,20 +28,21 @@ var startupFontPNG []byte
 var startupFontJSON []byte
 
 type startup struct {
-	load    func(func(int, string)) (*app, error)
-	scale   float64
-	once    sync.Once
-	mu      sync.Mutex
-	step    int
-	label   string
-	loaded  *app
-	err     error
-	closed  bool
-	game    *app
-	texture *ebiten.Image
-	last    string
-	font    image.Image
-	glyphs  map[string][4]int
+	load     func(func(int, string)) (*app, error)
+	scale    float64
+	once     sync.Once
+	mu       sync.Mutex
+	step     int
+	label    string
+	loaded   *app
+	err      error
+	closed   bool
+	game     *app
+	texture  *ebiten.Image
+	last     string
+	font     image.Image
+	glyphs   map[string][4]int
+	language *localize.Catalog
 }
 
 func newStartup(load func(func(int, string)) (*app, error), scale float64) *startup {
@@ -137,7 +139,12 @@ func (a *app) prepareWindow(scale float64) {
 		ebiten.SetScreenFilterEnabled(false)
 		a.hdScreen = ebiten.NewImage(gfx.Width*presentation.Scale, gfx.Height*presentation.Scale)
 	}
-	ebiten.SetWindowSize(int(float64(gfx.Width)*scale), int(float64(gfx.Height)*scale))
+	w, h := int(float64(gfx.Width)*scale), int(float64(gfx.Height)*scale)
+	if a.posterMode {
+		w = posterWindowWidth(h, true)
+	}
+	ebiten.SetWindowSize(w, h)
+	a.windowReady = true
 	ebiten.SetWindowTitle("銀河英雄傳說III SP")
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 	ebiten.SetCursorMode(ebiten.CursorModeHidden)
@@ -151,6 +158,11 @@ func (s *startup) Layout(w, h int) (int, int) {
 }
 
 func (s *startup) text(dst *image.RGBA, x, y int, text string, ink color.RGBA, maxWidth int) {
+	if s.language != nil && s.language.Locale != "zh-TW" {
+		if localize.DrawRGBA(dst, s.language.Locale, s.language.Translate(text), image.Rect(x, y, x+maxWidth, y+23), ink, 16) {
+			return
+		}
+	}
 	start := x
 	for _, char := range text {
 		glyph, ok := s.glyphs[string(char)]

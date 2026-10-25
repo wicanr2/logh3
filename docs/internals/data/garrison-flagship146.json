@@ -1,0 +1,216 @@
+{
+  "version": "v.1.5.2-20261024",
+  "platform": "Windows amd64，Wine正常操作驗證，未作Windows真機驗收",
+  "scope": "使用者指定非戰艦旗艦選項；原速正常視窗駐地改選提督、領船及移動。無新增DOS parity聲明。",
+  "archive": {
+    "path": "release/LOGH3-v.1.5.2-20261024-windows-amd64-patch.zip",
+    "bytes": 8044560,
+    "sha256": "c8fb79e0b8e60e46cc6929af48b874d2751ce3eefe50cd71d524f6c2390ecc05"
+  },
+  "binary_sha256": "ac86b2d440785ae9c40941da555fd861c8e299daf03f2ebeacf10c9c96a68eaa",
+  "build_sha256": "646d8f51a4ccf5bffbebdc65ffdafcc4cae31272100691b61dd8d4c0874e2fd9",
+  "frozen_files": 1593,
+  "product_files": 615,
+  "version_output_sha256": "07b760c7055ac9c1ad4f560c0436c83a99fc54d6eee9bacc22fb10cdf485ff8b",
+  "model_sha256": "0b8fb4bc9b6537f89ca9fed7adca977f6d40882c507dacb87fe4c78461d62b0c",
+  "gui": [
+    {
+      "path": "workplace/garrison146-recording-r2",
+      "result_sha256": "7dcd1eaf9febc8a23e596859cada478eb7b18ecc0ce55d1d0d54f8212ae8c657",
+      "trace_sha256": "5d0278a2b508d7ba1d980ff1daa3e3ae125013a1e08058dc7c554b89cec62785",
+      "binary_sha256": "2165a51c815185ed88ae92852d4ed94bc2787bc6e853e6b3c140b9d544ffb991",
+      "captures": 19,
+      "model_steps": 96,
+      "stock_before": [
+        9000,
+        3000,
+        16000,
+        2000,
+        12000,
+        3000,
+        1000
+      ],
+      "stock_after": [
+        6000,
+        3000,
+        12000,
+        2000,
+        9000,
+        3000,
+        1000
+      ],
+      "capital_stock": [
+        102000,
+        30000,
+        104000,
+        36000,
+        9000,
+        6000,
+        5000
+      ],
+      "fleet": {
+        "Index": 18,
+        "Number": 3,
+        "Admiral": 41,
+        "Adjutant": -1,
+        "Region": 19,
+        "Target": -1,
+        "Move": 5,
+        "Groups": [
+          {
+            "kind": 2,
+            "ships": 4000,
+            "full": 4000,
+            "slot2": 2,
+            "slot3": 20,
+            "pool": -1,
+            "repair_cap": 4000,
+            "missiles": 48000,
+            "fighters": 12000
+          },
+          {
+            "kind": 0,
+            "ships": 3000,
+            "full": 3000,
+            "slot2": 0,
+            "slot3": 21,
+            "pool": -1,
+            "repair_cap": 3000,
+            "missiles": 12000,
+            "fighters": 27000
+          },
+          {
+            "kind": 4,
+            "ships": 3000,
+            "full": 3000,
+            "slot2": 4,
+            "slot3": 19,
+            "pool": -1,
+            "repair_cap": 3000,
+            "missiles": 48000
+          }
+        ]
+      },
+      "destination": 18,
+      "saved": {
+        "ADMIRAL.DT0": "4f5d0322fe0bdcf9f48a1c851a8999a7900143c6bf9362889ccae9e1a4078824",
+        "FLEET.DT0": "ab4110fe062da6a485cb47b175337444ff57e7495e4ff68464bd05a4fbe9803d",
+        "PLANET.DT0": "f41471ef5e852271222673642f50cc1fb446470f94027e474e3ae1d48e7d9c45",
+        "SHIP.DT0": "61c544285badc1287ee9eb7e0359de7c134c5013cbe331a1fd21248ae7ed2b30",
+        "STELLAR.DT0": "39bcb69e370425d9b5bd47f518656d28e7ef678bc54fe7cd2bafb609b4f80ef1",
+        "WORK.DT0": "1dc5a4583438ab25187c0756da1bfe54b7cff9dcfec5d2a45f022b58289a3b91"
+      },
+      "preference_sha256": "5bbca908ad7b2055166f574043873951cc073ec7da8bc8839273b55d6e182903"
+    },
+    {
+      "path": "workplace/music69-windows/garrison146/verified-r2",
+      "result_sha256": "b43e53d4954c453693c65a893c82a405cb772a00596bfebdfbc6ef2c21acc504",
+      "trace_sha256": "20da738807c1f756c13672cf0191b655c27c847d440f0136b1d70d518574e261",
+      "binary_sha256": "ac86b2d440785ae9c40941da555fd861c8e299daf03f2ebeacf10c9c96a68eaa",
+      "captures": 19,
+      "model_steps": 96,
+      "stock_before": [
+        9000,
+        3000,
+        16000,
+        2000,
+        12000,
+        3000,
+        1000
+      ],
+      "stock_after": [
+        6000,
+        3000,
+        12000,
+        2000,
+        9000,
+        3000,
+        1000
+      ],
+      "capital_stock": [
+        102000,
+        30000,
+        104000,
+        36000,
+        9000,
+        6000,
+        5000
+      ],
+      "fleet": {
+        "Index": 18,
+        "Number": 3,
+        "Admiral": 41,
+        "Adjutant": -1,
+        "Region": 19,
+        "Target": -1,
+        "Move": 5,
+        "Groups": [
+          {
+            "kind": 2,
+            "ships": 4000,
+            "full": 4000,
+            "slot2": 2,
+            "slot3": 20,
+            "pool": -1,
+            "repair_cap": 4000,
+            "missiles": 48000,
+            "fighters": 12000
+          },
+          {
+            "kind": 0,
+            "ships": 3000,
+            "full": 3000,
+            "slot2": 0,
+            "slot3": 21,
+            "pool": -1,
+            "repair_cap": 3000,
+            "missiles": 12000,
+            "fighters": 27000
+          },
+          {
+            "kind": 4,
+            "ships": 3000,
+            "full": 3000,
+            "slot2": 4,
+            "slot3": 19,
+            "pool": -1,
+            "repair_cap": 3000,
+            "missiles": 48000
+          }
+        ]
+      },
+      "destination": 18,
+      "saved": {
+        "ADMIRAL.DT0": "4f5d0322fe0bdcf9f48a1c851a8999a7900143c6bf9362889ccae9e1a4078824",
+        "FLEET.DT0": "ab4110fe062da6a485cb47b175337444ff57e7495e4ff68464bd05a4fbe9803d",
+        "PLANET.DT0": "f41471ef5e852271222673642f50cc1fb446470f94027e474e3ae1d48e7d9c45",
+        "SHIP.DT0": "61c544285badc1287ee9eb7e0359de7c134c5013cbe331a1fd21248ae7ed2b30",
+        "STELLAR.DT0": "39bcb69e370425d9b5bd47f518656d28e7ef678bc54fe7cd2bafb609b4f80ef1",
+        "WORK.DT0": "1dc5a4583438ab25187c0756da1bfe54b7cff9dcfec5d2a45f022b58289a3b91"
+      },
+      "preference_sha256": "5bbca908ad7b2055166f574043873951cc073ec7da8bc8839273b55d6e182903"
+    }
+  ],
+  "tests": "tools/gui.sh test ./internal/... ./cmd/...：19套件，15 PASS／4無測試；新艦種矩陣與轉移保存測試通過",
+  "movie": {
+    "file": "dist-all/v.1.5.2-20261024/promo/LOGH3-v.1.5.2-20261024-garrison-promo.mp4",
+    "sha256": "bc622d1e53b5f7ce328a04fe044060c0833ad6652562016fcce5544b8e0c8803",
+    "seconds": 87,
+    "audit_sha256": "b3f3f028bbba4feeb430d4b8f2e60bff56898e85fc1b0a828f31d18e4f533116",
+    "plan_sha256": "41ce19d1a18e59063284f9c7193c7abe8eb5b2630ab9fddd79b405f219fb423a"
+  },
+  "reproduction": {
+    "plan": "tools/scripts/garrison_promo_plan.go",
+    "gui": "tools/scripts/garrison_promo_gui.py",
+    "movie": "tools/scripts/garrison_promo_movie.py",
+    "verification": "tools/scripts/garrison_promo_receipt.py"
+  },
+  "rights": "影片含原版及衍生音畫，僅本機；Windows替換包不含遊戲素材。未發布Release。",
+  "reproduction_sha256": {
+    "tools/scripts/garrison_promo_plan.go": "477cb961bd6769fb77f0399c52ed4c181c15c42924fcf37a228b445592a60fc5",
+    "tools/scripts/garrison_promo_gui.py": "6ef7d4daf3d591e95a79abe3a93ba6435494f6307c4ca909bb20cb753699e0db",
+    "tools/scripts/garrison_promo_movie.py": "8330c1836cce5e2d196727e98e2eeb854f4eb74032585e91b3cee4e5b735bf10",
+    "tools/scripts/garrison_promo_receipt.py": "86fad73f0828790422fb8dfabb11713dc81b35bccc0eef12223e7b91571f9c41"
+  },
+  "checksums_sha256": "900e8535d03cb8ed8cc6f352b9a1e6c7088a5bfd58f4f26c6b2f7a08c89e266c"
+}

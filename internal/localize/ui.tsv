@@ -1,0 +1,763 @@
+key	zh-TW	zh-CN	ja	en	ko
+ui.0754	月份	月份	月	Month	월
+ui.0755	月份船艦訂造報告	月份船舰订造报告	月次艦艇発注報告	Monthly Ship Orders	월간 함정 발주 보고
+ui.0756	星系嗎	星系吗	星系ですか	system	성계인가요
+ui.0757	亞爾‧沙列姆	亚尔‧沙列姆	アル・サレム	Al-Salem	알 살렘
+ui.0672	無法直接到達此星系	无法直接到达此星系	この星系へ直行できません	Cannot reach this system directly	이 성계로 직접 갈 수 없음
+ui.0673	的戰略輸入	的战略输入	の戦略入力	 strategic orders	전략 입력
+ui.0674	占領下來	占领下来	占領完了	Captured	점령 완료
+ui.0675	合計收入	合计收入	総収入	Total Income	총수입
+ui.0676	單位	单位	単位	Unit	단위
+ui.0677	億	亿	億	100M	억
+ui.0678	培特雷	培特雷	ペトレ	Petre	페트레
+ui.0679	姆夫維瑟	姆夫维瑟	ムフウェセ	Mufwese	무프베세
+ui.0680	完全無法支配的區域	完全无法支配的区域	支配不能地域	Uncontrolled area	통제 불가 지역
+ui.0681	官階晉昇為	官阶晋升为	階級昇進	Promoted to	계급 승진
+ui.0682	已支付	已支付	支払済み	Paid	지불 완료
+ui.0683	已經將敵方的主要星系攻陷	已经将敌方的主要星系攻陷	敵の主要星系を攻略	Enemy's main system captured	적 주요 성계 함락
+ui.0684	已經恢復	已经恢复	回復済み	Recovered	회복됨
+ui.0685	可以進行戰鬥	可以进行战斗	戦闘可能	Ready for battle	전투 가능
+ui.0686	已經歸屬	已经归属	所属変更	Now under	소속 변경
+ui.0687	掌控之中	掌控之中	の支配下	control	통제 아래
+ui.0688	建造船艦	建造船舰	艦艇建造	Build Ships	함정 건조
+ui.0689	預算分配	预算分配	予算配分	Budget Split	예산 배분
+ui.0690	金額	金额	金額	Cost	금액
+ui.0691	建造中	建造中	建造中	Building	건조 중
+ui.0692	影響內政參謀評分、稅率	影响内政参谋评分、税率	内政参謀の評価と税率に影響	Affects domestic staff ratings and tax.	내정 참모 평가와 세율에 영향.
+ui.0693	影響稅率、治安分段、AI艦隊類別	影响税率、治安分段、AI舰队类别	税率・治安区分・AI艦隊分類に影響	Affects tax, order bands and AI fleet types.	세율·치안 구간·AI 함대 유형에 영향.
+ui.0694	愈高愈容易選中評分最高的攻擊目標。	愈高愈容易选中评分最高的攻击目标。	高いほど最高評価の攻撃目標を選択。	Higher values favor the best-rated target.	높을수록 최고 평가 공격 목표를 선택.
+ui.0695	我方星系總數	我方星系总数	自軍星系総数	Allied Systems	아군 성계 총수
+ui.0696	我軍已進駐	我军已进驻	自軍が進駐	Allies garrisoned	아군 진주
+ui.0697	部分行星	部分行星	一部惑星	Some planets	일부 행성
+ui.0698	戰術模式結束	战术模式结束	戦術モード終了	Tactical mode ended	전술 모드 종료
+ui.0699	手動１	手动１	手動1	Manual 1	수동 1
+ui.0700	手動２	手动２	手動2	Manual 2	수동 2
+ui.0701	指揮官	指挥官	指揮官	Commander	지휘관
+ui.0702	損壞艦數	损坏舰数	損傷艦数	Damaged	손상 함정
+ui.0703	擊毀	击毁	撃破	Destroyed	격파
+ui.0704	放棄尚未套用的修改？	放弃尚未套用的修改？	未適用の変更を破棄しますか？	Discard unapplied changes?	미적용 변경을 버릴까요?
+ui.0705	整個艦隊已經失去戰鬥意志	整个舰队已经失去战斗意志	艦隊の戦意喪失	Fleet has lost its will to fight	함대 전체가 전투 의지를 상실
+ui.0706	無法繼續進行戰鬥	无法继续进行战斗	戦闘継続不能	Cannot continue battle	전투를 계속할 수 없음
+ui.0707	敵方艦隊正在侵略中	敌方舰队正在侵略中	敵艦隊侵攻中	Enemy fleet invading	적 함대 침공 중
+ui.0708	星系方面	星系方面	星系方面	System area	성계 방면
+ui.0709	已經被敵方艦隊侵入	已经被敌方舰队侵入	敵艦隊が侵入	Invaded by enemy fleet	적 함대가 침입
+ui.0710	占領行動持續進行中	占领行动持续进行中	占領継続中	Occupation continues	점령 행동 계속 중
+ui.0711	最高修理數	最高修理数	最大修理数	Max Repairs	최대 수리 수
+ui.0712	最高速度	最高速度	最高速度	Max Speed	최고속도
+ui.0713	會計報告	会计报告	会計報告	Financial Report	회계 보고
+ui.0714	有中等規模的艦隊群	有中等规模的舰队群	中規模の艦隊	Medium fleet force	중규모 함대
+ui.0715	本月份	本月份	今月	This Month	이번 달
+ui.0716	原定軍事費	原定军事费	当初軍事費	Planned Funds	당초 군사비
+ui.0717	本月份的收入及支出狀況	本月份的收入及支出状况	今月の収支	Monthly Income and Spending	이번 달 수입·지출
+ui.0718	索敵艦已經失去連絡	索敌舰已经失去连络	偵察艦が連絡不明	Scout ship lost contact	정찰함 연락 두절
+ui.0719	的官階晉昇為	的官阶晋升为	の階級が昇進	 promoted to	계급 승진
+ui.0720	距離	距离	距離	Distance	거리
+ui.0721	高速	高速	高速	High Speed	고속
+ui.0722	確定生還	确定生还	生還確認	Survival Confirmed	생환 확인
+ui.0723	費沙自治領地	费沙自治领地	フェザーン自治領	Phezzan Dominion	페잔 자치령
+ui.0724	占領費沙自治領地可能會導致費沙的經	占领费沙自治领地可能会导致费沙的经	フェザーン占領により経済力が	Occupying Phezzan may redirect its	페잔 점령으로 경제력이
+ui.0725	濟力流向同盟軍。	济力流向同盟军。	同盟へ流出する可能性があります。	economic strength to the Alliance.	동맹으로 유출될 수 있습니다.
+ui.0726	另外，同盟邊境地帶的情勢正陷入混亂	另外，同盟边境地带的情势正陷入混乱	また、同盟辺境は混乱しています	Alliance border areas are in turmoil	동맹 변방의 정세도 혼란에 빠집니다
+ui.0727	的狀態。	的状态。	。	.	.
+ui.0728	同時，支持費沙自治領地的邊境星系	同时，支持费沙自治领地的边境星系	フェザーンを支持する辺境星系も	Border systems supporting Phezzan	페잔을 지지하는 변방 성계도
+ui.0729	目前情勢正持續惡化中。	目前情势正持续恶化中。	情勢が悪化し続けています。	are also deteriorating.	정세가 계속 악화되고 있습니다.
+ui.0730	因為費沙自治領地已被帝國大軍占領。	因为费沙自治领地已被帝国大军占领。	帝国軍がフェザーンを占領しました。	Imperial forces have occupied Phezzan.	제국군이 페잔을 점령했습니다.
+ui.0731	有許多費沙的流亡者前來請求庇護。	有许多费沙的流亡者前来请求庇护。	多くの亡命者が保護を求めています。	Many Phezzan refugees seek asylum.	페잔 난민들이 망명을 요청합니다.
+ui.0732	由於費沙星系被同盟軍占領的緣故；	由于费沙星系被同盟军占领的缘故；	同盟軍によるフェザーン占領で、	Due to the Alliance occupation of Phezzan,	동맹군의 페잔 점령으로
+ui.0733	目前邊境正流入大量的難民。	目前边境正流入大量的难民。	辺境に大量の難民が流入しています。	many refugees are entering the border.	변방에 많은 난민이 유입됩니다.
+ui.0734	破壞和平條約將會使費沙龐大的經濟力	破坏和平条约将会使费沙庞大的经济力	平和条約を破るとフェザーンの経済力は	Breaking the peace treaty may send	평화 조약을 깨면 페잔의 경제력이
+ui.0735	流向帝國軍那一方。	流向帝国军那一方。	帝国側へ流出します。	Phezzan's economy to the Empire.	제국으로 유출됩니다.
+ui.0736	而且有可能會使得同盟星系發生叛亂。	而且有可能会使得同盟星系发生叛乱。	同盟星系で反乱の恐れもあります。	Alliance systems may also rebel.	동맹 성계에 반란이 일어날 수도 있습니다.
+ui.0737	你確定要占領費沙嗎？	你确定要占领费沙吗？	本当にフェザーンを占領しますか？	Occupy Phezzan anyway?	그래도 페잔을 점령할까요?
+ui.0738	而且，帝國邊境的星系目前好像發生叛	而且，帝国边境的星系目前好像发生叛	さらに帝国辺境でも反乱が起きた	Imperial border systems also appear	제국 변방의 성계에도 반란이
+ui.0739	亂的樣子。	乱的样子。	ようです。	to have rebelled.	일어난 듯합니다.
+ui.0740	而且，強硬的占領政策可能會造成邊境	而且，强硬的占领政策可能会造成边境	強硬な占領政策は辺境の情勢を	A harsh occupation policy may worsen	강경한 점령 정책은 변방
+ui.0741	星系的情勢惡化。	星系的情势恶化。	悪化させるかもしれません。	conditions in border systems.	성계의 정세를 악화시킬 수 있습니다.
+ui.0742	而且，費沙的經濟力大部份好像已經轉	而且，费沙的经济力大部份好像已经转	フェザーンの経済力の大半はすでに	Much of Phezzan's economy seems	페잔의 경제력 대부분이 이미
+ui.0743	移到帝國軍那邊的樣子。	移到帝国军那边的样子。	帝国側へ移ったようです。	to have shifted to the Empire.	제국으로 넘어간 듯합니다.
+ui.0744	雖然費沙自治領地的占領行動已經成功	虽然费沙自治领地的占领行动已经成功	フェザーンの占領には成功しましたが	Although Phezzan was occupied,	페잔 점령에는 성공했으나
+ui.0745	。但是，破壞條約的背信行為卻造成	。但是，破坏条约的背信行为却造成	条約違反という背信により	the betrayal of the treaty caused	조약 위반이라는 배신으로
+ui.0746	我方邊境星系接連不斷地發生叛亂。	我方边境星系接连不断地发生叛乱。	自軍辺境で反乱が相次いでいます。	repeated rebellions on our border.	아군 변방에 반란이 잇따릅니다.
+ui.0747	請將『銀河英雄傳說III  ＳＰ』的	请将『银河英雄传说III  ＳＰ』的	銀河英雄伝説III SPの	Insert the LOGH III SP	은하영웅전설 III SP의
+ui.0748	Ｃ–Ｄｉｓｋ放入Ａ磁碟機中。	Ｃ–Ｄｉｓｋ放入Ａ磁碟机中。	CディスクをAドライブへ。	C disk in drive A.	C 디스크를 A 드라이브에 넣으세요.
+ui.0749	請放入『銀河英雄傳說ⅢＳＰ』的Ｄ–Ｄｉｓｋ至Ａ磁碟機。	请放入『银河英雄传说ⅢＳＰ』的Ｄ–Ｄｉｓｋ至Ａ磁碟机。	DディスクをAドライブへ入れてください。	Insert the D disk in drive A.	D 디스크를 A 드라이브에 넣으세요.
+ui.0750	放入Ａ磁碟機中。	放入Ａ磁碟机中。	Aドライブに入れてください。	Insert in drive A.	A 드라이브에 넣으세요.
+ui.0751	磁碟片讀取時有發生錯誤。	磁碟片读取时有发生错误。	ディスク読込エラー。	Disk read error.	디스크 읽기 오류.
+ui.0752	磁碟片載入時有發生錯誤。	磁碟片载入时有发生错误。	ディスク読込エラー。	Disk loading error.	디스크 불러오기 오류.
+ui.0753	請重新開機。	请重新开机。	再起動してください。	Please restart.	다시 시작하세요.
+ui.0669	旗艦被擊毀時的換艦成功機率。	旗舰被击毁时的换舰成功机率。	旗艦撃沈時の交代成功率。	Chance of transferring after flagship loss.	기함 격침 시 교체 성공 확률.
+ui.0670	強化模式：全軍與戰鬥機加成各自乘算。	强化模式：全军与战斗机加成各自乘算。	強化モード：全軍と戦闘機補正は別々に乗算。	Enhanced mode: fleet and fighter bonuses multiply separately.	강화 모드: 전군·전투기 보너스는 각각 곱셈.
+ui.0671	覽表	览表	一覧	List	목록
+ui.0001	新遊戲	新游戏	新しいゲーム	New Game	새 게임
+ui.0002	開始遊戲	开始游戏	ゲーム開始	Start	게임 시작
+ui.0003	取進度	取进度	ロード	Load	불러오기
+ui.0004	存進度	存进度	セーブ	Save	저장
+ui.0005	結束遊戲	结束游戏	ゲーム終了	Quit	게임 종료
+ui.0006	結束	结束	終了	Close	닫기
+ui.0007	遊戲設定	游戏设定	ゲーム設定	Settings	게임 설정
+ui.0008	設定	设定	設定	Settings	설정
+ui.0009	系統指令	系统指令	システム	System	시스템
+ui.0010	艦隊指令	舰队指令	艦隊命令	Fleet Orders	함대 명령
+ui.0011	軍事指令	军事指令	軍事命令	Military	군사 명령
+ui.0012	內政指令	内政指令	内政命令	Domestic	내정 명령
+ui.0013	情報指令	情报指令	情報命令	Intelligence	정보 명령
+ui.0014	情報	情报	情報	Intel	정보
+ui.0015	財政	财政	財政	Finance	재정
+ui.0016	生產	生产	生産	Production	생산
+ui.0017	生產計劃	生产计划	生産計画	Production	생산 계획
+ui.0018	預算	预算	予算	Budget	예산
+ui.0019	徵稅	征税	徴税	Tax	징세
+ui.0020	稅金	税金	税金	Tax	세금
+ui.0021	重稅	重税	重税	High	중과세
+ui.0022	輕稅	轻税	軽税	Low	경과세
+ui.0023	普通	普通	標準	Normal	보통
+ui.0024	標準	标准	標準	Normal	표준
+ui.0025	稅收	税收	税収	Revenue	세수
+ui.0026	總稅收	总税收	総税収	Revenue	총세수
+ui.0027	經濟力	经济力	経済力	Economy	경제력
+ui.0028	成長率	成长率	成長率	Growth	성장률
+ui.0029	防衛力	防卫力	防衛力	Defense	방위력
+ui.0030	回復率	回复率	回復率	Recovery	회복률
+ui.0031	軍事費	军事费	軍事費	Funds	군사비
+ui.0032	維持費	维持费	維持費	Upkeep	유지비
+ui.0033	移動經費	移动经费	移動費	Move Cost	이동비
+ui.0034	營運經費	营运经费	運営費	Supply Cost	운영비
+ui.0035	船艦建造費	船舰建造费	建造費	Ship Cost	건조비
+ui.0036	船艦接收報告	船舰接收报告	艦艇受領報告	Ship Delivery	함정 수령 보고
+ui.0037	船艦訂造報告	船舰订造报告	艦艇発注報告	Ship Orders	함정 발주 보고
+ui.0038	艦隊維持費	舰队维持费	艦隊維持費	Fleet Upkeep	함대 유지비
+ui.0039	剩餘軍事費	剩余军事费	残余軍事費	Funds Left	남은 군사비
+ui.0040	預估徵稅額	预估征税额	予想税収	Est. Revenue	예상 세수
+ui.0041	預估軍事費	预估军事费	予想軍事費	Est. Funds	예상 군사비
+ui.0042	餘額	余额	残額	Balance	잔액
+ui.0043	總計	总计	合計	Total	합계
+ui.0044	本次	本次	今回	Current	이번
+ui.0045	次月份	次月份	翌月	Next Month	다음 달
+ui.0046	預定	预定	予定	Planned	예정
+ui.0047	半月	半月	半月	Half Month	반달
+ui.0048	月	月	月	Month	월
+ui.0049	日	日	日	Day	일
+ui.0050	艦隊編成	舰队编成	艦隊編成	Formation	함대 편성
+ui.0051	艦隊組成	舰队组成	艦隊編成	Formation	함대 편성
+ui.0052	艦隊解散	舰队解散	艦隊解散	Disband	함대 해산
+ui.0053	出擊命令	出击命令	出撃命令	Sortie	출격 명령
+ui.0054	出擊	出击	出撃	Sortie	출격
+ui.0055	出擊中	出击中	出撃中	Deployed	출격 중
+ui.0056	編成	编成	編成	Form	편성
+ui.0057	編組	编组	編成	Form	편성
+ui.0058	編隊	编队	編隊	Form	편대
+ui.0059	解散	解散	解散	Disband	해산
+ui.0060	配屬	配属	配属	Assign	배속
+ui.0061	任命	任命	任命	Appoint	임명
+ui.0062	卸任	卸任	解任	Dismiss	해임
+ui.0063	變更	变更	変更	Change	변경
+ui.0064	改選	改选	変更	Change	변경
+ui.0065	艦隊編號	舰队编号	艦隊番号	Fleet No.	함대 번호
+ui.0066	艦隊資料	舰队资料	艦隊情報	Fleet Info	함대 정보
+ui.0067	星系資料	星系资料	星系情報	Star Info	성계 정보
+ui.0068	行星資料	行星资料	惑星情報	Planet Info	행성 정보
+ui.0069	提督資料	提督资料	提督情報	Admiral Info	제독 정보
+ui.0070	部隊資料	部队资料	部隊情報	Unit Info	부대 정보
+ui.0071	待命中提督資料	待命中提督资料	待機提督情報	Idle Admirals	대기 제독 정보
+ui.0072	待命中	待命中	待機中	Standby	대기 중
+ui.0073	待命	待命	待機	Standby	대기
+ui.0074	現在位置	现在位置	現在位置	Location	현재 위치
+ui.0075	移動目標	移动目标	移動目標	Target	이동 목표
+ui.0076	移動至	移动至	移動先	Move to	이동 위치
+ui.0077	出發前往	出发前往	出発先	Depart for	출발 위치
+ui.0078	駐留在	驻留在	駐留先	Garrison at	주둔 위치
+ui.0079	駐留	驻留	駐留	Garrison	주둔
+ui.0080	返航	返航	帰還	Return	귀환
+ui.0081	歸隊	归队	帰隊	Rejoin	복귀
+ui.0082	輸送物資至	输送物资至	物資輸送先	Deliver to	물자 수송 위치
+ui.0083	輸送	输送	輸送	Transport	수송
+ui.0084	物資	物资	物資	Cargo	물자
+ui.0085	補充	补充	補充	Refill	보충
+ui.0086	補給	补给	補給	Supply	보급
+ui.0087	修理	修理	修理	Repair	수리
+ui.0088	修護艦	修护舰	工作艦	Repair	공작함
+ui.0089	運補艦	运补舰	補給艦	Supply	보급함
+ui.0090	運輸艦	运输舰	輸送艦	Transport	수송함
+ui.0091	戰艦	战舰	戦艦	Battleship	전함
+ui.0092	高速戰艦	高速战舰	高速戦艦	Fast BB	고속전함
+ui.0093	巡航艦	巡航舰	巡航艦	Cruiser	순양함
+ui.0094	巡洋艦	巡洋舰	巡洋艦	Cruiser	순양함
+ui.0095	航空母艦	航空母舰	空母	Carrier	항공모함
+ui.0096	驅逐艦	驱逐舰	駆逐艦	Destroyer	구축함
+ui.0097	偵察艦	侦察舰	偵察艦	Scout	정찰함
+ui.0098	登陸艦	登陆舰	揚陸艦	Lander	상륙함
+ui.0099	旗艦	旗舰	旗艦	Flagship	기함
+ui.0100	艦種	舰种	艦種	Type	함종
+ui.0101	艦數	舰数	艦数	Ships	함수
+ui.0102	最大	最大	最大	Max	최대
+ui.0103	不足艦數	不足舰数	不足艦数	Missing	부족 함수
+ui.0104	船艦總數	船舰总数	艦艇総数	Total Ships	총 함정 수
+ui.0105	船艦數量	船舰数量	艦艇数	Ships	함정 수
+ui.0106	造艦數	造舰数	建造数	Building	건조 수
+ui.0107	部隊數	部队数	部隊数	Units	부대 수
+ui.0108	部隊種類	部队种类	部隊種別	Unit Type	부대 종류
+ui.0109	部隊組成	部队组成	部隊編成	Unit Setup	부대 편성
+ui.0110	部隊行動	部队行动	部隊行動	Unit Action	부대 행동
+ui.0111	部隊士氣值	部队士气值	部隊士気	Morale	부대 사기
+ui.0112	艦隊士氣值	舰队士气值	艦隊士気	Morale	함대 사기
+ui.0113	艦隊運用能力	舰队运用能力	艦隊運用	Fleet Tactics	함대 운용
+ui.0114	艦隊能力	舰队能力	艦隊能力	Fleet Stats	함대 능력
+ui.0115	艦隊運用	舰队运用	艦隊運用	Fleet Ops	함대 운용
+ui.0116	提督	提督	提督	Admiral	제독
+ui.0117	參謀	参谋	参謀	Staff	참모
+ui.0118	副官	副官	副官	Aide	부관
+ui.0119	軍事專任參謀	军事专任参谋	軍事参謀	Military Staff	군사 참모
+ui.0120	內政專任參謀	内政专任参谋	内政参謀	Domestic Staff	내정 참모
+ui.0121	情報專任參謀	情报专任参谋	情報参謀	Intel Staff	정보 참모
+ui.0122	索敵專任參謀	索敌专任参谋	索敵参謀	Scout Staff	정찰 참모
+ui.0123	統率力	统率力	統率力	Command	통솔력
+ui.0124	統率	统率	統率	Cmd	통솔
+ui.0125	移動	移动	移動	Move	이동
+ui.0126	回轉	回转	旋回	Turn	회전
+ui.0127	營運	营运	運営	Supply	운영
+ui.0128	運用	运用	運用	Tactics	운용
+ui.0129	光線砲	光线砲	ビーム	Beam	광선포
+ui.0130	飛彈	飞弹	ミサイル	Missile	미사일
+ui.0131	戰鬥機	战斗机	戦闘機	Fighter	전투기
+ui.0132	防禦	防御	防御	Defense	방어
+ui.0133	占領	占领	占領	Occupy	점령
+ui.0134	防衛	防卫	防衛	Guard	방위
+ui.0135	攻擊	攻击	攻撃	Attack	공격
+ui.0136	耐久力	耐久力	耐久力	Hull	내구력
+ui.0137	火力	火力	火力	Power	화력
+ui.0138	射程	射程	射程	Range	사거리
+ui.0139	彈藥	弹药	弾薬	Ammo	탄약
+ui.0140	燃料	燃料	燃料	Fuel	연료
+ui.0141	剩餘燃料	剩余燃料	残燃料	Fuel Left	남은 연료
+ui.0142	巡航速度	巡航速度	巡航速度	Cruise	순항속도
+ui.0143	戰鬥速度	战斗速度	戦闘速度	Battle Speed	전투속도
+ui.0144	回轉速度	回转速度	旋回速度	Turn Speed	회전속도
+ui.0145	士氣值	士气值	士気	Morale	사기
+ui.0146	士氣	士气	士気	Morale	사기
+ui.0147	狀態	状态	状態	Status	상태
+ui.0148	等級	等级	階級	Level	등급
+ui.0149	經驗值	经验值	経験値	EXP	경험치
+ui.0150	功績	功绩	功績	Merit	공적
+ui.0151	經歷	经历	経歴	History	경력
+ui.0152	能力	能力	能力	Stats	능력
+ui.0153	基本能力	基本能力	基本能力	Basic Stats	기본 능력
+ui.0154	內部能力	内部能力	内部能力	Other Stats	내부 능력
+ui.0155	特殊能力	特殊能力	特殊能力	Special	특수 능력
+ui.0156	編輯提督	编辑提督	提督編集	Edit Admiral	제독 편집
+ui.0157	還原本提督	还原本提督	既定値に戻す	Reset Admiral	제독 초기화
+ui.0158	還原本提督的預設能力？	还原本提督的预设能力？	既定の能力に戻しますか？	Reset this admiral?	제독 능력을 초기화할까요?
+ui.0159	套用變更	套用变更	変更を適用	Apply	변경 적용
+ui.0160	返回編輯	返回编辑	編集へ戻る	Back to Edit	편집으로
+ui.0161	全局共用，新遊戲也套用	全局共用，新游戏也套用	全ゲーム共通・新規にも適用	Global; applies to new games	모든 게임에 적용
+ui.0162	點選數值輸入，或使用 -／+ 微調。	点选数值输入，或使用 -／+ 微调。	数値を入力、または -／+ で調整。	Click a value or use -/+.	값을 누르거나 -/+로 조정.
+ui.0163	內政／應變參數	内政／应变参数	内政・対応	Domestic / Response	내정·대응
+ui.0164	稅務／決策權重	税务／决策权重	税務・判断	Tax / Decisions	세무·판단
+ui.0165	目標選擇判斷	目标选择判断	目標選択	Target Choice	목표 선택
+ui.0166	旗艦擊毀換艦率	旗舰击毁换舰率	旗艦交代率	Transfer Chance	기함 교체율
+ui.0167	全軍移動加成	全军移动加成	全軍移動補正	Fleet Move Bonus	전군 이동 보너스
+ui.0168	全軍攻擊加成	全军攻击加成	全軍攻撃補正	Fleet Attack Bonus	전군 공격 보너스
+ui.0169	本艦隊戰鬥機攻擊	本舰队战斗机攻击	艦隊戦闘機補正	Fighter Bonus	함대 전투기 보너스
+ui.0170	以上為用途說明，原版欄名未知。	以上为用途说明，原版栏名未知。	用途による名称。原版の名称は不明。	Labels describe use; original names unknown.	용도에 따른 이름. 원래 이름은 미상.
+ui.0171	參戰時，同陣營全部艦隊的攻擊增幅。	参战时，同阵营全部舰队的攻击增幅。	参戦中の全味方艦隊への攻撃補正。	Attack bonus for all allied fleets in battle.	참전 시 모든 아군 함대 공격 보너스.
+ui.0172	參戰時，同陣營全部艦隊的移動增幅。	参战时，同阵营全部舰队的移动增幅。	参戦中の全味方艦隊への移動補正。	Move bonus for all allied fleets in battle.	참전 시 모든 아군 함대 이동 보너스.
+ui.0173	任提督或參謀時，所在艦隊的戰鬥機攻擊增幅。	任提督或参谋时，所在舰队的战斗机攻击增幅。	提督または参謀の所属艦隊に適用。	Applies as admiral or staff to this fleet.	제독이나 참모로 소속 함대에 적용.
+ui.0174	與戰術AI權重。	与战术AI权重。	戦術AIの重み。	and tactical AI weights.	및 전술 AI 가중치.
+ui.0175	及低完整度時的戰術判斷。	及低完整度时的战术判断。	低充足時の戦術判断。	and tactics at low strength.	및 저충족 시 전술 판단.
+ui.0176	無法保存提督設定	无法保存提督设定	設定を保存できません	Could not save settings	설정을 저장할 수 없음
+ui.0177	請輸入	请输入	入力	Enter	입력
+ui.0178	輸入	输入	入力	Enter	입력
+ui.0179	取消	取消	取消	Cancel	취소
+ui.0180	確定	确定	決定	OK	확인
+ui.0181	確認	确认	確認	OK	확인
+ui.0182	決定	决定	決定	OK	결정
+ui.0183	中止	中止	中止	Cancel	중지
+ui.0184	返回	返回	戻る	Back	돌아가기
+ui.0185	是	是	はい	Yes	예
+ui.0186	否	否	いいえ	No	아니요
+ui.0187	無	无	なし	None	없음
+ui.0188	沒有	没有	なし	None	없음
+ui.0189	未使用	未使用	未使用	Empty	비어 있음
+ui.0190	全滿	全满	満杯	Full	가득 참
+ui.0191	銀河帝國	银河帝国	銀河帝国	Empire	은하제국
+ui.0192	自由行星同盟	自由行星同盟	自由惑星同盟	Alliance	자유행성동맹
+ui.0193	自由同盟	自由同盟	自由同盟	Alliance	자유동맹
+ui.0194	同盟軍	同盟军	同盟軍	Alliance	동맹군
+ui.0195	帝國軍	帝国军	帝国軍	Empire	제국군
+ui.0196	中立軍	中立军	中立軍	Neutral	중립군
+ui.0197	帝國	帝国	帝国	Empire	제국
+ui.0198	同盟	同盟	同盟	Alliance	동맹
+ui.0199	星系內行星	星系内行星	星系内の惑星	Planets	성계 내 행성
+ui.0200	星系	星系	星系	System	성계
+ui.0201	星域	星域	星域	Region	성역
+ui.0202	行星	行星	惑星	Planet	행성
+ui.0203	首都	首都	首都	Capital	수도
+ui.0204	部隊	部队	部隊	Unit	부대
+ui.0205	艦隊	舰队	艦隊	Fleet	함대
+ui.0206	要塞	要塞	要塞	Fort	요새
+ui.0207	治安	治安	治安	Order	치안
+ui.0208	勢力	势力	勢力	Power	세력
+ui.0209	敵艦	敌舰	敵艦	Enemy	적함
+ui.0210	敵軍	敌军	敵軍	Enemy	적군
+ui.0211	我軍	我军	自軍	Allies	아군
+ui.0212	我方	我方	自軍	Allies	아군
+ui.0213	敵方	敌方	敵軍	Enemy	적군
+ui.0214	友軍	友军	友軍	Allies	우군
+ui.0215	選擇	选择	選択	Select	선택
+ui.0216	一覽表	一览表	一覧	List	목록
+ui.0217	一覽	一览	一覧	List	목록
+ui.0218	資料	资料	情報	Info	정보
+ui.0219	顯示	显示	表示	Show	표시
+ui.0220	顯示敵軍	显示敌军	敵軍表示	Show Enemy	적군 표시
+ui.0221	不顯示	不显示	非表示	Hide	숨기기
+ui.0222	開啟	开启	オン	On	켜기
+ui.0223	關閉	关闭	オフ	Off	끄기
+ui.0224	轉移旗艦	转移旗舰	旗艦交代	Flag Transfer	기함 교체
+ui.0225	名將移動加成	名将移动加成	名将移動補正	Hero Move	명장 이동 보너스
+ui.0226	非戰艦旗艦	非战舰旗舰	戦艦以外の旗艦	Any Flagship	비전함 기함
+ui.0227	介面字型	介面字型	表示フォント	UI Font	글꼴
+ui.0228	原版點陣	原版点阵	原版ドット	Original	원본 도트
+ui.0229	原版強化	原版强化	原版強化	Classic	원본 강화
+ui.0230	思源宋體	思源宋体	明朝体	Serif	명조체
+ui.0231	思源黑體	思源黑体	ゴシック体	Sans	고딕체
+ui.0232	原版規則	原版规则	原版ルール	Original AI	원본 규칙
+ui.0233	原版	原版	原版	Original	원본
+ui.0234	強化	强化	強化	Enhanced	강화
+ui.0235	AI強化	AI强化	AI強化	AI Mode	AI 모드
+ui.0236	音源	音源	音源	Audio	음원
+ui.0237	平時配樂	平时配乐	通常BGM	BGM	평시 음악
+ui.0238	戰鬥配樂	战斗配乐	戦闘BGM	Battle BGM	전투 음악
+ui.0239	配樂	配乐	BGM	Music	음악
+ui.0240	音色庫	音色库	音色	Soundfont	음색
+ui.0241	訊息速度	讯息速度	表示速度	Text Speed	메시지 속도
+ui.0242	動畫效果	动画效果	アニメ表示	Animations	애니메이션
+ui.0243	動畫速度	动画速度	アニメ速度	Anim Speed	애니 속도
+ui.0244	快速	快速	高速	Fast	빠르게
+ui.0245	最快	最快	最速	Fastest	가장 빠르게
+ui.0246	波琍璐	波琍璐	ボレロ	Bolero	볼레로
+ui.0247	英雄交響曲	英雄交响曲	英雄	Eroica	영웅 교향곡
+ui.0248	悲愴交響曲	悲怆交响曲	悲愴	Pathetique	비창 교향곡
+ui.0249	來自新世界	来自新世界	新世界より	New World	신세계로부터
+ui.0250	四季．夏	四季．夏	四季・夏	Summer	사계·여름
+ui.0251	沈默的戰場	沉默的战场	静かな戦場	Silent Field	침묵의 전장
+ui.0252	全艦攻擊	全舰攻击	全艦攻撃	All Attack	전 함대 공격
+ui.0253	決戰前夕	决战前夕	決戦前夜	Before Battle	결전 전야
+ui.0254	使用原有的BGM	使用原有的BGM	元のBGM	Keep BGM	기존 음악 사용
+ui.0255	海報	海报	ポスター	Poster	포스터
+ui.0256	語系	语系	言語	Language	언어
+ui.0257	海報 無	海报 无	ポスターなし	No Posters	포스터 없음
+ui.0258	海報 關	海报 关	ポスター オフ	Poster Off	포스터 끔
+ui.0259	海報 開	海报 开	ポスター オン	Poster On	포스터 켬
+ui.0260	名言	名言	名言	Quote	명언
+ui.0261	雙主角	双主角	二人の英雄	Heroes	두 영웅
+ui.0262	兩軍將領	两军将领	両軍の将官	Admirals	양군 장성
+ui.0263	親近的人	亲近的人	大切な人々	Companions	소중한 사람들
+ui.0264	設定失敗	设定失败	設定失敗	Save Failed	설정 실패
+ui.0265	思考中	思考中	思考中	Thinking	생각 중
+ui.0266	執行	执行	実行	Execute	실행
+ui.0267	實行	实行	実行	Execute	실행
+ui.0268	下令	下令	命令	Order	명령
+ui.0269	命令	命令	命令	Order	명령
+ui.0270	行動	行动	行動	Action	행동
+ui.0271	停止	停止	停止	Stop	정지
+ui.0272	自動	自动	自動	Auto	자동
+ui.0273	解除自動模式	解除自动模式	自動解除	End Auto	자동 해제
+ui.0274	緊急	紧急	緊急	Urgent	긴급
+ui.0275	優先	优先	優先	Priority	우선
+ui.0276	分散	分散	分散	Spread	분산
+ui.0277	集中	集中	集中	Focus	집중
+ui.0278	攻城	攻城	攻城	Siege	공성
+ui.0279	降伏	降伏	降伏	Surrender	항복
+ui.0280	撤退	撤退	撤退	Retreat	퇴각
+ui.0281	撤離	撤离	撤退	Withdraw	철수
+ui.0282	修理階段	修理阶段	修理段階	Repair Phase	수리 단계
+ui.0283	占領階段	占领阶段	占領段階	Occupy Phase	점령 단계
+ui.0284	戰鬥階段	战斗阶段	戦闘段階	Battle Phase	전투 단계
+ui.0285	最後階段	最后阶段	最終段階	Final Phase	최종 단계
+ui.0286	移動階段	移动阶段	移動段階	Move Phase	이동 단계
+ui.0287	索敵階段	索敌阶段	索敵段階	Scout Phase	정찰 단계
+ui.0288	補給階段	补给阶段	補給段階	Supply Phase	보급 단계
+ui.0289	次月份預算計劃	次月份预算计划	翌月予算計画	Next Budget	다음 달 예산 계획
+ui.0290	次月份船艦建造計劃	次月份船舰建造计划	翌月建造計画	Next Ship Orders	다음 달 함정 계획
+ui.0291	指定待命行星	指定待命行星	待機惑星指定	Standby Planet	대기 행성 지정
+ui.0292	登陸艦攻擊	登陆舰攻击	揚陸艦攻撃	Landing Attack	상륙함 공격
+ui.0293	防衛攻擊	防卫攻击	防衛攻撃	Defense Fire	방위 공격
+ui.0294	要塞砲發射	要塞砲发射	要塞砲発射	Fire Fortress	요새포 발사
+ui.0295	要塞砲待命中	要塞砲待命中	要塞砲待機	Fortress Ready	요새포 대기 중
+ui.0296	要塞砲填充	要塞砲填充	要塞砲装填	Fortress Charge	요새포 충전
+ui.0297	要塞砲	要塞砲	要塞砲	Fortress Gun	요새포
+ui.0298	索敵	索敌	索敵	Scout	정찰
+ui.0299	勝利點	胜利点	勝利点	Score	승점
+ui.0300	勝利	胜利	勝利	Victory	승리
+ui.0301	戰勝	战胜	勝利	Victory	승리
+ui.0302	戰敗	战败	敗北	Defeat	패배
+ui.0303	占領成功	占领成功	占領成功	Captured	점령 성공
+ui.0304	占領失敗	占领失败	占領失敗	Capture Failed	점령 실패
+ui.0305	無法戰鬥	无法战斗	戦闘不能	Unable to Fight	전투 불가
+ui.0306	下落不明	下落不明	行方不明	Missing	행방불명
+ui.0307	確認死亡	确认死亡	死亡確認	Death Confirmed	사망 확인
+ui.0308	死亡	死亡	死亡	Dead	사망
+ui.0309	能力提升	能力提升	能力上昇	Stats Up	능력 향상
+ui.0310	已經	已经	すでに	Already	이미
+ui.0311	已經到達目標星系。	已经到达目标星系。	目標星系に到着。	Target reached.	목표 성계에 도착.
+ui.0312	已經駐留在星系上。	已经驻留在星系上。	星系に駐留中。	Already garrisoned.	이미 성계에 주둔 중.
+ui.0313	已經全滅。	已经全灭。	全滅しました。	Annihilated.	전멸했습니다.
+ui.0314	已被我方占領。	已被我方占领。	自軍が占領。	Allied control.	아군이 점령.
+ui.0315	已被敵軍占領。	已被敌军占领。	敵軍が占領。	Enemy control.	적군이 점령.
+ui.0316	發現敵方艦隊。	发现敌方舰队。	敵艦隊発見。	Enemy fleet found.	적 함대 발견.
+ui.0317	發生叛亂。	发生叛乱。	反乱発生。	Rebellion.	반란 발생.
+ui.0318	目前各星系的治安狀態：	目前各星系的治安状态：	各星系の治安：	Order by system:	성계별 치안:
+ui.0319	目前我方艦隊的勢力圖：	目前我方舰队的势力图：	自軍艦隊の勢力：	Allied fleet strength:	아군 함대 세력:
+ui.0320	目前敵艦隊的配置情報	目前敌舰队的配置情报	敵艦隊の配置情報	Enemy deployment	적 함대 배치 정보
+ui.0321	沒有出現敵方艦隊	没有出现敌方舰队	敵艦隊なし	No enemy fleets	적 함대 없음
+ui.0322	出現小規模的敵方艦隊	出现小规模的敌方舰队	小規模敵艦隊	Small enemy force	소규모 적 함대
+ui.0323	出現大規模的敵方艦隊	出现大规模的敌方舰队	大規模敵艦隊	Large enemy force	대규모 적 함대
+ui.0324	可能有敵方的艦隊出沒	可能有敌方的舰队出没	敵艦隊の可能性	Possible enemies	적 함대 출몰 가능
+ui.0325	正集結大規模的艦隊	正集结大规模的舰队	大艦隊集結中	Large fleet gathering	대규모 함대 집결 중
+ui.0326	沒有我方艦隊的存在	没有我方舰队的存在	自軍艦隊なし	No allied fleets	아군 함대 없음
+ui.0327	治安正逐漸惡化	治安正逐渐恶化	治安悪化中	Order worsening	치안 악화 중
+ui.0328	處於危險狀態	处于危险状态	危険な状態	Critical state	위험한 상태
+ui.0329	您確定要結束這個遊戲嗎？	您确定要结束这个游戏吗？	ゲームを終了しますか？	Quit this game?	게임을 종료할까요?
+ui.0330	確定要放棄這個星系嗎？	确定要放弃这个星系吗？	この星系を放棄しますか？	Abandon this system?	이 성계를 포기할까요?
+ui.0331	只有戰艦或者高速戰艦才能當做旗艦。	只有战舰或者高速战舰才能当做旗舰。	旗艦は戦艦か高速戦艦のみ。	Only battleships can be flagships.	기함은 전함이나 고속전함만 가능.
+ui.0332	修護艦與運補艦不能當旗艦。	修护舰与运补舰不能当旗舰。	工作艦と補給艦は旗艦不可。	Repair and supply ships cannot lead.	공작함과 보급함은 기함 불가.
+ui.0333	船艦數量不足。	船舰数量不足。	艦艇不足。	Not enough ships.	함정 부족.
+ui.0334	沒有可以補充的船艦。	没有可以补充的船舰。	補充できる艦艇なし。	No ships to refill.	보충할 함정 없음.
+ui.0335	沒有需要修理的船艦在附近。	没有需要修理的船舰在附近。	近くに要修理艦なし。	No damaged ships nearby.	근처에 수리할 함정 없음.
+ui.0336	沒有需要補給的船艦。	没有需要补给的船舰。	補給が必要な艦艇なし。	No ships need supplies.	보급이 필요한 함정 없음.
+ui.0337	無法撤離旗艦。	无法撤离旗舰。	旗艦は撤去不可。	Cannot remove flagship.	기함은 철수 불가.
+ui.0338	無法超過目前統率能力以上的船艦數量。	无法超过目前统率能力以上的船舰数量。	統率上限を超えています。	Command limit exceeded.	현재 통솔력 한도 초과.
+ui.0339	由於移動經費不足無法移動。	由于移动经费不足无法移动。	移動費が不足。	Not enough move funds.	이동비가 부족.
+ui.0340	由於船艦數量不足，無法組成艦隊。	由于船舰数量不足，无法组成舰队。	艦艇不足で編成不可。	Not enough ships to form a fleet.	함정 부족으로 함대 편성 불가.
+ui.0341	這是無法前往的星系。	这是无法前往的星系。	到達できない星系。	System unreachable.	갈 수 없는 성계.
+ui.0342	這是無法行動的地方。	这是无法行动的地方。	行動できない場所。	Cannot act here.	행동할 수 없는 장소.
+ui.0343	無法前往敵方的星系	无法前往敌方的星系	敵星系へ移動不可	Cannot enter enemy system	적 성계로 이동 불가
+ui.0344	選擇錯誤！	选择错误！	選択が違います！	Wrong choice!	잘못된 선택!
+ui.0345	首都所在的星系已經被占領。	首都所在的星系已经被占领。	首都星系が占領された。	Capital system captured.	수도 성계가 점령됨.
+ui.0346	一級上將	一级上将	上級大将	Sr Admiral	상급대장
+ui.0347	元帥	元帅	元帥	Marshal	원수
+ui.0348	上將	上将	大将	Admiral	대장
+ui.0349	中將	中将	中将	Vice Adm.	중장
+ui.0350	少將	少将	少将	Rear Adm.	소장
+ui.0351	准將	准将	准将	Commodore	준장
+ui.0352	上校	上校	大佐	Captain	대령
+ui.0353	中校	中校	中佐	Commander	중령
+ui.0354	少校	少校	少佐	Lt Cmdr	소령
+ui.0355	上尉	上尉	大尉	Lieutenant	대위
+ui.0356	中尉	中尉	中尉	Lt Junior	중위
+ui.0357	少尉	少尉	少尉	Ensign	소위
+ui.0358	上士	上士	曹長	Chief	상사
+ui.0359	纺錘	纺锤	紡錘	Spindle	방추
+ui.0360	紡錘	纺锤	紡錘	Spindle	방추
+ui.0361	陣形	阵形	陣形	Formation	진형
+ui.0362	Ｍ字	Ｍ字	M字	M Shape	M자
+ui.0363	Ｔ字	Ｔ字	T字	T Shape	T자
+ui.0364	Ｖ字	Ｖ字	V字	V Shape	V자
+ui.0365	中子光線砲	中子光线砲	中性子ビーム	Neutron Beam	중성자 광선포
+ui.0366	中子飛彈	中子飞弹	中性子ミサイル	Neutron Missile	중성자 미사일
+ui.0367	中子彈	中子弹	中性子弾	Neutron Shot	중성자탄
+ui.0368	中子砲	中子砲	中性子砲	Neutron Gun	중성자포
+ui.0369	光子砲	光子砲	光子砲	Photon Gun	광자포
+ui.0370	光子魚雷	光子鱼雷	光子魚雷	Photon Torpedo	광자어뢰
+ui.0371	光子飛彈	光子飞弹	光子ミサイル	Photon Missile	광자 미사일
+ui.0372	軌道砲	轨道砲	軌道砲	Orbital Gun	궤도포
+ui.0373	雷射水雷	雷射水雷	レーザー機雷	Laser Mine	레이저 기뢰
+ui.0374	防空砲	防空砲	対空砲	AA Gun	대공포
+ui.0375	艦載機	舰载机	艦載機	Aircraft	함재기
+ui.0376	非搭載	非搭载	未搭載	Not Fitted	미탑재
+ui.0377	發射裝置	发射装置	発射装置	Launchers	발사장치
+ui.0378	全軍覆沒	全军覆没	全滅	Annihilated	전멸
+ui.0379	正在攻占	正在攻占	占領中	Capturing	점령 중
+ui.0380	企圖占領	企图占领	占領を企図	Attempting capture	점령 시도
+ui.0381	已經被敵軍奪取	已经被敌军夺取	敵軍が奪取	Seized by enemy	적군에게 빼앗김
+ui.0382	已經占領下來	已经占领下来	占領完了	Captured	점령 완료
+ui.0383	部分地區	部分地区	一部地域	Some areas	일부 지역
+ui.0384	已脫離我方統治	已脱离我方统治	支配を離脱	Left our control	아군 통치에서 이탈
+ui.0385	的索敵艦已經失去連絡	的索敌舰已经失去连络	偵察艦が消息不明	Scout ship lost contact	정찰함 연락 두절
+ui.0386	的消息已經斷絕	的消息已经断绝	消息が途絶	Contact lost	소식이 끊김
+ui.0387	的能力已經提昇	的能力已经提升	能力が上昇	Stats improved	능력이 향상됨
+ui.0388	已將	已将	すでに	Has	이미
+ui.0389	滑鼠左鍵: 選擇與確認	滑鼠左键: 选择与确认	左クリック：選択・決定	Left click: select / confirm	왼쪽 클릭: 선택·확인
+ui.0390	滑鼠右鍵: 返回或取消	滑鼠右键: 返回或取消	右クリック：戻る・取消	Right click: back / cancel	오른쪽 클릭: 뒤로·취소
+ui.0391	滑鼠移到頂端: 顯示功能列	滑鼠移到顶端: 显示功能列	上端へ移動：ツールバー	Move to top: toolbar	위쪽으로 이동: 도구 모음
+ui.0392	F1  開關說明	F1  开关说明	F1 ヘルプ	F1 Help	F1 도움말
+ui.0393	F1 說明	F1 说明	F1 ヘルプ	F1 Help	F1 도움말
+ui.0394	F7  原版 / HD	F7  原版 / HD	F7 原版 / HD	F7 Original / HD	F7 원본 / HD
+ui.0395	顯示敵軍: 設定選單	显示敌军: 设定选单	敵軍表示：設定メニュー	Enemy visibility: settings	적군 표시: 설정 메뉴
+ui.0396	關閉 Esc	关闭 Esc	閉じる Esc	Close Esc	닫기 Esc
+ui.0397	銀河英雄傳說 III SP	银河英雄传说 III SP	銀河英雄伝説 III SP	Legend of Galactic Heroes III SP	은하영웅전설 III SP
+ui.0398	銀河英雄傳說III SP	银河英雄传说III SP	銀河英雄伝説III SP	Legend of Galactic Heroes III SP	은하영웅전설 III SP
+ui.0399	正在載入，請稍候	正在载入，请稍候	読み込み中	Loading, please wait	불러오는 중
+ui.0400	載入完成	载入完成	読み込み完了	Ready	불러오기 완료
+ui.0401	載入失敗，請檢查資料與路徑	载入失败，请检查资料与路径	データとパスを確認してください	Loading failed; check data and paths	불러오기 실패. 자료와 경로 확인.
+ui.0402	準備載入	准备载入	読み込み準備	Preparing	불러오기 준비
+ui.0403	準備初始局	准备初始局	初期状態を準備	Preparing game	게임 준비
+ui.0404	準備音樂與音效	准备音乐与音效	音声を準備	Preparing audio	음악·효과음 준비
+ui.0405	載入HD圖像與字型	载入HD图像与字型	HD画像とフォント	Loading HD art and fonts	HD 그림·글꼴 불러오기
+ui.0406	載入人物圖像	载入人物图像	人物画像	Loading portraits	인물 그림 불러오기
+ui.0407	載入原版資料	载入原版资料	原版データ	Loading game data	원본 자료 불러오기
+ui.0408	載入存檔	载入存档	セーブデータ	Loading save	저장 자료 불러오기
+ui.0409	載入開場動畫	载入开场动画	オープニング	Loading intro	시작 영상 불러오기
+ui.0410	第	第	第	No.	제
+ui.0411	回合	回合	ターン	Turn	턴
+ui.0412	階段	阶段	段階	Phase	단계
+ui.0413	隊	队	隊	Unit	대
+ui.0414	回	回	回	Turns	회
+ui.0415	隻	只	隻	Ships	척
+ui.0416	架	架	機	Craft	기
+ui.0417	發	发	発	Shots	발
+ui.0418	門	门	門	Guns	문
+ui.0419	座	座	基	Units	기
+ui.0420	的	的	の	's	의
+ui.0421	要占領此星系嗎	要占领此星系吗	この星系を占領しますか	Capture this system	이 성계를 점령할까요
+ui.0422	戰鬥命令	战斗命令	戦闘命令	Battle Orders	전투 명령
+ui.0423	艦隊的索敵	舰队的索敌	艦隊索敵	Fleet Scouting	함대 정찰
+ui.0424	艦隊的戰鬥命令	舰队的战斗命令	艦隊戦闘命令	Fleet Orders	함대 전투 명령
+ui.0425	補給物資	补给物资	補給物資	Supplies	보급 물자
+ui.0426	星系內	星系内	星系内	In System	성계 내
+ui.0427	索敵部隊	索敌部队	索敵部隊	Scout Units	정찰 부대
+ui.0428	防拷	防拷	認証	Verification	인증
+ui.0429	照片	照片	写真	Portrait	사진
+ui.0430	能力數值	能力数值	能力値	Ability Value	능력 수치
+ui.0431	請查閱提督資料表	请查阅提督资料表	提督資料を参照	Check admiral reference	제독 자료표를 확인
+ui.0432	輸入照片上	输入照片上	写真の提督を入力	Enter portrait admiral	사진 속 제독 입력
+ui.0433	證實	证实	確認	Confirmed	확인
+ui.0434	供應	供应	供給	Supply	공급
+ui.0435	萊因哈特	莱因哈特	ラインハルト	Reinhard	라인하르트
+ui.0436	楊威利	杨威利	ヤン	Yang	양 웬리
+ui.0437	吉爾菲艾斯	吉尔菲艾斯	キルヒアイス	Kircheis	키르히아이스
+ui.0438	齊格飛	齐格飞	ジークフリード	Siegfried	지크프리트
+ui.0439	安妮羅潔	安妮罗洁	アンネローゼ	Annerose	안네로제
+ui.0440	希爾德	希尔德	ヒルダ	Hilda	힐데가르트
+ui.0441	米達麥亞	米达麦亚	ミッターマイヤー	Mittermeyer	미터마이어
+ui.0442	羅嚴塔爾	罗严塔尔	ロイエンタール	Reuenthal	로이엔탈
+ui.0443	奧貝斯坦	奥贝斯坦	オーベルシュタイン	Oberstein	오베르슈타인
+ui.0444	畢典菲爾特	毕典菲尔特	ビッテンフェルト	Bittenfeld	비텐펠트
+ui.0445	謬拉	谬拉	ミュラー	Muller	뮐러
+ui.0446	瓦列	瓦列	ワーレン	Wahlen	바렌
+ui.0447	梅克林格	梅克林格	メックリンガー	Mecklinger	메클링거
+ui.0448	艾齊納哈	艾齐纳哈	アイゼナッハ	Eisenach	아이제나흐
+ui.0449	坎普	坎普	ケンプ	Kempff	켐프
+ui.0450	法倫海特	法伦海特	ファーレンハイト	Fahrenheit	파렌하이트
+ui.0451	連內肯普	连内肯普	レンネンカンプ	Lennenkampf	렌넨캄프
+ui.0452	克斯拉	克斯拉	ケスラー	Kessler	케슬러
+ui.0453	魯茲	鲁兹	ルッツ	Lutz	루츠
+ui.0454	舒坦梅茲	舒坦梅兹	シュタインメッツ	Steinmetz	슈타인메츠
+ui.0455	拜耶爾藍	拜耶尔蓝	バイエルライン	Bayerlein	바이어라인
+ui.0456	馬里涅汀	马里涅汀	マリネッティ	Marinetti	마리네티
+ui.0457	布魯丹巴	布鲁丹巴	ブロンダン	Blondin	블롱댕
+ui.0458	迪爾克先	迪尔克先	ディルクセン	Dirksen	디르크센
+ui.0459	舒奈德	舒奈德	シュナイダー	Schneider	슈나이더
+ui.0460	貝爾肯格林	贝尔肯格林	ベルゲングリューン	Bergengrun	베르겐그륀
+ui.0461	菲爾納	菲尔纳	フェルナー	Ferner	페르너
+ui.0462	布連塔諾	布连塔诺	ブレンターノ	Brentano	브렌타노
+ui.0463	列肯道夫	列肯道夫	レッケンドルフ	Reckendorf	레켄도르프
+ui.0464	列佛爾特	列佛尔特	レフォルト	Lefort	레포르트
+ui.0465	格雷布納	格雷布纳	グレーブナー	Graebner	그레브너
+ui.0466	馬利諾	马利诺	マリーノ	Marino	마리노
+ui.0467	高爾加•法爾姆爾	高尔加•法尔姆尔	コルガ・ファルムル	Kolga Farmul	콜가 파르물
+ui.0468	馮凱爾	冯凯尔	フォンケル	Fonkel	폰켈
+ui.0469	倫貝克	伦贝克	ルンベック	Lunbeck	룬베크
+ui.0470	卡爾先	卡尔先	カールセン	Carlsen	카를센
+ui.0471	狄克爾	狄克尔	ディッケル	Dickel	디켈
+ui.0472	拉歐	拉欧	ラオ	Lao	라오
+ui.0473	姆萊	姆莱	ムライ	Murai	무라이
+ui.0474	亞典波羅	亚典波罗	アッテンボロー	Attenborough	아텐보로
+ui.0475	卡介倫	卡介伦	キャゼルヌ	Cazerne	카젤느
+ui.0476	先寇布	先寇布	シェーンコップ	Schoenkopf	셴코프
+ui.0477	菲列特利加	菲列特利加	フレデリカ	Frederica	프레데리카
+ui.0478	尤里安	尤里安	ユリアン	Julian	율리안
+ui.0479	比克古	比克古	ビュコック	Bucock	뷰코크
+ui.0480	梅爾卡茲	梅尔卡兹	メルカッツ	Merkatz	메르카츠
+ui.0481	費雪	费雪	フィッシャー	Fischer	피셔
+ui.0482	派特里契夫	派特里契夫	パトリチェフ	Patrichev	파트리체프
+ui.0483	波布蘭	波布兰	ポプラン	Poplan	포플란
+ui.0484	伊旺•高尼夫	伊旺•高尼夫	イワン・コーネフ	Ivan Konev	이반 코네프
+ui.0485	巴格達胥	巴格达胥	バグダッシュ	Bagdash	바그다슈
+ui.0486	伍蘭夫	伍兰夫	ウランフ	Ulanhu	울란후
+ui.0487	波羅汀	波罗汀	ボロディン	Borodin	보로딘
+ui.0488	亞爾•沙列姆	亚尔•沙列姆	アル・サレム	Al-Salem	알 살렘
+ui.0489	阿普頓	阿普顿	アップルトン	Appleton	애플턴
+ui.0490	莫頓	莫顿	モートン	Morton	모튼
+ui.0491	拉普	拉普	ラップ	Lapp	라프
+ui.0492	邱吾權	邱吾权	チュン・ウー・チェン	Chung Wu-Cheng	춘우첸
+ui.0493	雅拉肯	雅拉肯	アラルコン	Alarcon	알라르콘
+ui.0494	香陶	香陶	シャーントー	Shantau	샨타우
+ui.0495	克里希	克里希	クリシュ	Krish	크리슈
+ui.0496	派特	派特	パエッタ	Paetta	파에타
+ui.0497	帝納	帝纳	ディーナー	Diener	디너
+ui.0498	林滋	林滋	リンツ	Linz	린츠
+ui.0499	布魯姆哈爾特	布鲁姆哈尔特	ブルームハルト	Blumhardt	블룸하르트
+ui.0500	路菲普	路菲普	ルフェーブル	Lefebvre	르페브르
+ui.0501	萊博爾	莱博尔	ライベル	Raibel	라이벨
+ui.0502	錦茲	锦兹	キンツ	Kintz	킨츠
+ui.0503	史路茲卡利達	史路兹卡利达	スーン・スールズカリッター	Soulzcuarrite	술즈카리테
+ui.0504	山德斯	山德斯	サンダース	Sanders	샌더스
+ui.0505	阿姆斯道爾夫	阿姆斯道尔夫	アムスドルフ	Amsdorf	암스도르프
+ui.0506	費塞尼加	费塞尼加	フェッセンガー	Fessengger	페센거
+ui.0507	赫伍得	赫伍得	ヘーウッド	Haywood	헤우드
+ui.0508	可那利	可那利	コナリー	Connally	코널리
+ui.0509	奈西巴哈	奈西巴哈	ナイセバッハ	Neissebach	나이세바흐
+ui.0510	史多克斯	史多克斯	ストークス	Stokes	스토크스
+ui.0511	修特萊	修特莱	シュトライト	Streit	슈트라이트
+ui.0512	魯比茲	鲁比兹	ルビッツ	Rubitz	루비츠
+ui.0513	托爾奈森	托尔奈森	トゥルナイゼン	Thurneysen	튀르나이젠
+ui.0514	伊謝爾倫	伊谢尔伦	イゼルローン	Iserlohn	이제르론
+ui.0515	奧丁	奥丁	オーディン	Odin	오딘
+ui.0516	海尼森	海尼森	ハイネセン	Heinessen	하이네센
+ui.0517	費沙	费沙	フェザーン	Phezzan	페잔
+ui.0518	亞姆力札	亚姆力札	アムリッツァ	Amritsar	암릿처
+ui.0519	亞爾提那	亚尔提那	アルテナ	Altena	알테나
+ui.0520	亞爾維斯	亚尔维斯	アルヴィース	Alviss	알비스
+ui.0521	亞爾迪巴朗	亚尔迪巴朗	アルデバラン	Aldebaran	알데바란
+ui.0522	亞凡海爾	亚凡海尔	アファンヘイル	Afanheil	아판하일
+ui.0523	杜威爾格	杜威尔格	ドヴェルグ	Dvergr	드베르그
+ui.0524	干達巴爾	干达巴尔	ガンダルヴァ	Gandharva	간다르바
+ui.0525	流卡斯	流卡斯	リューカス	Rucas	류카스
+ui.0526	艾爾•法西爾	艾尔•法西尔	エル・ファシル	El Facil	엘 파실
+ui.0527	菲列亞	菲列亚	フィリア	Philia	필리아
+ui.0528	赫爾森	赫尔森	ヘルセン	Helsen	헬센
+ui.0529	達希利	达希利	ダジリ	Dajili	다지리
+ui.0530	馬爾•亞迪特	马尔•亚迪特	マル・アデッタ	Marr-Adetta	마르 아데타
+ui.0531	優茲黑姆	优兹黑姆	ウルズハイム	Urzheim	우르즈하임
+ui.0532	亞加特拉姆	亚加特拉姆	アガートラム	Agateram	아가트람
+ui.0533	亞斯古里	亚斯古里	アスグリム	Asgrim	아스그림
+ui.0534	人狼	人狼	ベイオウルフ	Beowulf	베이오울프
+ui.0535	休伯利安	休伯利安	ヒューベリオン	Hyperion	히페리온
+ui.0536	佛爾瑟帝	佛尔瑟帝	フォルセティ	Forseti	포르세티
+ui.0537	佩倫	佩伦	ペルーン	Perun	페룬
+ui.0538	佩卡蒙	佩卡蒙	ペルガモン	Pergamon	페르가몬
+ui.0539	克利什那	克利什那	クリシュナ	Krishna	크리슈나
+ui.0540	凱茲阿爾克阿多爾	凯兹阿尔克阿多尔	ケツァルコアトル	Quetzalcoatl	케찰코아틀
+ui.0541	利歐格朗特	利欧格朗特	リオ・グランデ	Rio Grande	리오그란데
+ui.0542	史奇爾尼爾	史奇尔尼尔	スキールニル	Skirnir	스키르니르
+ui.0543	巴爾巴洛沙	巴尔巴洛沙	バルバロッサ	Barbarossa	바르바로사
+ui.0544	帕拉米迪斯	帕拉米迪斯	パラミデュース	Palamedes	팔라메데스
+ui.0545	庫•赫林	库•赫林	クー・ホリン	Cu Chulainn	쿠 훌린
+ui.0546	庫典森	库典森	グーデリアン	Guderian	구데리안
+ui.0547	庫瓦希爾	库瓦希尔	クヴァシル	Kvasir	크바시르
+ui.0548	托利斯坦	托利斯坦	トリスタン	Tristan	트리스탄
+ui.0549	斯巴達尼恩	斯巴达尼恩	スパルタニアン	Spartanian	스파르타니안
+ui.0550	沙尼亞	沙尼亚	サラマンドル	Salamander	살라만더
+ui.0551	法菲爾	法菲尔	ファーブニル	Fafnir	파프니르
+ui.0552	波羅庫斯	波罗库斯	ポルックス	Pollux	폴룩스
+ui.0553	火龍	火龙	サラマンドル	Fire Drake	화룡
+ui.0554	烏爾拉	乌尔拉	ウルラ	Ulra	울라
+ui.0555	特奧德利克斯	特奥德利克斯	テオドリクス	Theodoric	테오도릭스
+ui.0556	特里古拉夫	特里古拉夫	トリグラフ	Triglav	트리글라프
+ui.0557	狄奧梅迪斯	狄奥梅迪斯	ディオメデス	Diomedes	디오메데스
+ui.0558	王爾古雷	王尔古雷	ワルキューレ	Valkyrie	발퀴레
+ui.0559	王虎	王虎	ケーニヒス・ティーゲル	Konigstiger	쾨니히스티거
+ui.0560	瓦爾哈拉	瓦尔哈拉	ヴァルハラ	Valhalla	발할라
+ui.0561	瑞文茲	瑞文兹	レヴンツ	Revntz	레븐츠
+ui.0562	皮羅	皮罗	ピュロス	Pyrrhus	피로스
+ui.0563	盤古	盘古	バン・グゥ	Bang Gu	반구
+ui.0564	維札爾	维札尔	ヴィーザル	Vidar	비다르
+ui.0565	雷歐達II	雷欧达II	レオニダスII	Leonidas II	레오니다스 II
+ui.0566	雷歐達	雷欧达	レオニダス	Leonidas	레오니다스
+ui.0567	馬奧里亞	马奥里亚	マウリア	Maurya	마우리아
+ui.0568	魯格拉希	鲁格拉希	ルグラシ	Lugrashi	루그라시
+ui.0569	阿奇列沃斯	阿奇列沃斯	アキレウス	Achilles	아킬레우스
+ui.0570	慕亞	慕亚	ムーア	Moore	무어
+ui.0571	古嚴	古严	グエン	Nguyen	응우옌
+ui.0572	執勤中	执勤中	任務中	On Duty	근무 중
+ui.0573	大致上還算平靜	大致上还算平静	おおむね平穏	Mostly peaceful	대체로 평온
+ui.0574	完全沒有問題	完全没有问题	問題なし	No problems	문제 없음
+ui.0575	建造以下船艦	建造以下船舰	次の艦艇を建造	Build these ships	다음 함정 건조
+ui.0576	待命於	待命于	待機先	Standby at	대기 위치
+ui.0577	待命行星	待命行星	待機惑星	Standby Planet	대기 행성
+ui.0578	徵稅計劃	征税计划	徴税計画	Tax Plan	징세 계획
+ui.0579	微稅	微税	軽微な税	Minimal	극소 세금
+ui.0580	情報收集	情报收集	情報収集	Gather Intel	정보 수집
+ui.0581	戰略命令	战略命令	戦略命令	Strategy Orders	전략 명령
+ui.0582	戰略模式	战略模式	戦略モード	Strategy	전략 모드
+ui.0583	戰略模式思考中	战略模式思考中	戦略思考中	Strategic Thinking	전략 사고 중
+ui.0584	戰略模式處理中	战略模式处理中	戦略処理中	Processing Strategy	전략 처리 중
+ui.0585	戰術	战术	戦術	Tactics	전술
+ui.0586	戰鬥	战斗	戦闘	Battle	전투
+ui.0587	戰鬥中	战斗中	戦闘中	In Battle	전투 중
+ui.0588	對戰	对战	対戦	Versus	대전
+ui.0589	作戰	作战	作戦	Operations	작전
+ui.0590	操作說明	操作说明	操作説明	Controls	조작 설명
+ui.0591	敵將資料	敌将资料	敵将情報	Enemy Admiral	적장 정보
+ui.0592	敵提督資料	敌提督资料	敵提督情報	Enemy Admiral	적 제독 정보
+ui.0593	敵艦隊	敌舰队	敵艦隊	Enemy Fleet	적 함대
+ui.0594	數值超出允許範圍	数值超出允许范围	範囲外の数値	Value out of range	허용 범위를 벗어남
+ui.0595	尚未套用	尚未套用	未適用	Not Applied	아직 미적용
+ui.0596	已保存全局設定	已保存全局设定	全体設定を保存	Global Settings Saved	전체 설정 저장됨
+ui.0597	提督的等級	提督的等级	提督の階級	Admiral Level	제독 등급
+ui.0598	提督能力編輯	提督能力编辑	提督能力編集	Admiral Editor	제독 능력 편집
+ui.0599	待命中副官資料	待命中副官资料	待機副官情報	Idle Aides	대기 부관 정보
+ui.0600	密集	密集	密集	Dense	밀집
+ui.0601	圓錐	圆锥	円錐	Cone	원뿔
+ui.0602	宇宙曆	宇宙历	宇宙暦	Space Year	우주력
+ui.0603	帝國馬克	帝国马克	帝国マルク	Imperial Mark	제국 마르크
+ui.0604	機動力	机动力	機動力	Mobility	기동력
+ui.0605	有少數的艦隊群	有少数的舰队群	少数の艦隊	A few fleets	소수 함대
+ui.0606	只有少數的船艦	只有少数的船舰	少数の艦艇のみ	Few ships	소수 함정
+ui.0607	不足	不足	不足	Shortage	부족
+ui.0608	以下船艦已建造完成	以下船舰已建造完成	以下の艦艇が完成	Ships completed	다음 함정 건조 완료
+ui.0609	已成功進駐	已成功进驻	進駐に成功	Garrisoned	주둔 성공
+ui.0610	部分行星我軍已成功進駐	部分行星我军已成功进驻	一部惑星に進駐	Allies reached some planets	일부 행성에 아군 진주
+ui.0611	由於受到敵方艦隊入侵	由于受到敌方舰队入侵	敵艦隊の侵入により	Due to enemy invasion	적 함대 침입으로
+ui.0612	部分地區已經無法掌控	部分地区已经无法掌控	一部地域が制御不能	Some areas beyond control	일부 지역 통제 불가
+ui.0613	低落的關係	低落的关系	低下のため	Due to low morale	저하로 인해
+ui.0614	已經無法戰鬥	已经无法战斗	戦闘不能	Can no longer fight	더 이상 전투 불가
+ui.0615	請查閱	请查阅	参照	Please check	참조
+ui.0616	請稍候	请稍候	お待ちください	Please wait	잠시 기다려 주세요
+ui.0617	全滅	全灭	全滅	Destroyed	전멸
+ui.0618	增幅	增幅	補正	Bonus	보너스
+ui.0619	要	要	必要	Need	필요
+ui.0620	取	取	読込	Load	불러오기
+ui.0621	存	存	保存	Save	저장
+language.name	繁體中文	繁体中文	日本語	English	한국어
+poster.quote.empire	啊，星星真好……	啊，星星真好……	ああ、星はいい……	Ah, the stars are beautiful…	아아, 별은 참 좋군…
+poster.quote.alliance	和平最好。	和平最好。	やはり平和が一番だ	Peace is best.	평화가 최고다.
+poster.name.empire	萊因哈特	莱因哈特	ラインハルト	Reinhard	라인하르트
+poster.name.alliance	楊威利	杨威利	ヤン・ウェンリー	Yang Wen-li	양 웬리
+ui.0622	年	年	年	Year	년
+ui.0623	稅率	税率	税率	Tax Rate	세율
+ui.0624	徵稅額	征税额	税収額	Tax Due	징세액
+ui.0625	敵軍顯示只影響畫面	敌军显示只影响画面	敵軍表示は表示のみ	Enemy visibility only affects display	적군 표시는 화면에만 적용
+ui.0626	卡斯特羅普	卡斯特罗普	カストロプ	Castrop	카스트로프
+ui.0627	奇霍伊薩	奇霍伊萨	キフォイザー	Kyffhauser	키포이저
+ui.0628	亞斯提	亚斯提	アスターテ	Astarte	아스타테
+ui.0629	迪亞馬特	迪亚马特	ティアマト	Tiamat	티아마트
+ui.0630	凱利姆	凯利姆	ケリム	Kerim	케림
+ui.0631	特利布拉	特利布拉	トリプラ	Tripura	트리푸라
+ui.0632	德奧里亞	德奥里亚	ドーリア	Doria	도리아
+ui.0633	傑姆席德	杰姆席德	ジャムシード	Jamshid	잠시드
+ui.0634	蘭提馬利歐	兰提马利欧	ランテマリオ	Rantemario	란테마리오
+ui.0635	波列多	波列多	ボレト	Bollet	볼레트
+ui.0636	萊加爾	莱加尔	ライガール	Raigarh	라이가르
+ui.0637	巴米利恩	巴米利恩	バーミリオン	Vermilion	버밀리온
+ui.0638	艾流塞拉	艾流塞拉	エリューセラ	Eleuthera	엘류세라
+ui.0639	巴拉特	巴拉特	バーラト	Bharat	바라트
+ui.0640	艦隊一覽	舰队一览	艦隊一覧	Fleet List	함대 목록
+ui.0641	星系一覽	星系一览	星系列覧	System List	성계 목록
+ui.0642	行星一覽	行星一览	惑星一覧	Planet List	행성 목록
+ui.0643	提督一覽	提督一览	提督一覧	Admiral List	제독 목록
+ui.0644	船艦	船舰	艦艇	Ship	함정
+ui.0645	統率能力	统率能力	統率能力	Command	통솔 능력
+ui.0646	要移動至	要移动至	移動しますか	Move to	이동할까요
+ui.0647	要移動	要移动	移動しますか	Move	이동할까요
+ui.0648	要解散	要解散	解散しますか	Disband	해산할까요
+ui.0649	艦隊嗎	舰队吗	艦隊か	fleet	함대인가요
+ui.0650	回合命令	回合命令	ターン命令	Turn Orders	턴 명령
+ui.0651	執行命令	执行命令	命令実行	Execute Orders	명령 실행
+ui.0652	本回合	本回合	このターン	This Turn	이번 턴
+ui.0653	回復	回复	回復	Restore	회복
+ui.0654	軍事	军事	軍事	Military	군사
+ui.0655	內政	内政	内政	Domestic	내정
+ui.0656	索敵能力	索敌能力	索敵能力	Scouting	정찰 능력
+ui.0657	防衛能力	防卫能力	防衛能力	Defense	방위 능력
+ui.0658	機動	机动	機動	Mobility	기동
+ui.0659	請查閱提督資料表輸入照片上	请查阅提督资料表输入照片上	写真の提督資料を参照	Check the pictured admiral	사진 속 제독 자료표 참조
+ui.0660	提督的	提督的	提督の	Admiral's	제독의
+ui.0661	寫入	写入	書込	Write	기록
+ui.0662	讀取	读取	読込	Read	읽기
+ui.0663	放棄	放弃	放棄	Abandon	포기
+ui.0664	目前	目前	現在	Current	현재
+ui.0665	目前位置	目前位置	現在位置	Location	현재 위치
+ui.0666	設定已保存	设定已保存	設定保存済み	Settings Saved	설정 저장됨
+ui.0667	使用原有的ＢＧＭ	使用原有的ＢＧＭ	元のBGM	Keep BGM	기존 음악 사용
+ui.0668	戰鬥ＢＧＭ	战斗ＢＧＭ	戦闘BGM	Battle BGM	전투 음악

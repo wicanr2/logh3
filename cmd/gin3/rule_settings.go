@@ -11,7 +11,7 @@ import (
 	"github.com/wicanr2/logh3/internal/ui"
 )
 
-var ruleOptionRects = [2]image.Rectangle{compactControlBounds("flagship"), compactControlBounds("movement")}
+var ruleOptionRects = [3]image.Rectangle{compactControlBounds("flagship"), compactControlBounds("movement"), compactControlBounds("non-battleship")}
 
 func readRulePreferences(path string) (game.RuleOptions, error) {
 	options := game.DefaultRuleOptions()
@@ -29,7 +29,7 @@ func readRulePreferences(path string) (game.RuleOptions, error) {
 	for _, item := range []struct {
 		name  string
 		value *bool
-	}{{"flagship_transfer", &options.FlagshipTransfer}, {"hero_movement", &options.HeroMovement}} {
+	}{{"flagship_transfer", &options.FlagshipTransfer}, {"hero_movement", &options.HeroMovement}, {"non_battleship_flagship", &options.NonBattleshipFlagship}} {
 		if raw, exists := p[item.name]; exists {
 			if string(raw) == "null" {
 				return game.DefaultRuleOptions(), fmt.Errorf("規則偏好 %s 不是開關", item.name)
@@ -50,12 +50,15 @@ func (a *app) ruleSettingsClick(point image.Point) bool {
 		options := a.g.RuleOptions()
 		if i == 0 {
 			options.FlagshipTransfer = !options.FlagshipTransfer
-		} else {
+		} else if i == 1 {
 			options.HeroMovement = !options.HeroMovement
+		} else {
+			options.NonBattleshipFlagship = !options.NonBattleshipFlagship
 		}
 		updates := map[string]json.RawMessage{}
 		updates["flagship_transfer"], _ = json.Marshal(options.FlagshipTransfer)
 		updates["hero_movement"], _ = json.Marshal(options.HeroMovement)
+		updates["non_battleship_flagship"], _ = json.Marshal(options.NonBattleshipFlagship)
 		if a.preferencesPath != "" {
 			if err := writePreferences(a.preferencesPath, updates); err != nil {
 				a.ruleSettingsError = err.Error()

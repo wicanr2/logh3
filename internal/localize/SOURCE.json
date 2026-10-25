@@ -1,0 +1,20 @@
+{
+  "font": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+  "font_sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
+  "catalog_sha256": "1f0a4e41acc3af65386ebbe911aadc633eae7af2e295e6273845b6242a85c29e",
+  "generator_sha256": "c29fa5bb96a9efe252b04f4742efb04e2ea90f8ba64a62d020c86a47549ca304",
+  "licenses": "Noto font SIL OFL 1.1，沿settings_font.LICENSE.txt",
+  "rows": 762,
+  "glyphs": 5368,
+  "big5": 13752,
+  "sizes": [
+    12,
+    36
+  ],
+  "outputs": {
+    "font.json": "a41caa79f0c21f943ae306d8f34853bf04c165fbad2a4c0d3b89b5fce08757c4",
+    "font-12.png": "7639073d3eaa76aa9f3ee6f7159aef7f3e5b1a84edf8a23753706e0c26a801ff",
+    "font-36.png": "6cc25f8e080f4948b7645f16a0e2ded4e005fceef684289c9f7ae677bc2d5d41",
+    "big5.json": "ecca66a70110c61438475f39c877cab13693eb257ef7d1f7369f4e3065c6baf3"
+  }
+}

@@ -6,6 +6,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/game"
+	"github.com/wicanr2/logh3/internal/localize"
 	"image"
 	"image/color"
 	"image/draw"
@@ -14,7 +15,8 @@ import (
 
 const toolbarHeight = 32
 
-var toolbarButtons = [2]image.Rectangle{image.Rect(8, 5, 152, 27), image.Rect(160, 5, 364, 27)}
+var toolbarButtons = [4]image.Rectangle{image.Rect(8, 5, 100, 27), image.Rect(108, 5, 284, 27), image.Rect(292, 5, 456, 27), image.Rect(464, 5, 632, 27)}
+var toolbarActions = [4]int{1, 2, 3, 5} // 4保留給既有說明關閉。
 var helpBounds = image.Rect(64, 110, 576, 374)
 var helpCloseBounds = image.Rect(260, 336, 380, 360)
 
@@ -25,40 +27,104 @@ type toolbar struct {
 	pixels                  *image.RGBA
 	texture                 *ebiten.Image
 	lastKey                 string
+	fontMenu, aiMenu        bool
+	fontChoices             []string
 }
+
+func toolbarFontRow(i int) image.Rectangle { return image.Rect(292, 32+i*24, 456, 56+i*24) }
+func toolbarAIRow(level int) image.Rectangle {
+	return image.Rect(464, 32+(level+1)*24, 632, 56+(level+1)*24)
+}
+func (t *toolbar) closeMenus() { t.fontMenu, t.aiMenu = false, false }
+func (a *app) fontStyleLabel() string {
+	style := "original"
+	if a.hd != nil {
+		style = a.hd.FontStyle()
+	}
+	return fontStyleLabels[style]
+}
+
+var fontStyleLabels = map[string]string{"original": "原版點陣", "classic": "原版強化", "serif": "思源宋體", "sans": "思源黑體"}
 
 func (t *toolbar) move(x, y int) {
 	inside := x >= 0 && x < 640 && y >= 0
-	t.visible = t.help || inside && (y < 6 || t.visible && y < toolbarHeight)
+	t.visible = t.help || t.fontMenu || t.aiMenu || inside && (y < 6 || t.visible && y < toolbarHeight)
 	t.hover = t.actionAt(x, y)
 }
 func (t *toolbar) blocks(x, y int) bool {
-	return t.help || t.visible && image.Pt(x, y).In(image.Rect(0, 0, 640, toolbarHeight))
+	return t.help || t.fontMenu || t.aiMenu || t.visible && image.Pt(x, y).In(image.Rect(0, 0, 640, toolbarHeight))
 }
 func (t *toolbar) actionAt(x, y int) int {
 	p := image.Pt(x, y)
+	if t.fontMenu {
+		for i := range t.fontChoices {
+			if p.In(toolbarFontRow(i)) {
+				return 100 + i
+			}
+		}
+	}
+	if t.aiMenu {
+		for level := -1; level <= 3; level++ {
+			if p.In(toolbarAIRow(level)) {
+				return 200 + level + 1
+			}
+		}
+	}
 	if t.help && p.In(helpCloseBounds) {
 		return 4
 	}
 	if t.visible {
 		for i, b := range toolbarButtons {
 			if p.In(b) {
-				return i + 1
+				return toolbarActions[i]
 			}
 		}
 	}
 	return 0
 }
 func (a *app) toolbarAction(action int) {
+	t := &a.toolbar
+	if action >= 100 && action < 200 {
+		i := action - 100
+		if t.fontMenu && a.hd != nil && i < len(t.fontChoices) {
+			_ = a.hd.SetFontStyle(t.fontChoices[i])
+		}
+		t.closeMenus()
+		return
+	}
+	if action >= 200 && action <= 204 {
+		if t.aiMenu {
+			_ = a.g.SetAILevel(action - 201)
+		}
+		t.closeMenus()
+		return
+	}
 	switch action {
 	case 1:
+		t.closeMenus()
 		a.toolbar.help = !a.toolbar.help
 	case 2:
+		t.closeMenus()
 		if !a.toggleGraphics() {
 			fmt.Println("F7：HD素材不可用，沿用原版顯示")
 		}
 	case 4:
 		a.toolbar.help = false
+	case 3:
+		open := !t.fontMenu
+		t.closeMenus()
+		t.help = false
+		if a.hd != nil {
+			t.fontChoices = a.hd.FontStyles()
+			t.fontMenu = open
+		}
+	case 5:
+		open := !t.aiMenu
+		t.closeMenus()
+		t.help = false
+		t.aiMenu = open
+	default:
+		t.closeMenus()
 	}
 }
 func (a *app) updateInput() {
@@ -69,6 +135,10 @@ func (a *app) updateInput() {
 		a.toolbarAction(2)
 	}
 	closedHelp := a.toolbar.help && inpututil.IsKeyJustPressed(ebiten.KeyEscape)
+	closedMenu := (a.toolbar.fontMenu || a.toolbar.aiMenu) && inpututil.IsKeyJustPressed(ebiten.KeyEscape)
+	if closedMenu {
+		a.toolbar.closeMenus()
+	}
 	if closedHelp {
 		a.toolbar.help = false
 	}
@@ -76,7 +146,8 @@ func (a *app) updateInput() {
 	x, y = a.gamePosition(x, y)
 	t := &a.toolbar
 	t.move(x, y)
-	blocked := t.blocks(x, y) || t.captured || closedHelp
+	outside := a.posterMode && (x < 0 || x >= 640 || y < 0 || y >= 480)
+	blocked := t.blocks(x, y) || t.captured || closedHelp || closedMenu || outside
 	if blocked {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 			t.captured = true
@@ -84,6 +155,7 @@ func (a *app) updateInput() {
 		}
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
 			t.captured = true
+			t.closeMenus()
 		}
 		if !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight) {
 			t.captured = false
@@ -93,6 +165,9 @@ func (a *app) updateInput() {
 		a.g.LeftRelease()
 		a.g.RightRelease()
 		ebiten.SetCursorMode(ebiten.CursorModeVisible)
+		if outside && !t.help && !closedHelp {
+			a.typeKeys()
+		}
 		return
 	}
 	ebiten.SetCursorMode(ebiten.CursorModeHidden)
@@ -104,25 +179,7 @@ func (a *app) updateInput() {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
 			a.editorCancel()
 		}
-		for k := ebiten.Key0; k <= ebiten.Key9; k++ {
-			if inpututil.IsKeyJustPressed(k) {
-				a.editorKey(byte('0' + k - ebiten.Key0))
-			}
-		}
-		for k := ebiten.KeyKP0; k <= ebiten.KeyKP9; k++ {
-			if inpututil.IsKeyJustPressed(k) {
-				a.editorKey(byte('0' + k - ebiten.KeyKP0))
-			}
-		}
-		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) || inpututil.IsKeyJustPressed(ebiten.KeyKPEnter) {
-			a.editorKey('\r')
-		}
-		if inpututil.IsKeyJustPressed(ebiten.KeyBackspace) {
-			a.editorKey(8)
-		}
-		if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
-			a.editorKey(27)
-		}
+		a.typeKeys()
 		a.g.LeftRelease()
 		a.g.RightRelease()
 		return
@@ -154,9 +211,18 @@ func (a *app) updateInput() {
 	case inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonRight):
 		a.g.RightRelease()
 	}
+	a.typeKeys()
+}
+
+// Keyboard input stays available while the cursor rests on a decorative side.
+func (a *app) typeKeys() {
+	send := a.g.Key
+	if a.admiralEditor != nil {
+		send = a.editorKey
+	}
 	for k := ebiten.Key0; k <= ebiten.Key9; k++ {
 		if inpututil.IsKeyJustPressed(k) {
-			a.g.Key(byte('0' + k - ebiten.Key0))
+			send(byte('0' + k - ebiten.Key0))
 		}
 	}
 	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) && a.soundFontMenu {
@@ -167,14 +233,17 @@ func (a *app) updateInput() {
 	}
 	for k := ebiten.KeyKP0; k <= ebiten.KeyKP9; k++ {
 		if inpututil.IsKeyJustPressed(k) {
-			a.g.Key(byte('0' + k - ebiten.KeyKP0))
+			send(byte('0' + k - ebiten.KeyKP0))
 		}
 	}
 	if inpututil.IsKeyJustPressed(ebiten.KeyEnter) || inpututil.IsKeyJustPressed(ebiten.KeyKPEnter) {
-		a.g.Key('\r')
+		send('\r')
 	}
 	if inpututil.IsKeyJustPressed(ebiten.KeyBackspace) {
-		a.g.Key(8)
+		send(8)
+	}
+	if a.admiralEditor != nil && inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
+		a.editorKey(27)
 	}
 }
 func (a *app) drawToolbar(screen *ebiten.Image, theme string) {
@@ -182,7 +251,7 @@ func (a *app) drawToolbar(screen *ebiten.Image, theme string) {
 	if !t.visible && !t.help {
 		return
 	}
-	key := fmt.Sprintf("%t/%t/%d/%t/%s", t.visible, t.help, t.hover, a.original, theme)
+	key := fmt.Sprintf("%t/%t/%d/%t/%s/%s/%t/%t/%s/%d", t.visible, t.help, t.hover, a.original, theme, a.localeCode(), t.fontMenu, t.aiMenu, a.fontStyleLabel(), a.g.AILevel())
 	if t.pixels == nil {
 		t.pixels = image.NewRGBA(image.Rect(0, 0, 640, 480))
 		t.texture = ebiten.NewImage(640, 480)
@@ -202,15 +271,10 @@ func (a *app) drawToolbar(screen *ebiten.Image, theme string) {
 		}
 		panel := func(b image.Rectangle, c color.RGBA) { fill(b, edge); fill(b.Inset(1), c) }
 		label := func(b image.Rectangle, text string) {
-			w := 0
-			for _, c := range text {
-				if c < 128 {
-					w += 8
-				} else {
-					w += 16
-				}
+			if a.language != nil {
+				text = a.language.Catalog.Translate(text)
 			}
-			t.text(b.Min.X+(b.Dx()-w)/2, b.Min.Y+(b.Dy()-15)/2, text, ink)
+			localize.DrawRGBA(t.pixels, a.localeCode(), text, b.Inset(2), ink, 12)
 		}
 		buttonAt := func(b image.Rectangle, text string, action int, enabled bool) {
 			c := button
@@ -233,12 +297,24 @@ func (a *app) drawToolbar(screen *ebiten.Image, theme string) {
 			}
 			buttonAt(toolbarButtons[0], "F1 說明", 1, true)
 			buttonAt(toolbarButtons[1], "F7 原版 / HD: "+mode, 2, a.hd != nil)
+			buttonAt(toolbarButtons[2], "介面字型: "+a.fontStyleLabel(), 3, a.hd != nil)
+			buttonAt(toolbarButtons[3], "AI: "+aiSettingsLabel(a.g.AILevel()), 5, true)
+			if t.fontMenu {
+				for i, style := range t.fontChoices {
+					buttonAt(toolbarFontRow(i), fontStyleLabels[style], 100+i, true)
+				}
+			}
+			if t.aiMenu {
+				for level := -1; level <= 3; level++ {
+					buttonAt(toolbarAIRow(level), aiSettingsLabel(level), 200+level+1, true)
+				}
+			}
 		}
 		if t.help {
 			draw.Draw(t.pixels, image.Rect(0, toolbarHeight, 640, 480), &image.Uniform{C: color.RGBA{0, 0, 0, 150}}, image.Point{}, draw.Over)
 			panel(helpBounds, base)
 			for i, text := range []string{"操作說明", "F1  開關說明", "F7  原版 / HD", "顯示敵軍: 設定選單", "滑鼠左鍵: 選擇與確認", "滑鼠右鍵: 返回或取消", "滑鼠移到頂端: 顯示功能列", "敵軍顯示只影響畫面"} {
-				t.text(92, 126+i*25, text, ink)
+				label(image.Rect(92, 126+i*25, 548, 146+i*25), text)
 			}
 			buttonAt(helpCloseBounds, "關閉 Esc", 4, true)
 		}
