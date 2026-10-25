@@ -1,0 +1,102 @@
+{
+  "version": "v.1.6.3-20261026",
+  "source": "實際正式AppImage正常主選單操作，完整1280×720原視窗，不重畫、不縮放",
+  "canvas": [
+    1280,
+    720
+  ],
+  "normal_entry": true,
+  "state_injection": false,
+  "seed_injection": false,
+  "appimage_sha256": "96f519353fe1e94c405fd56dfd0a91a0da48f481e2abd5b59924bf917b5f1e1d",
+  "receipts": [
+    {
+      "path": "workplace/poster166/player-linux/RESULT.json",
+      "sha256": "bee54d6e761ddb0231f03218d9a8a9b4d31596bc5d3f65dfb241895b3ed4be96"
+    },
+    {
+      "path": "workplace/poster166/garrison-linux-r3/RESULT.json",
+      "sha256": "1bd4c02cdd6067fcea7db5c21794256b0cb86bc935d0793253faffa08b4e5a77"
+    }
+  ],
+  "files": [
+    {
+      "file": "docs/images/readme-v163-poster-v1.png",
+      "source": "workplace/poster166/player-linux/zh-TW-map-v1-first.png",
+      "sha256": "6d26a7376751a7bca0752f309dcecacca1e1971e506c42795441f1b32cad23e3",
+      "bytes": 1274190,
+      "event": "zh-TW-map-v1-first"
+    },
+    {
+      "file": "docs/images/readme-v163-quotes.png",
+      "source": "workplace/poster166/player-linux/zh-TW-map-v1.png",
+      "sha256": "65a3987c65560e70b9ef54ae7d24edf364446c1394cc8b9084e8e6d36d097a1c",
+      "bytes": 1277163,
+      "event": "zh-TW-map-v1"
+    },
+    {
+      "file": "docs/images/readme-v163-poster-v2.png",
+      "source": "workplace/poster166/player-linux/zh-TW-map-v2.png",
+      "sha256": "89bc91276c53b26d4753fe44cfe8683f4bbf2d8c11b65e9101359ba5edc21184",
+      "bytes": 1305736,
+      "event": "zh-TW-map-v2"
+    },
+    {
+      "file": "docs/images/readme-v163-poster-v3.png",
+      "source": "workplace/poster166/player-linux/zh-TW-map-v3.png",
+      "sha256": "53acd1c86ff8c15a03ee60f53ada3a5b952238e9fd599f7150820d33467a44e3",
+      "bytes": 1319893,
+      "event": "zh-TW-map-v3"
+    },
+    {
+      "file": "docs/images/readme-v163-locale-zh-CN.png",
+      "source": "workplace/poster166/player-linux/zh-CN-map-v1.png",
+      "sha256": "9c4fc0e39bb3f32cb4384f90fe562dfd335111ae4f52f30cf170fdd5ebd899a1",
+      "bytes": 1269533,
+      "event": "zh-CN-map-v1"
+    },
+    {
+      "file": "docs/images/readme-v163-locale-ja.png",
+      "source": "workplace/poster166/player-linux/ja-map-v1.png",
+      "sha256": "44feb05a8a85475eb563b30873aea5a8797388d7edb0de677d6df0295b227c71",
+      "bytes": 1269945,
+      "event": "ja-map-v1"
+    },
+    {
+      "file": "docs/images/readme-v163-locale-en.png",
+      "source": "workplace/poster166/player-linux/en-map-v1.png",
+      "sha256": "eeaba8797875a2214b6f168dd7cc77adfd8dd79cb9236c661af25ad18238c926",
+      "bytes": 1265810,
+      "event": "en-map-v1"
+    },
+    {
+      "file": "docs/images/readme-v163-locale-ko.png",
+      "source": "workplace/poster166/player-linux/ko-map-v1.png",
+      "sha256": "ee02a507fbd6e0847c8c2da7190b3ea58f9b7173259514a233c02b001a7b7561",
+      "bytes": 1261613,
+      "event": "ko-map-v1"
+    },
+    {
+      "file": "docs/images/readme-v163-editor-basic.png",
+      "source": "workplace/poster166/player-linux/zh-TW-editor-basic.png",
+      "sha256": "203fe568bb8d1621ebc1ed171a3789f44a7be198364da98a353b01cfc896bc17",
+      "bytes": 1065952,
+      "event": "zh-TW-editor-basic"
+    },
+    {
+      "file": "docs/images/readme-v163-editor-special.png",
+      "source": "workplace/poster166/player-linux/zh-TW-editor-special.png",
+      "sha256": "a16139febe291863b16beaaeae0bc7066727010ff582909db85622b870f894ec",
+      "bytes": 1087954,
+      "event": "zh-TW-editor-special"
+    },
+    {
+      "file": "docs/images/readme-v163-settings-alliance.png",
+      "source": "workplace/poster166/garrison-linux-r3/option-default-off.png",
+      "sha256": "296a7934d592ce0868db0b3660d0ab93f890712ca8ba43de102237ccb9a0f0f7",
+      "bytes": 1214938,
+      "event": "option-default-off"
+    }
+  ],
+  "generator_sha256": "f64d3a77abf55a1eb4ff14768fb39323e72720a049e32086ddde687fc21c6c5d"
+}

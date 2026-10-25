@@ -4,9 +4,9 @@
 
 選擇銀河帝國或自由行星同盟，從財政、生產與提督任命安排戰略，再親自指揮艦隊迎戰。從亞姆力札會戰重新下令，讓你的戰術改變局勢。
 
-**目前開發版已接入定案銀河海報。** 三組人物海報與上下銀河連接，上方休伯利安、下方伯倫希爾保持固定船體，循環短光束。v1加入五組雙人名言，每60秒輪替，支援五語。中央遊戲與滑鼠命中同步縮放。Linux正常入口、三組、五語及存讀已驗證；本機已打包版本仍為v.1.6.2-20261025，尚未包含這次構圖。[定案與驗證](docs/playtest/137-approved-poster-frame.md) · [名言輪替驗證](docs/playtest/138-poster-quote-rotation.md) · [海報與語系](#海報與語系)
+**目前本機完整版為 v.1.6.3-20261026。** 三組人物海報與上下銀河連接，上方休伯利安、下方伯倫希爾保持固定船體，循環短光束。v1的五組雙人名言每60秒輪替，支援五語。Windows ZIP、Linux AppImage與macOS通用ZIP已納入定案構圖，中央遊戲與滑鼠命中同步縮放。[本次封包與影片驗收](docs/playtest/139-poster-frame-full-promo.md) · [海報與語系](#海報與語系)
 
-**Windows更新：v.1.6.1-20261025。** 改善滑鼠移動的重繪延遲，修正按鈕與下拉選項的hover變色。滑鼠移至頂端後，可從工具列直接切換思源黑體等既有字型及戰略AI。更新包沿用v1.6.0素材與存檔。[更新與驗收](docs/playtest/134-pointer-toolbar.md)
+完整版也包含滑鼠重繪延遲與按鈕、下拉選項的hover修正。滑鼠移至頂端後，可從工具列直接切換思源黑體等既有字型及戰略AI。[操作驗收](docs/playtest/134-pointer-toolbar.md)
 
 GitHub 公開引擎仍為 [v.1.5.0-20261019](https://github.com/wicanr2/logh3/releases/tag/v.1.5.0-20261019)，玩家須自備合法取得的原版遊戲資料。新版完整版與含原版音畫的推廣影片保留本機，不加入公開 Release 附件。
 
@@ -40,17 +40,13 @@ GitHub 公開引擎仍為 [v.1.5.0-20261019](https://github.com/wicanr2/logh3/re
 
 | 本機內容 | 路徑 |
 |---|---|
-| 三平台 v.1.6.2 完整版，Linux為AppImage | `dist-all/v.1.6.2-20261025/full/` |
-| v.1.6.2 海報循環實錄預覽 | `dist-all/v.1.6.2-20261025/promo/` |
-| 三平台 v.1.6.1 完整版，Linux為AppImage | `dist-all/v.1.6.1-20261025/full/` |
-| Windows v.1.6.1 引擎更新包 | `dist-all/v.1.6.1-20261025/release/` |
-| 三平台 v.1.6.0 完整版與啟動器 | `dist-all/v.1.6.0-20261024/full/` |
+| 三平台 v.1.6.3 完整版，Linux為AppImage | `dist-all/v.1.6.3-20261026/full/` |
+| v.1.6.3 完整故事推廣片 | `dist-all/v.1.6.3-20261026/promo/` |
 | 三平台 v.1.5.0 公開引擎、來源與校驗檔 | `dist-all/v.1.5.0-20261019/release/` |
-| v.1.6.0三組海報與五語介面推廣片 | `dist-all/v.1.6.0-20261024/promo/` |
 
 Linux AppImage包含完整素材，設為可執行後即可啟動；存檔沿原本的XDG設定目錄。沒有FUSE時可加`--appimage-extract-and-run`。[Linux操作與相容範圍](docs/playtest/135-v161-full-appimage.md)
 
-完整推廣片以帝國與同盟國徽作底圖，從百年對峙、雙主角與亞姆力札危局，接到玩家的前線部署。三組海報、五語、提督編輯與駐地領船出擊取自v1.6.0實際完整版新錄；主角動畫、兩軍戰場、要塞砲與三種武器交火沿用已驗來源，串成同一支故事片。全片使用同一首BGM_0F連續配樂，剪接處不換曲或重啟，戰鬥音效另依實際演出重混。本機檔名為 `LOGH3-v.1.6.0-20261024-promo.mp4`。[影片、來源與音軌驗收](docs/playtest/133-poster-five-language-delivery.md)
+完整推廣片以帝國與同盟國徽作底圖，從百年對峙、雙主角與亞姆力札危局，接到玩家的前線部署。三組海報、五語、實際60秒名言切換、提督編輯與駐地領船出擊，全部取自v1.6.3正式AppImage新錄。更換提督至出擊保留原速連續操作；主角動畫、兩軍戰場、要塞砲與三種武器交火沿用已驗來源。全片使用同一首BGM_0F連續配樂，剪接處不換曲或重啟，戰鬥音效依實際演出重混。本機檔名為 `LOGH3-v.1.6.3-20261026-promo.mp4`。[影片、來源與音軌驗收](docs/playtest/139-poster-frame-full-promo.md)
 
 ## 主要特點
 
@@ -75,11 +71,9 @@ Linux AppImage包含完整素材，設為可執行後即可啟動；存檔沿原
 
 **設定頁小字與邊框已強化。** 設定頁採專用黑體字形，HD 使用高解析遮罩，移除小字陰影，選取項目改用深字配亮底。視窗新增可見金屬外緣，內側保留立體陰影。「介面字型」仍可切換其他遊戲畫面的四款字型。三平台 v.1.4.0 完整版與引擎包均已納入本次更新。[字型與邊框驗收](docs/playtest/129-clear-settings-font.md)
 
-以下兩張設定頁更新為v1.6.0實際Linux完整ZIP的正常操作，手動開啟海報，保留完整1280×720視窗。點圖可放大。[新版截圖來源與雜湊](docs/images/readme-v160.json)
+以下設定頁取自v1.6.3正式AppImage正常操作，手動開啟海報，非戰艦旗艦仍為預設關閉。保留完整1280×720視窗。[新版截圖來源與雜湊](docs/images/readme-v163.json)
 
-| 帝國清晰設定頁 | 同盟清晰設定頁 |
-|---|---|
-| [![帝國v1.6.0設定頁，左上語系、右上海報選項](docs/images/readme-v160-settings-empire.png)](docs/images/readme-v160-settings-empire.png) | [![同盟v1.6.0設定頁，海報開啟，中央保留4:3](docs/images/readme-v160-settings-alliance.png)](docs/images/readme-v160-settings-alliance.png) |
+![同盟v1.6.3設定頁，左上語系、右上海報選項](docs/images/readme-v163-settings-alliance.png)
 
 ![v1.5.0正式包的AI原版與強化0至3選單](docs/images/readme-v150-ai.png)
 
@@ -103,17 +97,17 @@ Linux AppImage包含完整素材，設為可執行後即可啟動；存檔沿原
 
 設定頁右上的海報鈕依序切換「關閉 → v1 → v2 → v3」。首次啟動預設關閉，組別與語系會保存。缺少圖片時保留可用組別；海報全部不可用時回到原本4:3。
 
-目前來源程式已套用核准構圖。以下三圖取自Linux來源程式的正常遊玩入口，保留完整1280×720視窗。這次構圖尚未重打三平台套件。[定案HTML](docs/spec/157-poster-galaxy-frame.html) · [正常操作驗證與限制](docs/playtest/137-approved-poster-frame.md) · [來源與雜湊](docs/internals/data/poster-approved.json)
+三平台完整版已套用核准構圖。以下三圖取自v1.6.3正式AppImage正常遊玩入口，保留完整1280×720視窗。[定案HTML](docs/spec/157-poster-galaxy-frame.html) · [本次封包驗收](docs/playtest/139-poster-frame-full-promo.md) · [截圖來源與雜湊](docs/images/readme-v163.json)
 
-![定案v1，左右主角、圖內名言、上方休伯利安及下方伯倫希爾](docs/images/poster-runtime-v1.png)
+![v1.6.3雙主角、圖內名言、上方休伯利安及下方伯倫希爾](docs/images/readme-v163-poster-v1.png)
 
 v1的兩人名言每60秒同步換一組，五組循環。切換語系時保留當前組別；重開遊戲由第一組開始。文字與姓名保持在人物圖片內，長句向上排。語錄採已同意的網路轉錄及本專案譯文，尚未逐字核對尖端舊版，不稱官方譯文。[五組清單與來源](tools/scripts/poster_quote_candidates.json) · [驗證與截圖雜湊](docs/playtest/138-poster-quote-rotation.md)
 
-![正常遊玩約60秒後，v1兩人的名言已切換到第二組](docs/images/poster-quote-rotation.png)
+![正常遊玩約60秒後，v1兩人的名言已切換到第二組](docs/images/readme-v163-quotes.png)
 
 | v2兩軍將領 | v3雙方親友 |
 |---|---|
-| [![定案v2將領群像與連續銀河](docs/images/poster-runtime-v2.png)](docs/images/poster-runtime-v2.png) | [![定案v3親友群像與連續銀河](docs/images/poster-runtime-v3.png)](docs/images/poster-runtime-v3.png) |
+| [![v1.6.3的v2將領群像與連續銀河](docs/images/readme-v163-poster-v2.png)](docs/images/readme-v163-poster-v2.png) | [![v1.6.3的v3親友群像與連續銀河](docs/images/readme-v163-poster-v3.png)](docs/images/readme-v163-poster-v3.png) |
 
 | 組別 | 左側帝國 | 右側同盟 |
 |---|---|---|
@@ -121,23 +115,17 @@ v1的兩人名言每60秒同步換一組，五組循環。切換語系時保留�
 | v2 | 萊因哈特、齊格飛、米達麥亞、羅嚴塔爾、奧貝斯坦 | 楊威利、亞典波羅、卡介倫、先寇布、波布蘭 |
 | v3 | 萊因哈特、安妮羅潔、齊格飛、希爾德 | 楊威利、菲列特利加、尤里安、卡介倫、亞典波羅、先寇布 |
 
-![v1雙主角海報，底部斜體名言，中央完整4:3](docs/images/readme-v160-poster-v1.png)
-
-| v2兩軍將領 | v3雙方親友 |
-|---|---|
-| [![v2將領群像](docs/images/readme-v160-poster-v2.png)](docs/images/readme-v160-poster-v2.png) | [![v3親友群像，含安妮羅潔與齊格飛、菲列特利加與尤里安](docs/images/readme-v160-poster-v3.png)](docs/images/readme-v160-poster-v3.png) |
-
 左上Lang按鈕切換 `zh-TW`、`zh-CN`、`ja`、`en`、`ko`。五語共用操作位置、遊戲資料與存檔；v1名言同步切換。譯表為[UTF-8 TSV](internal/localize/ui.tsv)，完整版可編輯 `data/ui-locales.tsv` 後重啟。圖片內商標、故事圖片及未收錄原文保留，不把這些內容宣稱為完整翻譯。
 
 | 简体中文 | 日本語 |
 |---|---|
-| [![簡體中文介面與名言](docs/images/readme-v160-locale-zh-CN.png)](docs/images/readme-v160-locale-zh-CN.png) | [![日文介面與名言](docs/images/readme-v160-locale-ja.png)](docs/images/readme-v160-locale-ja.png) |
+| [![簡體中文介面與名言](docs/images/readme-v163-locale-zh-CN.png)](docs/images/readme-v163-locale-zh-CN.png) | [![日文介面與名言](docs/images/readme-v163-locale-ja.png)](docs/images/readme-v163-locale-ja.png) |
 
 | English | 한국어 |
 |---|---|
-| [![英文介面與名言](docs/images/readme-v160-locale-en.png)](docs/images/readme-v160-locale-en.png) | [![韓文介面與名言](docs/images/readme-v160-locale-ko.png)](docs/images/readme-v160-locale-ko.png) |
+| [![英文介面與名言](docs/images/readme-v163-locale-en.png)](docs/images/readme-v163-locale-en.png) | [![韓文介面與名言](docs/images/readme-v163-locale-ko.png)](docs/images/readme-v163-locale-ko.png) |
 
-以上皆為v1.6.0實際完整版正常操作，未縮放完整視窗。人物造型參考經典動畫官方資料，海報為重構美術；四語名言為本專案翻譯，非官方字幕。[規格與來源](docs/spec/152-poster-sets-and-quotes.md) · [截圖來源與雜湊](docs/images/readme-v160.json) · [GitHub三組海報索引](docs/images/readme-v160-posters.json)
+以上海報與五語畫面皆為v1.6.3實際完整版正常操作，未縮放完整視窗。人物造型參考經典動畫官方資料，海報為重構美術；四語名言為本專案翻譯，非官方字幕。[規格與來源](docs/spec/152-poster-sets-and-quotes.md) · [截圖來源與雜湊](docs/images/readme-v163.json)
 
 ## 提督能力編輯器
 
@@ -162,15 +150,15 @@ v1的兩人名言每60秒同步換一組，五組循環。切換語系時保留�
 
 點數值可直接輸入，也可用「−／+」微調。「套用變更」會保存全局設定，立即套用目前遊戲，並於重啟、新遊戲及讀檔後繼續套用。只有編輯過的能力持續覆寫，其餘保留劇本、存檔與升級結果。「取消」放棄未套用修改；「還原本提督」恢復該人的預設能力。設定保存在存檔目錄的 `preferences.json`，原版六表格式保持。
 
-以下基本與特殊能力畫面更新為v1.6.0正式包，完整1280×720視窗含海報。內部能力與個別將領畫面保留v1.5.0實錄。[功能驗收](docs/playtest/130-admiral-editor.md) · [新版來源雜湊](docs/images/readme-v160.json) · [v1.5.0來源雜湊](docs/images/readme-v150.json)
+以下繁體中文基本與特殊能力畫面取自v1.6.3正式AppImage，完整1280×720視窗含海報。內部能力與個別將領保留v1.5.0實錄，英文及韓文編輯器保留v1.6.0實錄。[功能驗收](docs/playtest/130-admiral-editor.md) · [新版來源雜湊](docs/images/readme-v163.json) · [v1.5.0來源雜湊](docs/images/readme-v150.json) · [v1.6.0來源雜湊](docs/images/readme-v160.json)
 
 | 基本能力 | 三項內部能力 |
 |---|---|
-| ![可分別編輯光線砲、飛彈、戰鬥機等十項基本能力](docs/images/readme-v160-editor-basic.png) | ![三項內部能力的用途標籤與數值編輯](docs/images/readme-v150-editor-internal.png) |
+| ![可分別編輯光線砲、飛彈、戰鬥機等十項基本能力](docs/images/readme-v163-editor-basic.png) | ![三項內部能力的用途標籤與數值編輯](docs/images/readme-v150-editor-internal.png) |
 
-| v1.6.0特殊能力 | English |
+| v1.6.3特殊能力 | English（v1.6.0） |
 |---|---|
-| ![新版特殊能力與海報](docs/images/readme-v160-editor-special.png) | ![英文提督能力編輯](docs/images/readme-v160-editor-en.png) |
+| ![新版特殊能力與海報](docs/images/readme-v163-editor-special.png) | ![英文提督能力編輯](docs/images/readme-v160-editor-en.png) |
 
 ![韓文提督基本能力編輯](docs/images/readme-v160-editor-ko.png)
 

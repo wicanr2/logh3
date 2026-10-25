@@ -1,0 +1,192 @@
+{
+  "passed": true,
+  "version": "v.1.6.3-20261026",
+  "classification": "含原版及衍生音畫，本機完整版與影片，不公開",
+  "packages": [
+    {
+      "path": "full/LOGH3-v.1.6.3-20261026-windows-amd64.zip",
+      "bytes": 473815288,
+      "sha256": "21c7e6c8f5a4ba1fffe5b18d6a82c443d2d23a76d5fcd8375fca28c5cc8b925c",
+      "binary_sha256": "ba593c8f084653510f0cc2bef66d1772f37347db84f48b283241f70ae7a28236",
+      "manifest_sha256": "0877b5dac8f1d9d03c33581c1e9a8acbac9eae98c9b791338e0be1eec025a9f7"
+    },
+    {
+      "path": "full/LOGH3-v.1.6.3-20261026-macos-universal.zip",
+      "bytes": 483767233,
+      "sha256": "01382e106821989af7be0204345e6c92553254bfbcb7f3e30157eeca145ca11d",
+      "binary_sha256": "fed4227dd5aa55b9fddab2810e0740e2211e55cc4141749b1b3b2b81a59820b1",
+      "manifest_sha256": "2cda4071c2e9324e448352f40c2ed00c831604b67f9e18832e18372b3a557aa8"
+    },
+    {
+      "path": "full/LOGH3-v.1.6.3-20261026-linux-x86_64.AppImage",
+      "bytes": 473745912,
+      "sha256": "96f519353fe1e94c405fd56dfd0a91a0da48f481e2abd5b59924bf917b5f1e1d",
+      "binary_sha256": "32ad07dc70216a4292ecccbf6dac974cc712fd9897f66edfb3d2b55922241361",
+      "runtime_sha256": "1cc49bcf1e2ccd593c379adb17c9f85a36d619088296504de95b1d06215aebbf"
+    }
+  ],
+  "architectures": {
+    "windows-amd64": "PE64 amd64，實際Wine另驗",
+    "macos-universal": [
+      {
+        "architecture": "amd64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 4096,
+        "bytes": 17688616,
+        "sha256": "d58623e21aea3d82dc19aca802658bf796f48e23569fb041847b2902602329f0"
+      },
+      {
+        "architecture": "arm64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [
+          {
+            "ad_hoc": true,
+            "flags": 131074,
+            "algorithm": "sha256",
+            "code_pages": 4100,
+            "code_limit": 16791936,
+            "all_page_hashes_match": true
+          }
+        ],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 17694720,
+        "bytes": 16923250,
+        "sha256": "642eefc54aaf2cf3357ff3a5b8ea34e1ae554737565ea2c1fb888ac98974bf28"
+      }
+    ],
+    "linux-x86_64": "Type-2 AppImage、ELF64 x86_64、15項相依、extract-and-run"
+  },
+  "source_files": 1655,
+  "source_nonvendor": 677,
+  "common_files": 650,
+  "inputs": {
+    "path": "workplace/package92-v.1.6.3-20261026-release166/INPUTS.json",
+    "bytes": 434669,
+    "sha256": "c24edd609dfad4909a047022e822e23916cfe28ff1a08a3e821830d0146d1dfb"
+  },
+  "normal": [
+    {
+      "name": "linux-alliance",
+      "path": "workplace/poster166/player-linux/RESULT.json",
+      "bytes": 109527,
+      "sha256": "bee54d6e761ddb0231f03218d9a8a9b4d31596bc5d3f65dfb241895b3ed4be96",
+      "screenshots": 15
+    },
+    {
+      "name": "linux-empire",
+      "path": "workplace/poster166/player-empire/RESULT.json",
+      "bytes": 219368,
+      "sha256": "cc3164d571dc13be007cc4ec8e81a441fecd8bda2c097c57331c95baee98e5c7",
+      "screenshots": 9
+    },
+    {
+      "name": "windows-alliance",
+      "path": "workplace/music69-windows/full166/player-windows-r2/RESULT.json",
+      "bytes": 200633,
+      "sha256": "9a05a628a2411b20a2a2893f0732646e743a7be4ae1ea3f0a99c3a4b894ee46c",
+      "screenshots": 9
+    },
+    {
+      "path": "workplace/poster166/diagnostic-linux/RESULT.json",
+      "bytes": 8576,
+      "sha256": "429bdc8dc9486c6ea9589a141c04601d46c8bf6de2801c2bf661481179937bb3"
+    },
+    {
+      "path": "workplace/music69-windows/full166/diagnostic-windows/RESULT.json",
+      "bytes": 9578,
+      "sha256": "86c47b3dbc96642d8a72407f93c16cd1ad0ed1ebccba33967853bd48a3a77681"
+    }
+  ],
+  "garrison": {
+    "path": "workplace/poster166/garrison-linux-r3/RESULT.json",
+    "bytes": 644131,
+    "sha256": "1bd4c02cdd6067fcea7db5c21794256b0cb86bc935d0793253faffa08b4e5a77",
+    "screenshots": 19,
+    "saved": {
+      "ADMIRAL.DT0": "4f5d0322fe0bdcf9f48a1c851a8999a7900143c6bf9362889ccae9e1a4078824",
+      "FLEET.DT0": "ab4110fe062da6a485cb47b175337444ff57e7495e4ff68464bd05a4fbe9803d",
+      "PLANET.DT0": "f41471ef5e852271222673642f50cc1fb446470f94027e474e3ae1d48e7d9c45",
+      "SHIP.DT0": "61c544285badc1287ee9eb7e0359de7c134c5013cbe331a1fd21248ae7ed2b30",
+      "STELLAR.DT0": "39bcb69e370425d9b5bd47f518656d28e7ef678bc54fe7cd2bafb609b4f80ef1",
+      "WORK.DT0": "1dc5a4583438ab25187c0756da1bfe54b7cff9dcfec5d2a45f022b58289a3b91"
+    }
+  },
+  "standards": {
+    "passed": 16,
+    "no_tests": 4,
+    "log": {
+      "path": "workplace/poster166/standard-final.log",
+      "bytes": 1091,
+      "sha256": "e2c663306fab4ee696b71b71dba3dd282f06c1782b0cfc11446648c162c42247"
+    }
+  },
+  "movie": {
+    "path": "dist-all/v.1.6.3-20261026/promo/LOGH3-v.1.6.3-20261026-promo.mp4",
+    "bytes": 20226563,
+    "sha256": "2f417531977fe629b9421ec0bf3b6864b1a2fd66715d070e7a3813fc658ec263",
+    "seconds": 126.8833333333333,
+    "audit": {
+      "path": "dist-all/v.1.6.3-20261026/promo/AUDIT.json",
+      "bytes": 7491,
+      "sha256": "090abdd3f7b39644e8d1f60d245ce605796823a0b37571af9974af3191068abf"
+    },
+    "plan": {
+      "path": "dist-all/v.1.6.3-20261026/promo/PLAN.json",
+      "bytes": 69759,
+      "sha256": "7dad403ffd3fc5dc4a0a56af1f6b830f3c34b651aae94861d0add6380d7b82ba"
+    },
+    "retained_scenes": 18,
+    "replaced_poster_scenes": 14,
+    "story": "雙國徽與百年對峙→1988動畫雙主角→亞姆力札危局→英雄及親友海報→五語與提督能力→前線整軍及再次出擊→兩軍戰場與要塞／三武器→由玩家下令",
+    "scope": "海報／五語／提督及前線整軍取新版正式AppImage新錄；動畫與完整實戰沿151已驗來源。實際60秒換名言，連續整軍原速。"
+  },
+  "checksums": {
+    "path": "dist-all/v.1.6.3-20261026/SHA256SUMS.txt",
+    "sha256": "9a4119fe86a51fbddf5da8dc42d6bd20c19a0d9e31b54dde3c57d32ffd703002"
+  },
+  "limits": [
+    "Linux採extract-and-run，未驗桌面FUSE",
+    "Windows使用Wine，macOS只核雙架構／依賴／ARM簽章，未真機",
+    "未新增DOS parity或尖端官方逐字聲明，未公開完整版／影片"
+  ]
+}
