@@ -11757,3 +11757,11 @@ README換11張實際AppImage完整原視窗及當前交付入口，複製後逐�
 獨立交付索引產生後，以--check完整讀回通過；11張README原圖SHA核對通過。README到定案HTML作正對照，109個相關連結與16份Python來源依賴均在Git索引。錄製工具來源已綁收據SHA，保留實錄版本末尾空白行，不為格式改動已錄來源。正式cmd、internal及核准藝術層Git差異為零；Python與shell語法通過，整專案find無root-owned檔案或誤建.md目錄，交付及圖片抽查1000:1000。本輪Go／HD／AppImage／macOS／Wine一次性容器均退出自刪，沒有新增映像或清理其他專案資源。只暫存38份必要工具、收據、文件與截圖，不含原始遊戲、完整版或影片。
 
 5b21bf4f87824e92ad189d87becf5d69ff9cb35a已推送feat/approved-poster-frame，git ls-remote逐字核對相同；main仍44a8cae1875a9af39ff9f23e645d7b8f96eeb5ff。README、11張新版截圖及可重現工具均在該功能分支。沒有建立或修改tag、Release，沒有再嘗試先前403的PR建立。工作樹僅保留原先其餘工具與使用者文字檔。
+
+## 2026-10-26：第167輪，合併GitHub預設main
+
+使用者要求合併GitHub repo到main或master。沿既有專案交接、驗收與文件職責入口，git ls-remote --symref確認預設為main，遠端main44a8cae1，功能分支與本機HEAD均為5bc0d76e。主機gh認證、102張Issue快照與verify通過，282條零失效、1項manual、126一致、155歷史文件；未寫Issue。
+
+fetch後確認main是功能分支祖先，七個提交可直接快轉，沒有衝突。以普通git push將5bc0d76ec9992254932b4d7a6ad7e1adaad3a728推至refs/heads/main，沒有force、改寫歷史或刪除分支。遠端預設HEAD、main與功能分支SHA逐字相同。本機main亦以非強制fetch快轉，再切至相同樹的main；windows_hotfix_package.py與其餘既有未提交工具、收據及使用者文字檔保留。
+
+產品樹與第166輪已驗內容完全相同，沿16PASS／4無測試及正式交付收據，不因單純快轉重跑建置或改動封包。只補CONTEXT、166狀態表及本流水帳，沒有新增狀態文件、移動tag或Release，沒有提交完整版與影片。Go與HD一次性容器均退出自刪，未新增映像或清理其他專案資源。
