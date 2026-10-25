@@ -1,0 +1,45 @@
+{
+  "status": "user-approved",
+  "decision": "2026-10-25 使用者：ok 定案 這份 proprosal 進入 github repo 開工吧",
+  "proposal_sha256": "ac843a911fce876e67292940285d22f19c988e092465fe09ab0746f6bf34c202",
+  "files": [
+    {
+      "file": "docs/spec/157-poster-galaxy-frame.html",
+      "sha256": "ac843a911fce876e67292940285d22f19c988e092465fe09ab0746f6bf34c202",
+      "bytes": 38666416
+    },
+    {
+      "file": "docs/images/poster-approved-v1.png",
+      "sha256": "0d64d491f42fd44499795b39f5183a495174f2702499b31959cfc850f717fa90",
+      "bytes": 1112865
+    },
+    {
+      "file": "docs/images/poster-approved-v2.png",
+      "sha256": "49567c4cad8b6bf6d919f7d9d5f3aa73ec758fb199087b93091ae431c5889ad4",
+      "bytes": 1161036
+    },
+    {
+      "file": "docs/images/poster-approved-v3.png",
+      "sha256": "b81fad90718780dda7fb1ac221bb0f4893e922186ed246df5a6006f4bc11cb7f",
+      "bytes": 1166211
+    },
+    {
+      "file": "docs/images/poster-approved-sets.png",
+      "sha256": "ae87318119af6b8420eb634fb06c211912d865fba9eb927483aeca7de786e676",
+      "bytes": 3494501
+    }
+  ],
+  "reference_canvas": [
+    1280,
+    720
+  ],
+  "default": {
+    "gameScale": 88,
+    "topSize": 65,
+    "bottomSize": 92,
+    "bottomY": 24,
+    "fade": 100
+  },
+  "scope": "公開保存使用者核准的HTML及截圖，作正式實作基準；原始遊戲檔與完整版不在此次提交範圍",
+  "classification": "remake美術與介面定案，不是DOS或動畫逐形證據"
+}
