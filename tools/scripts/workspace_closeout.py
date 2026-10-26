@@ -200,11 +200,18 @@ def restore(identity):
 def check():
     plan=read(BATCH/'PLAN.json');result=read(RECEIPT)
     assert result==read(BATCH/'RESULT.json')and sha(BATCH/'PLAN.json')==result['plan']['sha256']
-    assert all(not(ROOT/r['path']).exists()for r in plan['rows'])
+    empty_caches=[]
+    for row in plan['rows']:
+        path=ROOT/row['path']
+        if path.exists():
+            # tools/gui.sh creates GOCACHE before entering the container.
+            # An empty directory is expected; any regenerated content fails.
+            assert row['kind']=='go_cache'and path.is_dir()and not any(path.iterdir()),path
+            empty_caches.append(row['path'])
     origins={r['restore']['archive']:r['restore']['sha256']for r in plan['rows']if r.get('restore')}
     for n,h in origins.items():assert sha(ROOT/n)==h
     backup=read(BATCH/'WINE.json');assert sha(ROOT/backup['path'])==backup['sha256']
-    print('PASS cleanup',len(plan['rows']),'deleted;',len(origins),'restore archives unchanged;',result['reclaimed'],'bytes',flush=True)
+    print('PASS cleanup',len(plan['rows']),'deleted;',len(origins),'restore archives unchanged;',result['reclaimed'],'bytes; empty cache dirs',empty_caches,flush=True)
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('mode',choices=['plan','apply','restore','check']);p.add_argument('--id',type=int);a=p.parse_args()

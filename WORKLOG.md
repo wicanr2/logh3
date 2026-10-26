@@ -11773,3 +11773,15 @@ fetch後確認main是功能分支祖先，七個提交可直接快轉，沒有�
 初盤workplace約66GiB、dist-all約25GiB。其餘61份未提交來源包含歷史封包／試玩／海報原型工具、規格及收據，Python／JSON／shell語法與憑證／私人連結標記檢查通過，準備入庫保存。使用者文字備忘原樣保留，因含私人完整版下載連結加入精確忽略規則，不公開內容。正式cmd／internal及核准藝術層保持，沒有重跑已通過的產品建置去重生待清快取。
 
 168唯一狀態表與workspace_closeout.py將每個候選綁來源ZIP、SHA、檔案內容與權限。舊正式解壓目錄亦只有逐檔證明能從相鄰ZIP還原才列刪除。最新v.1.6.3全部交付、166凍結來源與實包操作輸入明確保護；原始資料、來源、oracle、decomp、IDA、模組下載、獨有音畫／存檔及外部工作樹保留。Wine先備份全部非Windows系統部分，含registry、使用者、Program Files、ProgramData及連結，逐檔讀回再刪可重建系統環境。不清其他專案或全域Docker資源。清理結果與還原抽驗待本節追加。
+
+來源保存提交ea26f166已推送main，當時Git工作樹乾淨，私人備忘原樣且精確忽略。61份未追蹤來源的Python／JSON／shell檢查、11份海報JavaScript語法及兩份Go探針解析通過，保留歷史來源原本格式，不為格式變更其收據綁定SHA。正式cmd／internal／藝術層對787b82c3差異為零，沒有重新編譯產品或改動現行封包。
+
+第一批37項實際淨釋放16332079104 bytes。Wine非Windows內容備份5970878 bytes，36個一般檔逐筆從tar讀回驗SHA，使用者目錄與連結亦完整保存。另查得未列入的Windows副本只一項權限不同，以及AppDir的.DirIcon為內部連結。第二批workspace_closeout_extra.py記錄實際權限與連結，以既有工作ZIP或正式AppImage為還原來源，完整讀取ZIP每個檔案驗CRC／SHA後，刪20項，淨釋放5706723328 bytes；含額外檔的安裝目錄只刪已核對素材子目錄，其他資料保持。
+
+目前macOS目錄中的Go編譯快取227303424 bytes另以其README標記、1000:1000、無Git追蹤檔及無55份影片來源依賴證實可重建，再於Docker中清除並保存CURRENT-CACHE.json。正式macOS雙架構程式、來源及封包保持。按第一批清理前至最後還原抽驗移除後的專案du，總淨釋放22265954304 bytes，約20.7368GiB，58項；完整指紋、來源映射及備份在workplace/cleanup168，總收據workspace-closeout168.json已掛進168及CONTEXT。
+
+第一批ID0從保留ZIP還原舊macOS安裝，逐檔SHA與權限通過；第二批ID16從正式AppImage還原AppDir，完整檔案、權限與.DirIcon連結通過。兩份抽驗副本均再次移除。初次check因GUI包裝器重建空workplace/gocache而拒絕；核對僅該空目錄後，限定只有空的Go快取目錄可通過，任何非空資料仍拒絕。這是環境／驗證器問題，未改刪除清單或產品；原計畫產生器保留在ea26f166，後續版本只修check。兩批check最終通過，第一批23份保留還原來源及Wine備份均未變。
+
+清理後poster_frame_receipt.py --check完整通過，三平台ZIP／AppImage、共用素材、正常試玩及六表收據、正式推廣片全保持；166影片55份輸入逐筆SHA相同。原始bundle仍de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673。整專案find無root-owned檔案或誤建.md目錄，未新增映像或清理其他專案。這次只結束v1.6.3交付與清理，#48仍開啟，不宣稱整個remake或DOS整段同態完成。最後文件／來源／容器與遠端核對後提交推送。
+
+最後8個新增結案入口以CONTEXT及總收據作正對照，均在Git索引；工具語法、輸出1000:1000、私人備忘存在且被精確忽略，以及提交內容不含原始遊戲／完整版／影片通過。Git中文路徑的顯示轉義由本機check-ignore說明確認，改用--quiet退出碼核對，沒有更動備忘檔。清理、還原、影像與Go／Node一次性容器均退出自刪。必要來源、兩批清理收據與本次交付結案紀錄提交至main。

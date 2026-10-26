@@ -1,0 +1,134 @@
+{
+  "passed": true,
+  "before_bytes": 80880730112,
+  "after_bytes": 75174006784,
+  "reclaimed": 5706723328,
+  "deleted": [
+    {
+      "id": 0,
+      "path": "workplace/promo139/package/LOGH3-v.1.4.0-20261015-linux-amd64",
+      "kind": "package_copy",
+      "allocated": 462299136
+    },
+    {
+      "id": 1,
+      "path": "workplace/promo139/precompact/dist-all/v.1.4.0-20261015/release/LOGH3-v.1.4.0-20261015-linux-amd64",
+      "kind": "package_copy",
+      "allocated": 21835776
+    },
+    {
+      "id": 2,
+      "path": "workplace/promo139/precompact/dist-all/v.1.4.0-20261015/release/LOGH3-v.1.4.0-20261015-macos-universal",
+      "kind": "package_copy",
+      "allocated": 33869824
+    },
+    {
+      "id": 3,
+      "path": "workplace/promo139/precompact/dist-all/v.1.4.0-20261015/full/LOGH3-v.1.4.0-20261015-linux-amd64",
+      "kind": "package_copy",
+      "allocated": 462299136
+    },
+    {
+      "id": 4,
+      "path": "workplace/promo139/precompact/dist-all/v.1.4.0-20261015/full/LOGH3-v.1.4.0-20261015-macos-universal",
+      "kind": "package_copy",
+      "allocated": 474353664
+    },
+    {
+      "id": 5,
+      "path": "workplace/promo139/package-compact/LOGH3-v.1.4.0-20261015-linux-amd64",
+      "kind": "package_copy",
+      "allocated": 462327808
+    },
+    {
+      "id": 6,
+      "path": "workplace/music69-windows/full153/LOGH3-v.1.6.1-20261025-windows-amd64",
+      "kind": "package_copy",
+      "allocated": 497209344
+    },
+    {
+      "id": 7,
+      "path": "workplace/music69-windows/poster149/installed/music",
+      "kind": "common_copy",
+      "allocated": 132202496
+    },
+    {
+      "id": 8,
+      "path": "workplace/music69-windows/poster149/installed/original",
+      "kind": "common_copy",
+      "allocated": 6189056
+    },
+    {
+      "id": 9,
+      "path": "workplace/music69-windows/poster149/installed/data",
+      "kind": "common_copy",
+      "allocated": 6320128
+    },
+    {
+      "id": 10,
+      "path": "workplace/music69-windows/poster149/installed/soundfont",
+      "kind": "common_copy",
+      "allocated": 148426752
+    },
+    {
+      "id": 11,
+      "path": "workplace/music69-windows/poster149/installed/licenses",
+      "kind": "common_copy",
+      "allocated": 212992
+    },
+    {
+      "id": 12,
+      "path": "workplace/settings141/published-before-overwrite/dist-all/v.1.4.0-20261015/release/LOGH3-v.1.4.0-20261015-linux-amd64",
+      "kind": "package_copy",
+      "allocated": 21864448
+    },
+    {
+      "id": 13,
+      "path": "workplace/settings141/published-before-overwrite/dist-all/v.1.4.0-20261015/release/LOGH3-v.1.4.0-20261015-macos-universal",
+      "kind": "package_copy",
+      "allocated": 33906688
+    },
+    {
+      "id": 14,
+      "path": "workplace/settings141/published-before-overwrite/dist-all/v.1.4.0-20261015/full/LOGH3-v.1.4.0-20261015-linux-amd64",
+      "kind": "package_copy",
+      "allocated": 462327808
+    },
+    {
+      "id": 15,
+      "path": "workplace/settings141/published-before-overwrite/dist-all/v.1.4.0-20261015/full/LOGH3-v.1.4.0-20261015-macos-universal",
+      "kind": "package_copy",
+      "allocated": 474390528
+    },
+    {
+      "id": 16,
+      "path": "workplace/appimage153/AppDir",
+      "kind": "appimage_copy",
+      "allocated": 501379072
+    },
+    {
+      "id": 17,
+      "path": "workplace/appimage153/extracted/squashfs-root",
+      "kind": "appimage_copy",
+      "allocated": 501379072
+    },
+    {
+      "id": 18,
+      "path": "workplace/poster154/AppDir",
+      "kind": "appimage_copy",
+      "allocated": 502824960
+    },
+    {
+      "id": 19,
+      "path": "workplace/poster154/extracted/squashfs-root",
+      "kind": "appimage_copy",
+      "allocated": 502824960
+    }
+  ],
+  "plan": {
+    "path": "workplace/cleanup168/EXTRA-PLAN.json",
+    "sha256": "33db4f4139da06809e7ddc9fe3fdb2c62c431ef503fa268835ed966dac8911a4"
+  },
+  "policy": "既有ZIP內每個檔案CRC及SHA通過；保留候選實際權限。只刪可完整還原的副本或素材子目錄，額外日誌／存檔／來源保持；AppImage內連結另記。",
+  "restore": "Docker內執行python3 tools/scripts/workspace_closeout_extra.py restore --id <ID>"
+}
