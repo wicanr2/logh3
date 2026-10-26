@@ -76,6 +76,9 @@ def main(version, base_version, base_package=None):
     full.mkdir()
     for name in ['original', 'art', 'licenses', 'soundfont']:
         shutil.copytree(base/name, full/name)
+    # 新海報是本機可選素材，不放入下面的公開引擎包。
+    if (ROOT/'assets/hd/poster').is_dir():
+        shutil.copytree(ROOT/'assets/hd/poster', full/'art/poster', dirs_exist_ok=True)
     shutil.copyfile(ROOT/'internal/font/settings_font.LICENSE.txt', full/'licenses/Noto-Settings.txt')
     shutil.copyfile(ROOT/'LICENSE', full/'LICENSE')
     shutil.copytree(ROOT/'workplace/round132/music', full/'music')
@@ -113,6 +116,8 @@ def main(version, base_version, base_package=None):
             '移動與攻擊加成只限強化模式；同類取最高值，全軍與戰鬥機攻擊倍率各自乘算。\n'
             '本包含原版及衍生素材，僅供合法持有人本機使用，不公開散布。\n'
             'Windows Wine 已驗證；Windows 真機待使用者驗收。戰術讀回重建仍由 #48 追蹤。\n')
+    if (full/'art/poster/empire.png').is_file():
+        text += '設定頁右上「海報」預設關閉，開啟為左右海報16:9，中央完整4:3；左帝國、右同盟，F7原版／HD保持。\n'
     (full/'README.txt').write_bytes(b'\xef\xbb\xbf'+text.replace('\n','\r\n').encode())
     (full/'RIGHTS.txt').write_text('僅本機完整包，含原版及衍生素材，禁止公開散布。引擎 RRSAL-1.0，第三方見 licenses、soundfont 與 music 內聲明。\n')
     metadata = dict(version=version, platform='windows', architecture='amd64',

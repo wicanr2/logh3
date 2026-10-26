@@ -1,0 +1,69 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>旗艦景深隊列與人物名言｜銀河英雄傳說 III SP</title>
+<style>/*__SHARED_CSS__*/
+.portrait-quote{font:italic 16px "Noto Serif CJK TC","Noto Serif TC",serif;fill:#f0e0ba;paint-order:stroke;stroke:#09111e;stroke-width:1.6px;stroke-linejoin:round}.portrait-name{font:14px "Noto Sans CJK TC",sans-serif;letter-spacing:1.5px;fill:#e1d4b9;paint-order:stroke;stroke:#09111e;stroke-width:1.5px}.controls>p{margin-bottom:14px}.control{margin:14px 0}.key-note{color:#d6bc86;font-size:12px;letter-spacing:1px}.frame svg{isolation:isolate}
+</style></head><body><div class="wrap">
+<div class="brand"><span>銀河英雄傳說 III SP</span><span>海報提案 · 旗艦景深隊列</span></div>
+<h1>上方同盟，下方帝國。</h1>
+<p class="lead">同盟旗艦朝左，帝國旗艦朝右。以遠近大小、錯位與前後遮擋排列景深；兩側名言與姓名一起放進人物圖片下緣。</p>
+<main class="layout"><section class="preview">
+<div class="stage-head"><strong>上：同盟 ←　／　下：帝國 →</strong><button id="fullscreen">放大檢視</button></div>
+<div class="frame" id="frame"><svg id="scene" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="上方同盟艦首朝左，下方帝國艦首朝右，遠近排列；名言姓名在人物圖內">
+<defs>
+ <clipPath id="top-clip"><rect x="160" y="0" width="960" height="62"/></clipPath>
+ <clipPath id="bottom-clip"><rect x="160" y="627" width="960" height="93"/></clipPath>
+ <clipPath id="left-portrait-clip"><rect x="0" y="0" width="160" height="720"/></clipPath>
+ <clipPath id="right-portrait-clip"><rect x="1120" y="0" width="160" height="720"/></clipPath>
+ <linearGradient id="row-bg" x2="0" y2="1"><stop stop-color="#12202e"/><stop offset="1" stop-color="#060b13"/></linearGradient>
+ <linearGradient id="text-vignette" x2="0" y2="1"><stop stop-color="#061020" stop-opacity="0"/><stop offset=".46" stop-color="#061020" stop-opacity=".5"/><stop offset="1" stop-color="#061020" stop-opacity="0"/></linearGradient>
+</defs>
+<image id="background" x="0" y="0" width="1280" height="720"/>
+<g id="portraits"></g>
+<g clip-path="url(#top-clip)"><rect x="160" y="0" width="960" height="62" fill="url(#row-bg)"/><g id="alliance-row" data-facing="left"></g><path d="M160 61.5H1120" stroke="#ac946a" stroke-opacity=".65" stroke-width=".5"/><g id="top-weapons"></g></g>
+<g clip-path="url(#bottom-clip)"><rect x="160" y="627" width="960" height="93" fill="url(#row-bg)"/><g id="empire-row" data-facing="right"></g><path d="M160 627.5H1120" stroke="#ac946a" stroke-opacity=".65" stroke-width=".5"/><g id="bottom-weapons"></g></g>
+<g id="guides" fill="none" stroke="#e8cf94" stroke-dasharray="5 5"><rect x="160" y=".5" width="960" height="61"/><rect x="160" y="627.5" width="960" height="92"/></g>
+</svg></div>
+<div class="legend"><span><b>上方</b> 同盟朝左</span><span>艦體固定 · 武器活動</span><span>帝國朝右 <b>下方</b></span></div>
+<div class="rules">
+ <article class="rule"><small>隊列</small><h2>由深處到近處，逐艘展開</h2><p>遠艦較小、位置稍高，近艦較大並遮住後方部分艦體。每艘沿同一方向固定排列，保留大比例局部特寫。</p></article>
+ <article class="rule"><small>人物海報</small><h2>名言與署名同屬圖片</h2><p>人物圖延伸到底，名言及楊威利、萊因哈特的姓名疊在圖內下緣，以淡漸層襯底保持可讀。</p></article>
+</div>
+</section><aside class="controls"><h2>調整隊列與人物文字</h2><p>可調整景深、間距及文字位置，下載設定供定稿。</p>
+<div class="control"><label for="count">每排旗艦 <output id="countValue"></output></label><input id="count" type="range" min="3" max="6" step="1" value="6"></div>
+<div class="control"><label for="size">近處旗艦大小 <output id="sizeValue"></output></label><input id="size" type="range" min="350" max="750" step="10" value="520"></div>
+<div class="control"><label for="depth">遠近景深 <output id="depthValue"></output></label><input id="depth" type="range" min="0" max="65" step="1" value="48"></div>
+<div class="control"><label for="spread">隊列展開距離 <output id="spreadValue"></output></label><input id="spread" type="range" min="550" max="940" step="10" value="830"></div>
+<div class="control"><label for="topY">上方取景 <output id="topYValue"></output></label><input id="topY" type="range" min="-70" max="70" step="2" value="0"></div>
+<div class="control"><label for="bottomY">下方取景 <output id="bottomYValue"></output></label><input id="bottomY" type="range" min="-70" max="70" step="2" value="0"></div>
+<div class="control"><label for="quoteY">名言與姓名位置 <output id="quoteYValue"></output></label><input id="quoteY" type="range" min="490" max="630" step="2" value="574"></div>
+<div class="control"><label for="locale">海報語系</label><select id="locale"><option value="zh-TW">繁體中文</option><option value="zh-CN">简体中文</option><option value="ja">日本語</option><option value="en">English</option><option value="ko">한국어</option></select></div>
+<div class="control"><label for="weapons">武器效果</label><select id="weapons"><option value="laser">光束</option><option value="missile">飛彈</option><option value="both">光束與飛彈</option><option value="none">關閉</option></select></div>
+<label class="check"><input id="guidesToggle" type="checkbox">顯示隊列裁切範圍</label>
+<div class="actions"><button id="pause">暫停武器</button><button id="reset">還原提案</button><button id="save" class="primary">下載我的設定</button></div>
+<div id="status" class="status" style="margin-top:12px">正在載入圖像…</div></aside></main>
+<section class="summary"><h2>本次修改</h2><table><thead><tr><th>區域</th><th>安排</th></tr></thead><tbody><tr><th>上緣</th><td>全部改成同盟旗艦，朝左，以遠近大小與遮擋排列。</td></tr><tr><th>下緣</th><td>帝國旗艦朝右，採同樣的景深隊列。</td></tr><tr><th>左右人物</th><td>名言與楊威利、萊因哈特的姓名同組置於圖片內，跟隨海報語系。</td></tr></tbody></table></section>
+<footer><span>HTML 視覺提案 · 可離線檢視</span><span>本體固定 · 上下兩軍旗艦隊列</span></footer>
+</div><script>
+'use strict';
+const DATA=/*__ROW_DATA__*/;
+const $=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg';
+const defaults={count:6,size:520,depth:48,spread:830,topY:0,bottomY:0,quoteY:574,locale:'zh-TW',weapons:'laser',guidesToggle:false};
+let time=0,last=performance.now(),running=!matchMedia('(prefers-reduced-motion: reduce)').matches;
+const settings=()=>Object.fromEntries(Object.keys(defaults).map(k=>[k,$(k).type==='checkbox'?$(k).checked:$(k).type==='range'?Number($(k).value):$(k).value]));
+function node(tag,attrs={}){const n=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);return n}
+function image(parent,asset,x,y,w,flip=false){const h=w*asset.height/asset.width;const n=node('image',{href:asset.src,x,y,width:w,height:h,preserveAspectRatio:'xMidYMid meet'});if(flip)n.setAttribute('transform',`translate(${2*x+w} 0) scale(-1 1)`);parent.append(n);return n}
+function quoteLines(text,locale){const ctx=document.createElement('canvas').getContext('2d');ctx.font='italic 16px "Noto Serif CJK TC",serif';const words=['en','ko'].includes(locale)?text.split(' '):Array.from(text);const lines=[];let line='';for(const word of words){const next=line+(line&&['en','ko'].includes(locale)?' ':'')+word;if(ctx.measureText(next).width>130&&line){lines.push(line);line=word}else line=next}if(line)lines.push(line);return lines}
+function portraits(c){$('portraits').replaceChildren();for(const side of [0,1]){const left=side?1120:0,key=side?'alliance':'empire',asset=DATA.portraits[side],group=node('g',{'clip-path':`url(#${side?'right':'left'}-portrait-clip)`,class:'portrait-panel','data-side':key});$('portraits').append(group);const scale=Math.max(160/asset.width,720/asset.height),w=asset.width*scale,x=left-(w-160)*(side?.5:.56);image(group,asset,x,(720-asset.height*scale)/2,w);group.append(node('rect',{x:left,y:c.quoteY-58,width:160,height:122,fill:'url(#text-vignette)'}));const quote=node('text',{id:'quote-'+key,x:left+80,'text-anchor':'middle',class:'portrait-quote','data-inside-picture':'true'});const lines=quoteLines(DATA.quotes['poster.quote.'+key][c.locale],c.locale);lines.forEach((line,i)=>{const span=node('tspan',{x:left+80,y:c.quoteY-(lines.length-1)*9+i*18});span.textContent=line;quote.append(span)});group.append(quote);const name=node('text',{id:'name-'+key,x:left+80,y:c.quoteY+30,'text-anchor':'middle',class:'portrait-name','data-inside-picture':'true'});name.textContent=DATA.quotes['poster.name.'+key][c.locale];group.append(name)}}
+function fleet(c,side){const group=$(side?'alliance-row':'empire-row');group.replaceChildren();const ships=DATA.ships.filter(s=>s.side===side),band=side?{y:0,h:62}:{y:627,h:93};for(let i=c.count-1;i>=0;i--){const near=1-i/(c.count-1),w=c.size*(1-c.depth/100*(1-near)),h=w*ships[i].height/ships[i].width;const noseX=side?190+c.spread*(1-near):1090-c.spread*(1-near);const noseY=band.y+band.h*.84-(1-near)*34+(side?c.topY:c.bottomY);const x=side?noseX:noseX-w,y=noseY-h*(side?.84:.90);const ship=node('g',{'data-key':ships[i].key,'data-depth':near.toFixed(4),'data-facing':side?'left':'right',class:'flagship'});group.append(ship);image(ship,ships[i],x,y,w,side===1)}}
+function render(){const c=settings();for(const k of ['count','size','depth','spread','topY','bottomY','quoteY'])$(k+'Value').textContent=c[k]+(k==='count'?' 艘':k==='depth'?'%':' px');$('scene').classList.toggle('show-guides',c.guidesToggle);portraits(c);fleet(c,1);fleet(c,0);effects(time);window.proposalSettings=c}
+function effects(t){const c=settings();$('top-weapons').replaceChildren();$('bottom-weapons').replaceChildren();if(c.weapons==='none')return;const p=t%12,laser=c.weapons==='laser'||c.weapons==='both',missile=c.weapons==='missile'||c.weapons==='both';if(laser&&p>1&&p<2.2)$('top-weapons').append(node('path',{d:'M280 49H170',stroke:'#bdd7e8','stroke-width':.8,'stroke-opacity':.8}));if(laser&&p>6&&p<7.2)$('bottom-weapons').append(node('path',{d:'M1000 705H1110',stroke:'#e2cd9d','stroke-width':.8,'stroke-opacity':.8}));if(missile&&p>3&&p<5.5){const x=290-(p-3)*46;$('top-weapons').append(node('path',{d:`M${x+8} 47H${x}`,stroke:'#e8d4a6','stroke-width':1.1}))}if(missile&&p>8&&p<10.5){const x=990+(p-8)*46;$('bottom-weapons').append(node('path',{d:`M${x-8} 703H${x}`,stroke:'#e8d4a6','stroke-width':1.1}))}}
+for(const[k,v]of Object.entries(defaults)){$(k).type==='checkbox'?$(k).checked=v:$(k).value=v;$(k).addEventListener('input',render)}
+$('background').setAttribute('href',DATA.background);
+$('pause').addEventListener('click',()=>{running=!running;$('pause').textContent=running?'暫停武器':'播放武器'});
+$('reset').addEventListener('click',()=>{for(const[k,v]of Object.entries(defaults))$(k).type==='checkbox'?$(k).checked=v:$(k).value=v;time=0;render()});
+$('fullscreen').addEventListener('click',()=>$('frame').requestFullscreen?.().catch(()=>{}));
+$('save').addEventListener('click',()=>{const data={proposal:'上下旗艦景深隊列',...settings(),top:'alliance-left',bottom:'empire-right',bodies:'fixed',portraitText:'inside-image'};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='旗艦景深與人物文字設定.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);$('status').textContent='已下載目前設定'});
+window.proposalControl={settings,render,setTime(t){time=t;effects(t)},setRunning(v){running=Boolean(v);$('pause').textContent=running?'暫停武器':'播放武器'}};
+render();function loop(now){if(running)time+=(now-last)/1000;last=now;effects(time);requestAnimationFrame(loop)}requestAnimationFrame(loop);
+Promise.all([DATA.background,...DATA.ships.map(s=>s.src),...DATA.portraits.map(s=>s.src)].map(src=>new Promise((resolve,reject)=>{const i=new Image();i.onload=resolve;i.onerror=reject;i.src=src}))).then(()=>{$('status').textContent='圖像已就緒 · 可直接調整';window.proposalReady=true}).catch(()=>{$('status').textContent='圖像載入失敗'});
+</script></body></html>

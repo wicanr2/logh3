@@ -1,0 +1,377 @@
+{
+  "passed": true,
+  "version": "v.1.6.0-20261024",
+  "packages": [
+    {
+      "path": "full/LOGH3-v.1.6.0-20261024-windows-amd64.zip",
+      "bytes": 451562109,
+      "sha256": "008710aeea24fd93ed383ff35e58de80c2f1a28b378d672d258c6d8aad663aa6",
+      "files": 620,
+      "binary_sha256": "81349fa8653f0714fb8c46a33129b578b4fc240bb15fae4f6e7851bfebcedf5c",
+      "manifest_sha256": "72493e70a46150323271d0764633d7d415c5f5cd86779235c36caf6f4e029d56"
+    },
+    {
+      "path": "full/LOGH3-v.1.6.0-20261024-linux-amd64.zip",
+      "bytes": 451686846,
+      "sha256": "ff05f0dd4739d39c72de900e890f343555172a38e479819fcb60a294f41c85ab",
+      "files": 620,
+      "binary_sha256": "187e826961c66d393b4653908ad95ef293522d6c8ae61a098c0d96bc743869e5",
+      "manifest_sha256": "01c30ecd8146f4e6caeb5e01f7b1aeef8e436d346313e44118c94fe23461bfd9"
+    },
+    {
+      "path": "full/LOGH3-v.1.6.0-20261024-macos-universal.zip",
+      "bytes": 461380729,
+      "sha256": "a53357d22fd46de93fb516e0d027a1899d8e937f8879389de979ddfccca8c622",
+      "files": 622,
+      "binary_sha256": "39dddfe87f8ac57394f0af873b8064c8e81a0e3c29f43c55ab9444a4a274ef08",
+      "manifest_sha256": "61a8e02fb387b9e36670c37c03d23436b1954267b053ce7a5398644b05cb5b36"
+    }
+  ],
+  "architectures": {
+    "windows-amd64": "PE amd64，Wine執行另驗",
+    "linux-amd64": "ELF amd64",
+    "macos-universal": [
+      {
+        "architecture": "amd64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 4096,
+        "bytes": 17586280,
+        "sha256": "031ffc3cc5053bb917808ada853849509a5aa1fede081ead9b31c22271cd4dd1"
+      },
+      {
+        "architecture": "arm64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [
+          {
+            "ad_hoc": true,
+            "flags": 131074,
+            "algorithm": "sha256",
+            "code_pages": 4079,
+            "code_limit": 16706192,
+            "all_page_hashes_match": true
+          }
+        ],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 17596416,
+        "bytes": 16836834,
+        "sha256": "09683125af5e0796b1c1e93782dd92fae4493f7ce6f70d61518db7cf7814b741"
+      }
+    ]
+  },
+  "frozen_files": 1610,
+  "product_files": 632,
+  "shared_files": 615,
+  "build": {
+    "path": "dist-all/v.1.6.0-20261024/full/BUILD.json",
+    "bytes": 424308,
+    "sha256": "872053ec054bb880ff114a0e9c7a11535a666129c4a31a23a6e6ada1b75fbc2d"
+  },
+  "players": [
+    {
+      "path": "workplace/poster150/player-linux/RESULT.json",
+      "bytes": 1308214,
+      "sha256": "66eb0ed1d3b56eae983edfe2e8ec46886eca88f21c7b5c21f73a4f0aaad76b9f",
+      "screenshots": 54,
+      "binary_sha256": "187e826961c66d393b4653908ad95ef293522d6c8ae61a098c0d96bc743869e5",
+      "comparisons": [
+        {
+          "locale": "zh-TW",
+          "pixels": 691200,
+          "different": 0
+        },
+        {
+          "locale": "zh-CN",
+          "pixels": 691200,
+          "different": 0
+        },
+        {
+          "locale": "ja",
+          "pixels": 691200,
+          "different": 0
+        },
+        {
+          "locale": "en",
+          "pixels": 691200,
+          "different": 0
+        },
+        {
+          "locale": "ko",
+          "pixels": 691200,
+          "different": 0
+        }
+      ],
+      "saved": {
+        "ADMIRAL.DT0": "482a24048a9f553ae568560ad2a3ae21e2764c3783032a1ce0d204aecf2273c7",
+        "FLEET.DT0": "744d5df992c0c3f3fb13fcd5f17a6b3504842e8596db36b547136fbe32462d76",
+        "PLANET.DT0": "12d2e1ef8835fc8103e171a29cc9cb61814bd483c4d5358267c9010f5e4eb02b",
+        "SHIP.DT0": "0115127c1860283942928a6adbc6d83c97bb2418f452c89e655c0251ee95ed53",
+        "STELLAR.DT0": "c6ddd9ea1932d3ad13da01af7a7329bbe290da83ed433933f42589b1a421c017",
+        "WORK.DT0": "d506a292df0326408b634074e56c001552882b3c852588f539ae4c4337e5a46d"
+      }
+    },
+    {
+      "path": "workplace/music69-windows/poster150/player-windows/RESULT.json",
+      "bytes": 1307407,
+      "sha256": "5574ae05d867fa38b35fe49dedb434c9bd9602b7e14751a7689facd0fe649efe",
+      "screenshots": 54,
+      "binary_sha256": "81349fa8653f0714fb8c46a33129b578b4fc240bb15fae4f6e7851bfebcedf5c",
+      "comparisons": [
+        {
+          "locale": "zh-TW",
+          "pixels": 691200,
+          "different": 0
+        },
+        {
+          "locale": "zh-CN",
+          "pixels": 691200,
+          "different": 0
+        },
+        {
+          "locale": "ja",
+          "pixels": 691200,
+          "different": 0
+        },
+        {
+          "locale": "en",
+          "pixels": 691200,
+          "different": 0
+        },
+        {
+          "locale": "ko",
+          "pixels": 691200,
+          "different": 0
+        }
+      ],
+      "saved": {
+        "ADMIRAL.DT0": "482a24048a9f553ae568560ad2a3ae21e2764c3783032a1ce0d204aecf2273c7",
+        "FLEET.DT0": "744d5df992c0c3f3fb13fcd5f17a6b3504842e8596db36b547136fbe32462d76",
+        "PLANET.DT0": "12d2e1ef8835fc8103e171a29cc9cb61814bd483c4d5358267c9010f5e4eb02b",
+        "SHIP.DT0": "0115127c1860283942928a6adbc6d83c97bb2418f452c89e655c0251ee95ed53",
+        "STELLAR.DT0": "c6ddd9ea1932d3ad13da01af7a7329bbe290da83ed433933f42589b1a421c017",
+        "WORK.DT0": "d506a292df0326408b634074e56c001552882b3c852588f539ae4c4337e5a46d"
+      }
+    }
+  ],
+  "garrisons": [
+    {
+      "path": "workplace/poster150/garrison-linux/RESULT.json",
+      "bytes": 540498,
+      "sha256": "d4f23f219220376a20e04f7c39c76ead4271c095e72a2064c73667a5e535769b",
+      "screenshots": 19,
+      "binary_sha256": "187e826961c66d393b4653908ad95ef293522d6c8ae61a098c0d96bc743869e5",
+      "stock_before": [
+        9000,
+        3000,
+        16000,
+        2000,
+        12000,
+        3000,
+        1000
+      ],
+      "stock_after": [
+        6000,
+        3000,
+        12000,
+        2000,
+        9000,
+        3000,
+        1000
+      ],
+      "saved": {
+        "ADMIRAL.DT0": "4f5d0322fe0bdcf9f48a1c851a8999a7900143c6bf9362889ccae9e1a4078824",
+        "FLEET.DT0": "ab4110fe062da6a485cb47b175337444ff57e7495e4ff68464bd05a4fbe9803d",
+        "PLANET.DT0": "f41471ef5e852271222673642f50cc1fb446470f94027e474e3ae1d48e7d9c45",
+        "SHIP.DT0": "61c544285badc1287ee9eb7e0359de7c134c5013cbe331a1fd21248ae7ed2b30",
+        "STELLAR.DT0": "39bcb69e370425d9b5bd47f518656d28e7ef678bc54fe7cd2bafb609b4f80ef1",
+        "WORK.DT0": "1dc5a4583438ab25187c0756da1bfe54b7cff9dcfec5d2a45f022b58289a3b91"
+      }
+    },
+    {
+      "path": "workplace/music69-windows/poster150/garrison-windows/RESULT.json",
+      "bytes": 2569352,
+      "sha256": "3249e4e2759f95da8730b2f57c803756f748fabef883fa384782015e807bd3e8",
+      "screenshots": 19,
+      "binary_sha256": "81349fa8653f0714fb8c46a33129b578b4fc240bb15fae4f6e7851bfebcedf5c",
+      "stock_before": [
+        9000,
+        3000,
+        16000,
+        2000,
+        12000,
+        3000,
+        1000
+      ],
+      "stock_after": [
+        6000,
+        3000,
+        12000,
+        2000,
+        9000,
+        3000,
+        1000
+      ],
+      "saved": {
+        "ADMIRAL.DT0": "4f5d0322fe0bdcf9f48a1c851a8999a7900143c6bf9362889ccae9e1a4078824",
+        "FLEET.DT0": "ab4110fe062da6a485cb47b175337444ff57e7495e4ff68464bd05a4fbe9803d",
+        "PLANET.DT0": "f41471ef5e852271222673642f50cc1fb446470f94027e474e3ae1d48e7d9c45",
+        "SHIP.DT0": "61c544285badc1287ee9eb7e0359de7c134c5013cbe331a1fd21248ae7ed2b30",
+        "STELLAR.DT0": "39bcb69e370425d9b5bd47f518656d28e7ef678bc54fe7cd2bafb609b4f80ef1",
+        "WORK.DT0": "1dc5a4583438ab25187c0756da1bfe54b7cff9dcfec5d2a45f022b58289a3b91"
+      }
+    }
+  ],
+  "diagnostics": [
+    {
+      "path": "workplace/poster150/diagnostic-linux/RESULT.json",
+      "bytes": 8903,
+      "sha256": "e0de54872b1a84a421d56571de60f38a5d451658d99a976ae3d46c3f6d870129"
+    },
+    {
+      "path": "workplace/music69-windows/poster150/diagnostic-windows/RESULT.json",
+      "bytes": 9243,
+      "sha256": "1da87877d308763ea73ccd7a3357c4e3233a318d1f743051dfa060dd178b3f87"
+    }
+  ],
+  "native": {
+    "path": "workplace/poster150/native-linux/RESULT.json",
+    "bytes": 144319,
+    "sha256": "f6f729f52bc8715c60b74c3ccc27e33c598afaf9e0db6bc296b4fc4a064bbac7"
+  },
+  "tests": {
+    "passed": 16,
+    "no_tests": 4,
+    "log": {
+      "path": "workplace/poster150/standard-final.log",
+      "bytes": 1087,
+      "sha256": "53f91134e568b01e571a3daaf8dd3b2c79265808fa9f20e7e1a21afc45249f0f"
+    }
+  },
+  "images": {
+    "index": {
+      "path": "docs/images/readme-v160.json",
+      "bytes": 370970,
+      "sha256": "082c326e0aefeda361016bd4306915a16b99830c6ebefc21c2e803d884addcc2"
+    },
+    "files": 18
+  },
+  "movie": {
+    "file": "dist-all/v.1.6.0-20261024/promo/LOGH3-v.1.6.0-20261024-promo.mp4",
+    "sha256": "2ce661ff5fa66ac2498718e39a5cf81443db6adfe6f7b26b2b457a0540f78314",
+    "seconds": 123.56666666666663,
+    "audit": {
+      "path": "dist-all/v.1.6.0-20261024/promo/AUDIT.json",
+      "bytes": 7444,
+      "sha256": "52427885ba8c9d5a53e6de82f875f3f0f4792c62ebf01cd68b81784eb653810c"
+    },
+    "storyboard": "雙國徽與百年對峙→1988動畫雙主角→亞姆力札危局→英雄及親友海報→五語與提督能力→前線整軍及再次出擊→兩軍戰場與要塞／三武器→由玩家下令",
+    "recording_scope": "新版操作為v1.6.0正式ZIP新錄；動畫與戰術實戰沿已驗舊來源。完整交火保留原速，駐地改選至出發連續。"
+  },
+  "catalog": {
+    "path": "internal/localize/ui.tsv",
+    "bytes": 60402,
+    "sha256": "1f0a4e41acc3af65386ebbe911aadc633eae7af2e295e6273845b6242a85c29e"
+  },
+  "font": {
+    "font": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+    "font_sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
+    "catalog_sha256": "1f0a4e41acc3af65386ebbe911aadc633eae7af2e295e6273845b6242a85c29e",
+    "generator_sha256": "c29fa5bb96a9efe252b04f4742efb04e2ea90f8ba64a62d020c86a47549ca304",
+    "licenses": "Noto font SIL OFL 1.1，沿settings_font.LICENSE.txt",
+    "rows": 762,
+    "glyphs": 5368,
+    "big5": 13752,
+    "sizes": [
+      12,
+      36
+    ],
+    "outputs": {
+      "font.json": "a41caa79f0c21f943ae306d8f34853bf04c165fbad2a4c0d3b89b5fce08757c4",
+      "font-12.png": "7639073d3eaa76aa9f3ee6f7159aef7f3e5b1a84edf8a23753706e0c26a801ff",
+      "font-36.png": "6cc25f8e080f4948b7645f16a0e2ded4e005fceef684289c9f7ae677bc2d5d41",
+      "big5.json": "ecca66a70110c61438475f39c877cab13693eb257ef7d1f7369f4e3065c6baf3"
+    }
+  },
+  "art": [
+    {
+      "path": "assets/hd/poster/SOURCES.json",
+      "bytes": 4539,
+      "sha256": "d0199ac6ff7094909183695ccfb12a8c72765201440c28d2d75c2da6001bca3a"
+    },
+    {
+      "path": "assets/hd/poster/SETS.SOURCE.json",
+      "bytes": 11769,
+      "sha256": "3fd3b6ad45398ef188738dffd2cb11e94953b24207c577983ec39f8c0ba800dc"
+    },
+    {
+      "path": "assets/hd/poster/NARROW.SOURCE.json",
+      "bytes": 12677,
+      "sha256": "971574917106afd74c6e5203f58a1146b5d8cabc55fcfec126d20ad85eaf7b9e"
+    },
+    {
+      "path": "assets/hd/poster/QUOTE-SOURCES.json",
+      "bytes": 1132,
+      "sha256": "5bcd970158b33a5b39ba752cfb1f50630128146bfbf8ae80eafe889b8edabf64"
+    }
+  ],
+  "scope": "三組海報、五語主要操作介面與名言；原版圖片內文字及未收錄文字保留，無新增DOS parity；Windows Wine、macOS非真機",
+  "rights": "完整版及含原版音畫影片限本機。使用者授權README新實錄，未發布Release或移動tag。",
+  "checksums": {
+    "path": "dist-all/v.1.6.0-20261024/SHA256SUMS.txt",
+    "bytes": 1296,
+    "sha256": "f849c3a67408f6b7fe5e8e6b549334892127a3b25e65247b37e11017cc198695"
+  },
+  "generators": {
+    "tools/scripts/poster_delivery.py": "24c5633c6d4f6fac412832a6f145217fd25e964fa1bb0129094cedd9b9cc3202",
+    "tools/scripts/poster_release.py": "86bf86a12ed6480aa457323338837e08141a615f6cae1d13c08d9031d866a856",
+    "tools/scripts/poster_sets_gui.py": "de2bc82482fd641b6fce7bb5f9159a29c81e129b2bfe7e9fd8f09e7c9c97cfff",
+    "tools/scripts/garrison_promo_gui.py": "a7e553d40b3ab832f8eed11cc2efbc741e22bcc588e271245ab7adca987eedfb",
+    "tools/scripts/poster_promo_movie.py": "760e25fc528ac51cdb4498bd6bc7a57d5e5c15d43430e9e03014ec23eedd9d37",
+    "tools/scripts/garrison_promo_movie.py": "c8e7e01fad51c87078a9a1e0d2a0de209ed055de1b7dde5399bd1e163223bae0",
+    "tools/scripts/poster_story_promo.py": "fcb302d667edd7b4ae11cf2801e34308f8b9ba419fbb5c3613a6e6478292eea2"
+  },
+  "previous_delivery": {
+    "path": "workplace/poster151/previous/docs/internals/data/v160-delivery.json",
+    "sha256": "9cd5cdffef12976cac710755cdc38496a8de111f4ace30df94bd165db1386fb4",
+    "bytes": 13705
+  }
+}

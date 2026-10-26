@@ -1,0 +1,185 @@
+{
+  "passed": true,
+  "version": "v.1.5.2-20261024",
+  "packages": [
+    {
+      "path": "full/LOGH3-v.1.5.2-20261024-windows-amd64.zip",
+      "bytes": 417534032,
+      "sha256": "16ba822f7a339e9d9c624fa57bd6dfffca5bb90b90d2c8fe53789def7695daa6",
+      "files": 603,
+      "binary_sha256": "ac86b2d440785ae9c40941da555fd861c8e299daf03f2ebeacf10c9c96a68eaa",
+      "manifest_sha256": "0b57baf7c991267bbb14616e594c44cfbc32e8af7de94777dc55df10962cb7b6"
+    },
+    {
+      "path": "full/LOGH3-v.1.5.2-20261024-linux-amd64.zip",
+      "bytes": 417671677,
+      "sha256": "61d08493de183568ee9e6ebb91c5b12bc3ac0eeb71e6c8d5cbec187da5664cec",
+      "files": 603,
+      "binary_sha256": "7ea795b92cba7901b1dd585743fe6752fa8cffac2509f6a4a8752924de21f7e1",
+      "manifest_sha256": "b86ed082c11a77f1322665859b48fa85b67b4d6ca647d29932b902421109ec6d"
+    },
+    {
+      "path": "full/LOGH3-v.1.5.2-20261024-macos-universal.zip",
+      "bytes": 424656460,
+      "sha256": "dee008053dc251142815b52a5bab2ec5fabd43d7c36aae488f7a498427db5fd8",
+      "files": 605,
+      "binary_sha256": "5fa8a678a397b8d868be2e5a76113a0d85ef5e0c6c018d5b908a26008efe210d",
+      "manifest_sha256": "42eeeeab60e7902a4d1fc327743d84078f0ebbac3e6a403cf13e8f1e118ba82a"
+    }
+  ],
+  "build": {
+    "path": "dist-all/v.1.5.2-20261024/full/BUILD.json",
+    "bytes": 420372,
+    "sha256": "befbaf90df0c818f69b824c277fdf01854a88355bf616e55c1aade78d9859ccf"
+  },
+  "checksums": {
+    "path": "dist-all/v.1.5.2-20261024/SHA256SUMS.txt",
+    "bytes": 1152,
+    "sha256": "de03f0de444fda57d0f30c920111a4a3861ac69320878846d911b0d8402cc413"
+  },
+  "frozen_files": 1593,
+  "product_files": 615,
+  "shared_asset_files": 598,
+  "architectures": {
+    "windows-amd64": "PE amd64，與146替換包EXE相同",
+    "linux-amd64": "ELF 64-bit amd64",
+    "macos-universal": [
+      {
+        "architecture": "amd64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 4096,
+        "bytes": 14232408,
+        "sha256": "d1244c7ba7a646191a70cf987d5ed5d8859cb86c347ab28a654bd055ff6460de"
+      },
+      {
+        "architecture": "arm64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [
+          {
+            "ad_hoc": true,
+            "flags": 131074,
+            "algorithm": "sha256",
+            "code_pages": 3261,
+            "code_limit": 13356480,
+            "all_page_hashes_match": true
+          }
+        ],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 14237696,
+        "bytes": 13460946,
+        "sha256": "a838ba81bb3b882625e6a15a7b14ded4d2946f20488f4fb26e5994c1335b1264"
+      }
+    ]
+  },
+  "diagnostics": [
+    {
+      "path": "workplace/package92-v.1.5.2-20261024-release147/diagnostic/RESULT.json",
+      "bytes": 8904,
+      "sha256": "eed41f1bfe8ad44095bd71042556d5779dfd16f70b0aebb8e5725bbca520f770"
+    },
+    {
+      "path": "workplace/music69-windows/full147/diagnostic/RESULT.json",
+      "bytes": 9013,
+      "sha256": "b2fccb24d9790335a207e1c605a5143c39d8b51d67a1cc24cfe5fd770a51b4ed"
+    }
+  ],
+  "normal_player": [
+    {
+      "path": "workplace/package92-v.1.5.2-20261024-release147/player-linux/RESULT.json",
+      "bytes": 525338,
+      "sha256": "73d7d0381acdd8af2a5311ea64856fce031d36fe097473d297633020f1a9ec70",
+      "screenshots": 19,
+      "saved": {
+        "ADMIRAL.DT0": "4f5d0322fe0bdcf9f48a1c851a8999a7900143c6bf9362889ccae9e1a4078824",
+        "FLEET.DT0": "ab4110fe062da6a485cb47b175337444ff57e7495e4ff68464bd05a4fbe9803d",
+        "PLANET.DT0": "f41471ef5e852271222673642f50cc1fb446470f94027e474e3ae1d48e7d9c45",
+        "SHIP.DT0": "61c544285badc1287ee9eb7e0359de7c134c5013cbe331a1fd21248ae7ed2b30",
+        "STELLAR.DT0": "39bcb69e370425d9b5bd47f518656d28e7ef678bc54fe7cd2bafb609b4f80ef1",
+        "WORK.DT0": "1dc5a4583438ab25187c0756da1bfe54b7cff9dcfec5d2a45f022b58289a3b91"
+      },
+      "binary_sha256": "7ea795b92cba7901b1dd585743fe6752fa8cffac2509f6a4a8752924de21f7e1"
+    },
+    {
+      "path": "workplace/music69-windows/full147/player-windows/RESULT.json",
+      "bytes": 524785,
+      "sha256": "d6e9af909676106b5ac89e16fc3d9f301fabac614de67ece57eacce32c9d7a6e",
+      "screenshots": 19,
+      "saved": {
+        "ADMIRAL.DT0": "4f5d0322fe0bdcf9f48a1c851a8999a7900143c6bf9362889ccae9e1a4078824",
+        "FLEET.DT0": "ab4110fe062da6a485cb47b175337444ff57e7495e4ff68464bd05a4fbe9803d",
+        "PLANET.DT0": "f41471ef5e852271222673642f50cc1fb446470f94027e474e3ae1d48e7d9c45",
+        "SHIP.DT0": "61c544285badc1287ee9eb7e0359de7c134c5013cbe331a1fd21248ae7ed2b30",
+        "STELLAR.DT0": "39bcb69e370425d9b5bd47f518656d28e7ef678bc54fe7cd2bafb609b4f80ef1",
+        "WORK.DT0": "1dc5a4583438ab25187c0756da1bfe54b7cff9dcfec5d2a45f022b58289a3b91"
+      },
+      "binary_sha256": "ac86b2d440785ae9c40941da555fd861c8e299daf03f2ebeacf10c9c96a68eaa"
+    }
+  ],
+  "preserved": {
+    "BUILD.json": "646d8f51a4ccf5bffbebdc65ffdafcc4cae31272100691b61dd8d4c0874e2fd9",
+    "release/LOGH3-v.1.5.2-20261024-windows-amd64-patch.zip": "c8fb79e0b8e60e46cc6929af48b874d2751ce3eefe50cd71d524f6c2390ecc05",
+    "promo/AUDIT.json": "b3f3f028bbba4feeb430d4b8f2e60bff56898e85fc1b0a828f31d18e4f533116",
+    "promo/CONTACT.png": "e9625ef13c30a0222a9d7e18c1d7a0c3f24d64d344676939c4749debba72703f",
+    "promo/LOGH3-v.1.5.2-20261024-garrison-promo.mp4": "bc622d1e53b5f7ce328a04fe044060c0833ad6652562016fcce5544b8e0c8803",
+    "promo/PLAN.json": "41ce19d1a18e59063284f9c7193c7abe8eb5b2630ab9fddd79b405f219fb423a",
+    "promo/SHA256SUMS.txt": "94529638a2c99a25b28258b93d1e81c58c65d6e335d782d18825362f058f681d"
+  },
+  "previous_checksums": {
+    "path": "workplace/package92-v.1.5.2-20261024-release147/previous-SHA256SUMS.txt",
+    "bytes": 648,
+    "sha256": "900e8535d03cb8ed8cc6f352b9a1e6c7088a5bfd58f4f26c6b2f7a08c89e266c"
+  },
+  "normal_path": "兩平台各96步及19張正常X11；GUI原版掛載與封包original逐檔相同。另6條診斷入口未傳orig／data／art／music，驗自動封包路徑。",
+  "test_scope": "產品615項與146最後標準19套件15 PASS／4無測試來源一致；本輪沒有產品程式變更",
+  "limits": [
+    "Windows為Wine，未真機",
+    "macOS為雙架構／依賴／ARM簽章檢查，未真機",
+    "未新增人耳或DOS parity驗收"
+  ],
+  "generators": {
+    "tools/scripts/full_platform_receipt.py": "a1a568181b3ee7e39a00476e1bafc519baa282d2377225c0072814744d92e397",
+    "tools/scripts/full_platform_repack.py": "65e09f5bcf10ccfca36da52623fe2c0eecbf4779c35d4122aaf59d2d6b417839",
+    "tools/scripts/full_package_smoke.py": "1ce8372281f00895982c0757a196cdd583fd997ce4343db121ab5093fd058528",
+    "tools/scripts/garrison_promo_gui.py": "6ef7d4daf3d591e95a79abe3a93ba6435494f6307c4ca909bb20cb753699e0db"
+  }
+}

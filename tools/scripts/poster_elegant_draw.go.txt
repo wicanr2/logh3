@@ -1,0 +1,93 @@
+// 第155輪可丟棄原型：本體固定，只讓飛彈／光束變化。
+func (d *posterDecoration) drawBand(target *ebiten.Image, b image.Rectangle, band int, scale float64) {
+	w, h := float64(b.Dx())/scale, float64(b.Dy())/scale
+	quad := func(tex *ebiten.Image, x, y, width, height float64, flip bool, tint color.NRGBA) {
+		if tex == nil { return }
+		op := &ebiten.DrawImageOptions{Filter: ebiten.FilterLinear}
+		sx := width*scale/float64(tex.Bounds().Dx())
+		if flip { sx = -sx; x += width }
+		op.GeoM.Scale(sx, height*scale/float64(tex.Bounds().Dy()))
+		op.GeoM.Translate(float64(b.Min.X)+x*scale, float64(b.Min.Y)+y*scale)
+		op.ColorScale.ScaleWithColor(tint)
+		target.DrawImage(tex, op)
+	}
+	fill := func(x,y,width,height float64,c color.NRGBA) { quad(d.white,x,y,width,height,false,c) }
+	line := func(x,y,x2,y2,thickness float64,c color.NRGBA) {
+		op := &ebiten.DrawImageOptions{}
+		dx,dy := x2-x,y2-y
+		op.GeoM.Scale(math.Hypot(dx,dy)*scale,thickness*scale)
+		op.GeoM.Rotate(math.Atan2(dy,dx))
+		op.GeoM.Translate(float64(b.Min.X)+x*scale,float64(b.Min.Y)+y*scale)
+		op.ColorScale.ScaleWithColor(c)
+		target.DrawImage(d.white,op)
+	}
+	// 深藏藍與固定髮絲線；沒有星光閃爍、艦體位移或換批。
+	fill(0,0,w,h,color.NRGBA{5,10,18,255})
+	gold:=color.NRGBA{162,143,106,150}
+	rim:=h-.5
+	if band==1 { rim=.2 }
+	line(0,rim,w,rim,.4,gold)
+	for _,x:=range []float64{8,w-48} { line(x,h/2,x+40,h/2,.3,color.NRGBA{73,90,111,80}) }
+	center:=w/2
+	line(center-3,h/2,center,h/2-2,.35,gold)
+	line(center,h/2-2,center+3,h/2,.35,gold)
+	line(center+3,h/2,center,h/2+2,.35,gold)
+	line(center,h/2+2,center-3,h/2,.35,gold)
+	white:=color.NRGBA{244,241,231,255}
+	muted:=color.NRGBA{194,201,210,255}
+	if band==0 {
+		for side:=0;side<2;side++ {
+			for i:=0;i<3;i++ {
+				x:=46+float64(i)*72
+				if side==1 { x=w-x-30 }
+				quad(d.fighterTextures[side],x,h/2-10.5,30,21,side==1,muted)
+			}
+		}
+	} else {
+		for side,ships:=range d.shipTextures {
+			if len(ships)==0 { continue }
+			x:=center-88
+			if side==1 { x=center+10 }
+			quad(ships[0],x,h/2-15,78,30,false,white)
+			columns:=8
+			if side==1 { columns=6 }
+			pitch:=210./float64(columns)
+			for i:=1;i<len(ships);i++ {
+				col,row:=(i-1)%columns,(i-1)/columns
+				x:=15+float64(col)*pitch
+				if side==1 { x=w-15-float64(col)*pitch-(pitch-3) }
+				y:=h*.20-5+float64(row)*h*.50
+				quad(ships[i],x,y,pitch-3,(pitch-3)*76/192,false,muted)
+			}
+		}
+	}
+	if d.phase==0 { return } // 沿原動畫關閉的相位，沒有武器效果。
+	beam:=func(x,y,x2,y2 float64,c color.NRGBA) {
+		halo:=c;halo.A=18
+		line(x,y,x2,y2,2.0,halo)
+		line(x,y,x2,y2,.40,c)
+	}
+	if band==0 {
+		p:=d.phase%90
+		if p>=10 && p<28 {
+			x,x2:=220.,w-220
+			if d.phase>=90 { x,x2=x2,x }
+			beam(x,h/2,x2,h/2,color.NRGBA{184,204,218,120})
+		}
+		p=(d.phase+40)%180
+		if p>=50 && p<88 {
+			f:=float64(p-50)/38
+			x:=220+(w-440)*f
+			y:=h/2+2*math.Sin(f*math.Pi)
+			line(x-7,y,x,y,.45,color.NRGBA{210,192,153,125})
+			fill(x,y-.4,1.5,.8,color.NRGBA{240,224,187,215})
+		}
+	} else {
+		if d.phase>=70 && d.phase<88 {
+			beam(center-13,h/2+1,center+13,h/2+1,color.NRGBA{198,181,142,135})
+		}
+		if d.phase>=130 && d.phase<148 {
+			beam(center+13,h/2-1,center-13,h/2-1,color.NRGBA{165,193,211,135})
+		}
+	}
+}

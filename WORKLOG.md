@@ -11765,3 +11765,11 @@ README換11張實際AppImage完整原視窗及當前交付入口，複製後逐�
 fetch後確認main是功能分支祖先，七個提交可直接快轉，沒有衝突。以普通git push將5bc0d76ec9992254932b4d7a6ad7e1adaad3a728推至refs/heads/main，沒有force、改寫歷史或刪除分支。遠端預設HEAD、main與功能分支SHA逐字相同。本機main亦以非強制fetch快轉，再切至相同樹的main；windows_hotfix_package.py與其餘既有未提交工具、收據及使用者文字檔保留。
 
 產品樹與第166輪已驗內容完全相同，沿16PASS／4無測試及正式交付收據，不因單純快轉重跑建置或改動封包。只補CONTEXT、166狀態表及本流水帳，沒有新增狀態文件、移動tag或Release，沒有提交完整版與影片。Go與HD一次性容器均退出自刪，未新增映像或清理其他專案資源。
+
+## 2026-10-26：第168輪，提交來源與工作區結案清理
+
+使用者要求commit、push後結案，工作區只留必要內容。命中復古重製交接及文件職責路由，讀技能、verification-and-handoff及project-document-responsibilities，沿148逐檔核對與可還原契約。主機gh認證、102張Issue快照及verify通過，282條零失效、1項manual、126一致、155歷史文件；#48未完成項不因本次交付結案而關閉。
+
+初盤workplace約66GiB、dist-all約25GiB。其餘61份未提交來源包含歷史封包／試玩／海報原型工具、規格及收據，Python／JSON／shell語法與憑證／私人連結標記檢查通過，準備入庫保存。使用者文字備忘原樣保留，因含私人完整版下載連結加入精確忽略規則，不公開內容。正式cmd／internal及核准藝術層保持，沒有重跑已通過的產品建置去重生待清快取。
+
+168唯一狀態表與workspace_closeout.py將每個候選綁來源ZIP、SHA、檔案內容與權限。舊正式解壓目錄亦只有逐檔證明能從相鄰ZIP還原才列刪除。最新v.1.6.3全部交付、166凍結來源與實包操作輸入明確保護；原始資料、來源、oracle、decomp、IDA、模組下載、獨有音畫／存檔及外部工作樹保留。Wine先備份全部非Windows系統部分，含registry、使用者、Program Files、ProgramData及連結，逐檔讀回再刪可重建系統環境。不清其他專案或全域Docker資源。清理結果與還原抽驗待本節追加。

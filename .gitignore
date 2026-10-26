@@ -35,3 +35,6 @@ __pycache__/
 # 只公開使用者定案proposal的衍生藝術層，其餘海報素材留本機。
 /assets/hd/poster/*
 !/assets/hd/poster/approved/
+
+# 使用者本機備忘含私人完整版下載連結，原檔保留，不公開。
+/銀河英雄傳說 III SP remake 2026.txt

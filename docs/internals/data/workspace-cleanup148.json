@@ -1,0 +1,509 @@
+{
+  "passed": true,
+  "before_workplace": 71045984256,
+  "after_workplace": 53914406912,
+  "reclaimed": 17131577344,
+  "after_free": 299653316608,
+  "deleted": [
+    {
+      "id": 0,
+      "path": "workplace/promo139/precompact/workplace/package92-v.1.4.0-20261015-release139/common",
+      "kind": "common_copy",
+      "allocated": 446926848
+    },
+    {
+      "id": 1,
+      "path": "workplace/promo139/precompact/workplace/macos-release139/gocache",
+      "kind": "go_cache",
+      "allocated": 215584768
+    },
+    {
+      "id": 2,
+      "path": "workplace/hero130/gh-download/LOGH3-v.1.2.0-20261012-windows-amd64.zip",
+      "kind": "archive_copy",
+      "allocated": 8101888
+    },
+    {
+      "id": 3,
+      "path": "workplace/hero130/gh-download/LOGH3-v.1.2.0-20261012-linux-amd64.zip",
+      "kind": "archive_copy",
+      "allocated": 8245248
+    },
+    {
+      "id": 4,
+      "path": "workplace/hero130/gh-download/LOGH3-v.1.2.0-20261012-engine-source.tar.gz",
+      "kind": "archive_copy",
+      "allocated": 3452928
+    },
+    {
+      "id": 5,
+      "path": "workplace/hero130/gh-download/LOGH3-v.1.2.0-20261012-macos-universal.zip",
+      "kind": "archive_copy",
+      "allocated": 14733312
+    },
+    {
+      "id": 6,
+      "path": "workplace/package92-v.1.2.0-20261012-final/common",
+      "kind": "common_copy",
+      "allocated": 361148416
+    },
+    {
+      "id": 7,
+      "path": "workplace/macos-v1-20261010/gocache",
+      "kind": "go_cache",
+      "allocated": 12288
+    },
+    {
+      "id": 8,
+      "path": "workplace/macos-v113-hd/gocache",
+      "kind": "go_cache",
+      "allocated": 12288
+    },
+    {
+      "id": 9,
+      "path": "workplace/music69-windows/release-v.1.3.0-20261013-windows-amd64.zip",
+      "kind": "archive_copy",
+      "allocated": 8183808
+    },
+    {
+      "id": 10,
+      "path": "workplace/music69-windows/package92-v.1.2.0-20261012-windows-amd64.zip",
+      "kind": "archive_copy",
+      "allocated": 335306752
+    },
+    {
+      "id": 11,
+      "path": "workplace/music69-windows/package92-v.1.1.6-20261012-windows-amd64.zip",
+      "kind": "archive_copy",
+      "allocated": 335294464
+    },
+    {
+      "id": 12,
+      "path": "workplace/music69-windows/release-v.1.2.0-20261012-windows-amd64.zip",
+      "kind": "archive_copy",
+      "allocated": 8101888
+    },
+    {
+      "id": 13,
+      "path": "workplace/music69-windows/release-v.1.1.6-20261012-windows-amd64.zip",
+      "kind": "archive_copy",
+      "allocated": 8089600
+    },
+    {
+      "id": 14,
+      "path": "workplace/music69-windows/package92-smoke-v.1.2.0-20261012/LOGH3-v.1.2.0-20261012-windows-amd64",
+      "kind": "package_copy",
+      "allocated": 375648256
+    },
+    {
+      "id": 15,
+      "path": "workplace/music69-windows/garrison146/wine-prefix",
+      "kind": "wine_cache",
+      "allocated": 723038208
+    },
+    {
+      "id": 16,
+      "path": "workplace/music69-windows/full147/full.zip",
+      "kind": "archive_copy",
+      "allocated": 417550336
+    },
+    {
+      "id": 17,
+      "path": "workplace/music69-windows/full147/gui-wine-prefix",
+      "kind": "wine_cache",
+      "allocated": 722690048
+    },
+    {
+      "id": 18,
+      "path": "workplace/music69-windows/full147/wine-prefix",
+      "kind": "wine_cache",
+      "allocated": 723034112
+    },
+    {
+      "id": 19,
+      "path": "workplace/music69-windows/full147/diagnostic/unpacked/銀河 完整版/LOGH3-v.1.5.2-20261024-windows-amd64",
+      "kind": "package_copy",
+      "allocated": 462680064
+    },
+    {
+      "id": 20,
+      "path": "workplace/music69-windows/release-smoke-v.1.3.0-20261013/LOGH3-v.1.3.0-20261013-windows-amd64",
+      "kind": "package_copy",
+      "allocated": 21094400
+    },
+    {
+      "id": 21,
+      "path": "workplace/music69-windows/modal131-windows/full.zip",
+      "kind": "archive_copy",
+      "allocated": 374878208
+    },
+    {
+      "id": 22,
+      "path": "workplace/music69-windows/modal131-windows/LOGH3-v.1.3.0-20261013-windows-amd64",
+      "kind": "package_copy",
+      "allocated": 418492416
+    },
+    {
+      "id": 23,
+      "path": "workplace/music69-windows/wine-prefix",
+      "kind": "wine_cache",
+      "allocated": 722690048
+    },
+    {
+      "id": 24,
+      "path": "workplace/music69-windows/windows143-delivery/engine.zip",
+      "kind": "archive_copy",
+      "allocated": 8556544
+    },
+    {
+      "id": 25,
+      "path": "workplace/music69-windows/windows143-delivery/full.zip",
+      "kind": "archive_copy",
+      "allocated": 417525760
+    },
+    {
+      "id": 26,
+      "path": "workplace/music69-windows/windows143-delivery/unpacked/銀河 修正版/engine/LOGH3-v.1.5.0-20261019-windows-amd64",
+      "kind": "package_copy",
+      "allocated": 21610496
+    },
+    {
+      "id": 27,
+      "path": "workplace/music69-windows/windows143-delivery/unpacked/銀河 修正版/full/LOGH3-v.1.5.0-20261019-windows-amd64",
+      "kind": "package_copy",
+      "allocated": 462069760
+    },
+    {
+      "id": 28,
+      "path": "workplace/music69-windows/personnel145/wine-prefix",
+      "kind": "wine_cache",
+      "allocated": 722944000
+    },
+    {
+      "id": 29,
+      "path": "workplace/music69-windows/release-smoke-v.1.1.6-20261012/LOGH3-v.1.1.6-20261012-windows-amd64",
+      "kind": "package_copy",
+      "allocated": 20951040
+    },
+    {
+      "id": 30,
+      "path": "workplace/music69-windows/windows141-delivery/engine.zip",
+      "kind": "archive_copy",
+      "allocated": 8298496
+    },
+    {
+      "id": 31,
+      "path": "workplace/music69-windows/windows141-delivery/full.zip",
+      "kind": "archive_copy",
+      "allocated": 417267712
+    },
+    {
+      "id": 32,
+      "path": "workplace/music69-windows/windows141-delivery/unpacked/銀河 修正版/engine/LOGH3-v.1.4.0-20261015-windows-amd64",
+      "kind": "package_copy",
+      "allocated": 21446656
+    },
+    {
+      "id": 33,
+      "path": "workplace/music69-windows/windows141-delivery/unpacked/銀河 修正版/full/LOGH3-v.1.4.0-20261015-windows-amd64",
+      "kind": "package_copy",
+      "allocated": 461901824
+    },
+    {
+      "id": 34,
+      "path": "workplace/music69-windows/release-smoke-v.1.2.0-20261012/LOGH3-v.1.2.0-20261012-windows-amd64",
+      "kind": "package_copy",
+      "allocated": 20971520
+    },
+    {
+      "id": 35,
+      "path": "workplace/music69-windows/package92-smoke-v.1.1.6-20261012/LOGH3-v.1.1.6-20261012-windows-amd64",
+      "kind": "package_copy",
+      "allocated": 375627776
+    },
+    {
+      "id": 36,
+      "path": "workplace/settings141/package/LOGH3-v.1.4.0-20261015-linux-amd64",
+      "kind": "package_copy",
+      "allocated": 462417920
+    },
+    {
+      "id": 37,
+      "path": "workplace/settings141/release-download/LOGH3-v.1.4.0-20261015-macos-universal.zip",
+      "kind": "archive_copy",
+      "allocated": 15237120
+    },
+    {
+      "id": 38,
+      "path": "workplace/settings141/release-download/LOGH3-v.1.4.0-20261015-linux-amd64.zip",
+      "kind": "archive_copy",
+      "allocated": 8519680
+    },
+    {
+      "id": 39,
+      "path": "workplace/settings141/release-download/LOGH3-v.1.4.0-20261015-windows-amd64.zip",
+      "kind": "archive_copy",
+      "allocated": 8298496
+    },
+    {
+      "id": 40,
+      "path": "workplace/settings141/release-download/LOGH3-v.1.4.0-20261015-engine-source.tar.gz",
+      "kind": "archive_copy",
+      "allocated": 3620864
+    },
+    {
+      "id": 41,
+      "path": "workplace/macos-release141/gocache",
+      "kind": "go_cache",
+      "allocated": 216104960
+    },
+    {
+      "id": 42,
+      "path": "workplace/hd-art-v014-macos/gocache",
+      "kind": "go_cache",
+      "allocated": 12288
+    },
+    {
+      "id": 43,
+      "path": "workplace/package92-v.1.4.0-20261015-release141/common",
+      "kind": "common_copy",
+      "allocated": 446947328
+    },
+    {
+      "id": 44,
+      "path": "workplace/macos-battle129/gocache",
+      "kind": "go_cache",
+      "allocated": 213544960
+    },
+    {
+      "id": 45,
+      "path": "workplace/macos-release143/gocache",
+      "kind": "go_cache",
+      "allocated": 218529792
+    },
+    {
+      "id": 46,
+      "path": "workplace/admiral144/release-download/LOGH3-v.1.5.0-20261019-linux-amd64.zip",
+      "kind": "archive_copy",
+      "allocated": 8695808
+    },
+    {
+      "id": 47,
+      "path": "workplace/admiral144/release-download/LOGH3-v.1.5.0-20261019-engine-source.tar.gz",
+      "kind": "archive_copy",
+      "allocated": 3764224
+    },
+    {
+      "id": 48,
+      "path": "workplace/admiral144/release-download/LOGH3-v.1.5.0-20261019-windows-amd64.zip",
+      "kind": "archive_copy",
+      "allocated": 8556544
+    },
+    {
+      "id": 49,
+      "path": "workplace/admiral144/release-download/LOGH3-v.1.5.0-20261019-macos-universal.zip",
+      "kind": "archive_copy",
+      "allocated": 15613952
+    },
+    {
+      "id": 50,
+      "path": "workplace/macos-battle129-final/gocache",
+      "kind": "go_cache",
+      "allocated": 217214976
+    },
+    {
+      "id": 51,
+      "path": "workplace/package92-v.1.4.0-20261015-release139/common",
+      "kind": "common_copy",
+      "allocated": 446926848
+    },
+    {
+      "id": 52,
+      "path": "workplace/package92-v.1.5.2-20261024-release147/unpacked/LOGH3-v.1.5.2-20261024-linux-amd64",
+      "kind": "package_copy",
+      "allocated": 463069184
+    },
+    {
+      "id": 53,
+      "path": "workplace/package92-v.1.5.2-20261024-release147/common",
+      "kind": "common_copy",
+      "allocated": 447422464
+    },
+    {
+      "id": 54,
+      "path": "workplace/macos-release139/gocache",
+      "kind": "go_cache",
+      "allocated": 215855104
+    },
+    {
+      "id": 55,
+      "path": "workplace/package92-v.1.1.6-20261012-ui/common",
+      "kind": "common_copy",
+      "allocated": 361148416
+    },
+    {
+      "id": 56,
+      "path": "workplace/package92-v.1.1.6-20261012-final/common",
+      "kind": "common_copy",
+      "allocated": 361148416
+    },
+    {
+      "id": 57,
+      "path": "workplace/gocache",
+      "kind": "go_cache",
+      "allocated": 1165787136
+    },
+    {
+      "id": 58,
+      "path": "workplace/macos94-r119a/gocache",
+      "kind": "go_cache",
+      "allocated": 12288
+    },
+    {
+      "id": 59,
+      "path": "workplace/hd125-macos-v110/gocache",
+      "kind": "go_cache",
+      "allocated": 12288
+    },
+    {
+      "id": 60,
+      "path": "workplace/macos-release147/gocache",
+      "kind": "go_cache",
+      "allocated": 219004928
+    },
+    {
+      "id": 61,
+      "path": "workplace/hd123-macos/gocache",
+      "kind": "go_cache",
+      "allocated": 12288
+    },
+    {
+      "id": 62,
+      "path": "workplace/modal131/gh-download/LOGH3-v.1.3.0-20261013-windows-amd64.zip",
+      "kind": "archive_copy",
+      "allocated": 8183808
+    },
+    {
+      "id": 63,
+      "path": "workplace/modal131/gh-download/LOGH3-v.1.3.0-20261013-engine-source.tar.gz",
+      "kind": "archive_copy",
+      "allocated": 3510272
+    },
+    {
+      "id": 64,
+      "path": "workplace/modal131/gh-download/LOGH3-v.1.3.0-20261013-linux-amd64.zip",
+      "kind": "archive_copy",
+      "allocated": 8331264
+    },
+    {
+      "id": 65,
+      "path": "workplace/modal131/gh-download/LOGH3-v.1.3.0-20261013-macos-universal.zip",
+      "kind": "archive_copy",
+      "allocated": 14893056
+    },
+    {
+      "id": 66,
+      "path": "workplace/package92-v.1.5.0-20261019-release143/common",
+      "kind": "common_copy",
+      "allocated": 446943232
+    },
+    {
+      "id": 67,
+      "path": "workplace/modal131-macos/gocache",
+      "kind": "go_cache",
+      "allocated": 214339584
+    },
+    {
+      "id": 68,
+      "path": "workplace/package92-v.1.2.0-20261012-hero130/common",
+      "kind": "common_copy",
+      "allocated": 156495872
+    },
+    {
+      "id": 69,
+      "path": "workplace/package92-v.1.3.0-20261013-final/common",
+      "kind": "common_copy",
+      "allocated": 403881984
+    },
+    {
+      "id": 70,
+      "path": "workplace/admiral143/package/LOGH3-v.1.5.0-20261019-linux-amd64",
+      "kind": "package_copy",
+      "allocated": 462512128
+    },
+    {
+      "id": 71,
+      "path": "workplace/input121-r120-macos/gocache",
+      "kind": "go_cache",
+      "allocated": 12288
+    },
+    {
+      "id": 72,
+      "path": "workplace/macos-v112-20261011-hd/gocache",
+      "kind": "go_cache",
+      "allocated": 12288
+    },
+    {
+      "id": 73,
+      "path": "workplace/macos-hero130/gocache",
+      "kind": "go_cache",
+      "allocated": 213774336
+    }
+  ],
+  "plan": {
+    "path": "workplace/cleanup148/PLAN.json",
+    "sha256": "a55617b540a654bd089c7437632b6c91ef947bd203e0784f4ca4429d48cd553f"
+  },
+  "wine_state": {
+    "path": "workplace/cleanup148/wine-state.tar.gz",
+    "bytes": 978747,
+    "sha256": "d614a8931a13542fca913f25ee1f4ebd2a6004c9d7c9edb5561119a990569638"
+  },
+  "restore": "tools/scripts/workspace_cleanup.py restore --id <項目ID>；Go／Wine環境由既有工具映像重建。",
+  "retained": "保留dist-all、org_game、assets、來源、原版oracle、反編譯與獨有音畫；只清快取及已逐檔核對的正式包副本。",
+  "sources": [
+    "dist-all/v.1.1.6-20261012/full/LOGH3-v.1.1.6-20261012-windows-amd64.zip",
+    "dist-all/v.1.1.6-20261012/release/LOGH3-v.1.1.6-20261012-windows-amd64.zip",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-engine-source.tar.gz",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-windows-amd64.zip",
+    "dist-all/v.1.2.0-20261012/release/LOGH3-v.1.2.0-20261012-linux-amd64.zip",
+    "dist-all/v.1.2.0-20261012/release/LOGH3-v.1.2.0-20261012-macos-universal.zip",
+    "dist-all/v.1.2.0-20261012/release/LOGH3-v.1.2.0-20261012-windows-amd64.zip",
+    "dist-all/v.1.3.0-20261013/full/LOGH3-v.1.3.0-20261013-engine-source.tar.gz",
+    "dist-all/v.1.3.0-20261013/full/LOGH3-v.1.3.0-20261013-windows-amd64.zip",
+    "dist-all/v.1.3.0-20261013/release/LOGH3-v.1.3.0-20261013-linux-amd64.zip",
+    "dist-all/v.1.3.0-20261013/release/LOGH3-v.1.3.0-20261013-macos-universal.zip",
+    "dist-all/v.1.3.0-20261013/release/LOGH3-v.1.3.0-20261013-windows-amd64.zip",
+    "dist-all/v.1.4.0-20261015/full/LOGH3-v.1.4.0-20261015-linux-amd64.zip",
+    "dist-all/v.1.4.0-20261015/full/LOGH3-v.1.4.0-20261015-windows-amd64.zip",
+    "dist-all/v.1.4.0-20261015/release/LOGH3-v.1.4.0-20261015-engine-source.tar.gz",
+    "dist-all/v.1.4.0-20261015/release/LOGH3-v.1.4.0-20261015-linux-amd64.zip",
+    "dist-all/v.1.4.0-20261015/release/LOGH3-v.1.4.0-20261015-macos-universal.zip",
+    "dist-all/v.1.4.0-20261015/release/LOGH3-v.1.4.0-20261015-windows-amd64.zip",
+    "dist-all/v.1.5.0-20261019/full/LOGH3-v.1.5.0-20261019-linux-amd64.zip",
+    "dist-all/v.1.5.0-20261019/full/LOGH3-v.1.5.0-20261019-windows-amd64.zip",
+    "dist-all/v.1.5.0-20261019/release/LOGH3-v.1.5.0-20261019-engine-source.tar.gz",
+    "dist-all/v.1.5.0-20261019/release/LOGH3-v.1.5.0-20261019-linux-amd64.zip",
+    "dist-all/v.1.5.0-20261019/release/LOGH3-v.1.5.0-20261019-macos-universal.zip",
+    "dist-all/v.1.5.0-20261019/release/LOGH3-v.1.5.0-20261019-windows-amd64.zip",
+    "dist-all/v.1.5.2-20261024/full/LOGH3-v.1.5.2-20261024-linux-amd64.zip",
+    "dist-all/v.1.5.2-20261024/full/LOGH3-v.1.5.2-20261024-windows-amd64.zip"
+  ],
+  "restore_tests": [
+    {
+      "id": 4,
+      "kind": "archive_copy",
+      "passed": true
+    },
+    {
+      "id": 29,
+      "kind": "package_copy",
+      "passed": true
+    }
+  ],
+  "current_delivery_checksums": {
+    "path": "dist-all/v.1.5.2-20261024/SHA256SUMS.txt",
+    "sha256": "de03f0de444fda57d0f30c920111a4a3861ac69320878846d911b0d8402cc413"
+  },
+  "generator_sha256": "0cb98aada6f50b24b6770198fb77796aa37b7095b727d653df98efd02fb9786d"
+}

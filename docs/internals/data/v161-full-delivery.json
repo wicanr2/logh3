@@ -1,0 +1,222 @@
+{
+  "version": "v.1.6.1-20261025",
+  "classification": "含原版及衍生素材，本機完整版，不公開",
+  "source_files": 1616,
+  "source_nonvendor": 638,
+  "common_files": 615,
+  "frozen_inputs": {
+    "path": "workplace/package92-v.1.6.1-20261025-release153/INPUTS.json",
+    "bytes": 423348,
+    "sha256": "d0d9327a82c57f8b99f5ed951071e58a92144c439126bebe6224705237c4ed5d"
+  },
+  "pointer_build": {
+    "path": "dist-all/v.1.6.1-20261025/BUILD.json",
+    "bytes": 212925,
+    "sha256": "11f70914ce762a1f6964c8bf2ba26f3d19ba2c29e91f75f4dd04da4398c5728c"
+  },
+  "standards": {
+    "path": "workplace/pointer152/standard-final.log",
+    "bytes": 1089,
+    "sha256": "28d214540bab36a6e6e61e69c2ffb8d5c6aaaad19b363050cc7a8014f87f5b5a",
+    "passed": 16,
+    "no_tests": 4
+  },
+  "packages": [
+    {
+      "path": "full/LOGH3-v.1.6.1-20261025-windows-amd64.zip",
+      "bytes": 451581535,
+      "sha256": "74188509e4f0ea6a8359ee25edabc0a6ce4593394a4e81d2fdd1d073d8c617f9",
+      "binary_sha256": "7bb10fbfae213ea537aef068eb7fa90491be68b2afd34388533e9bd8bac364b2",
+      "manifest_sha256": "cf4b611d1178058bb0d468134f33245818501afc2d578b3eb159b4830d6059a4"
+    },
+    {
+      "path": "full/LOGH3-v.1.6.1-20261025-macos-universal.zip",
+      "bytes": 461418440,
+      "sha256": "be121a49351e1c4018f7ae6804ff77009ea138f6663abf0b6564cef7b4a46345",
+      "binary_sha256": "35bc5c212193e705ce33e828e8bba83ca46df7e160e50553c8567f89ed57afbb",
+      "manifest_sha256": "e8a4a9e1defd9f86d53762929d6431a610425065091a028ad4d942a47e1c3624"
+    },
+    {
+      "path": "full/LOGH3-v.1.6.1-20261025-linux-x86_64.AppImage",
+      "bytes": 451459576,
+      "sha256": "30980f616392356d52424984eee8e22508c78d5f98b13937f7112336b1dd442b",
+      "binary_sha256": "a4677b80ed03049e14a88ea45b5355247a28a918ba3013dc1bcafb399ac22dab",
+      "appdir_files": 741,
+      "runtime_sha256": "1cc49bcf1e2ccd593c379adb17c9f85a36d619088296504de95b1d06215aebbf"
+    }
+  ],
+  "architectures": {
+    "windows-amd64": "PE amd64，與152輪已驗程式逐位元組相同",
+    "macos-universal": [
+      {
+        "architecture": "amd64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 4096,
+        "bytes": 17611480,
+        "sha256": "0b327f23bf8bf5f8e5bda7e9f122ed9cd43cf0aff5c5d24ba7b8ef93edd7097f"
+      },
+      {
+        "architecture": "arm64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [
+          {
+            "ad_hoc": true,
+            "flags": 131074,
+            "algorithm": "sha256",
+            "code_pages": 4083,
+            "code_limit": 16723200,
+            "all_page_hashes_match": true
+          }
+        ],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 17629184,
+        "bytes": 16853970,
+        "sha256": "f24fdcf60663123547a007af64a93605c4fcac9c8eaf08146d85d2d539973bdb"
+      }
+    ],
+    "linux-x86_64": "Type-2 AppImage，ELF64 x86_64，實際ELF最大GLIBC_2.34需求，15附帶函式庫"
+  },
+  "appimage_metadata": {
+    "path": "dist-all/v.1.6.1-20261025/full/APPIMAGE.json",
+    "bytes": 4153,
+    "sha256": "37c42d7d1dcec60c3157bce9f1a80ba861f38cc042f981e2e12f8c20fb3dc141"
+  },
+  "normal_player": [
+    {
+      "platform": "linux-x86_64",
+      "path": "workplace/appimage153/player-linux/RESULT.json",
+      "bytes": 439888,
+      "sha256": "b6ed9ad9ffdcb899fcab70b681c0bdd485807d5ad4f60fb63d1475235c1abcc0",
+      "screenshots": 31,
+      "saved": {
+        "ADMIRAL.DT0": "482a24048a9f553ae568560ad2a3ae21e2764c3783032a1ce0d204aecf2273c7",
+        "FLEET.DT0": "744d5df992c0c3f3fb13fcd5f17a6b3504842e8596db36b547136fbe32462d76",
+        "PLANET.DT0": "12d2e1ef8835fc8103e171a29cc9cb61814bd483c4d5358267c9010f5e4eb02b",
+        "SHIP.DT0": "0115127c1860283942928a6adbc6d83c97bb2418f452c89e655c0251ee95ed53",
+        "STELLAR.DT0": "c6ddd9ea1932d3ad13da01af7a7329bbe290da83ed433933f42589b1a421c017",
+        "WORK.DT0": "d506a292df0326408b634074e56c001552882b3c852588f539ae4c4337e5a46d"
+      },
+      "appimage_automatic_resources": true,
+      "poster_center_pixels": 691200,
+      "poster_center_different": 0
+    },
+    {
+      "platform": "windows-amd64",
+      "path": "workplace/music69-windows/full153/player-windows/RESULT.json",
+      "bytes": 439950,
+      "sha256": "ef157be826a14719b6c4cc3d3e304365f9a5ff86a299d2937146f6a3bf02981d",
+      "screenshots": 31,
+      "saved": {
+        "ADMIRAL.DT0": "482a24048a9f553ae568560ad2a3ae21e2764c3783032a1ce0d204aecf2273c7",
+        "FLEET.DT0": "744d5df992c0c3f3fb13fcd5f17a6b3504842e8596db36b547136fbe32462d76",
+        "PLANET.DT0": "12d2e1ef8835fc8103e171a29cc9cb61814bd483c4d5358267c9010f5e4eb02b",
+        "SHIP.DT0": "0115127c1860283942928a6adbc6d83c97bb2418f452c89e655c0251ee95ed53",
+        "STELLAR.DT0": "c6ddd9ea1932d3ad13da01af7a7329bbe290da83ed433933f42589b1a421c017",
+        "WORK.DT0": "d506a292df0326408b634074e56c001552882b3c852588f539ae4c4337e5a46d"
+      },
+      "appimage_automatic_resources": false,
+      "poster_center_pixels": 691200,
+      "poster_center_different": 0
+    }
+  ],
+  "diagnostics": [
+    {
+      "platform": "linux-x86_64",
+      "path": "workplace/appimage153/diagnostic-linux/RESULT.json",
+      "bytes": 8597,
+      "sha256": "b5de01a61e4a01fe9214964eb7d96b4d4ec7169182e5c4c5d2096946304dbbf2",
+      "runs": 3
+    },
+    {
+      "platform": "windows-amd64",
+      "path": "workplace/music69-windows/full153/diagnostic/RESULT.json",
+      "bytes": 9481,
+      "sha256": "ab9aff9520f4cacf72b28367006130cf7884d8e7bd90a12327532151d119b78a",
+      "runs": 3
+    }
+  ],
+  "generators": [
+    {
+      "path": "tools/scripts/full_appimage_release.py",
+      "bytes": 11806,
+      "sha256": "05f92b545c2f658066d0f9b064182a75dfcad3ae597387453fa70ab9605dd8ea"
+    },
+    {
+      "path": "tools/scripts/full_appimage_receipt.py",
+      "bytes": 11306,
+      "sha256": "4f4a733d248f8194d999aa6decb72839bdc4084907f4ac8b35bdbcbb3e1378b9"
+    },
+    {
+      "path": "tools/scripts/appimage_build.sh",
+      "bytes": 935,
+      "sha256": "b33cd066c80d067136d703f18e77f0cda1340ae86b42122d7f45c1c3ef1450a9"
+    },
+    {
+      "path": "tools/scripts/appimage_licenses.py",
+      "bytes": 1274,
+      "sha256": "6d19db7b7c1a4338b0b36495fa0298b40ae1f035bc147fb70732a05d49b7f363"
+    },
+    {
+      "path": "tools/scripts/appimage_smoke.py",
+      "bytes": 2742,
+      "sha256": "7692f1d0936cb358f5d9a1f6a699538c5e80956bf8e705915918da7bb64eaad8"
+    },
+    {
+      "path": "tools/scripts/pointer_toolbar_gui.py",
+      "bytes": 13095,
+      "sha256": "1431175f6d0a52d37a702f2d73f22063171e6948452c0ca41df976612b12b273"
+    },
+    {
+      "path": "tools/appimage.sh",
+      "bytes": 734,
+      "sha256": "ee9cee0a89253440f5acb090e303a0eac20504118cc8de839b779c2cca207fb8"
+    }
+  ],
+  "platform_correction": "使用者明確表示152輪試玩為Linux；先前Windows推定不作測試平台事實。",
+  "limits": [
+    "AppImage採extract-and-run及Xvfb驗證，未驗桌面FUSE掛載。",
+    "Windows採Wine，macOS僅架構／依賴／ARM程式頁簽章，未作兩平台真機驗收。",
+    "不新增DOS parity、固定硬體延遲或全發行版相容聲明。",
+    "既有更新包、v1.6.0三平台與影片保留；未發布GitHub Release。"
+  ]
+}
