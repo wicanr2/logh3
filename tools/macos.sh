@@ -4,8 +4,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # 舊psychicwar映像已不在主機；143沿現有相同Go1.24.13／SDK15.5工具鏈。
 # 版本、建置與簽章收據見docs/playtest/131-admiral-editor-delivery.md。
-IMAGE=wizardry7-osxcross:go1.24.13-python3.13.15-15.5-r1
-EXPECTED=sha256:1aa0f82b2c880d33751bf26259a6453d8c0009fd7f13e593db92897710aa9370
+IMAGE="${LOGH3_MACOS_IMAGE:-cok-osxcross:go1.24.13-sdk15.5-r1}"
+EXPECTED="${LOGH3_MACOS_IMAGE_ID:-sha256:a2dc911a8709192604ffe6e4936dd3fd74fecc5fbc63996fbe75058edfa00980}"
 batch="${1:?需建置批次}"
 shift
 [[ "$batch" =~ ^[a-z0-9-]+$ ]]

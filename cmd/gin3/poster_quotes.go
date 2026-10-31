@@ -1,12 +1,9 @@
 package main
 
 import (
-	"bytes"
-	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"image"
-	"image/png"
 	"os"
 	"path/filepath"
 	"time"
@@ -32,6 +29,7 @@ type posterQuoteManifest struct {
 }
 
 type posterQuoteRotation struct {
+	files    [4]map[string]*posterPNG
 	images   [4]map[string]image.Image
 	textures map[string]*ebiten.Image
 	offset   image.Point
@@ -67,37 +65,18 @@ func loadPosterQuoteRotation(dir string) (*posterQuoteRotation, error) {
 		}
 		seen[set.ID] = true
 		q.images[i] = map[string]image.Image{}
+		q.files[i] = map[string]*posterPNG{}
 		for _, locale := range []string{"zh-TW", "zh-CN", "ja", "en", "ko"} {
 			item := set.Files[locale]
 			if item.File != fmt.Sprintf("quote-%d-%s.png", i+2, locale) {
 				return nil, fmt.Errorf("名言檔名無效")
 			}
 			path := filepath.Join(dir, item.File)
-			info, err := os.Stat(path)
+			q.files[i][locale], err = registerPosterPNG(path, item.SHA, m.Rect[2]-m.Rect[0], m.Rect[3]-m.Rect[1], 8<<20)
 			if err != nil {
 				return nil, err
 			}
-			if !info.Mode().IsRegular() || info.Size() > 8<<20 {
-				return nil, fmt.Errorf("名言圖片過大或無效")
-			}
-			data, err := os.ReadFile(path)
-			if err != nil {
-				return nil, err
-			}
-			if fmt.Sprintf("%x", sha256.Sum256(data)) != item.SHA {
-				return nil, fmt.Errorf("名言圖片雜湊錯誤：%s", item.File)
-			}
-			config, err := png.DecodeConfig(bytes.NewReader(data))
-			if err != nil {
-				return nil, err
-			}
-			if config.Width != m.Rect[2]-m.Rect[0] || config.Height != m.Rect[3]-m.Rect[1] {
-				return nil, fmt.Errorf("名言圖片尺寸錯誤：%s", item.File)
-			}
-			q.images[i][locale], err = png.Decode(bytes.NewReader(data))
-			if err != nil {
-				return nil, err
-			}
+			q.images[i][locale] = nil
 		}
 	}
 	return q, nil
@@ -119,7 +98,7 @@ func (q *posterQuoteRotation) indexAt(now time.Time) int {
 }
 
 func (p *approvedPosterArt) drawQuote(screen *ebiten.Image, locale string, now time.Time) {
-	if p.labels[locale] == nil {
+	if _, ok := p.labels[locale]; !ok {
 		locale = "zh-TW"
 	}
 	index := 0
@@ -128,7 +107,25 @@ func (p *approvedPosterArt) drawQuote(screen *ebiten.Image, locale string, now t
 	}
 	if index == 0 {
 		if p.labelTextures[locale] == nil {
-			p.labelTextures[locale] = ebiten.NewImageFromImage(p.labels[locale])
+			im := p.labels[locale]
+			if im == nil {
+				im = p.files["labels-"+locale+".png"].image()
+			}
+			if im == nil {
+				return
+			}
+			for key, texture := range p.labelTextures {
+				texture.Dispose()
+				delete(p.labelTextures, key)
+			}
+			if p.rotation != nil {
+				for key, texture := range p.rotation.textures {
+					texture.Dispose()
+					delete(p.rotation.textures, key)
+				}
+			}
+			p.labelTextures[locale] = ebiten.NewImageFromImage(im)
+			p.labels[locale] = nil
 		}
 		screen.DrawImage(p.labelTextures[locale], nil)
 		return
@@ -136,7 +133,23 @@ func (p *approvedPosterArt) drawQuote(screen *ebiten.Image, locale string, now t
 	q := p.rotation
 	key := fmt.Sprintf("%d:%s", index, locale)
 	if q.textures[key] == nil {
-		q.textures[key] = ebiten.NewImageFromImage(q.images[index-1][locale])
+		im := q.images[index-1][locale]
+		if im == nil {
+			im = q.files[index-1][locale].image()
+		}
+		if im == nil {
+			return
+		}
+		for name, texture := range q.textures {
+			texture.Dispose()
+			delete(q.textures, name)
+		}
+		for name, texture := range p.labelTextures {
+			texture.Dispose()
+			delete(p.labelTextures, name)
+		}
+		q.textures[key] = ebiten.NewImageFromImage(im)
+		q.images[index-1][locale] = nil
 	}
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(q.offset.X), float64(q.offset.Y))

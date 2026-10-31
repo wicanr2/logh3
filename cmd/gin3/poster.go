@@ -125,7 +125,7 @@ func (p *posterArt) setAvailable(index int) bool {
 		return false
 	}
 	if p.approved != nil {
-		return p.approved.bases[index] != nil
+		return p.approved.bases[index] != nil || p.approved.files[fmt.Sprintf("base-v%d.png", index+1)] != nil
 	}
 	if index == 0 {
 		return p.pairAvailable()

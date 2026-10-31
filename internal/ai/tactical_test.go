@@ -10,13 +10,13 @@ import (
 // 量到的那個開場（`docs/re/80`）。
 func battle() Battlefield {
 	return Battlefield{Units: []rules.BattleUnit{
-		{Fleet: 12, Faction: 0, X: 416, Y: 280, TargetX: 416, TargetY: 280, Strength: 30000},
-		{Fleet: 16, Faction: 1, X: 1536, Y: 1840, TargetX: 1536, TargetY: 1840, Strength: 20000},
-		{Fleet: 17, Faction: 1, X: 1536, Y: 1808, TargetX: 1536, TargetY: 1808, Strength: 20000},
-		{Fleet: 28, Faction: 1, X: 1568, Y: 1808, TargetX: 1568, TargetY: 1808, Strength: 20000},
-		{Fleet: 29, Faction: 1, X: 1504, Y: 1872, TargetX: 1504, TargetY: 1872, Strength: 20000},
-		{Fleet: 30, Faction: 1, X: 1504, Y: 1808, TargetX: 1504, TargetY: 1808, Strength: 20000},
-		{Fleet: 31, Faction: 1, X: 1536, Y: 1776, TargetX: 1536, TargetY: 1776, Strength: 20000},
+		{Fleet: 12, Faction: 0, X: 416, Y: 280, TargetX: 416, TargetY: 280, Ships: 100, Strength: 30000},
+		{Fleet: 16, Faction: 1, X: 1536, Y: 1840, TargetX: 1536, TargetY: 1840, Ships: 100, Strength: 20000},
+		{Fleet: 17, Faction: 1, X: 1536, Y: 1808, TargetX: 1536, TargetY: 1808, Ships: 100, Strength: 20000},
+		{Fleet: 28, Faction: 1, X: 1568, Y: 1808, TargetX: 1568, TargetY: 1808, Ships: 100, Strength: 20000},
+		{Fleet: 29, Faction: 1, X: 1504, Y: 1872, TargetX: 1504, TargetY: 1872, Ships: 100, Strength: 20000},
+		{Fleet: 30, Faction: 1, X: 1504, Y: 1808, TargetX: 1504, TargetY: 1808, Ships: 100, Strength: 20000},
+		{Fleet: 31, Faction: 1, X: 1536, Y: 1776, TargetX: 1536, TargetY: 1776, Ships: 100, Strength: 20000},
 	}}
 }
 
@@ -86,10 +86,10 @@ func TestEncircleComesFromSeveralSides(t *testing.T) {
 // TestEncircleFocusesTheWeakest 集火挑最好打的那一支。
 func TestEncircleFocusesTheWeakest(t *testing.T) {
 	b := Battlefield{Units: []rules.BattleUnit{
-		{Faction: 0, X: 100, Y: 100, Strength: 50000},
-		{Faction: 0, X: 900, Y: 900, Strength: 5000}, // 最弱，雖然比較遠
-		{Faction: 1, X: 500, Y: 500, Strength: 20000},
-		{Faction: 1, X: 520, Y: 500, Strength: 20000},
+		{Fleet: 0, Faction: 0, X: 100, Y: 100, Ships: 100, Strength: 50000},
+		{Fleet: 1, Faction: 0, X: 900, Y: 900, Ships: 100, Strength: 5000}, // 最弱，雖然比較遠
+		{Fleet: 2, Faction: 1, X: 500, Y: 500, Ships: 100, Strength: 20000},
+		{Fleet: 3, Faction: 1, X: 520, Y: 500, Ships: 100, Strength: 20000},
 	}}
 	ms := (&Encircle{}).Moves(b, 1, 1)
 	if len(ms) != 2 {
@@ -105,8 +105,8 @@ func TestEncircleFocusesTheWeakest(t *testing.T) {
 // TestEncircleRetreatsWhenBeaten 打不動了就撤，不打到全滅。
 func TestEncircleRetreatsWhenBeaten(t *testing.T) {
 	b := Battlefield{Units: []rules.BattleUnit{
-		{Faction: 0, X: 1000, Y: 1000, Strength: 50000},
-		{Faction: 1, X: 500, Y: 500, Strength: 20000},
+		{Faction: 0, X: 1000, Y: 1000, Ships: 100, Strength: 50000},
+		{Fleet: 2, Faction: 1, X: 500, Y: 500, Ships: 100, Strength: 20000},
 	}}
 	e := &Encircle{}
 	e.Moves(b, 1, 1) // 記下開場戰力
@@ -159,7 +159,7 @@ func squadrons(n int) Battlefield {
 				Fleet: f.Fleet, Squadron: k, Faction: f.Faction,
 				X: f.X + dx, Y: f.Y + dy,
 				TargetX: f.X + dx, TargetY: f.Y + dy,
-				Strength: f.Strength / n,
+				Ships: 100, Strength: f.Strength / n,
 			})
 		}
 	}
@@ -167,12 +167,12 @@ func squadrons(n int) Battlefield {
 }
 
 // TestEncircleAtSquadronScale 分隊規模下強化版仍然要圍上去：
-// 每個分隊都收到命令、目標點不只一個、而且真的縮短了距離。
+// 每艦隊只由旗艦收命令、目標點不只一個，而且縮短距離。
 func TestEncircleAtSquadronScale(t *testing.T) {
 	b := squadrons(6)
 	mine := 0
 	for _, u := range b.Units {
-		if u.Faction == 1 {
+		if u.Faction == 1 && u.Squadron == 0 {
 			mine++
 		}
 	}
@@ -182,10 +182,13 @@ func TestEncircleAtSquadronScale(t *testing.T) {
 		ms = turn(&b, e, 1, n)
 	}
 	if len(ms) != mine {
-		t.Fatalf("下了 %d 道命令，%d 個分隊都該有", len(ms), mine)
+		t.Fatalf("下了 %d 道命令，%d 個艦隊各一條", len(ms), mine)
 	}
 	pts := map[[2]int]bool{}
 	for _, m := range ms {
+		if !m.Formation || b.Units[m.Unit].Squadron != 0 {
+			t.Fatal("AI拆分艦隊", m)
+		}
 		pts[[2]int{m.X, m.Y}] = true
 	}
 	if len(pts) < 4 {

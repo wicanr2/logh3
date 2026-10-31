@@ -1,8 +1,6 @@
 package presentation
 
 import (
-	"bytes"
-	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -13,7 +11,7 @@ import (
 )
 
 // 圖集只提供基底；來源像素雜湊吻合才用於正式動畫。
-func loadShips(dir string) (map[string]*image.RGBA, map[string][32]byte, error) {
+func loadShips(dir string) (map[string]artworkSource, map[string][32]byte, error) {
 	data, err := os.ReadFile(filepath.Join(dir, "MANIFEST.json"))
 	if os.IsNotExist(err) {
 		return nil, nil, nil
@@ -45,41 +43,37 @@ func loadShips(dir string) (map[string]*image.RGBA, map[string][32]byte, error) 
 	if m.Schema != 1 || len(m.LogicalCell) != 2 || m.LogicalCell[0] != 256 || m.LogicalCell[1] != 102 || len(m.Atlases) > 12 {
 		return nil, nil, fmt.Errorf("HD 艦型清單格式無效")
 	}
-	ships := make(map[string]*image.RGBA)
+	ships := make(map[string]artworkSource)
 	hashes := make(map[string][32]byte)
 	for _, a := range m.Atlases {
 		if filepath.Base(a.File) != a.File || a.Width > 4096 || a.Height > 4096 || a.Width < 1024 || a.Height < 408 || len(a.Cells) > 4 {
 			return nil, nil, fmt.Errorf("HD 艦型圖集尺寸無效")
 		}
-		raw, e := os.ReadFile(filepath.Join(dir, a.File))
+		path := filepath.Join(dir, a.File)
+		info, e := os.Stat(path)
 		if e != nil {
 			return nil, nil, e
 		}
-		if len(raw) > 32<<20 {
+		if !info.Mode().IsRegular() || info.Size() > 32<<20 {
 			return nil, nil, fmt.Errorf("HD 艦型圖集過大")
 		}
-		sum := sha256.Sum256(raw)
-		if fmt.Sprintf("%x", sum) != a.SHA {
-			return nil, nil, fmt.Errorf("HD 艦型圖集雜湊不符：%s", a.File)
-		}
-		config, e := png.DecodeConfig(bytes.NewReader(raw))
-		if e != nil || config.Width != a.Width || config.Height != a.Height {
-			return nil, nil, fmt.Errorf("HD 艦型圖集尺寸不符")
-		}
-		im, e := png.Decode(bytes.NewReader(raw))
+		file, e := os.Open(path)
 		if e != nil {
 			return nil, nil, e
 		}
-		if im.Bounds().Dx() != a.Width || im.Bounds().Dy() != a.Height {
+		config, e := png.DecodeConfig(file)
+		file.Close()
+		if e != nil || config.Width != a.Width || config.Height != a.Height {
 			return nil, nil, fmt.Errorf("HD 艦型圖集尺寸不符")
 		}
 		for _, c := range a.Cells {
 			key, e := hex.DecodeString(c.Key)
-			if e != nil || len(key) != 2 || ships[c.Key] != nil {
+			_, duplicate := ships[c.Key]
+			if e != nil || len(key) != 2 || duplicate {
 				return nil, nil, fmt.Errorf("HD 艦型索引無效：%s", c.Key)
 			}
 			rect := image.Rect(c.X, c.Y, c.X+c.W, c.Y+c.H)
-			if c.W < 256 || c.H < 102 || !rect.In(im.Bounds()) {
+			if c.W < 256 || c.H < 102 || !rect.In(image.Rect(0, 0, a.Width, a.Height)) {
 				return nil, nil, fmt.Errorf("HD 艦型裁切越界")
 			}
 			h, e := hex.DecodeString(c.SHA)
@@ -89,11 +83,8 @@ func loadShips(dir string) (map[string]*image.RGBA, map[string][32]byte, error) 
 			var digest [32]byte
 			copy(digest[:], h)
 			hashes[c.Key] = digest
-			// resize接受非零原點的子圖；不改寫生成圖集。
-			sub := im.(interface {
-				SubImage(image.Rectangle) image.Image
-			}).SubImage(rect)
-			ships[c.Key] = resize(sub, 256*Scale, 102*Scale)
+			ships[c.Key] = artworkSource{path: path, width: a.Width, height: a.Height,
+				w: 256 * Scale, h: 102 * Scale, digest: a.SHA, crop: rect}
 		}
 	}
 	if len(ships) != m.Completed || len(ships) > 45 {

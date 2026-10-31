@@ -1,0 +1,93 @@
+{
+  "version": "v.1.6.4-20261031",
+  "normal_entry": true,
+  "state_injection": false,
+  "full_canvas": true,
+  "input_sha256": {
+    "workplace/release171/battle-linux/RESULT.json": "818ac590120bb70c5b769cd612329f5ffb9decf6f22cdbafed196120b87f9ea6",
+    "workplace/release171/battle-linux/RAW.mp4": "82d2657c1487e7123d01079cb0ee46b7f2fc3cc4e9f2701c904acff9f81228f6",
+    "workplace/release171/battle-linux/scout-range.png": "a6b0cf2c16baac14bde1b2328326cba0e0672560725e56a4783b6d1fdffba9ea",
+    "tools/scripts/scout_readme.py": "75a98fe1c6241c14b8b4bf99d1a4863019d9d050aa029041cf76202c3b769fb7",
+    "workplace/release171/battle-linux/FRAMES.jsonl": "16465f1faaffbe224a7c9801b9fee0a07de1d381661779aa0adafd18e9680747"
+  },
+  "images": [
+    {
+      "path": "docs/images/readme-v164-scout.png",
+      "sha256": "a6b0cf2c16baac14bde1b2328326cba0e0672560725e56a4783b6d1fdffba9ea",
+      "source": "workplace/release171/battle-linux/scout-range.png",
+      "seconds": null,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "docs/images/readme-v164-march.png",
+      "sha256": "aff86723f7b39d0dba20d66b8f5da68923c5c818b374eea5193b51e74ca9e824",
+      "source": "workplace/release171/battle-linux/RAW.mp4",
+      "seconds": 90.55026966400001,
+      "size": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "march_movement": [
+    {
+      "seconds": 89.33909236,
+      "xy": [
+        544,
+        960
+      ]
+    },
+    {
+      "seconds": 89.489237848,
+      "xy": [
+        552,
+        960
+      ]
+    },
+    {
+      "seconds": 89.629541991,
+      "xy": [
+        560,
+        960
+      ]
+    },
+    {
+      "seconds": 89.777367779,
+      "xy": [
+        568,
+        960
+      ]
+    },
+    {
+      "seconds": 89.972527566,
+      "xy": [
+        576,
+        960
+      ]
+    },
+    {
+      "seconds": 90.133874295,
+      "xy": [
+        584,
+        960
+      ]
+    },
+    {
+      "seconds": 90.261888337,
+      "xy": [
+        592,
+        960
+      ]
+    },
+    {
+      "seconds": 90.400269664,
+      "xy": [
+        600,
+        960
+      ]
+    }
+  ]
+}

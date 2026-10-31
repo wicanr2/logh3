@@ -1,12 +1,10 @@
 package main
 
 import (
-	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"image"
 	"image/color"
-	"image/png"
 	"math"
 	"os"
 	"path/filepath"
@@ -36,6 +34,7 @@ func (a *app) posterViewport() posterViewport {
 }
 
 type approvedPosterArt struct {
+	files         map[string]*posterPNG
 	bases         [3]image.Image
 	hulls         image.Image
 	labels        map[string]image.Image
@@ -70,54 +69,19 @@ func loadApprovedPosterArt(art string) (*approvedPosterArt, error) {
 	if manifest.Format != "logh3-approved-poster-v1" || manifest.Canvas != [2]int{posterTotalW, posterHeight} || manifest.Proposal != approvedPosterSHA || manifest.Scale != 88 {
 		return nil, fmt.Errorf("定案海報manifest不相符")
 	}
-	read := func(name string) (image.Image, error) {
+	p := &approvedPosterArt{labels: map[string]image.Image{}, labelTextures: map[string]*ebiten.Image{}, files: map[string]*posterPNG{}}
+	names := []string{"base-v1.png", "base-v2.png", "base-v3.png", "hulls.png"}
+	for _, locale := range []string{"zh-TW", "zh-CN", "ja", "en", "ko"} {
+		p.labels[locale] = nil
+		names = append(names, "labels-"+locale+".png")
+	}
+	for _, name := range names {
 		item, ok := manifest.Files[name]
 		if !ok || item.Width != posterTotalW || item.Height != posterHeight {
 			return nil, fmt.Errorf("定案海報缺少或尺寸錯誤：%s", name)
 		}
-		path := filepath.Join(dir, name)
-		info, err := os.Stat(path)
+		p.files[name], err = registerPosterPNG(filepath.Join(dir, name), item.SHA, item.Width, item.Height, 32<<20)
 		if err != nil {
-			return nil, err
-		}
-		if !info.Mode().IsRegular() || info.Size() > 32<<20 {
-			return nil, fmt.Errorf("定案海報檔案無效：%s", name)
-		}
-		bytes, err := os.ReadFile(path)
-		if err != nil {
-			return nil, err
-		}
-		if fmt.Sprintf("%x", sha256.Sum256(bytes)) != item.SHA {
-			return nil, fmt.Errorf("定案海報雜湊錯誤：%s", name)
-		}
-		f, err := os.Open(path)
-		if err != nil {
-			return nil, err
-		}
-		defer f.Close()
-		config, err := png.DecodeConfig(f)
-		if err != nil {
-			return nil, err
-		}
-		if config.Width != posterTotalW || config.Height != posterHeight {
-			return nil, fmt.Errorf("定案海報PNG尺寸錯誤：%s", name)
-		}
-		if _, err = f.Seek(0, 0); err != nil {
-			return nil, err
-		}
-		return png.Decode(f)
-	}
-	p := &approvedPosterArt{labels: map[string]image.Image{}, labelTextures: map[string]*ebiten.Image{}}
-	for i, set := range []string{"v1", "v2", "v3"} {
-		if p.bases[i], err = read("base-" + set + ".png"); err != nil {
-			return nil, err
-		}
-	}
-	if p.hulls, err = read("hulls.png"); err != nil {
-		return nil, err
-	}
-	for _, locale := range []string{"zh-TW", "zh-CN", "ja", "en", "ko"} {
-		if p.labels[locale], err = read("labels-" + locale + ".png"); err != nil {
 			return nil, err
 		}
 	}
@@ -147,13 +111,35 @@ func (a *app) drawApprovedPoster(screen, game *ebiten.Image) {
 	art := p.approved
 	i := p.selected
 	if art.baseTextures[i] == nil {
-		art.baseTextures[i] = ebiten.NewImageFromImage(art.bases[i])
+		im := art.bases[i]
+		if im == nil {
+			im = art.files[fmt.Sprintf("base-v%d.png", i+1)].image()
+		}
+		if im != nil {
+			for n, texture := range art.baseTextures {
+				if n != i && texture != nil {
+					texture.Dispose()
+					art.baseTextures[n] = nil
+				}
+			}
+			art.baseTextures[i] = ebiten.NewImageFromImage(im)
+			art.bases[i] = nil
+		}
 	}
 	if art.hullTexture == nil {
-		art.hullTexture = ebiten.NewImageFromImage(art.hulls)
+		im := art.hulls
+		if im == nil {
+			im = art.files["hulls.png"].image()
+		}
+		if im != nil {
+			art.hullTexture = ebiten.NewImageFromImage(im)
+			art.hulls = nil
+		}
 	}
 	base := art.baseTextures[i]
-	screen.DrawImage(base, nil)
+	if base != nil {
+		screen.DrawImage(base, nil)
+	}
 	v := a.posterViewport()
 	op := &ebiten.DrawImageOptions{Filter: ebiten.FilterLinear}
 	op.GeoM.Scale(v.W/float64(game.Bounds().Dx()), v.H/float64(game.Bounds().Dy()))
@@ -166,8 +152,12 @@ func (a *app) drawApprovedPoster(screen, game *ebiten.Image) {
 				continue
 			}
 			target := screen.SubImage(bounds).(*ebiten.Image)
-			target.DrawImage(base, nil)
-			target.DrawImage(art.hullTexture, nil)
+			if base != nil {
+				target.DrawImage(base, nil)
+			}
+			if art.hullTexture != nil {
+				target.DrawImage(art.hullTexture, nil)
+			}
 		}
 	}
 	if i == 0 {

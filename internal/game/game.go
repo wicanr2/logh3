@@ -951,8 +951,10 @@ type Game struct {
 
 	// battleMove ＝ 選了「移動」之後在等玩家點目的地（`docs/spec/024`）；
 	// battleMoveUnit 是要移動的分隊。
-	battleMove     bool
-	battleMoveUnit int
+	battleMove        bool
+	battleMoveUnit    int
+	battleMoveRestore bool
+	battleMoveView    screen.BattleView
 
 	// battleForm ＝ 選了「編隊」之後在等玩家點隊形格（`docs/internals/46`）；
 	// battleFormUnit 是要換位置的分隊。
@@ -5175,6 +5177,14 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 		}
 	}
 	g.drawFleetCombatRange(fb, view)
+	if g.battleMove && g.battleMoveUnit >= 0 && g.battleMoveUnit < len(g.battleUnits) {
+		u := g.battleUnits[g.battleMoveUnit]
+		if u.Kind == shipKindScout {
+			screen.DrawSupplyRange(g.res.Battle, fb, u.X+8, u.Y+8, rules.ScoutVision, view)
+			// 選點中的P位於旗艦上方，讓玩家辨識目前指揮的分隊。
+			screen.DrawBattleUnits(g.res.Battle, fb, g.res.Sprites, []rules.BattleUnit{u}, g.displayBattleSprite, view)
+		}
+	}
 	// 艦隊選點時畫兩個範圍圖形（`docs/re/120`、`docs/re/135`）。
 	// 兩個都是 XOR 上去的，所以要畫在單位與格線之後。
 	if g.fleetOrder != FleetOrderNone {

@@ -149,6 +149,7 @@ func nebulaMask(c gfx.DrawCommand) []uint8 {
 }
 
 func (r *Renderer) terrain(c gfx.DrawCommand) bool {
+	r.ensureScene("material")
 	if r.material == nil || c.W != 16 || c.H != 20 || c.SourceW != 16 || c.SourceH != 20 || len(c.Source) != 320 {
 		return false
 	}

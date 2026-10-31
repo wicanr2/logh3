@@ -5,6 +5,7 @@ package presentation
 import (
 	"fmt"
 	"image"
+	"image/draw"
 	"image/png"
 	"os"
 	"path/filepath"
@@ -18,40 +19,47 @@ import (
 const Scale = 3
 
 type Renderer struct {
-	images         map[string]*image.RGBA
-	editorFaces    map[string]*image.RGBA
-	frame          *image.RGBA
-	refine         bool
-	font           *fontAtlas
-	fonts          map[string]*fontAtlas
-	fontStyle      string
-	theme          bool
-	classic        bool
-	factionThemes  map[string]*factionTheme
-	activeTheme    *factionTheme
-	themeID        string
-	uiMask         []uint8
-	material       *image.RGBA
-	terrainMasks   map[uint64][]uint8
-	planets        [2]*image.RGBA
-	mapPlanets     [4]*image.RGBA
-	mapEmblems     [2]*image.RGBA
-	opaque         map[string]bool
-	paletteWords   [16][12]byte
-	starCache      map[[32]byte]*image.RGBA
-	hull           *image.RGBA
-	grid           *image.RGBA
-	projected      map[[32]byte]*projectionSprite
-	animationCache map[[32]byte]*image.RGBA
-	ships          map[string]*image.RGBA
-	shipHashes     map[string][32]byte
-	frameKey       [32]byte
-	classicPixels  map[[32]byte][]classicPixel
-	cursorBaseKey  [32]byte
-	cursorBasePix  []byte
-	cursorBaseMask []uint8
-	frameValid     bool
-	generation     uint64
+	artDir                              string
+	sceneLoaded                         map[string]bool
+	images                              map[string]*image.RGBA
+	artSources                          map[string]artworkSource
+	artUse                              map[string]uint64
+	failedArt                           map[string]bool
+	artClock                            uint64
+	artBytes, artDecodes, portraitCount int
+	editorFaces                         map[string]*image.RGBA
+	frame                               *image.RGBA
+	refine                              bool
+	font                                *fontAtlas
+	fonts                               map[string]*fontAtlas
+	fontStyle                           string
+	theme                               bool
+	classic                             bool
+	factionThemes                       map[string]*factionTheme
+	activeTheme                         *factionTheme
+	themeID                             string
+	uiMask                              []uint8
+	material                            *image.RGBA
+	terrainMasks                        map[uint64][]uint8
+	planets                             [2]*image.RGBA
+	mapPlanets                          [4]*image.RGBA
+	mapEmblems                          [2]*image.RGBA
+	opaque                              map[string]bool
+	paletteWords                        [16][12]byte
+	starCache                           map[[32]byte]*image.RGBA
+	hull                                *image.RGBA
+	grid                                *image.RGBA
+	projected                           map[[32]byte]*projectionSprite
+	animationCache                      map[[32]byte]*image.RGBA
+	ships                               map[string]*image.RGBA
+	shipHashes                          map[string][32]byte
+	frameKey                            [32]byte
+	classicPixels                       map[[32]byte][]classicPixel
+	cursorBaseKey                       [32]byte
+	cursorBasePix                       []byte
+	cursorBaseMask                      []uint8
+	frameValid                          bool
+	generation                          uint64
 }
 
 // Load 只載入真實 FACE.AMG 索引中的替換圖；缺少單張時保留原圖。
@@ -59,7 +67,7 @@ func Load(dir string, faces *asset.AMG) (*Renderer, error) {
 	return LoadWithProgress(dir, faces, nil)
 }
 
-// LoadWithProgress 回報實際已解碼的HD人物圖數量，不改變載入或驗證契約。
+// LoadWithProgress只建立人物索引；首次繪製才解碼，錯誤退回原圖。
 func LoadWithProgress(dir string, faces *asset.AMG, progress func(done, total int)) (*Renderer, error) {
 	if faces == nil {
 		return nil, fmt.Errorf("HD：缺少 FACE.AMG")
@@ -69,6 +77,8 @@ func LoadWithProgress(dir string, faces *asset.AMG, progress func(done, total in
 		return nil, fmt.Errorf("HD 圖片目錄：%w", err)
 	}
 	r := &Renderer{images: make(map[string]*image.RGBA), frame: image.NewRGBA(image.Rect(0, 0, gfx.Width*Scale, gfx.Height*Scale)), refine: true, classic: true}
+	r.artSources = make(map[string]artworkSource)
+	r.artDir = dir
 	total := 0
 	for _, entry := range entries {
 		if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".png") {
@@ -111,13 +121,6 @@ func LoadWithProgress(dir string, faces *asset.AMG, progress func(done, total in
 				err = fmt.Errorf("長寬比與原圖不同：%dx%d", config.Width, config.Height)
 			}
 		}
-		var img image.Image
-		if err == nil {
-			_, err = file.Seek(0, 0)
-		}
-		if err == nil {
-			img, err = png.Decode(file)
-		}
 		closeErr := file.Close()
 		if err != nil {
 			return nil, fmt.Errorf("HD 圖片 %s：%w", name, err)
@@ -125,24 +128,19 @@ func LoadWithProgress(dir string, faces *asset.AMG, progress func(done, total in
 		if closeErr != nil {
 			return nil, closeErr
 		}
-		r.images[fmt.Sprintf("face/%02d", id)] = resize(img, original.W*Scale, original.H*Scale)
+		key := fmt.Sprintf("face/%02d", id)
+		r.artSources[key] = artworkSource{path: path, width: config.Width, height: config.Height, w: original.W * Scale, h: original.H * Scale}
+		r.artSources[fmt.Sprintf("editor-face/%02d", id)] = artworkSource{parent: key, w: 64 * Scale, h: 80 * Scale}
+		r.portraitCount++
 		if progress != nil {
-			progress(len(r.images), total)
+			progress(r.portraitCount, total)
 		}
 	}
-	if len(r.images) == 0 {
+	if r.portraitCount == 0 {
 		return nil, fmt.Errorf("HD 目錄沒有可用人物圖：%s", dir)
 	}
 	r.opaque = make(map[string]bool)
 	r.editorFaces = make(map[string]*image.RGBA)
-	for key, im := range r.images {
-		r.opaque[key] = im.Opaque()
-		if strings.HasPrefix(key, "face/") {
-			smallKey := "editor-face/" + strings.TrimPrefix(key, "face/")
-			r.editorFaces[smallKey] = resize(im, 64*Scale, 80*Scale)
-			r.opaque[smallKey] = r.editorFaces[smallKey].Opaque()
-		}
-	}
 	r.font, err = loadFontAtlas(filepath.Join(dir, "font"))
 	if err != nil {
 		return nil, err
@@ -159,21 +157,14 @@ func LoadWithProgress(dir string, faces *asset.AMG, progress func(done, total in
 		return nil, err
 	}
 	if r.theme {
-		r.material, err = loadMapMaterial(filepath.Join(dir, "material"))
-		if err != nil {
-			return nil, err
-		}
-		if err = r.loadMapDecor(filepath.Join(dir, "strategy")); err != nil {
-			return nil, err
-		}
 		r.terrainMasks = make(map[uint64][]uint8)
-		r.hull, err = loadMaterial(filepath.Join(dir, "material"), "hull-01.png")
+		var ships map[string]artworkSource
+		ships, r.shipHashes, err = loadShips(filepath.Join(dir, "animation"))
 		if err != nil {
 			return nil, err
 		}
-		r.ships, r.shipHashes, err = loadShips(filepath.Join(dir, "animation"))
-		if err != nil {
-			return nil, err
+		for key, source := range ships {
+			r.artSources["ship/"+key] = source
 		}
 		r.projectionGrid()
 	}
@@ -186,7 +177,12 @@ func abs(x int) int {
 	}
 	return x
 }
-func (r *Renderer) Count() int { return len(r.images) }
+func (r *Renderer) Count() int {
+	if r.portraitCount != 0 {
+		return r.portraitCount
+	}
+	return len(r.images)
+}
 
 // Render 使用原圖的可見像素覆蓋範圍，後畫內容即使同色也不被 HD 圖覆寫。
 func (r *Renderer) Render(fb *gfx.Framebuffer, pal gfx.Palette) *image.RGBA {
@@ -250,7 +246,7 @@ func (r *Renderer) Render(fb *gfx.Framebuffer, pal gfx.Palette) *image.RGBA {
 		}
 	}
 	for _, a := range fb.Artwork {
-		img := r.images[a.Key]
+		img := r.artworkImage(a.Key)
 		if img == nil || img.Bounds().Dx() != a.SourceW*Scale || img.Bounds().Dy() != a.SourceH*Scale {
 			continue
 		}
@@ -279,6 +275,15 @@ func (r *Renderer) Render(fb *gfx.Framebuffer, pal gfx.Palette) *image.RGBA {
 func resize(src image.Image, w, h int) *image.RGBA {
 	dst := image.NewRGBA(image.Rect(0, 0, w, h))
 	b := src.Bounds()
+	// 發行複本已是正式顯示尺寸；RGBA或不透明PNG可直接複製。
+	if b.Dx() == w && b.Dy() == h {
+		_, rgba := src.(*image.RGBA)
+		opaque, ok := src.(interface{ Opaque() bool })
+		if rgba || (ok && opaque.Opaque()) {
+			draw.Draw(dst, dst.Rect, src, b.Min, draw.Src)
+			return dst
+		}
+	}
 	for y := 0; y < h; y++ {
 		fy := max(0, (float64(y)+0.5)*float64(b.Dy())/float64(h)-0.5)
 		y0 := int(fy)

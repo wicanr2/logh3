@@ -1,6 +1,7 @@
 package presentation
 
 import (
+	"bytes"
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
@@ -33,6 +34,11 @@ type atlasManifest struct {
 type fontAtlas struct {
 	pages  []*image.Gray
 	glyphs map[uint32]atlasGlyph
+	files  []artworkSource
+	bounds []image.Rectangle
+	failed map[int]bool
+	use    map[int]uint64
+	clock  uint64
 }
 
 // FontStyles 只列出已完整載入的字型；原版點陣與原版強化共用原字庫。
@@ -67,8 +73,71 @@ func (r *Renderer) SetFontStyle(style string) error {
 		r.font = r.fonts[style]
 	}
 	r.fontStyle = style
+	for _, font := range r.fonts {
+		if font != nil && (font != r.font || style == "original" || style == "classic") {
+			for i := range font.pages {
+				font.pages[i] = nil
+			}
+			clear(font.use)
+		}
+	}
 	r.frameValid = false
 	return nil
+}
+
+func (a *fontAtlas) page(index int) *image.Gray {
+	if index < 0 || index >= len(a.pages) || a.failed[index] {
+		return nil
+	}
+	if a.use == nil {
+		a.use = map[int]uint64{}
+	}
+	a.clock++
+	a.use[index] = a.clock
+	if a.pages[index] != nil {
+		return a.pages[index]
+	}
+	if index >= len(a.files) {
+		return nil
+	}
+	source := a.files[index]
+	raw, err := checkedFile(filepath.Dir(source.path), filepath.Base(source.path), source.digest)
+	var im image.Image
+	if err == nil {
+		im, err = png.Decode(bytes.NewReader(raw))
+	}
+	if err == nil && im.Bounds() != a.bounds[index] {
+		err = fmt.Errorf("字型頁尺寸改變")
+	}
+	if err != nil {
+		if a.failed == nil {
+			a.failed = map[int]bool{}
+		}
+		a.failed[index] = true
+		fmt.Fprintf(os.Stderr, "HD字型頁退回原字庫：%v\n", err)
+		return nil
+	}
+	gray := image.NewGray(im.Bounds())
+	for y := 0; y < gray.Rect.Dy(); y++ {
+		for x := 0; x < gray.Rect.Dx(); x++ {
+			gray.SetGray(x, y, color.GrayModel.Convert(im.At(x, y)).(color.Gray))
+		}
+	}
+	a.pages[index] = gray
+	for len(a.use) > 2 {
+		oldest, age := -1, ^uint64(0)
+		for i, used := range a.use {
+			if i != index && used < age {
+				oldest, age = i, used
+			}
+		}
+		if oldest < 0 {
+			break
+		}
+		a.pages[oldest] = nil
+		delete(a.use, oldest)
+	}
+	return gray
 }
 
 func glyphID(code uint16, half bool) uint32 {
@@ -121,39 +190,36 @@ func loadFontAtlas(dir string) (*fontAtlas, error) {
 		return nil, err
 	}
 	a := &fontAtlas{glyphs: make(map[uint32]atlasGlyph)}
-	for _, p := range m.Pages {
-		if _, err = checkedFile(dir, p.File, p.SHA256); err != nil {
+	for _, page := range m.Pages {
+		if filepath.Base(page.File) != page.File {
+			return nil, fmt.Errorf("HD字型頁檔名無效")
+		}
+		path := filepath.Join(dir, page.File)
+		info, err := os.Stat(path)
+		if err != nil {
 			return nil, err
 		}
-		file, err := os.Open(filepath.Join(dir, p.File))
+		if !info.Mode().IsRegular() || info.Size() > 32<<20 {
+			return nil, fmt.Errorf("字型圖集過大")
+		}
+		file, err := os.Open(path)
 		if err != nil {
 			return nil, err
 		}
 		config, err := png.DecodeConfig(file)
-		if err == nil && (config.Width <= 0 || config.Height <= 0 || config.Width > 4096 || config.Height > 4096) {
-			err = fmt.Errorf("字型圖集過大")
-		}
-		var im image.Image
-		if err == nil {
-			_, err = file.Seek(0, 0)
-		}
-		if err == nil {
-			im, err = png.Decode(file)
-		}
-		closeErr := file.Close()
+		file.Close()
 		if err != nil {
 			return nil, err
 		}
-		if closeErr != nil {
-			return nil, closeErr
+		if config.Width <= 0 || config.Height <= 0 || config.Width > 4096 || config.Height > 4096 {
+			return nil, fmt.Errorf("字型圖集尺寸無效")
 		}
-		gray := image.NewGray(im.Bounds())
-		for y := 0; y < config.Height; y++ {
-			for x := 0; x < config.Width; x++ {
-				gray.SetGray(x, y, color.GrayModel.Convert(im.At(x, y)).(color.Gray))
-			}
+		if hash, err := hex.DecodeString(page.SHA256); err != nil || len(hash) != 32 {
+			return nil, fmt.Errorf("字型圖集雜湊格式無效")
 		}
-		a.pages = append(a.pages, gray)
+		a.pages = append(a.pages, nil)
+		a.bounds = append(a.bounds, image.Rect(0, 0, config.Width, config.Height))
+		a.files = append(a.files, artworkSource{path: path, digest: page.SHA256})
 	}
 	for _, g := range m.Glyphs {
 		w := 16 * Scale
@@ -161,7 +227,7 @@ func loadFontAtlas(dir string) (*fontAtlas, error) {
 			w = 8 * Scale
 		}
 		if g.Page < 0 || g.Page >= len(a.pages) || g.W != w || g.H != 15*Scale || g.X < 0 || g.Y < 0 ||
-			!image.Rect(g.X, g.Y, g.X+g.W, g.Y+g.H).In(a.pages[g.Page].Bounds()) || (g.Half && g.Code > 255) {
+			!image.Rect(g.X, g.Y, g.X+g.W, g.Y+g.H).In(a.bounds[g.Page]) || (g.Half && g.Code > 255) {
 			return nil, fmt.Errorf("HD 字型索引無效：%04X", g.Code)
 		}
 		id := glyphID(g.Code, g.Half)

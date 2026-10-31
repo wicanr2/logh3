@@ -67,8 +67,8 @@ func TestHeroWithoutCommanderPreservesGeneric(t *testing.T) {
 	b := heroBattle()
 	b.Commanders = [2]Commander{}
 	for _, m := range (&Encircle{}).Moves(b, 1, 1) {
-		if m.Formation {
-			t.Fatal("無名將也套名將命令")
+		if !m.Formation || b.Units[m.Unit].Squadron != 0 {
+			t.Fatal("無名將的普通AI拆散編隊")
 		}
 	}
 }

@@ -1,0 +1,370 @@
+{
+  "version": "v.1.6.4-20261031",
+  "passed": true,
+  "rights": "含原版與衍生音畫，只限本機完整版；未公開上傳",
+  "head": "5918a5c0177bd135071ddcb914905bbac1e0f103",
+  "dirty_source": true,
+  "inputs": {
+    "path": "workplace/package92-v.1.6.4-20261031-release171/INPUTS.json",
+    "bytes": 435540,
+    "sha256": "19241afb5cc2c4ff8b134a8fbd4d2f9d4016fda9d6de8c896af89d9da5998358"
+  },
+  "source_files": 1663,
+  "common_files": 652,
+  "artifacts": [
+    {
+      "path": "dist-all/v.1.6.4-20261031/full/LOGH3-v.1.6.4-20261031-windows-amd64.zip",
+      "bytes": 372492136,
+      "sha256": "83a6324d338ae5c8296d34a7e299ada688cbe69ab3e70913e97512ab8e7d7fbb"
+    },
+    {
+      "path": "dist-all/v.1.6.4-20261031/full/LOGH3-v.1.6.4-20261031-macos-universal.zip",
+      "bytes": 382386562,
+      "sha256": "1301a49e7edf2897c23a7dff64cd7dcc7127b7de733b0755b8aec470c281fc79"
+    },
+    {
+      "path": "dist-all/v.1.6.4-20261031/full/LOGH3-v.1.6.4-20261031-linux-x86_64.AppImage",
+      "bytes": 372468216,
+      "sha256": "4b7b3ab7b249effcb22a7c2ce1aacaa97e5ee17be6dc66b1c35aa5f23a5b8884"
+    },
+    {
+      "path": "dist-all/v.1.6.4-20261031/promo/LOGH3-v.1.6.4-20261031-promo.mp4",
+      "bytes": 21352320,
+      "sha256": "432fb2cef509043fd95734abfc0eeeaf917057ed91a3a8c9a396c069b0b6f50a"
+    }
+  ],
+  "checks": {
+    "windows-amd64": {
+      "crc": true,
+      "manifest_files": 659,
+      "permissions": true,
+      "utf8_names": true
+    },
+    "macos-universal": {
+      "crc": true,
+      "manifest_files": 659,
+      "permissions": true,
+      "utf8_names": true
+    }
+  },
+  "macos": {
+    "slices": [
+      {
+        "architecture": "amd64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 4096,
+        "bytes": 17718320,
+        "sha256": "2446c2f4f11070667c22744147ee12981cbd3c70216242aba7d460b816d0c380"
+      },
+      {
+        "architecture": "arm64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [
+          {
+            "ad_hoc": true,
+            "flags": 131074,
+            "algorithm": "sha256",
+            "code_pages": 4112,
+            "code_limit": 16842112,
+            "all_page_hashes_match": true
+          }
+        ],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 17727488,
+        "bytes": 16973810,
+        "sha256": "14a2561f536b13b615cf8ae727875dd2084e2252a149fa6abaafa287afbb2353"
+      }
+    ],
+    "toolchain": "go version go1.24.13 linux/amd64\nDebian clang version 19.1.7 (3+b1)\nTarget: x86_64-apple-darwin24.5\nThread model: posix\nInstalledDir: /usr/lib/llvm-19/bin\nDebian clang version 19.1.7 (3+b1)\nTarget: arm64-apple-darwin24.5\nThread model: posix\nInstalledDir: /usr/lib/llvm-19/bin\n",
+    "native_execution": false
+  },
+  "linux": {
+    "actual_appimage": true,
+    "extract_and_run": true,
+    "fuse_execution": false,
+    "offset": 944632,
+    "runtime_sha256": "1cc49bcf1e2ccd593c379adb17c9f85a36d619088296504de95b1d06215aebbf",
+    "appdir_manifest": {
+      "path": "workplace/release171/APPDIR-MANIFEST.json",
+      "bytes": 139883,
+      "sha256": "8d03b7a49638cb26e68e2d455245e207934a257cfadb082f9a8e7ecc4ca54ab3"
+    },
+    "dependencies": {
+      "libraries": {
+        "libX11.so.6": {
+          "bytes": 1318408,
+          "sha256": "688d7edc1a02a0e7993722d57a42821b22435e249071554625a5ec4784787d3d",
+          "mode": "0o644"
+        },
+        "libXau.so.6": {
+          "bytes": 14496,
+          "sha256": "833aa73cf8f645330907d5923fcbf380e0895ab2551d522b41b0308747a51e27",
+          "mode": "0o644"
+        },
+        "libXcursor.so.1": {
+          "bytes": 47768,
+          "sha256": "dd642a6a142df39d4243001a30bb8d09ef2bbbd35df6c2d226a12ee70cdadaa8",
+          "mode": "0o644"
+        },
+        "libXdmcp.so.6": {
+          "bytes": 22728,
+          "sha256": "911ecd1cf42f310e788652f2719803bb4632e077b6e292af31b876c836bba264",
+          "mode": "0o644"
+        },
+        "libXext.so.6": {
+          "bytes": 81568,
+          "sha256": "32471a718f4cfef053aae4b84154ebb34ad16996d5db5dd6254e41e5fb36079e",
+          "mode": "0o644"
+        },
+        "libXfixes.so.3": {
+          "bytes": 26736,
+          "sha256": "a9e0b36916394b36351fbb017a80e5ec09c0454e6f1bf1125cb2b66cb1bbc6e6",
+          "mode": "0o644"
+        },
+        "libXi.so.6": {
+          "bytes": 76160,
+          "sha256": "b5ecdc4892a59349238f5c5ed560c1634af7e2fc3c82a533345a7712fd2fbdd6",
+          "mode": "0o644"
+        },
+        "libXinerama.so.1": {
+          "bytes": 18592,
+          "sha256": "4329e3bfa8febba3f0f540165a6e806b32ee48fc4f7467c228f833216bdeddfe",
+          "mode": "0o644"
+        },
+        "libXrandr.so.2": {
+          "bytes": 47416,
+          "sha256": "8f8f1266a55b55b78d32e91a453af585467b77fcef6d1cb00d44d7427c4b3c6e",
+          "mode": "0o644"
+        },
+        "libXrender.so.1": {
+          "bytes": 47608,
+          "sha256": "5cd723d723504af24d297cf9bc87156c0e023f4becbee2ce8432555cbaa73836",
+          "mode": "0o644"
+        },
+        "libXxf86vm.so.1": {
+          "bytes": 22816,
+          "sha256": "242c90bf3a361485e38412c54ebdc6fa045607bc0c959300ee24a35aa1f21094",
+          "mode": "0o644"
+        },
+        "libasound.so.2": {
+          "bytes": 1079888,
+          "sha256": "9dabddc79cc29b4f69058ac7d94ac11e82a4d6d8cc8c9148cb8377705790c7ea",
+          "mode": "0o644"
+        },
+        "libbsd.so.0": {
+          "bytes": 84840,
+          "sha256": "c34693b27401e6e74d7ac32184c79bfb0cca936d3b1be990d435124a6a5686f5",
+          "mode": "0o644"
+        },
+        "libmd.so.0": {
+          "bytes": 47312,
+          "sha256": "9e8462f7650da0b39ecfe1680fa87fe393f0710b324250931ab36fa0135b14cc",
+          "mode": "0o644"
+        },
+        "libxcb.so.1": {
+          "bytes": 166824,
+          "sha256": "35e218293d7c1f65b765337b92c6425f3495e80f5973058d8847fa08258cb97e",
+          "mode": "0o644"
+        }
+      },
+      "packages": {
+        "libx11-6": "2:1.8.4-2+deb12u2",
+        "libxau6": "1:1.0.9-1",
+        "libxcursor1": "1:1.2.1-1",
+        "libxdmcp6": "1:1.1.2-3",
+        "libxext6": "2:1.3.4-1+b1",
+        "libxfixes3": "1:6.0.0-2",
+        "libxi6": "2:1.8-1+b1",
+        "libxinerama1": "2:1.1.4-3",
+        "libxrandr2": "2:1.5.2-2+b1",
+        "libxrender1": "1:0.9.10-1.1",
+        "libxxf86vm1": "1:1.1.4-1+b2",
+        "libasound2": "1.2.8-1+b1",
+        "libbsd0": "0.11.7-2",
+        "libmd0": "1.0.4-2",
+        "libxcb1": "1.15-1"
+      },
+      "glibc_requirements": {
+        "libX11.so.6": "2.34",
+        "libXau.so.6": "2.4",
+        "libXcursor.so.1": "2.4",
+        "libXdmcp.so.6": "2.4",
+        "libXext.so.6": "2.14",
+        "libXfixes.so.3": "2.14",
+        "libXi.so.6": "2.14",
+        "libXinerama.so.1": "2.4",
+        "libXrandr.so.2": "2.14",
+        "libXrender.so.1": "2.14",
+        "libXxf86vm.so.1": "2.4",
+        "libasound.so.2": "2.34",
+        "libbsd.so.0": "2.33",
+        "libmd.so.0": "2.33",
+        "libxcb.so.1": "2.14",
+        "gin3": "2.34"
+      },
+      "host_requirements": "x86_64、主機glibc、X11或XWayland、OpenGL/GPU驅動、音效服務；不附主機驅動"
+    }
+  },
+  "windows": {
+    "pe_amd64": true,
+    "wine": true,
+    "native_execution": false,
+    "prior_crash_root": "unknown，尚待對應Windows日誌或存檔"
+  },
+  "hd": {
+    "portraits": 83,
+    "before_bytes": 109880634,
+    "after_bytes": 7392131,
+    "pixel_identical": true,
+    "report": {
+      "path": "workplace/package92-v.1.6.4-20261031-release171/common/art/PACKED-HD.json",
+      "bytes": 28583,
+      "sha256": "1aa59db0fb92577c1b68b0c8b682e889c9d28c55b93bb8dce42017b42e9b4521"
+    },
+    "master_unchanged": true
+  },
+  "standard_tests": {
+    "command": "go test ./cmd/... ./internal/...",
+    "passed": true,
+    "packages": 21,
+    "with_tests": 16,
+    "no_tests": 5,
+    "scope": "本輪執行完成；不等同DOS全局同態或Windows真機驗收"
+  },
+  "player_receipts": {
+    "linux-alliance": {
+      "path": "workplace/release171/player-linux/RESULT.json",
+      "bytes": 1121454,
+      "sha256": "d3ee80dd93ecd4be49d858123de1926306da60a1af8e9dec47a468450640c91c"
+    },
+    "linux-empire": {
+      "path": "workplace/release171/player-empire/RESULT.json",
+      "bytes": 249355,
+      "sha256": "8988968f68d5e90a478fd723c7e244067c6ab4a9b9ab0f981ee8144d0a8db20f"
+    },
+    "windows-wine": {
+      "path": "workplace/music69-windows/full171/player-windows/RESULT.json",
+      "bytes": 220304,
+      "sha256": "9550277a1cc9ea21bfe7b09e2a4878c17fdef98256741b77b94c8d31dd62e420"
+    },
+    "linux-battle": {
+      "path": "workplace/release171/battle-linux/RESULT.json",
+      "bytes": 723393,
+      "sha256": "818ac590120bb70c5b769cd612329f5ffb9decf6f22cdbafed196120b87f9ea6"
+    },
+    "linux-garrison": {
+      "path": "workplace/release171/garrison-linux/RESULT.json",
+      "bytes": 653529,
+      "sha256": "7413e056d8de6216dba9ad5c15760acfa0c64b2a1494f41329906eea11e8a9a7"
+    }
+  },
+  "save_cross_platform": {
+    "ADMIRAL.DT0": "482a24048a9f553ae568560ad2a3ae21e2764c3783032a1ce0d204aecf2273c7",
+    "FLEET.DT0": "744d5df992c0c3f3fb13fcd5f17a6b3504842e8596db36b547136fbe32462d76",
+    "PLANET.DT0": "12d2e1ef8835fc8103e171a29cc9cb61814bd483c4d5358267c9010f5e4eb02b",
+    "SHIP.DT0": "0115127c1860283942928a6adbc6d83c97bb2418f452c89e655c0251ee95ed53",
+    "STELLAR.DT0": "c6ddd9ea1932d3ad13da01af7a7329bbe290da83ed433933f42589b1a421c017",
+    "WORK.DT0": "d506a292df0326408b634074e56c001552882b3c852588f539ae4c4337e5a46d"
+  },
+  "promo": {
+    "audit": {
+      "path": "dist-all/v.1.6.4-20261031/promo/AUDIT.json",
+      "bytes": 8917,
+      "sha256": "df369a2f3a80e0e61013ce4e729793f7c179cef8605d57ea969e79b0a8fba6bc"
+    },
+    "plan": {
+      "path": "dist-all/v.1.6.4-20261031/promo/PLAN.json",
+      "bytes": 68170,
+      "sha256": "d57234bcc05b20000b4d1c6313d05b0fa2fe49275205333ae03a16162325369c"
+    },
+    "seconds": 126.88333333333331,
+    "new_scenes": [
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "old_story_and_battles_retained": true,
+    "audio_listening": "未作人耳驗收"
+  },
+  "generators": {
+    "tools/scripts/scout_full_receipt.py": "232cdba18f882a323aab77020e9267a5adfc88c798eb68efc1ca59343e27cc99",
+    "tools/scripts/scout_promo.py": "bde4bb2c61180832b4503272b90425dd4a65310027468468cacdecc53646442f",
+    "tools/scripts/release_battle_gui.py": "d5fa1becdce9ead3c0e66d1022268b74fc7a8c65682495ba1b0a72c312864d31",
+    "tools/scripts/release_garrison_gui.py": "f8db320400fea8fa7270ad43101f277961bbd366b5c3088d9e24b7e084614e54",
+    "tools/scripts/scout_readme.py": "75a98fe1c6241c14b8b4bf99d1a4863019d9d050aa029041cf76202c3b769fb7",
+    "tools/release.sh": "c0ea8f57514c1ab818b1d0ab6771eb5b9d07f5f3b306d587b617ab3e3acdf766"
+  },
+  "toolchain": {
+    "release": {
+      "image": "logh3-release:20261031-r171",
+      "id": "sha256:c300ac10ae82519c285808ad33c9b6d1086239ae701d5f0bc879ecc9e70286fa"
+    },
+    "macos": {
+      "image": "cok-osxcross:go1.24.13-sdk15.5-r1",
+      "id": "sha256:a2dc911a8709192604ffe6e4936dd3fd74fecc5fbc63996fbe75058edfa00980"
+    },
+    "wine": {
+      "image": "yuan-wine-verify:noble-r2",
+      "id": "sha256:31664639bb8cce681b29c9b06765a2f19ca5fb88468ad3fd8ed1645771d8f7b2"
+    },
+    "versions": {
+      "path": "workplace/release171/RELEASE-TOOLCHAIN.txt",
+      "bytes": 265,
+      "sha256": "5fe5847d7ad96893560e507746ef4754ccfdce903c0c1e56355102c78bb86671"
+    }
+  },
+  "closeout": {
+    "path": "workplace/release171/CLOSEOUT.json",
+    "bytes": 809,
+    "sha256": "985ce3eb66cece076ee2bdb5d480c14113ece3a08537ba2c7f6eaf731fdf4dfd"
+  },
+  "limitations": [
+    "Windows先前交戰閃退根因仍未知",
+    "macOS未真機",
+    "Linux未測FUSE啟動",
+    "無新增DOS同態宣稱"
+  ]
+}

@@ -4,7 +4,7 @@
 
 選擇銀河帝國或自由行星同盟，從財政、生產與提督任命安排戰略，再親自指揮艦隊迎戰。從亞姆力札會戰重新下令，讓你的戰術改變局勢。
 
-**目前本機完整版為 v.1.6.3-20261026。** 三組人物海報與上下銀河連接，上方休伯利安、下方伯倫希爾保持固定船體，循環短光束。v1的五組雙人名言每60秒輪替，支援五語。Windows ZIP、Linux AppImage與macOS通用ZIP已納入定案構圖，中央遊戲與滑鼠命中同步縮放。[本次封包與影片驗收](docs/playtest/139-poster-frame-full-promo.md) · [海報與語系](#海報與語系)
+**目前本機完整版為 v.1.6.4-20261031。** P索敵顯示指揮P與範圍圈，指定位置後回到原視窗；敵我行軍改為整隊下令。圖片按需載入，發行人物圖預縮，保留原始HD。Windows ZIP、Linux AppImage與macOS通用ZIP均包含三組銀河海報及五語名言輪替。[本次封包與影片驗收](docs/playtest/142-v164-full-scout-march-promo.md) · [海報與語系](#海報與語系)
 
 完整版也包含滑鼠重繪延遲與按鈕、下拉選項的hover修正。滑鼠移至頂端後，可從工具列直接切換思源黑體等既有字型及戰略AI。[操作驗收](docs/playtest/134-pointer-toolbar.md)
 
@@ -40,13 +40,19 @@ GitHub 公開引擎仍為 [v.1.5.0-20261019](https://github.com/wicanr2/logh3/re
 
 | 本機內容 | 路徑 |
 |---|---|
-| 三平台 v.1.6.3 完整版，Linux為AppImage | `dist-all/v.1.6.3-20261026/full/` |
-| v.1.6.3 完整故事推廣片 | `dist-all/v.1.6.3-20261026/promo/` |
+| 三平台 v.1.6.4 完整版，Linux為AppImage | `dist-all/v.1.6.4-20261031/full/` |
+| v.1.6.4 完整故事推廣片 | `dist-all/v.1.6.4-20261031/promo/` |
 | 三平台 v.1.5.0 公開引擎、來源與校驗檔 | `dist-all/v.1.5.0-20261019/release/` |
 
 Linux AppImage包含完整素材，設為可執行後即可啟動；存檔沿原本的XDG設定目錄。沒有FUSE時可加`--appimage-extract-and-run`。[Linux操作與相容範圍](docs/playtest/135-v161-full-appimage.md)
 
-完整推廣片以帝國與同盟國徽作底圖，從百年對峙、雙主角與亞姆力札危局，接到玩家的前線部署。三組海報、五語、實際60秒名言切換、提督編輯與駐地領船出擊，全部取自v1.6.3正式AppImage新錄。更換提督至出擊保留原速連續操作；主角動畫、兩軍戰場、要塞砲與三種武器交火沿用已驗來源。全片使用同一首BGM_0F連續配樂，剪接處不換曲或重啟，戰鬥音效依實際演出重混。本機檔名為 `LOGH3-v.1.6.3-20261026-promo.mp4`。[影片、來源與音軌驗收](docs/playtest/139-poster-frame-full-promo.md)
+完整推廣片以帝國與同盟國徽作底圖，從百年對峙、雙主角與亞姆力札危局，接到玩家的前線部署。本版補錄P索敵、選點返回與實際隊形行軍，也重錄駐地更換提督、領船與出擊。海報、五語展示、主角動畫、兩軍戰場、要塞砲與三種武器交火沿用已驗來源。操作保持原速，全片使用同一首BGM_0F連續配樂。本機檔名為 `LOGH3-v.1.6.4-20261031-promo.mp4`。[影片、來源與音軌驗收](docs/playtest/142-v164-full-scout-march-promo.md)
+
+以下為v1.6.4正式AppImage正常入口的完整視窗。P索敵圈可隨選點視野移動；行軍圖取自實際移動結束時刻。[截圖來源與雜湊](docs/images/readme-v164.json)
+
+![v1.6.4的指揮P與索敵範圍圈](docs/images/readme-v164-scout.png)
+
+![v1.6.4的艦隊整隊行軍](docs/images/readme-v164-march.png)
 
 ## 主要特點
 

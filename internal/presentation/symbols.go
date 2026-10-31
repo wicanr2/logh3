@@ -11,6 +11,8 @@ import (
 )
 
 func (r *Renderer) starMap(c gfx.DrawCommand, p gfx.Palette) bool {
+	r.ensureScene("material")
+	r.ensureScene("strategy")
 	n := c.SourceW * c.SourceH
 	if r.material == nil || c.SourceW != 320 || c.SourceH != 300 || len(c.Base) != n || len(c.Regions) != n || len(c.Colours) != 32 {
 		return false
@@ -65,7 +67,7 @@ func (r *Renderer) smallLabel(label string, rect image.Rectangle, ink color.RGBA
 		return false
 	}
 	for _, ch := range label {
-		if _, ok := r.font.glyphs[glyphID(uint16(ch), true)]; !ok {
+		if g, ok := r.font.glyphs[glyphID(uint16(ch), true)]; !ok || r.font.page(g.Page) == nil {
 			return false
 		}
 	}
@@ -74,7 +76,10 @@ func (r *Renderer) smallLabel(label string, rect image.Rectangle, ink color.RGBA
 	advance := width / len(label)
 	for k, ch := range label {
 		g := r.font.glyphs[glyphID(uint16(ch), true)]
-		page := r.font.pages[g.Page]
+		page := r.font.page(g.Page)
+		if page == nil {
+			return false
+		}
 		area := image.Rect(x0+k*advance, rect.Min.Y, x0+(k+1)*advance, rect.Max.Y).Intersect(clip).Intersect(r.frame.Rect)
 		for y := area.Min.Y; y < area.Max.Y; y++ {
 			for x := area.Min.X; x < area.Max.X; x++ {

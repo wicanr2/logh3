@@ -35,7 +35,7 @@ func (g *Game) applyFormationMove(index, x, y int) {
 	for i := range g.battleUnits {
 		u := &g.battleUnits[i]
 		if u.Fleet == fleet && u.Squadron > 0 && !u.Out && u.Ships > 0 {
-			u.Action = 3 // 原有編隊跟隨分派，索敵隊不改。
+			u.Action = squadronNone // 原有編隊跟隨分派，索敵隊不改。
 		}
 	}
 }
@@ -81,6 +81,8 @@ type TacticalObservation struct {
 	FortressTarget   bool                              `json:"fortress_target"`
 	Planets          []TacticalPlanetObservation       `json:"planets"`
 	GunHits          []rules.FortressGunHit            `json:"gun_hits,omitempty"`
+	ScoutTarget      bool                              `json:"scout_target"`
+	MoveUnit         int                               `json:"move_unit"`
 }
 
 // Detached observations only; these fields never set a position, order or RNG.
@@ -100,6 +102,7 @@ func (g *Game) TacticalObservation() *TacticalObservation {
 		return nil
 	}
 	v := &TacticalObservation{Region: g.battleRegion, Turn: g.battleTurn, View: [2]int{g.battleView.Col, g.battleView.Row}, Commanders: g.HeroCommandObservation()}
+	v.ScoutTarget, v.MoveUnit = g.battleMove && g.battleMoveRestore, g.battleMoveUnit
 	v.Idle, v.MessageOpen, v.MenuOpen = g.battleInputIdle(), g.msgOn, g.battleMenu
 	v.PlanetMenu, v.FortressTarget = g.PlanetMenuOpen(), g.FortressTargetPending()
 	v.FleetOrder, v.CommandOpen, v.CommandKind = int(g.fleetOrder), g.battleCmd, string(g.battleCmdKind)

@@ -1,0 +1,20 @@
+# 第169輪：舊logh3 GUI映像已清除，沿用本機Go1.24.13／X11工具鏈，
+# 僅補正常玩家路徑的輸入、抓圖及搜尋工具。由tools/作build context。
+ARG BASE_IMAGE=dosgolem-go-ebiten:1.24-r1
+FROM ${BASE_IMAGE}
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    xdotool imagemagick python3-pil ripgrep fonts-dejavu-core \
+    libgl1-mesa-dri libglx-mesa0 pulseaudio pulseaudio-utils \
+    libasound2-plugins ffmpeg \
+ && rm -rf /var/lib/apt/lists/* \
+ && (getent group 1000 >/dev/null || groupadd --gid 1000 logh3debug) \
+ && (getent passwd 1000 >/dev/null || useradd --uid 1000 --gid 1000 \
+     --home-dir /tmp --no-create-home --shell /usr/sbin/nologin logh3debug)
+COPY with-xvfb.sh /usr/local/bin/with-xvfb
+RUN chmod 0755 /usr/local/bin/with-xvfb \
+ && mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
+ENV HOME=/tmp LIBGL_ALWAYS_SOFTWARE=1 XDG_RUNTIME_DIR=/tmp
+USER 1000:1000
+ENTRYPOINT []
+CMD ["bash"]

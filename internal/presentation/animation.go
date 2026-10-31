@@ -11,6 +11,7 @@ import (
 
 // animation共用原輪廓、高解析面材及當幀光效；沒有逐幀亂數。
 func (r *Renderer) animation(c gfx.DrawCommand, p gfx.Palette) bool {
+	r.ensureScene("hull")
 	if r.hull == nil || c.SourceW != c.W || c.SourceH != c.H || c.W <= 0 || c.H <= 0 || c.W > 640 || c.H > 480 || len(c.Source) != c.W*c.H {
 		return false
 	}
@@ -29,7 +30,7 @@ func (r *Renderer) animation(c gfx.DrawCommand, p gfx.Palette) bool {
 	}
 	im := r.animationCache[key]
 	if im == nil {
-		ship := r.ships[c.Key]
+		ship := r.shipImage(c.Key)
 		if len(c.Base) != len(c.Source) || sha256.Sum256(c.Base) != r.shipHashes[c.Key] {
 			ship = nil
 		}

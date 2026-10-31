@@ -40,6 +40,11 @@ func (g *Game) beginScout(unit int) {
 		u.MarkerFlags = 0xC0 | 9
 	}
 	u.MarkerX, u.MarkerY = u.X, u.Y
+	// 1CC5:0966接25DB:0514，立即將偵察隊圖示寫入SHIP+2F。
+	// 帝國20+23=43、同盟50+23=73；不等下一回合刷新才出現。
+	if record := g.slot.ShipAt(f.Scout); len(record) == rules.ShipRecord {
+		record[0x2F] = byte(rules.BattleCachedSprite(u, true, rules.BlankSprite))
+	}
 	// 已回收的索敵隊仍保留池身份，再次放出不能增加同池副本。
 	for i := range g.battleUnits {
 		if g.battleUnits[i].Fleet == fleet && g.battleUnits[i].Squadron < 0 {

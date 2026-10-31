@@ -1,0 +1,512 @@
+{
+  "date": "2026-10-30",
+  "source_head": "5918a5c0177bd135071ddcb914905bbac1e0f103",
+  "product_changed": false,
+  "root_cause": "unknown",
+  "fixed": false,
+  "user_platform": "Windows",
+  "tested_version": "v.1.6.3-20261026",
+  "toolchain": {
+    "linux": "logh3-ebiten:20261030-r169",
+    "linux_image_id": "sha256:af41da356eed76cea5463f8eafe156879ae0c96d7a265e76a05767a2b5241454",
+    "wine": "yuan-wine-verify:noble-r2",
+    "go": "1.24.13",
+    "wine_version": "9.0",
+    "network": "none",
+    "user": "1000:1000",
+    "memory": "4g",
+    "xvfb": "1280x800x24",
+    "runtime_env": {
+      "GOMAXPROCS": "2",
+      "LP_NUM_THREADS": "2",
+      "GOMEMLIMIT": "1800MiB",
+      "GOGC": "70"
+    }
+  },
+  "plan": [
+    {
+      "kind": "click",
+      "x": 300,
+      "y": 270
+    },
+    {
+      "key": "1",
+      "kind": "key"
+    },
+    {
+      "key": "3",
+      "kind": "key"
+    },
+    {
+      "key": "8",
+      "kind": "key"
+    },
+    {
+      "key": "Return",
+      "kind": "key"
+    },
+    {
+      "kind": "capture",
+      "name": "load"
+    },
+    {
+      "kind": "wait",
+      "wait": 4
+    },
+    {
+      "kind": "click",
+      "x": 300,
+      "y": 282
+    },
+    {
+      "kind": "click",
+      "x": 318,
+      "y": 228
+    },
+    {
+      "kind": "capture",
+      "name": "strategy"
+    },
+    {
+      "kind": "click",
+      "x": 544,
+      "y": 125
+    },
+    {
+      "kind": "click",
+      "x": 560,
+      "y": 125
+    },
+    {
+      "kind": "click",
+      "x": 240,
+      "y": 240
+    },
+    {
+      "expect": {
+        "battle_ready": true
+      },
+      "kind": "wait_state",
+      "state": "StateBattle",
+      "timeout": 240
+    },
+    {
+      "kind": "capture",
+      "name": "entry"
+    },
+    {
+      "kind": "click",
+      "x": 600,
+      "y": 240
+    },
+    {
+      "kind": "click",
+      "x": 600,
+      "y": 242
+    },
+    {
+      "kind": "wait_state",
+      "state": "StateBattle",
+      "expect": {
+        "battle_ready": true,
+        "tactical.turn": 2
+      },
+      "auto_combat": true,
+      "timeout": 300,
+      "wait": 1,
+      "auto_execute": true
+    },
+    {
+      "kind": "capture",
+      "name": "turn-01"
+    },
+    {
+      "kind": "click",
+      "x": 600,
+      "y": 240
+    },
+    {
+      "kind": "click",
+      "x": 600,
+      "y": 242
+    },
+    {
+      "kind": "wait_state",
+      "state": "StateBattle",
+      "expect": {
+        "battle_ready": true,
+        "tactical.turn": 3
+      },
+      "auto_combat": true,
+      "timeout": 300,
+      "wait": 1,
+      "auto_execute": true
+    },
+    {
+      "kind": "capture",
+      "name": "turn-02"
+    },
+    {
+      "kind": "click",
+      "x": 600,
+      "y": 240
+    },
+    {
+      "kind": "click",
+      "x": 600,
+      "y": 242
+    },
+    {
+      "kind": "wait_state",
+      "state": "StateBattle",
+      "expect": {
+        "battle_ready": true,
+        "tactical.turn": 4
+      },
+      "auto_combat": true,
+      "timeout": 300,
+      "wait": 1,
+      "auto_execute": true
+    },
+    {
+      "kind": "capture",
+      "name": "turn-03"
+    },
+    {
+      "kind": "click",
+      "x": 600,
+      "y": 240
+    },
+    {
+      "kind": "click",
+      "x": 600,
+      "y": 242
+    },
+    {
+      "kind": "wait_state",
+      "state": "StateBattle",
+      "expect": {
+        "battle_ready": true,
+        "tactical.turn": 5
+      },
+      "auto_combat": true,
+      "timeout": 300,
+      "wait": 1,
+      "auto_execute": true
+    },
+    {
+      "kind": "capture",
+      "name": "turn-04"
+    },
+    {
+      "kind": "stop"
+    }
+  ],
+  "runs": [
+    {
+      "passed": true,
+      "normal_entry": true,
+      "state_injection": false,
+      "seed_injection": false,
+      "time_injection": false,
+      "script_flag": false,
+      "poster": "v1",
+      "graphics": "hd",
+      "locale": "zh-TW",
+      "audio": "on",
+      "command": [
+        "/src/dist-all/v.1.6.3-20261026/full/LOGH3-v.1.6.3-20261026-linux-x86_64.AppImage",
+        "-intro=false",
+        "-orig",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/original",
+        "-data",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/data",
+        "-art",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/art",
+        "-save",
+        "/src/workplace/battle169/linux-poster-f1-before/save",
+        "-frame-trace",
+        "/src/workplace/battle169/linux-poster-f1-before/FRAMES.jsonl",
+        "-graphics",
+        "hd",
+        "-scale",
+        "1.5",
+        "-poster=true",
+        "-poster-set",
+        "v1",
+        "-locale",
+        "zh-TW",
+        "-ai",
+        "-1",
+        "-music",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/music"
+      ],
+      "binary_sha256": "96f519353fe1e94c405fd56dfd0a91a0da48f481e2abd5b59924bf917b5f1e1d",
+      "plan_sha256": "a799b1c9cceec6c0aab8832df306143fdb0e024c2fe74515394d084763620924",
+      "driver_sha256": "6247c283a1767268704f2ba420c76514e67fd1cd263a6db37e60cec4e804008d",
+      "pre_cleanup_alive": true,
+      "observed_until_utc_ns": 1793366817460300633,
+      "trace_sha256": "19e73a8622e7c08b0534455963415827a35392f211d7246602a6206de01fb4b3",
+      "log_sha256": "0fee0cfcb4b874f65248923169321c89c5f416874dc90da079a46945bcac9ec8",
+      "path": "workplace/battle169/linux-poster-f1-before",
+      "result_sha256": "6387d51c206629d54883dfb04ab07c53aa30255b962e81544bcc609d9f576cd2",
+      "unique_playback_ids": 69,
+      "playback_observations": {
+        "planet/0": 254,
+        "fleet/2": 848,
+        "fleet/1": 172,
+        "fleet/0": 45
+      },
+      "played_sfx_ids": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        17,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "damage_applied_playback_ids": 53,
+      "last": {
+        "state": "StateBattle",
+        "ticks": 4023,
+        "battle_ready": true,
+        "turn": 5
+      },
+      "captures": [
+        {
+          "name": "main",
+          "file": "main.png",
+          "sha256": "d28ea4746bb73163dae593015d1375d32605d2b9119288c155fdb22a0f79c067",
+          "state": "StateMainMenu",
+          "turn": null
+        },
+        {
+          "name": "load",
+          "file": "load.png",
+          "sha256": "2f4050c06a075d64894564a212798a12b580d14f0c61668aa3361c2e338e7e34",
+          "state": "StateLoadGame",
+          "turn": null
+        },
+        {
+          "name": "strategy",
+          "file": "strategy.png",
+          "sha256": "5e306f10dec81e25921e6c15e6f6b9208570d118e0229c58aafbef53d8495bbc",
+          "state": "StateCommandPhase",
+          "turn": null
+        },
+        {
+          "name": "entry",
+          "file": "entry.png",
+          "sha256": "2f226f6b656c8fa86541d6b0a78b5a363b29165e0d791ea0fc600bbe11e7524b",
+          "state": "StateBattle",
+          "turn": 1
+        },
+        {
+          "name": "turn-01",
+          "file": "turn-01.png",
+          "sha256": "c3a13a49da2db36bc45dc990e2f66520f18de4f3d62bb92f159fe769c72fe445",
+          "state": "StateBattle",
+          "turn": 2
+        },
+        {
+          "name": "turn-02",
+          "file": "turn-02.png",
+          "sha256": "9f59f212b5869d6a60d3cfb24dcdbb93cada73cc3317c8d2002aa86fccef2452",
+          "state": "StateBattle",
+          "turn": 3
+        },
+        {
+          "name": "turn-03",
+          "file": "turn-03.png",
+          "sha256": "9a970ce157c6bc15bac1e2605f3e34455c4bdaee0bb6ef5eda35dd87b5330a18",
+          "state": "StateBattle",
+          "turn": 4
+        },
+        {
+          "name": "turn-04",
+          "file": "turn-04.png",
+          "sha256": "cb66283c4a6c5f7b214f8a4497abccc3239acaa68cbca95fea6d9c698d140453",
+          "state": "StateBattle",
+          "turn": 5
+        }
+      ]
+    },
+    {
+      "passed": false,
+      "normal_entry": true,
+      "state_injection": false,
+      "seed_injection": false,
+      "time_injection": false,
+      "script_flag": false,
+      "poster": "v1",
+      "graphics": "hd",
+      "locale": "zh-TW",
+      "audio": "off",
+      "command": [
+        "wine",
+        "Z:\\out\\full166\\LOGH3-v.1.6.3-20261026-windows-amd64\\gin3.exe",
+        "-intro=false",
+        "-orig",
+        "Z:\\out\\full166\\LOGH3-v.1.6.3-20261026-windows-amd64\\original",
+        "-data",
+        "Z:\\out\\full166\\LOGH3-v.1.6.3-20261026-windows-amd64\\data",
+        "-art",
+        "Z:\\out\\full166\\LOGH3-v.1.6.3-20261026-windows-amd64\\art",
+        "-save",
+        "Z:\\out\\battle169\\windows-before\\save",
+        "-frame-trace",
+        "Z:\\out\\battle169\\windows-before\\FRAMES.jsonl",
+        "-graphics",
+        "hd",
+        "-scale",
+        "1.5",
+        "-poster=true",
+        "-poster-set",
+        "v1",
+        "-locale",
+        "zh-TW",
+        "-ai",
+        "-1",
+        "-music",
+        ""
+      ],
+      "binary_sha256": "ba593c8f084653510f0cc2bef66d1772f37347db84f48b283241f70ae7a28236",
+      "plan_sha256": "a799b1c9cceec6c0aab8832df306143fdb0e024c2fe74515394d084763620924",
+      "driver_sha256": "6247c283a1767268704f2ba420c76514e67fd1cd263a6db37e60cec4e804008d",
+      "error": "AssertionError()",
+      "pre_cleanup_returncode": null,
+      "observed_until_utc_ns": 1793367382903740082,
+      "trace_sha256": "1158699d654fdcff50a6ee9cd5dd94c549944a2c2fbcec9a2fa0ba22e2e16ea1",
+      "log_sha256": "e57dab83b1f15a8b42bd89b53f73f593d40dc454aa8927e16cd354b57a396a03",
+      "path": "workplace/music69-windows/battle169/windows-before",
+      "result_sha256": "9d15bdc8225a58de1f3cf9b36988a8b1a230efca3198f344382efaae45e4fb97",
+      "unique_playback_ids": 69,
+      "playback_observations": {
+        "planet/0": 190,
+        "fleet/2": 605,
+        "fleet/1": 120,
+        "fleet/0": 25
+      },
+      "played_sfx_ids": [],
+      "damage_applied_playback_ids": 53,
+      "last": {
+        "state": "StateBattle",
+        "ticks": 3579,
+        "battle_ready": true,
+        "turn": 5
+      },
+      "captures": [
+        {
+          "name": "main",
+          "file": "main.png",
+          "sha256": "81420f01506b7d8885b8f53d729b86443ebbf43c1396e43263a2ebd77d8f7ff7",
+          "state": "StateMainMenu",
+          "turn": null
+        },
+        {
+          "name": "load",
+          "file": "load.png",
+          "sha256": "a2720d956b7c46e49dbb4a8610cbe17cb4cbc1271b4999e91e84d886681bc20a",
+          "state": "StateLoadGame",
+          "turn": null
+        },
+        {
+          "name": "strategy",
+          "file": "strategy.png",
+          "sha256": "e43b78a461bbb92297c0bd27101a6d5b6963d9446b38ccee503504a8b2418436",
+          "state": "StateCommandPhase",
+          "turn": null
+        },
+        {
+          "name": "entry",
+          "file": "entry.png",
+          "sha256": "7042cc2c0c2b5240ad52a0cba27c8531d6385f1fb40d5e70199ec3e6b91a8618",
+          "state": "StateBattle",
+          "turn": 1
+        },
+        {
+          "name": "turn-01",
+          "file": "turn-01.png",
+          "sha256": "42491e73da54c3802d557a47b1109d713e2141d44c4601f6afa0940a4c8b7d2b",
+          "state": "StateBattle",
+          "turn": 2
+        },
+        {
+          "name": "turn-02",
+          "file": "turn-02.png",
+          "sha256": "d8cec272d87b69eb30aa41e6168d085ea3544d0eaf4ed0621632f8aeccc4ed2d",
+          "state": "StateBattle",
+          "turn": 3
+        },
+        {
+          "name": "turn-03",
+          "file": "turn-03.png",
+          "sha256": "b1f6287e1ca04524a5d423023970af2da493fca74805e7a6521c906526c10888",
+          "state": "StateBattle",
+          "turn": 4
+        }
+      ]
+    }
+  ],
+  "inputs": {
+    "tools/scripts/battle_crash_gui.py": "6247c283a1767268704f2ba420c76514e67fd1cd263a6db37e60cec4e804008d",
+    "tools/Dockerfile.gui-debug": "b597a410947229f6db268449ab35d6844b62ba71eefc358f4817c5d87921aba3",
+    "tools/with-xvfb.sh": "913fe6d5aa53a28f874acfa39eabccd2b9ef6926f50805c649bafc9ac44d0ad7",
+    "tools/gui.sh": "9e402192427f629c3b19d46b76b1dccdf451089bc3186918c80cbe9964e728cc",
+    "tools/player_wine.sh": "38ffb97c5fda12e38e2b8340393db8a1aa55450ee7af2456e63c1143b9e2fcb9",
+    "tools/capture-battle-original.cmd": "7d4b7d700c34e2df03b45cce5c335ce1127565101c74054a0ecb794dbfde20c7",
+    "tools/capture-battle-enhanced.cmd": "93ad1e44b6ff8db5a2051c52c45521c18fa582e248924ea7d502db756c5b47db"
+  },
+  "limits": [
+    "User version, poster setting and triggering save are unconfirmed.",
+    "Loaded shipped S1 save at strategic turn 93 as Alliance; no new-campaign/new-fleet path verified.",
+    "No state, seed, time or script injection; only observed trace and real X11 inputs.",
+    "Linux uses software OpenGL, Pulse null sink, APPIMAGE_EXTRACT_AND_RUN and bounded Go memory/GC; native GPU, FUSE and default runtime unverified.",
+    "Linux child alive at successful final check; final game log contains ALSA I/O error without timestamp, so teardown timing is not proven.",
+    "Windows Wine had audio off; observed turn 5 ready while child alive, but driver exceeded 900s before final capture and returned failure. Not a full-plan pass or native Windows validation.",
+    "No original-game parity or issue48 completion claim."
+  ],
+  "launchers_smoke": [
+    {
+      "path": "workplace/music69-windows/battle169/cmd-test/logh3-battle-enhanced-20599-4518.log",
+      "sha256": "08e93fbb525a2df5cdb87bde025661480fac2a3b0604ef66445d96151452f733",
+      "version": "v.1.6.3-20261026",
+      "exit_code": 0
+    },
+    {
+      "path": "workplace/music69-windows/battle169/cmd-test/logh3-battle-original-20593-15789.log",
+      "sha256": "649e793d7b24cfbe83c30f1bf0df94f81c3769e3c7f579b118002ac39ddee5c0",
+      "version": "v.1.6.3-20261026",
+      "exit_code": 0
+    }
+  ],
+  "cleanup": {
+    "generated_wine_prefixes": [
+      {
+        "path": "workplace/music69-windows/battle169/wine-prefix",
+        "bytes": 720381381
+      },
+      {
+        "path": "workplace/music69-windows/battle169/cmd-wine-prefix",
+        "bytes": 720381772
+      }
+    ],
+    "preserved": "All gameplay traces, screenshots, logs, current packages and user saves",
+    "containers": "Round169 one-shot containers exited and removed; unrelated containers untouched"
+  },
+  "standard_tests": {
+    "command": "LOGH3_GUI_IMAGE=logh3-ebiten:20261030-r169 tools/gui.sh test -p 2 ./cmd/... ./internal/...",
+    "exit_code": 0,
+    "pass_packages": 16,
+    "no_test_packages": 4,
+    "note": "20 product packages; first broad ./... mistakenly included historical probes and was stopped. Product targets passed."
+  }
+}

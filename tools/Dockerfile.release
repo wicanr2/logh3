@@ -1,0 +1,11 @@
+# 171：沿r169既有GUI／Go1.24.13工具鏈，補缺少的影片及SquashFS工具。
+# r169保留供169／170收據重現；本revision取代已不存在的舊HD／AppImage工具。
+ARG BASE_IMAGE=logh3-ebiten:20261030-r169
+FROM ${BASE_IMAGE}
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3-numpy fonts-noto-cjk squashfs-tools \
+    && rm -rf /var/lib/apt/lists/*
+USER 1000:1000
+ENTRYPOINT []
+CMD ["bash"]

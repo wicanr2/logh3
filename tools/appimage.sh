@@ -14,5 +14,6 @@ test "$(stat -c '%u:%g' "$BATCH")" = "$(id -u):$(id -g)"
 exec timeout "${LOGH3_TIMEOUT:-15m}" docker run --rm --network none \
   --memory 3g --cpus 2 --pids-limit 128 --log-opt max-size=10m --log-opt max-file=3 \
   -u "$(id -u):$(id -g)" --entrypoint sh -e LOGH3_APPIMAGE_VERSION="$VERSION" \
+  -e LOGH3_APPIMAGE_RUNTIME=/out/runtime-x86_64 \
   -v "$ROOT/tools:/tools:ro" -v "$BATCH/AppDir:/appdir:ro" -v "$BATCH:/out" \
-  -w /out hr-appimage:runtime-recovery-r1 /tools/scripts/appimage_build.sh
+  -w /out "${LOGH3_APPIMAGE_IMAGE:-logh3-release:20261031-r171}" /tools/scripts/appimage_build.sh

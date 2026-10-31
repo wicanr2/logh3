@@ -376,11 +376,25 @@ func (g *Game) MoveTargetPending() bool { return g.battleMove }
 
 // beginMoveTarget 進入選目的地的狀態。
 func (g *Game) beginMoveTarget(unit int) {
+	if unit < 0 || unit >= len(g.battleUnits) {
+		return
+	}
+	if g.battleUnits[unit].Kind == shipKindScout {
+		g.battleMoveView, g.battleMoveRestore = g.battleView, true
+		u := g.battleUnits[unit]
+		g.battleView = g.battleViewAt(u.X, u.Y)
+	}
 	g.battleMove, g.battleMoveUnit = true, unit
 }
 
 // cancelMoveTarget 取消選目的地。
-func (g *Game) cancelMoveTarget() { g.battleMove = false }
+func (g *Game) cancelMoveTarget() {
+	g.battleMove = false
+	if g.battleMoveRestore {
+		g.battleView = g.battleMoveView
+		g.battleMoveRestore = false
+	}
+}
 
 // moveTargetClick 處理選目的地時的左鍵；回有沒有吃掉這一下。
 //
@@ -392,11 +406,19 @@ func (g *Game) moveTargetClick(x, y int) bool {
 		return false
 	}
 	unit := g.battleMoveUnit
+	if g.battleMoveRestore && g.res.Battle != nil {
+		m := g.res.Battle.Minimap
+		if m.UnitScale > 0 && x >= m.X && y >= m.Y && x < m.X+m.W && y < m.Y+m.H {
+			g.battleView = g.battleViewAt((x-m.X)*m.UnitScale, (y-m.Y-m.UnitRowBias)*m.UnitScale)
+			return true
+		}
+	}
+	// 選點使用臨時鏡頭；先換算世界座標，再還原玩家原視窗。
+	wx, wy, ok := g.battleWorldAt(x, y)
 	g.cancelMoveTarget()
 	if unit < 0 || unit >= len(g.battleUnits) {
 		return true
 	}
-	wx, wy, ok := g.battleWorldAt(x, y)
 	if !ok {
 		g.showMessage("move_blocked")
 		return true

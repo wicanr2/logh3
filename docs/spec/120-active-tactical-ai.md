@@ -1,5 +1,7 @@
 # 120：正常單人啟用既有戰術AI
 
+2026-10-31現行接線依[158](158-scout-formation-lazy-hd.md)：所有AI移動意圖以艦隊為單位，普通分隊保持槽位跟隨；不再逐分隊指向同點。下文保留第105輪驗收身份，不升格為原版完整AI決策同態。
+
 狀態：**CONFORMED**（2026-10-06，限定本規格的活動政策與既有AI接線）。工作項目：[93](https://github.com/wicanr2/logh3/issues/93)。
 
 驗收：[交付105](../playtest/105-local-full-test-package.md)及[來源索引](../internals/data/local-test-package.json)。正常公開S3兩模式各九回合，46個CPU分隊移動，命令不同；活動傷害回歸及標準13套件通過。Windows／Linux測試包已包含新政策。原版完整決策同態不在本規格範圍。

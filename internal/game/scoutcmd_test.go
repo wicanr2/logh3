@@ -64,6 +64,13 @@ func TestScoutOrderDeploysDetachment(t *testing.T) {
 	if !g.MoveTargetPending() {
 		t.Fatal("索敵之後應該接著等玩家點目的地")
 	}
+	wantP := 43 // 25DB:0520..052A：陣營基底20／50加23。
+	if u.Faction == 1 {
+		wantP = 73
+	}
+	if got := g.cachedBattleSprite(u); got != wantP {
+		t.Fatalf("派出時P圖示仍未初始化：%d", got)
+	}
 
 	// 再開一次選單，「索敵」那一項要變成不能選。
 	g.cancelMoveTarget()

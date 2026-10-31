@@ -1,5 +1,7 @@
 # 規格
 
+[158：索敵選點、整隊行軍與按需HD圖片](158-scout-formation-lazy-hd.md)，第170輪限定CONFORMED，驗證141；下次HD發行預縮人物，保留原始圖。
+
 第141輪：[148設定左緣補充修正](148-clear-settings-font.md)，保留陰影並補上可見金屬外緣；重新打包的版號決定及進度見[狀態表141](../goal/2026-10-15-settings-repackage-round-141.md)。
 
 第140輪：[148系統設定專用清晰字型](148-clear-settings-font.md)，以原生小字與高解析遮罩修正縮小字模的斷筆及陰影重疊。[驗收129](../playtest/129-clear-settings-font.md)／[狀態表140](../goal/2026-10-15-settings-font-round-140.md)。

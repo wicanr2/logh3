@@ -1,10 +1,16 @@
-<!-- 第166輪：v.1.6.3-20261026三平台完整版、定案銀河海報、五組名言及替換海報段落的完整故事推廣片。#48正式讀回重建與DOS整段同態仍未完成。 -->
+<!-- 第171輪：v.1.6.4-20261031三平台完整版與完整故事推廣片，補錄P索敵及實際隊形行軍。#48正式讀回重建、Windows先前閃退根因及DOS整段同態仍未完成。 -->
 # CONTEXT — 銀河英雄傳說III SP 專案目前真相
 
 本檔保存目前真相；剩餘工作的權威是 GitHub 上的 `worklist` Issue。
 流水帳在 `WORKLOG.md`；協作規範在 `AGENTS.md`。
 
 ## 現況一覽
+
+**目前交付（2026-10-31，第171輪）**：`v.1.6.4-20261031`三平台本機完整版已重建，Windows ZIP、Linux AppImage、macOS通用ZIP逐檔核對通過。1663凍結來源、652共用素材一致，83人物預縮保持顯示RGBA與原始HD。標準21套件16PASS／5無測試，實包Linux兩陣營、Windows Wine、P索敵／實際64點行軍、前線換提督／當地領船／出擊共五條正常路徑通過；同盟跨平台六表相同。完整影片保留雙國徽故事、主角動畫與原有完整交戰，重錄前線整軍並補P與行軍，37段126.883333秒1080p60、7613格、21352320 bytes；單曲配樂、40音效、SNR37.35dB、無黑幀、字幕及目視通過。README補兩張實包原圖。macOS未真機、Linux未驗FUSE、169未知Windows閃退保持。交付只本機，舊版／tag／Release保留；169至171來源依後續push授權提交至main。打包收據仍綁建置時HEAD與來源SHA，提交不重新打包。[唯一狀態表171](docs/goal/2026-10-31-full-p-scout-march-promo-round-171.md)、[驗收142](docs/playtest/142-v164-full-scout-march-promo.md)、[機器收據](docs/internals/data/v164-full-delivery.json)。
+
+**目前修正（2026-10-31，第170輪）**：[158限定CONFORMED](docs/spec/158-scout-formation-lazy-hd.md)。P索敵可見圖示與250視野圈，選點／取消還原鏡頭；各AI分支整隊下令，兩陣營空地逐步槽位保持。HD人物／艦型64MiB快取，字型按頁，定案海報與場景首用載入；同資源容器主選單峰值847.24→447.80MiB。下一次HD發行人物預縮83張109880634→7392131 bytes，RGBA零差、master及其餘素材SHA保持。標準21套件16PASS／5無測試、60張正常GUI及Windows交叉編譯通過，未重打包、發布或commit。真機與新的艦隊動畫驗收不在範圍，169閃退仍待Windows日誌。[唯一狀態表170](docs/goal/2026-10-30-scout-formation-hd-round-170.md)、[驗證141](docs/playtest/141-scout-formation-lazy-hd.md)及[機器收據](docs/internals/data/scout-formation-hd170.json)。
+
+**目前除錯（2026-10-30，第169輪）**：使用者回報Windows交火閃退，要求Linux驗證。現行v1.6.3 AppImage以正常入口讀隨包S1同盟存檔，開HD、v1海報與音效，完成四回合、69個不同交火識別，最後第5回合待命仍存活。Windows EXE在Wine關音效也觀測到第5回合，但驅動器900秒逾時，不記完整通過或真機驗收。根因unknown，正式產品與封包未改；已備Windows日誌啟動檔，待使用者版號、觸發存檔與閃退訊息。舊GUI映像缺失已以既有Go1.24.13基底的新revision恢復。收尾ALSA訊息及測試限制詳見[驗證140](docs/playtest/140-battle-crash-linux-check.md)與[唯一狀態表169](docs/goal/2026-10-30-battle-crash-round-169.md)。
 
 **本次交付結案（2026-10-26，第168輪）**：必要歷史工具、規格與收據已提交推送main，58項可還原副本及快取清理完成，淨釋放22265954304 bytes，約20.74GiB。ZIP與AppImage還原抽驗通過，Wine非系統資料備份5970878 bytes、36檔讀回通過；v1.6.3完整交付check、影片55份綁定來源及原始bundle SHA保持。原始資料、Git歷史、唯一研究證據、166現行驗收輸入、正式ZIP／AppImage／影片及私人備忘保留。正式cmd／internal／藝術層未改，#48仍開啟，沒有將本次結案稱為整個remake完成。[唯一狀態表168](docs/goal/2026-10-26-closeout-cleanup-round-168.md)、[清理總收據](docs/internals/data/workspace-closeout168.json)。
 

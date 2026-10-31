@@ -93,7 +93,11 @@ func (a *app) traceFrame(fb *gfx.Framebuffer, start time.Time, frameTime time.Du
 		ToolbarControls   map[string][4]int                 `json:"toolbar_controls,omitempty"`
 		ToolbarMenu       string                            `json:"toolbar_menu"`
 		PosterDecoration  *posterDecorationTrace            `json:"poster_decoration,omitempty"`
-	}{start.UnixNano(), a.ticks, a.g.State().String(), mode, float64(frameTime) / 1e6, float64(time.Since(start)) / 1e6, animations, a.toolbar.visible, a.toolbar.help, a.g.ShowEnemies(), a.g.PlaybackObservation(), a.g.BattleInputReady(), a.g.TacticalObservation(), a.g.FortressPlaybackObservation(), a.g.PlanetPlaybackObservation(), [2]bool{ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft), ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight)}, [2]int{}, fontStyle, musicQuality, a.musicHD != nil, musicTrack, a.selectedSoundFont(), a.musicMT32 != nil, a.soundFontMenu, musicLibrary, a.g.AILevel(), a.aiSettingsMenu, settings, a.g.RuleOptions(), a.admiralEditorObservation(), a.g.StrategicObservation(), a.posterMode, a.posters.available(), a.posters.setName(), a.localeCode(), nil, [4]int{fb.HoverControl.Min.X, fb.HoverControl.Min.Y, fb.HoverControl.Max.X, fb.HoverControl.Max.Y}, a.backgroundUploads, nil, "", a.posterDecorationObservation()}
+		HDImages          [3]int                            `json:"hd_images"`
+	}{start.UnixNano(), a.ticks, a.g.State().String(), mode, float64(frameTime) / 1e6, float64(time.Since(start)) / 1e6, animations, a.toolbar.visible, a.toolbar.help, a.g.ShowEnemies(), a.g.PlaybackObservation(), a.g.BattleInputReady(), a.g.TacticalObservation(), a.g.FortressPlaybackObservation(), a.g.PlanetPlaybackObservation(), [2]bool{ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft), ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight)}, [2]int{}, fontStyle, musicQuality, a.musicHD != nil, musicTrack, a.selectedSoundFont(), a.musicMT32 != nil, a.soundFontMenu, musicLibrary, a.g.AILevel(), a.aiSettingsMenu, settings, a.g.RuleOptions(), a.admiralEditorObservation(), a.g.StrategicObservation(), a.posterMode, a.posters.available(), a.posters.setName(), a.localeCode(), nil, [4]int{fb.HoverControl.Min.X, fb.HoverControl.Min.Y, fb.HoverControl.Max.X, fb.HoverControl.Max.Y}, a.backgroundUploads, nil, "", a.posterDecorationObservation(), [3]int{}}
+	if a.hd != nil {
+		row.HDImages[0], row.HDImages[1], row.HDImages[2] = a.hd.ImageCacheStats()
+	}
 	if a.toolbar.visible {
 		row.ToolbarControls = map[string][4]int{}
 		put := func(name string, b image.Rectangle) {

@@ -437,7 +437,7 @@ func main() {
 		_, artErr := os.Stat(filepath.Join(*artDir, "face"))
 		if *graphics == "hd" || artErr == nil {
 			a.hd, err = presentation.LoadWithProgress(*artDir, res.Faces, func(done, total int) {
-				report(5, fmt.Sprintf("載入人物圖像 %d / %d", done, total))
+				report(5, fmt.Sprintf("建立人物索引 %d / %d", done, total))
 			})
 			if err != nil {
 				if *graphics == "hd" {

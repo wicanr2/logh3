@@ -107,6 +107,9 @@ func (r *Renderer) glyph(c gfx.DrawCommand, p gfx.Palette) bool {
 		if _, ok := r.font.glyphs[glyphID(right.Code, true)]; !ok {
 			return false
 		}
+		if r.font.page(r.font.glyphs[glyphID(left.Code, true)].Page) == nil || r.font.page(r.font.glyphs[glyphID(right.Code, true)].Page) == nil {
+			return false
+		}
 		r.glyph(left, p)
 		r.glyph(right, p)
 		return true
@@ -115,7 +118,10 @@ func (r *Renderer) glyph(c gfx.DrawCommand, p gfx.Palette) bool {
 	if !ok {
 		return false
 	}
-	mask := r.font.pages[g.Page]
+	mask := r.font.page(g.Page)
+	if mask == nil {
+		return false
+	}
 	ink := textColour(c.Colour)
 	if r.classic {
 		ink = paletteColour(p, c.Colour)
@@ -265,10 +271,7 @@ func (r *Renderer) replay(commands []gfx.DrawCommand, p gfx.Palette) {
 			}
 		case gfx.DrawImage:
 			r.markUI(c, 0)
-			hd := r.images[c.Key]
-			if hd == nil {
-				hd = r.editorFaces[c.Key]
-			}
+			hd := r.artworkImage(c.Key)
 			if hd != nil && (hd.Bounds().Dx() != c.SourceW*Scale || hd.Bounds().Dy() != c.SourceH*Scale) {
 				hd = nil
 			}

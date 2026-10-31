@@ -78,7 +78,11 @@ func (OriginalTactic) Moves(b Battlefield, faction, turn int) []Move {
 	for _, g := range fleetGroups(b, mine) {
 		// 艦隊的位置取旗艦（第 0 個分隊）那一份，與原版讀
 		// `+0x5C`／`+0x5E` 同一個來源（`docs/internals/34`）。
-		u := b.Units[g[0]]
+		flag, ok := fleetFlagship(b, g)
+		if !ok {
+			continue
+		}
+		u := b.Units[flag]
 		rx, ry, ok := 0, 0, false
 		if p, found := enemyPlanet(b, faction, u.X, u.Y); found {
 			rx, ry, ok = p.X, p.Y, true
@@ -95,8 +99,8 @@ func (OriginalTactic) Moves(b Battlefield, faction, turn int) []Move {
 			tx, ty = rules.PickRally(b.Terrain, b.Cells, b.Rally,
 				u.X, u.Y, rx, ry, b.Rand)
 		}
-		for _, i := range g {
-			out = append(out, Move{Unit: i, X: tx, Y: ty})
+		if i, ok := fleetFlagship(b, g); ok {
+			out = append(out, Move{Unit: i, X: tx, Y: ty, Formation: true})
 		}
 	}
 	return out
@@ -198,14 +202,19 @@ func (e *Encircle) Moves(b Battlefield, faction, turn int) []Move {
 	order := bearingOrder(t.X, t.Y, radius)
 
 	var out []Move
-	for n, i := range mine {
+	for n, group := range fleetGroups(b, mine) {
+		i, ok := fleetFlagship(b, group)
+		if !ok {
+			continue
+		}
 		// 每一支分到不同方位——**這就是包圍**：一路壓上去只會排成
 		// 一條線，繞到不同方位才會同時從幾個方向接觸。
 		b := bearings[order[n%len(order)]]
 		out = append(out, Move{
-			Unit: i,
-			X:    t.X + b[0]*radius/10,
-			Y:    t.Y + b[1]*radius/10,
+			Unit:      i,
+			X:         t.X + b[0]*radius/10,
+			Y:         t.Y + b[1]*radius/10,
+			Formation: true,
 		})
 	}
 	return out
@@ -237,19 +246,26 @@ func bearingOrder(tx, ty, radius int) []int {
 func (e *Encircle) retreat(b Battlefield, mine, foes []int) []Move {
 	cx, cy := centre(b, foes)
 	var out []Move
-	for _, i := range mine {
+	for _, group := range fleetGroups(b, mine) {
+		i, ok := fleetFlagship(b, group)
+		if !ok {
+			continue
+		}
 		u := b.Units[i]
 		dx, dy := u.X-cx, u.Y-cy
 		if dx == 0 && dy == 0 {
 			dx = 1
 		}
-		out = append(out, Move{Unit: i, X: u.X + dx, Y: u.Y + dy})
+		out = append(out, Move{Unit: i, X: u.X + dx, Y: u.Y + dy, Formation: true})
 	}
 	return out
 }
 
 func split(b Battlefield, faction int) (mine, foes []int) {
 	for i, u := range b.Units {
+		if u.Out || u.Ships <= 0 || u.Squadron < 0 {
+			continue
+		}
 		if u.Faction == faction {
 			mine = append(mine, i)
 		} else {
@@ -257,6 +273,15 @@ func split(b Battlefield, faction int) (mine, foes []int) {
 		}
 	}
 	return mine, foes
+}
+
+func fleetFlagship(b Battlefield, group []int) (int, bool) {
+	for _, i := range group {
+		if b.Units[i].Squadron == 0 {
+			return i, true
+		}
+	}
+	return 0, false
 }
 
 func centre(b Battlefield, idx []int) (int, int) {

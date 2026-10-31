@@ -1,0 +1,920 @@
+{
+  "date_started": "2026-10-30",
+  "date_verified": "2026-10-31",
+  "source_head": "5918a5c0177bd135071ddcb914905bbac1e0f103",
+  "worktree": "dirty; rounds169 and170 retained",
+  "original_parity": false,
+  "windows_crash_fixed": false,
+  "release_changed": false,
+  "toolchain": {
+    "image": "logh3-ebiten:20261030-r169",
+    "image_id": "sha256:af41da356eed76cea5463f8eafe156879ae0c96d7a265e76a05767a2b5241454",
+    "go": "1.24.13",
+    "network": "none",
+    "uid_gid": "1000:1000",
+    "memory": "4g",
+    "xvfb": "1280x800",
+    "runtime_env": {
+      "GOMAXPROCS": "2",
+      "LP_NUM_THREADS": "2",
+      "GOMEMLIMIT": "1800MiB",
+      "GOGC": "70"
+    }
+  },
+  "runs": [
+    {
+      "path": "workplace/scout170/normal-alliance-r2",
+      "result_sha256": "b64cf3e3ff88c11aa01e73fc6ac24d32fc050a5187f7a3e9ca20f7a7739847b7",
+      "passed": true,
+      "normal_entry": true,
+      "state_injection": false,
+      "seed_injection": false,
+      "time_injection": false,
+      "command": [
+        "/src/workplace/scout170/gin3",
+        "-intro=false",
+        "-orig",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/original",
+        "-data",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/data",
+        "-art",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/art",
+        "-save",
+        "/src/workplace/scout170/normal-alliance-r2/save",
+        "-frame-trace",
+        "/src/workplace/scout170/normal-alliance-r2/FRAMES.jsonl",
+        "-graphics",
+        "hd",
+        "-scale",
+        "1.5",
+        "-poster=true",
+        "-poster-set",
+        "v1",
+        "-locale",
+        "zh-TW",
+        "-ai",
+        "-1",
+        "-music",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/music"
+      ],
+      "binary_sha256": "a2942e7645f257367477451879745cfe091d74af0df58fadf3b862c43162aa5d",
+      "screenshots": [
+        {
+          "path": "entry.png",
+          "sha256": "2f226f6b656c8fa86541d6b0a78b5a363b29165e0d791ea0fc600bbe11e7524b"
+        },
+        {
+          "path": "load.png",
+          "sha256": "2f4050c06a075d64894564a212798a12b580d14f0c61668aa3361c2e338e7e34"
+        },
+        {
+          "path": "main.png",
+          "sha256": "4926859157c2094205ff13aa2616cbfb2c11da115f8b794edab3072418193fd1"
+        },
+        {
+          "path": "scout-other-view.png",
+          "sha256": "1d3cd213daa2ed9554eb2bfd4ddc84b405b961b5fdd0c18d8063fbe0e0f80214"
+        },
+        {
+          "path": "scout-range.png",
+          "sha256": "f33f22d0575bc15983d3945b64eef4684805b452411b6352fbea005a71298dd7"
+        },
+        {
+          "path": "scout-restored.png",
+          "sha256": "bc20ab3f4df89f885e28daa466d580f0634261a4e1b3da70ee4f03625fab9bdd"
+        },
+        {
+          "path": "strategy.png",
+          "sha256": "9a70e8f6bd7c1b5809a468836e68795bb213e90f6713b2bc384dae29d81db328"
+        },
+        {
+          "path": "turn-01.png",
+          "sha256": "2a6f610b5ccfd65308c0b2272b24f913281f68360aceb0fd8d6a35355a8c2023"
+        },
+        {
+          "path": "turn-02.png",
+          "sha256": "c916f0bc85215e2a06bde0d8d78130f93142040fe1161e30b9ae8f28a9164ecc"
+        }
+      ],
+      "scout_checks": [
+        {
+          "kind": "scout_check",
+          "before_view": [
+            17,
+            40
+          ],
+          "after_view": [
+            17,
+            40
+          ]
+        }
+      ],
+      "trace_sha256": "d3fe45cb5a6071d28f3d43f9899ba16d20f6150bfdec50edfa9ab4acf37d5674",
+      "playback_observations": {
+        "planet/0": 387
+      },
+      "unique_playbacks": 15,
+      "played_sfx_ids": [
+        3,
+        17,
+        22
+      ],
+      "cache_max": [
+        211,
+        7,
+        5276160
+      ],
+      "last_state": "StateBattle",
+      "last_turn": 3,
+      "pre_cleanup_alive": true
+    },
+    {
+      "path": "workplace/scout170/normal-alliance-r3",
+      "result_sha256": "2819bcd65bab6ef59aaedc09a90bf6d7782d483858c7a930a317978e42b7d0b8",
+      "passed": true,
+      "normal_entry": true,
+      "state_injection": false,
+      "seed_injection": false,
+      "time_injection": false,
+      "command": [
+        "/src/workplace/scout170/gin3-r2",
+        "-intro=false",
+        "-orig",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/original",
+        "-data",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/data",
+        "-art",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/art",
+        "-save",
+        "/src/workplace/scout170/normal-alliance-r3/save",
+        "-frame-trace",
+        "/src/workplace/scout170/normal-alliance-r3/FRAMES.jsonl",
+        "-graphics",
+        "hd",
+        "-scale",
+        "1.5",
+        "-poster=true",
+        "-poster-set",
+        "v1",
+        "-locale",
+        "zh-TW",
+        "-ai",
+        "-1",
+        "-music",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/music"
+      ],
+      "binary_sha256": "d618ecda9399d2275c827dcbc04898ba9538023b6b2393d12555b6b219bd57d8",
+      "screenshots": [
+        {
+          "path": "entry.png",
+          "sha256": "2f226f6b656c8fa86541d6b0a78b5a363b29165e0d791ea0fc600bbe11e7524b"
+        },
+        {
+          "path": "load.png",
+          "sha256": "2f4050c06a075d64894564a212798a12b580d14f0c61668aa3361c2e338e7e34"
+        },
+        {
+          "path": "main.png",
+          "sha256": "d28ea4746bb73163dae593015d1375d32605d2b9119288c155fdb22a0f79c067"
+        },
+        {
+          "path": "scout-other-view.png",
+          "sha256": "1d3cd213daa2ed9554eb2bfd4ddc84b405b961b5fdd0c18d8063fbe0e0f80214"
+        },
+        {
+          "path": "scout-range.png",
+          "sha256": "1f33b8587fd01fda16ff669601d99713b678ed328b4334f8822f504de360860d"
+        },
+        {
+          "path": "scout-restored.png",
+          "sha256": "bc20ab3f4df89f885e28daa466d580f0634261a4e1b3da70ee4f03625fab9bdd"
+        },
+        {
+          "path": "strategy.png",
+          "sha256": "9a70e8f6bd7c1b5809a468836e68795bb213e90f6713b2bc384dae29d81db328"
+        },
+        {
+          "path": "turn-01.png",
+          "sha256": "7eaca6a9158936c58cbd74c15c1fa53d8a63f7e1ac49102065a7b5700efa8bc9"
+        },
+        {
+          "path": "turn-02.png",
+          "sha256": "c916f0bc85215e2a06bde0d8d78130f93142040fe1161e30b9ae8f28a9164ecc"
+        }
+      ],
+      "scout_checks": [
+        {
+          "kind": "scout_check",
+          "before_view": [
+            17,
+            40
+          ],
+          "after_view": [
+            17,
+            40
+          ]
+        }
+      ],
+      "trace_sha256": "13c4ceb5a27c77dc13c8ca975a2b85c1a9ed3cbb0626446cebb28ab42b122415",
+      "playback_observations": {
+        "planet/0": 482
+      },
+      "unique_playbacks": 15,
+      "played_sfx_ids": [
+        3,
+        17,
+        22
+      ],
+      "cache_max": [
+        211,
+        7,
+        5276160
+      ],
+      "last_state": "StateBattle",
+      "last_turn": 3,
+      "pre_cleanup_alive": true
+    },
+    {
+      "path": "workplace/scout170/fonts",
+      "result_sha256": "5f361d738d125124c390dedea1083198933c2e1a26e3f7d7f62c8daafe2a3632",
+      "passed": true,
+      "normal_entry": true,
+      "state_injection": false,
+      "seed_injection": false,
+      "time_injection": false,
+      "command": [
+        "/src/workplace/scout170/gin3-r2",
+        "-intro=false",
+        "-orig",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/original",
+        "-data",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/data",
+        "-art",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/art",
+        "-save",
+        "/src/workplace/scout170/fonts/save",
+        "-frame-trace",
+        "/src/workplace/scout170/fonts/FRAMES.jsonl",
+        "-graphics",
+        "hd",
+        "-scale",
+        "1.5",
+        "-poster=true",
+        "-poster-set",
+        "v1",
+        "-locale",
+        "zh-TW",
+        "-ai",
+        "-1",
+        "-music",
+        ""
+      ],
+      "binary_sha256": "d618ecda9399d2275c827dcbc04898ba9538023b6b2393d12555b6b219bd57d8",
+      "screenshots": [
+        {
+          "path": "font-classic.png",
+          "sha256": "ebc8ae1c6f8b638db62b9ed39ddf1f7209d1f2839d843d4bfd1e69c52a434f51"
+        },
+        {
+          "path": "font-sans.png",
+          "sha256": "ccd25d703d250b26185e0d25174ee334425621974824f7b8a3cf01d198573885"
+        },
+        {
+          "path": "font-serif.png",
+          "sha256": "97ea7512ee9e61a6cbbefd2e004ee259888be136d54ee9e26b38859bb3c9f8dc"
+        },
+        {
+          "path": "load.png",
+          "sha256": "2f4050c06a075d64894564a212798a12b580d14f0c61668aa3361c2e338e7e34"
+        },
+        {
+          "path": "main.png",
+          "sha256": "4926859157c2094205ff13aa2616cbfb2c11da115f8b794edab3072418193fd1"
+        },
+        {
+          "path": "strategy.png",
+          "sha256": "5e306f10dec81e25921e6c15e6f6b9208570d118e0229c58aafbef53d8495bbc"
+        }
+      ],
+      "scout_checks": [],
+      "trace_sha256": "01392371fd0dceca2d1252729caf966964e088015fa35039bc2f9d68ebe51bb2",
+      "playback_observations": {},
+      "unique_playbacks": 0,
+      "played_sfx_ids": [],
+      "cache_max": [
+        211,
+        1,
+        288000
+      ],
+      "last_state": "StateCommandPhase",
+      "last_turn": null,
+      "pre_cleanup_alive": true
+    },
+    {
+      "path": "workplace/scout170/presentation",
+      "result_sha256": "efefd82abfbdd8ef2bbd914fa590de6cd064c129154a743e09f4f5e5fb8c8ffd",
+      "passed": true,
+      "normal_entry": true,
+      "state_injection": false,
+      "seed_injection": false,
+      "time_injection": false,
+      "command": [
+        "/src/workplace/scout170/gin3",
+        "-intro=false",
+        "-graphics",
+        "hd",
+        "-scale",
+        "1.5",
+        "-music",
+        "",
+        "-frame-trace",
+        "/src/workplace/scout170/presentation/first-frames.jsonl",
+        "-save",
+        "/src/workplace/scout170/presentation/save",
+        "-orig",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/original",
+        "-data",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/data",
+        "-art",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/art"
+      ],
+      "binary_sha256": "a2942e7645f257367477451879745cfe091d74af0df58fadf3b862c43162aa5d",
+      "screenshots": [
+        {
+          "path": "group-1-en.png",
+          "sha256": "b66b3cc373aaee16c5ff0069c03a8e7b9261f42e3c44b3c687ac9b94e4bee7c3"
+        },
+        {
+          "path": "group-1-ja.png",
+          "sha256": "35be84132d013553543d30e639cf9da211006af532338e44366afb243c5c6d4e"
+        },
+        {
+          "path": "group-1-ko.png",
+          "sha256": "b935c9cffad63a48c71f318854f2bda525506be92b246024184756e249b05369"
+        },
+        {
+          "path": "group-1-map.png",
+          "sha256": "6d26a7376751a7bca0752f309dcecacca1e1971e506c42795441f1b32cad23e3"
+        },
+        {
+          "path": "group-1-wrapped.png",
+          "sha256": "6d26a7376751a7bca0752f309dcecacca1e1971e506c42795441f1b32cad23e3"
+        },
+        {
+          "path": "group-1-zh-CN.png",
+          "sha256": "0330ccc0ecbec7adeed02c9a8a0c2a187619160326174747f29d84023799482e"
+        },
+        {
+          "path": "group-1-zh-TW.png",
+          "sha256": "66454b279a42f7a590e1a4134bd8657372ae132f84c5fb657ed973482bda4fb9"
+        },
+        {
+          "path": "group-2-en.png",
+          "sha256": "5f10d11eef18baa766736be1aff5245aa835e4bfb6347137a72726ebb7989f9f"
+        },
+        {
+          "path": "group-2-ja.png",
+          "sha256": "3a2109028ed5770f6f91d5020c18f4404c9a302ce1e0992cb41941bb791f9ebc"
+        },
+        {
+          "path": "group-2-ko.png",
+          "sha256": "ef442f3b7e7b4372f392c2c6da36bfcd47261df2f604e396e9754aa683cce741"
+        },
+        {
+          "path": "group-2-map.png",
+          "sha256": "65a3987c65560e70b9ef54ae7d24edf364446c1394cc8b9084e8e6d36d097a1c"
+        },
+        {
+          "path": "group-2-zh-CN.png",
+          "sha256": "e22a2dca113ce2ce7e9da89030e07a40283eaa3bb0159ad149229e666d3946c7"
+        },
+        {
+          "path": "group-2-zh-TW.png",
+          "sha256": "cf3602c21876552b5ccfa966fdbe6c7640d8e86c7264b21fb9f23faeed715c7c"
+        },
+        {
+          "path": "group-3-animation-off.png",
+          "sha256": "a23f7fcd7a26d4e4a925123036a38206c5a982380277948076459d534db932b3"
+        },
+        {
+          "path": "group-3-en.png",
+          "sha256": "b2b3a95cff6259980de28ed0a3f71bc70517bb5b713f76c4d7fabe764f6537af"
+        },
+        {
+          "path": "group-3-ja.png",
+          "sha256": "ab1db949363190ffcb1635dd2b52c08a84446a5e2ee63f3640c22873a69b538b"
+        },
+        {
+          "path": "group-3-ko.png",
+          "sha256": "4d0687c6c95244a1ca03510abf801f8dbabd008d7e25a0701fd107cd8e1abe50"
+        },
+        {
+          "path": "group-3-zh-CN.png",
+          "sha256": "4ef122b73bd06ed3cbe961950b1e11084ef736d746ecf1a609da5b3c8c3408a6"
+        },
+        {
+          "path": "group-3-zh-TW.png",
+          "sha256": "9157199e23a50fc90abe27e228d155e757ec968f58608ef866d7a3537d291d7e"
+        },
+        {
+          "path": "group-4-en.png",
+          "sha256": "0a84987f5757ddce8ff59afd1f0fb3b70358a4d3d7c5f829bd9f66ae15a3441e"
+        },
+        {
+          "path": "group-4-ja.png",
+          "sha256": "9341bfe9d7b7cc2b571dd53030f7c702e9eeff38572e04e609b6132a1ebf0fb0"
+        },
+        {
+          "path": "group-4-ko.png",
+          "sha256": "b20a7e42a6715b2783bbdac801c964d7c1b14c491be57867b29ac54fd86aa705"
+        },
+        {
+          "path": "group-4-zh-CN.png",
+          "sha256": "336472b6302c1e39564486549f5e17710748fba92a4c947ae8e606884cb15074"
+        },
+        {
+          "path": "group-4-zh-TW.png",
+          "sha256": "c29f0feb37651bd9768f9219e0ca2478af4aa7c599ea8d0432aa69fe770dad3d"
+        },
+        {
+          "path": "group-5-en.png",
+          "sha256": "c7142edb00c6dfd469d3c62c03f19eab51b896129935db5ab49ab2d0d5b51f6a"
+        },
+        {
+          "path": "group-5-ja.png",
+          "sha256": "882b086c8cdecf32822642582ff39ef87632606287932131ace6eb2a8526c384"
+        },
+        {
+          "path": "group-5-ko.png",
+          "sha256": "e40ac0fa478ae49e87e1f04ca0fae6c20267595b41f97566868f6e1af976c1ce"
+        },
+        {
+          "path": "group-5-zh-CN.png",
+          "sha256": "24a6e9208e2cd31fc154db05bae7f0fe19b219a1b82a97a9a979b930c57955a6"
+        },
+        {
+          "path": "group-5-zh-TW.png",
+          "sha256": "365d080c7395a4c4fcdba207680501cad386c80e95cefd8c4c977f05b546e7de"
+        },
+        {
+          "path": "help.png",
+          "sha256": "5d9178b4926fba92b50b37d51694034ed1a47b367382e3036f94bb8da0b3a489"
+        },
+        {
+          "path": "loaded.png",
+          "sha256": "65a3987c65560e70b9ef54ae7d24edf364446c1394cc8b9084e8e6d36d097a1c"
+        },
+        {
+          "path": "main.png",
+          "sha256": "810daaeb3b5f5713a8b3fb6735a2ede5e146e3b2d9004d860149d9a05ffcabc7"
+        },
+        {
+          "path": "original.png",
+          "sha256": "936ab71e629c4e12752c924975ae871eb407e043830857e80a00b3553f1addd8"
+        },
+        {
+          "path": "restart-first-group.png",
+          "sha256": "6ffd09f4a0c6730f114bfa439fa18689fc98371423367026825c0303cab6dcc6"
+        },
+        {
+          "path": "v2-no-quotes.png",
+          "sha256": "82991082a7b90da9ff1b31817d300a0c63cf07d39e24e073a2685ec11079f1f7"
+        },
+        {
+          "path": "v3-no-quotes.png",
+          "sha256": "5c21029c5093b9049ac8abf4abcddaacf2abd06a4f33e627578429986bbe8468"
+        }
+      ],
+      "scout_checks": [],
+      "full_cycle": true,
+      "traces": {
+        "first-frames.jsonl": "8e3026022e32635e7631b1706ce963d459c75bf49e1f6c1b41de14a23fcd98c9",
+        "restart-frames.jsonl": "537e6a9168e19cc23608f7b36ce5d0fed92cee32e62606c7295da1279e07be15"
+      },
+      "event_count": 36
+    }
+  ],
+  "profiles": {
+    "profile-before-timed": {
+      "result_sha256": "416ee4f77425cef206a55e4d5a690a701390cb65743f483f9ec1af173f94c175",
+      "command": [
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/gin3",
+        "-intro=false",
+        "-orig",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/original",
+        "-data",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/data",
+        "-art",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/art",
+        "-save",
+        "/src/workplace/scout170/profile-before-timed/save",
+        "-frame-trace",
+        "/src/workplace/scout170/profile-before-timed/FRAMES.jsonl",
+        "-graphics",
+        "hd",
+        "-scale",
+        "1.5",
+        "-poster=true",
+        "-poster-set",
+        "v1",
+        "-locale",
+        "zh-TW",
+        "-ai",
+        "-1",
+        "-music",
+        ""
+      ],
+      "binary_sha256": "32ad07dc70216a4292ecccbf6dac974cc712fd9897f66edfb3d2b55922241361",
+      "start_to_main_capture_seconds": 11.493239912,
+      "memory_peak_bytes": 888397824,
+      "first_hd_images": null
+    },
+    "profile-after": {
+      "result_sha256": "245db3922749f8b525d8e8ad3aa29ba6ee57ae7da599e759e4117ef7273e2d60",
+      "command": [
+        "/src/workplace/scout170/gin3",
+        "-intro=false",
+        "-orig",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/original",
+        "-data",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/data",
+        "-art",
+        "/src/workplace/poster166/extracted/squashfs-root/usr/bin/art",
+        "-save",
+        "/src/workplace/scout170/profile-after/save",
+        "-frame-trace",
+        "/src/workplace/scout170/profile-after/FRAMES.jsonl",
+        "-graphics",
+        "hd",
+        "-scale",
+        "1.5",
+        "-poster=true",
+        "-poster-set",
+        "v1",
+        "-locale",
+        "zh-TW",
+        "-ai",
+        "-1",
+        "-music",
+        ""
+      ],
+      "binary_sha256": "a2942e7645f257367477451879745cfe091d74af0df58fadf3b862c43162aa5d",
+      "start_to_main_capture_seconds": 0.527765947,
+      "memory_peak_bytes": 469553152,
+      "first_hd_images": [
+        211,
+        0,
+        0
+      ]
+    }
+  },
+  "product_sources": {
+    "cmd/gin3/admiral_editor.go": "a07aaba65f79cc62452a48bb34f120d352caff434b8ff02379216a2fe1ef2398",
+    "cmd/gin3/animationclock.go": "f5f29c97c93259b841a79d0e12fc7f39ad300ad31048325c838150230fe6d9f0",
+    "cmd/gin3/audio_device_linux.go": "6b2e58b9b1375c719b6b97b9bca26418d32829ef6a82f29c7990731dfc83463d",
+    "cmd/gin3/audio_device_other.go": "4882ab8cb2bf24cc1959807d089c5a645d788c87cc8b8658c8c0ac814609e51a",
+    "cmd/gin3/compact_settings.go": "1230421bb60795d40337973526f0345f95d46d096278f7a7735828079ab9507a",
+    "cmd/gin3/effects.go": "bb4dbc11fec42f971ad346dd2020ce116ff3e7829d22260a15e7c5d6f7259ac9",
+    "cmd/gin3/lazypng.go": "f26410f23c7a157c9667bcb915407d2010d8cce03b3041a06d111fdde1b7b6c3",
+    "cmd/gin3/locale.go": "63c56c5cd40ea93ae8dfe04f7f3a66e3598546db8b7eacfa2df59973505e17ae",
+    "cmd/gin3/main.go": "9cbf2a0f61eacf923ef869ea43af1101505a419885d7fa14f9beef819299db3a",
+    "cmd/gin3/music.go": "6360ed017b909dc1a2c470dfd7169bba20db091eb29c12ed66bd3bba76e28714",
+    "cmd/gin3/pointer.go": "dbc4521be6d6e758fa683f215dfd7f5f5f91222e05fb6b65c17b87a1eb3f05a7",
+    "cmd/gin3/poster.go": "685f550b3352f43e9498b4d648c1963156d9be8e9262bdd139952e2ea88bbc85",
+    "cmd/gin3/poster_approved.go": "8b8a63e34f27f0e75f38b5b671a87abae7966f245fce3097e45cc73b3f2eb000",
+    "cmd/gin3/poster_decoration.go": "80f0b24a2dbb6b9097586c84531146d3a67a66af228ca2212a4246f56b761b1e",
+    "cmd/gin3/poster_quotes.go": "eeb6b30cb7494dc6f2e7c5309bf0d94830be0f6ada74155f3b134ad5600e8232",
+    "cmd/gin3/presentation_settings.go": "96a0844d38ad72636c9bb54267bf6c9bb5c76b92a56713be4f30169a88bdb2cd",
+    "cmd/gin3/resourcepaths.go": "78fdf484506d7a2136c4039f48d11fe824ff90cd0cdc551162014e84530d660b",
+    "cmd/gin3/rule_settings.go": "c1b50c6f787308b791e08e619bd8a4a3adff288ac91fa1f48dee61b6566f769e",
+    "cmd/gin3/soundfont.go": "01a0493f3cc35a494aa25bb985838876d09a6fc7cd75dfc532274079d37aa40b",
+    "cmd/gin3/startup.go": "fb4f3ff015404b6b5c30c8f2faa00e2e1218cd76a9f969cd119c29f83bb7536c",
+    "cmd/gin3/telemetry.go": "99c5ed390ced98b92f0a105bdeed3590cd242b5f971f3b2ea5c7f17af30a3ba2",
+    "cmd/gin3/toolbar.go": "e6d6b07e60ef6150cd7f840132778b3ce04c357422240e16757bf2dd3d839a51",
+    "internal/ai/ai.go": "7a442759dd0d4f63362db8d9d5d15c2d661e81ddb3edd2bc24812e63a13fbfd9",
+    "internal/ai/focused.go": "88c6d4a5a7933732d4ae7ec6677d72dd76d01fb44eca847b4888949359cb25ea",
+    "internal/ai/hero.go": "648f8bc1480f8e4f5125e00c6b74134e9a286302e1cabeceb9377a32ac5eeb7a",
+    "internal/ai/original_board.go": "d34b1b0f317daf0c67b4131a0ef311836b80fd0316f1d676100e07b0af97b524",
+    "internal/ai/original_build.go": "da843f608b53716625285e2e19e3762ea861dfb6e4ecc19bd44eff7c48f8d4ed",
+    "internal/ai/original_buildpass.go": "467573e8e5ad6c14988b9bf4e381cafe44989ef5fb8c6ae777f8583fe012018b",
+    "internal/ai/original_decision.go": "52573443288fc300d5a7940ad1f31dfa732bfaeaf58038890359761add7e5aa9",
+    "internal/ai/original_reach.go": "81ecdfc93d81babe122dedf42a8e5f9a0d096c42c6b6b46a6f9cd095435adc6d",
+    "internal/ai/original_score.go": "2589be73c5f6e12d21320fb9e4ec1c678fb66950c6be41d68dc857060e0c21b9",
+    "internal/ai/original_tables.go": "d1c31bd0882111b6f9bb000965d499ac47c278aae567a134e3a91564e7310b28",
+    "internal/ai/original_turn.go": "52f93df2c8380801a2998a0021f04f552b6b7cd1984bfa1ab379125c988c75ee",
+    "internal/ai/tactical.go": "915ea34bdcedfcbab74704277b4233b9022cdce4c2b39fc01856446a1ad23b78",
+    "internal/asset/amg.go": "6dcd668591f4b08b653892395b7b3ae7c12fa6b22f8af3c40a263ddf9f421208",
+    "internal/asset/bmg.go": "366f94457c3919b22b1dbdf22dc36cfd0c6d7f0ba0d6b6dd543b540dcb3e7839",
+    "internal/asset/cmp.go": "e52cdfedfbcdac614e5e59ff7a06f606ad0090d688726769dd4659f81eac3360",
+    "internal/asset/draw.go": "110432a5e99bd8dbd5f462a6a083c210004b04b91dcad9e4c3e77fd188e00785",
+    "internal/asset/fleet_scene.go": "b6b12c7ef6ee2b22e3a0d53c57d37df107dd2dcda43888f5eae09958eb7e692f",
+    "internal/asset/intro.go": "5a30b2604316105fa808823e462f3eeec609971c3372419f074e534fdbcddf92",
+    "internal/asset/mds.go": "9b366d9c0114dcfaf3f35ce5cfe0a24231646163f4f02a382320ab35cccc525b",
+    "internal/asset/oggserial.go": "97208fd8a9f47a4be5358bd5115cf3fa073cab00c75c95482748c3c6fa4c5e88",
+    "internal/asset/rgn.go": "aea500f653b7ebf35b7436442787e0e1a2c56b9bd1e55765908883591c880e15",
+    "internal/asset/spr.go": "cdbe34e90e915b8db4e7e875ad84b371135d07f38d9d31277d384517fa8dfd7d",
+    "internal/asset/svf.go": "fd7f04011e16d034b7da1cdd754ad9e2ea2e1c928f890f984ebacec45bdf71dd",
+    "internal/asset/title.go": "eb414a77f7b9c16da1f7bb360eeaa567addc94b3d43028f3eeb8bbbd72e58455",
+    "internal/asset/vo5.go": "112e44409c5ca347e1a5d6e35fc913dba82f9b4f441a204fb48f76a5a83e104f",
+    "internal/audio/effects.go": "4773bffece1d20cebd0dc8ca1af4dbc09df479f19e1b50087880899b26a8ab90",
+    "internal/audio/library.go": "ecb983314c5f652fa667f67637f9db9f8b0f45153d9db5a1e50b1f3e2918cbcf",
+    "internal/audio/tune.go": "fbce916f6d0e265af8ddc48cb3591bf0c23c81ec6cec8abf21082a19724c986a",
+    "internal/bootstrap/intro.go": "99541b981fc1147e6090b63cfb15759f1e04ec99360c05d61af7fdee192e123a",
+    "internal/bootstrap/load.go": "b8f53c9eea865271d5ce4c0929ce18158a40dea7266dcbc447c3eee8765a1e70",
+    "internal/font/font.go": "8c331f20eeff52fed6a9aa0519d9f68a6b8e70d830c0687f5a86d86ba696a8e3",
+    "internal/font/settings.go": "3650c27fea335f0c711408126ad629b57395b8a12b4500fa69b596171401ce51",
+    "internal/game/activeseat.go": "15f29f10aad8ab4058ac6ec2380d98fc593977173a7fc7e57729d4fce272d96f",
+    "internal/game/admiraleditor.go": "bc6e162d8400ae02e42bc491aa8b960b5cc6fbd74ed812050094f397d2c28de3",
+    "internal/game/admiralfatereport.go": "536dc95729d737f0361db1fa8df4ca18033fa1fd81be5a41e84bca093fd84ee4",
+    "internal/game/aimode.go": "4110ef4da0b2f9b9a52e20bc41a65072314067e470fa89c8fc8f8cb426f580bc",
+    "internal/game/annihilation.go": "936ec77bd73f261bb23823cb69dd19922d2f9e9a67f71f5b21816bd560a220c0",
+    "internal/game/battle.go": "5567e1144005ef3a9897b62ff4d56ea8aa20b6c8e46082ad218e312be30a0069",
+    "internal/game/battlecleanup.go": "24eeb34fe2fda576c00604db6f93e9d91602b1bcb4d08a2754b90c5e7cfdda36",
+    "internal/game/battlecmd.go": "d88bf2a8ffeb967040a57412e314fc33ae32cb21931653a5f2b1341a49df147a",
+    "internal/game/battledata.go": "60db439947b5c5d0dad91e227f11469b8782bd34bd00fac0f19a5ba05c5d9402",
+    "internal/game/battlefinal.go": "2145fa9eb903ed19c3942466e9a94ad93adba55c47970654de26d922b66da137",
+    "internal/game/battlefinish.go": "133a08b808292bd9e45eb05c2c9d60a14a36fd421742682a274af9a7ef3b06b3",
+    "internal/game/battlemarker.go": "3133dd820b464996b5d79aafe104014b7083aaf9e9e39c491ee75c3c0bbc1791",
+    "internal/game/battlemovement.go": "e8b8702d463182fdeddd51f73a05998e288b354c3ccb33646274e2af430dc97f",
+    "internal/game/battleownership.go": "2349dd93aa187392d89d2c240d9e1ef8e0897ba0a093d16f3d43a35a5e9fb73d",
+    "internal/game/battlepreparation.go": "b640cdd87b8f1c355a2084b3ea7230f9d13ccbfd9dabdf288df7e60d743bb35d",
+    "internal/game/battlespotting.go": "440feecb24eb2a2030a9415719b15b1054942f217d635f8ce6623e1b6e9c2f57",
+    "internal/game/battlework.go": "f91c493fb6f0661e0dc54c5c8ef22d79eabbafc6a370ed273ce558bdac96ef06",
+    "internal/game/commandphase.go": "5438f35156c99ca4b550fb12e1ed573a74c22d3e350127700a418d79628a207a",
+    "internal/game/controlhover.go": "01d6f26545dffc53eee58fbeb7cf71aed52a1a2715f3339bb6e6abfea0377e67",
+    "internal/game/displayframe.go": "97714b3c45a9f6b08d216bb3ac01f135e78ee2c96aec2899bae725e372e68d9a",
+    "internal/game/enemyvisibility.go": "0d328c72fa9080b6693b4c6823217b89dd88b088a8d64f365cb12c43765205cc",
+    "internal/game/engagement.go": "980c250d56c94e750478396fe28242157a1eb92d6ae9febcde3970671945010d",
+    "internal/game/engagementcache.go": "2aea7a8c9b99d40f0fd355816d3bdc28629989adb8a778ec92a09d5bef52b2f2",
+    "internal/game/engagementobservation.go": "86114c2e657dbc16b84d34fa1ebf85f0502af9b81fef4ad8176f6c9d8d1314d9",
+    "internal/game/flagshiptransfer.go": "90582c8dec73913faeeec127aa513d15b4b13e12c784e74b78c27c8c8c2eee38",
+    "internal/game/fleetadj.go": "aa6f8aea3b774fb80e3d7dfc4ee885641852c153e12d03e3a20af70c4c312b64",
+    "internal/game/fleetarrival.go": "479fc09c5704716adf2b8dada96de93dc93c8cc7230869dab456091177f4c544",
+    "internal/game/fleetchange.go": "e00a75e7ef47f350a4ac626b95e10185ca7e063d73f4c794c75c3a0c78ff1a88",
+    "internal/game/fleetcmd.go": "54c110c40286d785d63dd76bf04dcbb0f95a68a61fb12f3da40cc0c12ae1bea6",
+    "internal/game/fleetcombat.go": "217c6590d76335ba29175713b8f3cf7aff48fa00231184224211e79a88f1a8e0",
+    "internal/game/fleetcombatcommand.go": "9e908182d2529c6d5eb72aa246a0b95b4d2b2a5e6909ebf34eeb3015d52d3669",
+    "internal/game/fleetcombatscene.go": "b0faa0672c0a869177c80c87c2743eb7471626d411334af5b185b2aa55c16d51",
+    "internal/game/fleetdetail.go": "5734e89a009afd530236e81214f687dc6251ed67017bf2157e9f496a6c0ed00b",
+    "internal/game/fleetedit.go": "b89cc0ce55fd05f44e0c398c9c7d574bf7c67f20c04ed93df870c2462d02df27",
+    "internal/game/fleetnumberlist.go": "9da9055b55ebd5e27ed0df1fcf341903c9a75b6cb2aafcad9fccc262678056ca",
+    "internal/game/fleetorder.go": "a8d6ba678732a720d274b439e37089577231a57858531aed143c76678fef6594",
+    "internal/game/fleetsave.go": "52496404ebca96386a380cd4901d218e7751a5c965ab9b71697733d71a92a1b2",
+    "internal/game/fleetstandby.go": "7c1417774fe5211af35d1c07dccb7bf2b0127a0b45e9d5debfac8ab2667979f7",
+    "internal/game/formationpick.go": "93f0754c29adc904baeae5fba61db1baa57b5617770ca649cded4fa0b13b4927",
+    "internal/game/fortressengagement.go": "ca4b11121fe4590f2e03f3e2f29e7f5805e0aaf87b330de0f89359f1c694b4d8",
+    "internal/game/game.go": "055caeb1b83a198ddf0baeba137f0dc6080ea26f5a652622b9b95a3d97ce9a7f",
+    "internal/game/herocommand.go": "bfc6f8a61ba115bb1d7f29e7452a11a4aa7f402f9e0bb5f9a8511ee78b957788",
+    "internal/game/infoscreen.go": "9337fb41bd119cecf52047e80fdfa084398f534ac7dbc16713f86375c6fd6cba",
+    "internal/game/intro.go": "b682729be455f2ac9965a91bbb72c9e6dae448c88a2cb5e573f126b9d29827fb",
+    "internal/game/lefthold.go": "957dfcf0090505f79a6cac8fc584eac53e1ba6e35b340efc581828d58f58cab6",
+    "internal/game/listscreen.go": "8360a89b07a262498d2c650f75626100a9441ece4683983db1953b6f8bc355af",
+    "internal/game/listtabs.go": "ecb5598246ce38bc41f4f9e00e63d4496e49f442616718e9412da58e681f8dd4",
+    "internal/game/loadfaction.go": "3504a71e5491f077873908494e28a1fa8199f1d5766411467eca8de2ea99f261",
+    "internal/game/messagebox.go": "a95b2fd09184a6444cfafa4553bf812a8f8433480f627dcd846ceb60690557b6",
+    "internal/game/monthseat.go": "6eea8d72fc804c6268d008d61f1b3ce5b30181aef185b7f260b8b5fe32a8c9a0",
+    "internal/game/occupationreport.go": "8f05bf5ae553eca051ae82a314bc7cacd49616067c8a4be899ac1d83d7cff69c",
+    "internal/game/originalbrain.go": "32b1e8e31c1a7e968d23d06190916fa77af6036b1253233d842fe420c474a305",
+    "internal/game/passivebattle.go": "fb073043d6f161595f92c68ec6aae00b7d976f77fd80b3c3d3d62020ba93e40e",
+    "internal/game/personnelframe.go": "134fa2c1fdcd54606c93307dfb2ad42545b1cf1ad964e584ba723b5f18772c45",
+    "internal/game/phezzan.go": "2b6d917370d5b278f8a7972a8684d252f263957cc8ddc74289f732d804f69b7e",
+    "internal/game/planetcmd.go": "3c8dce3d04dda61e18586a5da7f803760c9544088fc046b94eafbd07695bb99a",
+    "internal/game/planetengagement.go": "f6c49163c9da375ea44cab90c29323cce4e43957a0460ac298bbf2f170a17ee8",
+    "internal/game/planscreens.go": "42f31f0c0beb1f25c5e19220b2bba276703fbcada022fe97d30e7f793d93cb48",
+    "internal/game/playbackobservation.go": "dc2027ff3926fd40998b71abb3b6b8260220c66d6a89f4eceaffd6c8e8254337",
+    "internal/game/playerinput.go": "efbf86d01b9654f780739d918df18748bfc9935dfd959ee1f012518b8279cf0f",
+    "internal/game/promotion.go": "4f33b2322c4fee706678774fccd87f131ea3723360515f7857109108e49485be",
+    "internal/game/rebellion.go": "b6820e505e68cfc0689a65e7ef48eea898ac6dfc10233be1c377efdea5352999",
+    "internal/game/regioninfo.go": "8071e85f30d2f4e24513c98208afc8f0acb502bcea87f600431f56e4570ce328",
+    "internal/game/regionreport.go": "0ec587890f958cbebfefbf7373bf79b84a6df4861c1bc0e4f3e3a7d36b790e3c",
+    "internal/game/regionresupply.go": "18bb7ec0fe4585e85fd9296d694dd7926bc3d5b0d8ad7135293c513f292536e9",
+    "internal/game/regionturn.go": "4282a343474ca261621df569ed0491b54177aaaff0547d0886e5d83e0b11b962",
+    "internal/game/regionvisible.go": "050e5d320220295d581d19dcd42dca30cc9c76fb1d711d4157d3aa958918d338",
+    "internal/game/repairrule.go": "e2e9a3d9a333f7e5347acb2994ac1c6aa7d39843e1f86da9b01175f40d921811",
+    "internal/game/ruleoptions.go": "22618e42c1459e0c46baa7b38e189da0d22c039a7060f52ff8e35426d9a638c0",
+    "internal/game/scoutcmd.go": "89451ddc0804272188acbb1c93a986cc1d2ee7f2b43e22153f1d7c8b71713f29",
+    "internal/game/scoutfuel.go": "3f0a6a0d6a4bb41fe421cccf7eac937bb195b073f461709970680167a2a7f424",
+    "internal/game/settingsscreen.go": "db7dc8cf7e1a684d64d420ed0006389308ac6d86ecd34f705d338e00c689e0a3",
+    "internal/game/soundeffects.go": "277ad627636dff777649b4706c61528a964dcdac3727f412bdae36d902f56758",
+    "internal/game/staffpick.go": "9694ef2700659d75aacf2d23f59aea49a76a75beda06da96feb3e5936c373995",
+    "internal/game/strategicobservation.go": "9b06131e0547fd5462d67e626aa56257670c36f99ac4728da5246d339ca176b2",
+    "internal/game/supplypick.go": "9429bbd9ec8c3fdf247f75f39bda1c4edc60f0ce3e7cd11853c8cd0cd424ed6b",
+    "internal/game/title.go": "84afe3d00d5d9dc756c86383a2de2662409387b3d890d81fc165d776a5b3ca78",
+    "internal/game/turnreport.go": "6dc033a90192a10cfe1a786f70fbd47cd8de4302ffcd9bdd4cb0fbc9c80a8732",
+    "internal/game/turnthink.go": "0ba0711da7a059de213d308934374a98f826784d0b6cdd5e283a597af1b37f02",
+    "internal/game/turnwindow.go": "cc572baaf4c7e8d460f44da5477cf875927e9485e2da5153467e7c1ac9ad6fa0",
+    "internal/game/victoryreport.go": "c353e259f115af10d8b382164883578acd6bbd28a757a6cdb8306aff7998b8cf",
+    "internal/gfx/artwork.go": "041058427a4847936e6405722081437ce4d84f0daac542f9670e340ca232eee5",
+    "internal/gfx/control.go": "bfd45172319fbb58db3d0e724c12f9217cae2e45dd326b1c714259ac13a209b2",
+    "internal/gfx/drawlist.go": "24a574f103a7128711da18c9a3e57fd168c21f70c76405c46f44a3b285a6a014",
+    "internal/gfx/framebuffer.go": "171fcb7579a8dd38113de53144a85bc2ce818bbaf762a955461b9b5e99cc560f",
+    "internal/gfx/png.go": "c85d575cc0fe0da383b7734db46f8a92a5f0c819ad4ea722e2e4f527030df1e5",
+    "internal/localize/catalog.go": "59eb6a9c59bea1e971525c5e0c4e0149e7deb78e104044a1519a9150c92040c1",
+    "internal/localize/font.go": "43e95ad4b35009a6fac887c2d174e1fc25b7c2876a9aea8393878890e95120e8",
+    "internal/localize/frame.go": "1b1b7cad08cf0ffb0ee7b19f9e8b55f19cf8d0819ac27ddf3b5540b0ed9cadac",
+    "internal/localize/rgba.go": "860284571e2d65edef21a2e3a44d63ad251a66616a47bc2c41bff120374b6014",
+    "internal/presentation/animation.go": "4e5580c5539e7cdf16673d8a44c5b31babceda505e299ea89c972940853002b1",
+    "internal/presentation/artwork.go": "2643812afa89c02d0711b47142b61c8c26a42e8de3ad22b857399e368e875c55",
+    "internal/presentation/cache.go": "433a96735427aaa19c98732bdd4172c028d02cccd624081cd3b06dcfb10b9cb0",
+    "internal/presentation/classic.go": "59bfc4ffa22de7089b109e029e9be0b3a29dbde051a826325af02d8b30bdc1f7",
+    "internal/presentation/decor.go": "34a9784febcb1d589474c127733d2cb9003465d16d02ac48fd51e10bd40a4c29",
+    "internal/presentation/faction.go": "ac082424e180946ac77e7a99b51ee05c62b432b88a6681a930bedeaeb945ce64",
+    "internal/presentation/hover.go": "561aa7fc624915031046f919e168bf848c7d18c21b8deb862f520a231782c809",
+    "internal/presentation/journal.go": "53fb245593970b8ce2634407526328dd4721274aa3d1b8b47d6239d342621529",
+    "internal/presentation/lazy.go": "80f4302e2fb67b14cad9a05788fc81730036b496511aee9d8f7c4a6ad74d7b04",
+    "internal/presentation/localized.go": "90013a1378c9b4d672812ad91aacde02c13d91b014f962b6e378067e48fc35b3",
+    "internal/presentation/personnel.go": "2ee696798c05b9a56dc928437951b6362ba55ada4bc39b0ccba31dfd66cf42df",
+    "internal/presentation/poster_ship.go": "8719bdd6f3581f8ebf351ca0f195f76008033a2b46f9093c572bcf3ba3f39286",
+    "internal/presentation/projection.go": "fe3d214fc78cedd0077a674551258deb22c5c2f66cccb6ff221bef391be7ab2a",
+    "internal/presentation/refinement.go": "202a9bd307f47737818e790b92b66c5e330de7d19b2096ff97f94526b74afa1d",
+    "internal/presentation/release.go": "567f035bc24209368ccbe656f1f05ac443059b4ad5979d2182ba4a98b1597150",
+    "internal/presentation/settings.go": "0edc36a7f5747359e784c91375b168ef3fa54f8f9940959c6a0dae8c7952056d",
+    "internal/presentation/ships.go": "21ab9e347aa7066241d5b68ec2fb2a8c93e95ec03a5b5b7905244345f1e21341",
+    "internal/presentation/symbols.go": "1df1a9d61889c82503cf92c658ab8f149885c121031eee510609c712194cc113",
+    "internal/presentation/terrain.go": "53a51d130a179c7acf76c532d865229c9a2f55dba44650506635b110197875bf",
+    "internal/presentation/typography.go": "073e6b259616caba7083a152ba91d4e1bff5b9d8791376bc77b9391a7c730b8c",
+    "internal/rules/ability.go": "7845a74a05301cc9309e776e73d50bc230d0c676c8399fb1e2e7b749cc56cb1e",
+    "internal/rules/admiral.go": "fb208164bb00aea3c0c2ad8b4a1ed6231272657a9ad9acb875995385a3681d1d",
+    "internal/rules/admiral_fate.go": "e9332f830ca68761ca355f58fb73e4f32d75acbd86815d4460d010c7c3ee0e9c",
+    "internal/rules/admiraleditor.go": "cd14aa7c91bacbfc781744ddb108b342307f3801f19cd309893e2653a373630e",
+    "internal/rules/admiralsort.go": "c55ee72ee43889dda53926c7098eb488e75c4cb11b285ab54b0065d62ef8b409",
+    "internal/rules/annihilation.go": "b7ed6cc4b4931518c9d849152e2d60a7faa2023d1cfe1048ca8c97a995e8a0cf",
+    "internal/rules/attackcoef.go": "9d8717b7d1fa6bef5bb14019ff3769f435a0ca3fe867baceb9c83e36c0e36d33",
+    "internal/rules/battle.go": "eacde8475683afb84626a1e024c4b61af8a9b64939379c2eeb939a83d3844d41",
+    "internal/rules/battlecleanup.go": "1f9bddd9ff0bfee0b73ec94cac39d25026573d1f3944c9a6db26435bf6e9dc91",
+    "internal/rules/battlefinish.go": "9ea900a5d055c010b3694e3b4a4c2d8118d6ca801faa70e7c960734ce87d9e8a",
+    "internal/rules/battlemarker.go": "f0f0607f3fa372467efc64ab1782f91d7122fcdf0f473efac5b7b1b4b2cad9e7",
+    "internal/rules/battlemovement.go": "0f313bdc87ef01c4d968202ba078de82a9b614b49a7ef66993cfdabf3d48eaa4",
+    "internal/rules/battleplanet.go": "486c61d3c39283c9b822dc0c864c11a84fceb0e9bc627d7faf14d41fe661dcc8",
+    "internal/rules/battlepreparation.go": "617f67750fbd09e7aac28c746c2dcd0bc44bafef734a56bbed7dff11abd5b1a3",
+    "internal/rules/battleview.go": "c640659d7b916a499a7520c39238f6a3cb492ad4301d16a6b62ef3b1801132f1",
+    "internal/rules/budget.go": "b1873794131f80d5e8a103fb50bb44620f252d17ab6ab341fb1942d7baa3706d",
+    "internal/rules/buildplan.go": "d7978118efa86e7410f3d07aaf63d20caed8f8ea558f21d8c5819a2913324017",
+    "internal/rules/calendar.go": "c038a8de6b677b1784e02bce04ccfacc451fe6d173c79e802df512d5ff3c0ce1",
+    "internal/rules/entry.go": "c0ec31b4c41f0f85a9bc3176dd4b1aee73e352a5278ffa1dd7e5a45c9d931f8d",
+    "internal/rules/fixed.go": "e3540ee14e9c350b37df14b094ef7b178e4b457c70a0eb944c1d4bd890161df8",
+    "internal/rules/flagshiptransfer.go": "bb5029270c05ea1c8ed329dff425e9e83a885d3beb93195e3c0fd9535520e0d3",
+    "internal/rules/fleet.go": "3dafbcb06dc6da7a54ec8e34cbaa78fd437338ec28c5cae9662011abe3ea7af3",
+    "internal/rules/fleetarrival.go": "6d9c42038847bd0cbbd34f77026ce5804802ddf912f80b256ea295503eb9eab4",
+    "internal/rules/fleetauto.go": "7672e7e8ceaffca0f33ead80e1676946db2b9bf4f01f182d65fd58ed21e787b1",
+    "internal/rules/fleetbuild.go": "dc060d48d097e8a59d0487915b2892150a71b6e349c3799df8db388b36eb43b6",
+    "internal/rules/fleetcandidates.go": "eaefa607e37297e0340fc735a1d422467953547e6e1ab8b2c639a226929dfff3",
+    "internal/rules/fleetcombat.go": "c31d3ef966a318f8316953dd1e9547e6075b16fd4370a2188423cbca582e6fc6",
+    "internal/rules/fleetcommandrange.go": "8d93c882929383dd3022682325f12b6d8979756e048cd01a8d870b962ef7477f",
+    "internal/rules/fleetedit.go": "f1e3b58f82230e5200dbe23f9eba84557a4f9fe9e10a6da00167748d8d8cb86b",
+    "internal/rules/fleetmove.go": "ca4bcc2e22bc2f7b7672481dca4b0462f507f08997f5badfcdbd301d132b71a6",
+    "internal/rules/fleetprojection.go": "e03e8b3a9d38350233bb8c957471cbf7767a6bd5b1cae5b0cb3c8de0b711f71a",
+    "internal/rules/fleetrefit.go": "54f7ed72570291f58ff0f117e83abebdfd700680d6ad7fb63bc0f962333e1a93",
+    "internal/rules/fleetsave.go": "386d240b3d3cd3cebd1ffeae0795be3c54f7ac35a26520d94fd44b54812ac40e",
+    "internal/rules/fleetslots.go": "a42429a1138bfd4985e869238671bfddb57726120ec33c928962fa2b4c67a0a4",
+    "internal/rules/fleetstep.go": "e2b3a25906d851992e49b35fa1be8684a210612331fad7592f37324f6d0b9aa3",
+    "internal/rules/formation.go": "bdee271f5c79cfefceaa8d1658fd675cc8f87c03a028705d20f329b2da4f744f",
+    "internal/rules/fortressgun.go": "0813a574e155e3adb040cad72cf087cad29540bd504e7808a316656efa85fea4",
+    "internal/rules/growth.go": "a60c5bc522d534f5c3d5da500b73b810111ca38de2709962127a456f2745dd25",
+    "internal/rules/losses.go": "4f8af6588107e7da8b4e8b325dc1c32f79e3fce8064b6673fd528dc9ebb222d8",
+    "internal/rules/morale.go": "aaa645907902d2017b93dd958f6999f2acd4ba92ed7a3e3a87a6eb359234011b",
+    "internal/rules/newgame.go": "b712ed988aab93dfa8b38d12dd3397e6a38feeda85d897d306587f4bde1df21b",
+    "internal/rules/phezzan.go": "04823f2b3f5bb4fe3d0e780646dea3e03b631d77861e9648c3cba433a3d255ec",
+    "internal/rules/planetassault.go": "99bd6c82b51bfec233e1c5b891ba1afe48192f64e6f6b5c01c4c66e67e7e5308",
+    "internal/rules/planetassaultscene.go": "508af6d2f7deb9159f26969ea6ede9b7d0ca859671c08dc3d08946324923fc37",
+    "internal/rules/planetcmd.go": "a3d300491e1bc3a3f5e21df16fdbcce75779b3fb207781b40c34944268404be6",
+    "internal/rules/promotion.go": "c5b415b670bff27e654d720019bb7eba8cc589ca517e252819517ad2e785402d",
+    "internal/rules/rand.go": "0457b7259bd820cc13b2f2f009226283cf501ff561a9feeaf35afb4432468d99",
+    "internal/rules/rebellion.go": "c45a44ab90e91e7908cafcfc0b30073e078a16767d59180aa1358f269c696d39",
+    "internal/rules/region.go": "cba006daa23304121e4136523efd41b0f523164e0212abc0ec045456266b82a2",
+    "internal/rules/region_supply.go": "693c2245ac2f3fb0a437ad7b517e6b3116b69a0e00684fe8b9f0c797e291d907",
+    "internal/rules/regionplanets.go": "5732bf0860e2a992f572b95db6e2a357941bf6fb2cb1d2487e4006cf2dec9a63",
+    "internal/rules/regionposture.go": "fca1c2c21d44e4ae47acce912a041c9ae1554e19b80e279c7a4fae7c86bdbaa0",
+    "internal/rules/regionresupply.go": "ade290a94ae97bcb33d2d5af58e7d50f6b6b55ee1a3b29386f443f4444fc90d1",
+    "internal/rules/regionsummary.go": "937c0c4baf53069a5451c36c7f36cd220088f29d205bb3ec20011fe1d40e8039",
+    "internal/rules/regionupkeep.go": "5aeff0940817da9ef5c1896dc0795fc5f6a8c972a337b1c9a834392bc02c343a",
+    "internal/rules/resolve.go": "9e85cca4d4749cff9e5ed99c193f51aa316a23915b03d3e00de7c3bfcd329589",
+    "internal/rules/save.go": "af906b1fb74439673d9aa5a0d80b6c2fa48298378279293f53589244298bf11f",
+    "internal/rules/shipkind.go": "c8d97e95112b49ddede237b0fea0d9e8beeba96fbfc6d400f5df926355e83f6c",
+    "internal/rules/spotting.go": "5195c9d6348538585a2d0738cb49c1af699ae579df6feb7865016b4813f12fce",
+    "internal/rules/staffpick.go": "2cb46c5361f92ebffce527670866f0d7a0a2b0527020d82107a0f9a4f21dbd9e",
+    "internal/rules/stardistance.go": "f56fb8221e5c58043f908b9c3bc48c21a8539d2cc6d35f67f2b06ca5b5791071",
+    "internal/rules/stargraph.go": "e6c3ddfdd1a1a105104f3b41a619b7ab4cbe3c77f83ad5075618aa39d1e7803e",
+    "internal/rules/strategicassault.go": "3f0cfdd6fdce71d1d7bb798fa52ca8d2090b454514c291191fac1f144ab510ec",
+    "internal/rules/strength.go": "947431d0b47d54b720e1bbf21244f7fc3d5e26a7a5b83b05026a67bc07d4539f",
+    "internal/rules/supplyrepair.go": "f9aebab6b5f2ec10e3ad82d762f5d37878d6ceb7d0d6d339cc7d962b9b75093c",
+    "internal/rules/taxrate.go": "4b07dcb7e22f7bd20e13c126a2017983feb3245041bbf9afa5c2fe38171aeb4b",
+    "internal/rules/terrain.go": "bf7191b53683b2a1e9c70dfafea4dc562a843bed138a2fdac724f4e505037d2a",
+    "internal/rules/trig.go": "6a7cffeb674321bd6e09ed4e272571d139993a3c518a7ec83179abb060d2f1e9",
+    "internal/rules/unrest.go": "b3a97c54b88d2c49d04a2ca91936c2f5c6c735380415e4b9822084e0f8b88fee",
+    "internal/screen/admiralpanel.go": "c586d6b9c1375fd5e60a797184caac5ee5c83d989d6932b9ece603b9b45b5cb1",
+    "internal/screen/animation.go": "98e8599f50efefbf7cd9feb721074d4557f1dbd723d7f7db715a4320a79ab1d1",
+    "internal/screen/battle.go": "3577075dd536039e3f43d12525a85d3c1006a54ecb67212006a89ccd396e89ce",
+    "internal/screen/battledata.go": "13227142e5844f6c765081f8f8b52768046a396dae86e3c28f51d279f4ab4a7e",
+    "internal/screen/battlemenu.go": "f6455b9f4f2992e96b824336ed4d9a2297a52580a00cdb9823f48ddf9bc4be0a",
+    "internal/screen/big5.go": "421e2755943865e50b0f13fdf7892ebf781496ddf7971858adb004fab5373518",
+    "internal/screen/biopanel.go": "8ae2e6c820d29bfc60901e60ee39aee2e31d1f49f035beebfd823609b08fa13b",
+    "internal/screen/budgetpanel.go": "313e2b482fc1aa12d6c1bf0f1a586a5770fae8c6591196701a94b398a9a8246a",
+    "internal/screen/capitalpanel.go": "05aa8ace063998d9fea958a3578b612bdfe57fde74754ad3acb929e5263bf399",
+    "internal/screen/commandmenu.go": "2c5bed266766265fd6525a186f7a7fa7a367b21743095636189d4d5ba1bea22e",
+    "internal/screen/compositionpanel.go": "82230da5607577d3648c3628379eddd66922f3c07aefd4e71c18ac454e78379e",
+    "internal/screen/copyprot.go": "98b67796a9a10b5165742eb2a4e70a68ac1360c592d210c6d7e97342e2852346",
+    "internal/screen/deliverypanel.go": "98a87e7b043c10ed421d977ff7d8a2b69d42233b098007db1385cbc3cb22f415",
+    "internal/screen/ending.go": "3b8e1f2cacc0aa6a372b4628daab535150aa33dce5d6268d64453d6114696c60",
+    "internal/screen/enemywindow.go": "d1750470155093314e08e30daf01a3a78a03eab8da6610d235cb1f7e5a097100",
+    "internal/screen/engagement.go": "eebb2f9b309b7bd16c1dff4dd40bbb2c75b00a8b77d4a69d71f4a426115c2169",
+    "internal/screen/engagement_gauges.go": "99717307937bbc7ee1ce08196110f2f57cc5d45b113293daebf503c4712d1cde",
+    "internal/screen/flagships.go": "870133f095b6394352251352fcd20ab9e62baeaa12b5cff760039ee112ff6e51",
+    "internal/screen/fleet_blocks.go": "0c96b8bfbec86f9050568da4462e21e86b2331e36e55a72a55281459c83515a2",
+    "internal/screen/fleet_command.go": "3bad9884eaaa19480e33669626693846605724d4e10ff0642a4e60f76cb067a6",
+    "internal/screen/fleet_command_display.go": "7f38f5df0d656898a902d41558574729a0245af25c7d74f68b1cc2681014c74c",
+    "internal/screen/fleet_frame.go": "c49c6584765148d5431134ecc213ef2c3f6e677ac5b443342e4a0ca7564f2714",
+    "internal/screen/fleet_presentation.go": "156d6266310d95ce87d4ad8e421a62070a6a4fd826221ccef6ff8f132473432d",
+    "internal/screen/fleet_scene.go": "d15f0705fef6d3be67ce1e998f5beedd79fe0303e28eafb3e41fc1bfc8c0d91e",
+    "internal/screen/fleetdetail.go": "6df21b241b792ffce71ea98b3454576fb4bf258bbd7dcc3d4ec5c0a8a9b49826",
+    "internal/screen/fleetlist.go": "5c2aa81f7a0c8a527921a5dd62745b7bc432628f9efaef330028617cac9cc902",
+    "internal/screen/fleetnumber.go": "7db60dd8f21064db55afb497941a3d8eed9f22dc8de4e3a940d43375a0ffcbc2",
+    "internal/screen/fleetpanel.go": "0819b0574c77667dfd6c462d9de1859a4471f4a542a64e1aa169fa577ed1d4bd",
+    "internal/screen/fleetwindow.go": "3c7d9a49be48b6fb6b9ce8302084be02a132087cc9dc2699a05b1c1bf4a538c1",
+    "internal/screen/flipreport.go": "07cda1df98f04e030e39ec72af65d2840824ccc370ad0594fde072fedc17d430",
+    "internal/screen/fortress_frame.go": "8f5b6febee7e58339b3f3ca2978c7d009c61552b27b55efac0d3283b7f1cc1af",
+    "internal/screen/infopanel.go": "2af4ec8642c320a22e91f26b5812fe7429366f534efec9ad43b0f6535ce29897",
+    "internal/screen/intro.go": "efd2b13aaee7c275ca3b2fbf221084b7e81f96fece083842d92c0e50a2c38bc2",
+    "internal/screen/list.go": "7ce2f221e1cb63aab55034d4d4c91265c072837fbf6cf792e035a086a55eaab2",
+    "internal/screen/listscreen.go": "3a124154969c283b7bb1bfbc0bf699c6e1c3244c21f150cee40d38efb43cdf3c",
+    "internal/screen/listtabs.go": "6df9f25d64038decf111fece8410b37394fbda625a05e47ad9f64633dcdcd438",
+    "internal/screen/maingame.go": "0394a5e71039ac3b1fc8b6b40b03bfd35f8c7cf261502e54990d2e85e4a68738",
+    "internal/screen/mainmenu.go": "a3380b0e891f7b8d2d441a9855c0ba16e0d3a5d6c97b27a5f3b6b95cda36622b",
+    "internal/screen/manoeuvre.go": "3fdd0a741481b25d00d768f6510112d1b6a70e179950d3451d6a8554bc6485b5",
+    "internal/screen/messagebox.go": "4cfc2933db4f2122f0bd77f1c4094e67afb42f4c561fd049556013671aef80a1",
+    "internal/screen/occupyask.go": "c8cdf7e919f776d75a28c343d9d0a7b6d53b19fe297af2ed2deb69fe11ea873d",
+    "internal/screen/phezzanreport.go": "6063b4961ce6c7f22f98136e824b33431853564db507f9600eaf4b9ab35fe83c",
+    "internal/screen/planet_frame.go": "f8cad220d72e8468a62478c18319716eb5d2c145b9b2ba6b4c6b8d7b4cc674fb",
+    "internal/screen/planetinfo.go": "51cd51e296f86985190e826eecda26f06ada8ecc7f3df8339c203b442c8d78e0",
+    "internal/screen/productionpanel.go": "98918c48285776a604ad49e0117de3df3d0edf9f57372c943f92f8ed5f841fa6",
+    "internal/screen/regioncolours.go": "f7489cfb55e60cfd24774701d251ca10451c59da1f95ee7f56847c43dad30179",
+    "internal/screen/regioninfo.go": "a48631ea0d702a6c67e45a83c562d073002b80c0314545da321e0f2f2d15d0d9",
+    "internal/screen/regionpanel.go": "6f4367ae8e36a8143a6f2c68d9ea826305f3cfe38f63130230a40d233be64ea5",
+    "internal/screen/reportpanel.go": "89d62a07a97fdd60096a1d510ca2c59892aec4c8d518f02fd0027e8050d36d22",
+    "internal/screen/settlement.go": "d173b6ba627fe4c1189e437fc9b05219105bdfd2afc25cae2e2e525679918860",
+    "internal/screen/slotlist.go": "36df376835d19ae2d596b51088672c60966a1844a052d6eccd09982bb3ed6242",
+    "internal/screen/standby.go": "3a7e032ffc83190c09a754665ce0c3192c5ee6ef5a20774aaabce5bbead328be",
+    "internal/screen/supplypanel.go": "97063012b7d97a233618b61f3338808cd2b7e3d2d4b97f97924b0c6f214beb6b",
+    "internal/screen/turnwindow.go": "49d555416fde97b7afe410c910810d982aed43bd662df9a4d1e50173190442b7",
+    "internal/screen/unitpanel.go": "396d2bdd3f322b7e1e20a54cba68b6ac29335ed7d09d51097b4b03e27db40550",
+    "internal/screen/victoryreport.go": "5eda8019dfc5c7d5d603a903bc96a99c87369399ef572e7040b5a4677410e7d6",
+    "internal/ui/bevel.go": "241979e35fae95d63a6c3dfcb699e61d2eec5fbf97093ce76849e8106eb3583c",
+    "internal/ui/button.go": "62a17a98b3a3bc3795b2ef45a26de5eeab6ed68e1f81a86ad70a764e6c714de3",
+    "internal/ui/cursor.go": "f29019b8921a4076109be139a1790833a56533cc08d88b25c664891c7a69499f",
+    "internal/ui/frameblk.go": "87d4b6607889a59a24cdd93c82a23e712fbbdad30737b396aefe89a9e20cfd4c",
+    "internal/ui/tabs.go": "2651f2378630205921d2c97769fef232e5d411ac7f8e8c9139dff2c3bf616545",
+    "internal/ui/textbuf.go": "20df200f73f11af5cb280fdb7970703e6c654905a04f2d0d88384de539ec1d26",
+    "internal/ui/textbufdraw.go": "d0c97ffdc9d1b9190880260534fde442ffc097bff84a0a80b2bd37b8b567a754",
+    "internal/ui/textprintf.go": "3721ab0bdc7b4e6b155cbb470f669942c61dfcbe7b836348bd7f3452ecfb3cde",
+    "internal/ui/textwindow.go": "ea1191ff9ca25d7196502df96d2e7d82fe94acb28bd142cbd0a577d2f2f45d14",
+    "internal/ui/widen.go": "9ff6937d50e54bfbf3c9c9a70f6e729cac92da619359f7d29ca71c7e59d2e8d3"
+  },
+  "tools": {
+    "tools/scripts/scout_hd_gui.py": "a84d649a55b0b00e4e5c3df0b4766c8588030ee6fc4744dfb251ab9ae713c0b7",
+    "tools/scripts/battle_crash_gui.py": "6247c283a1767268704f2ba420c76514e67fd1cd263a6db37e60cec4e804008d",
+    "tools/scripts/prepare_hd_release.py": "d69629c2a0d631e1bd951b8e98797f204f217ac6f71d9c2ddef1d13ff463cb47",
+    "cmd/hd-pack/main.go": "9aaeb618abffd3efa29db6a424562999033d909ff266bcf5f93a63127ad90a53",
+    "internal/presentation/release.go": "567f035bc24209368ccbe656f1f05ac443059b4ad5979d2182ba4a98b1597150"
+  },
+  "release_art": {
+    "path": "workplace/scout170/release-art",
+    "packed_manifest_sha256": "5b5b0d1ac53d26577042f4c228b9ea7f06ffec69b2d1903cafa3f02aca9cfcd5",
+    "face_manifest_sha256": "d784376a0a6ae4e11e63a9e5ac976c15f0d010c8e3dd52bda49b94fb79eb095f",
+    "count": 83,
+    "before_bytes": 109880634,
+    "after_bytes": 7392131,
+    "original_master_files_unchanged": true,
+    "other_art_unchanged": true,
+    "rgba_comparison_count": 83,
+    "rgba_different_pixels": 0,
+    "check_command": "tools/go.sh run ./cmd/hd-pack -orig /orig -art workplace/poster166/extracted/squashfs-root/usr/bin/art -out workplace/scout170/release-art/face -check",
+    "check_exit": 0
+  },
+  "binaries": {
+    "workplace/scout170/gin3-r2": "d618ecda9399d2275c827dcbc04898ba9538023b6b2393d12555b6b219bd57d8",
+    "workplace/scout170/gin3-windows.exe": "555a8e31950e8ccd7094f3e0d7926a3bea4a92545c7ef1e3802dad72c5877cbc",
+    "workplace/scout170/gin3": "a2942e7645f257367477451879745cfe091d74af0df58fadf3b862c43162aa5d"
+  },
+  "evidence": {
+    "docs/internals/data/battle-sprite-priority.json": "4540cb1002bf37cf7f927cd91349d3910cf59b66b4d06ee24c893a84768b5e29"
+  },
+  "tests": {
+    "command": "LOGH3_GUI_IMAGE=logh3-ebiten:20261030-r169 tools/gui.sh test -p 2 ./cmd/... ./internal/...",
+    "pass_packages": 16,
+    "no_test_packages": 5,
+    "exit": 0,
+    "extra": [
+      "TestFontPagesAreDeferredBoundedAndChecked",
+      "TestScoutOrderDeploysDetachment"
+    ]
+  },
+  "limits": [
+    "No new original-game oracle run: dedicated dosgolem-logh3 checkout absent; existing indexed static evidence used for P sprite initialization.",
+    "P foreground icon, 250 vision hint and camera restore are user-requested remake UI. No original selection-screen parity claim.",
+    "Normal battle sample completes two turns and planet attack, not a new fleet-versus-fleet animation acceptance.",
+    "Three poster sets, five quote groups/five locales, full 300s wrap, save/load and restart sampled on candidate1; final candidate2 differs only in active P glyph display.",
+    "Profiles are single warm-cache Xvfb/software-GL observations with intro/audio off and bounded Go heap/GC. Before uses extracted shipped ELF to exclude AppImage extraction; not native Windows or physical hardware latency.",
+    "Windows cross-build only; no new native Windows or macOS verification, new three-platform release or tag change.",
+    "Round169 Windows crash root cause remains unknown; issue48 not closed."
+  ]
+}
