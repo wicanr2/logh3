@@ -2,14 +2,14 @@
   "version": "v.1.6.5-20261102",
   "passed": true,
   "rights": "含原版與衍生音畫，只限本機完整版；未公開上傳",
-  "head": "caca2b8e3fd12fcfea5a37274d3a1b32390747bc",
-  "branch": "fix/new-game-first-battle",
+  "head": "0f6d076749a1e933930d8bbd83a6ce1a6025e6f3",
+  "branch": "main",
   "product_sources_clean": true,
   "working_tree_at_prepare": "",
   "inputs": {
     "path": "workplace/package92-v.1.6.5-20261102-release172/INPUTS.json",
     "bytes": 434015,
-    "sha256": "c35ce7e6318cf88f295bc56a3370b6e74ded4b1c62211f518c4f28a3c38740b1"
+    "sha256": "0bd43d637d5030ecb2a481795d33ed2d2687a2f257b51c5c549500edd181d087"
   },
   "source_files": 1665,
   "common_files": 652,
@@ -17,18 +17,18 @@
   "artifacts": [
     {
       "path": "dist-all/v.1.6.5-20261102/full/LOGH3-v.1.6.5-20261102-windows-amd64.zip",
-      "bytes": 372490553,
-      "sha256": "afe51a9ecb06939ff0fa6cf7763a0dc6723c498578df5043131bb3ab50a34e62"
+      "bytes": 372490554,
+      "sha256": "6dd88f144cb70ea8b4eec63420edb59ae276f0ddc562fc00126cd6bb1bc50eaa"
     },
     {
       "path": "dist-all/v.1.6.5-20261102/full/LOGH3-v.1.6.5-20261102-macos-universal.zip",
-      "bytes": 382393230,
-      "sha256": "628aac23a6f780a1f245294806ace2cfe12518b80b785a3c5c161088babf93ac"
+      "bytes": 382393235,
+      "sha256": "c21d77ece7cd1f2575b7a53fc3ffcf0a354315557d9804d403e665e1f273503d"
     },
     {
       "path": "dist-all/v.1.6.5-20261102/full/LOGH3-v.1.6.5-20261102-linux-x86_64.AppImage",
       "bytes": 372476408,
-      "sha256": "70d017ff94aa948fa00f610944dc2726148655e00d716463e16dcf29c228e9d2"
+      "sha256": "4220ced089e26fae7f42b1021a8e5029a093c4d08187e71b84f8ba95cd3520b1"
     }
   ],
   "checks": {
@@ -125,7 +125,7 @@
     "appdir_manifest": {
       "path": "workplace/release172/APPDIR-MANIFEST.json",
       "bytes": 139883,
-      "sha256": "3fb1beaa9db5c2363984f383a077d13f5662e341337ec510a88cf76e3cc323b0"
+      "sha256": "e901fe7807f8bedfe3f1e8a38b3b4298afb8a1b6e6533b75241b3182846067da"
     },
     "dependencies": {
       "libraries": {
@@ -257,8 +257,8 @@
     "no_tests": 5,
     "log": {
       "path": "workplace/release172/standard-tests.txt",
-      "bytes": 1122,
-      "sha256": "72239588a241feb7222de634f1cec538aaf179437ffce0dea9642e69d2310a57"
+      "bytes": 1125,
+      "sha256": "3bcc30e3c2bc09d71d238b667b24f4621a9194ef56e07b11b0150a5b7e5d7f0c"
     },
     "scope": "不等同DOS全局同態或Windows真機驗收"
   },
@@ -328,53 +328,53 @@
   "player_receipts": {
     "linux-alliance": {
       "path": "workplace/release172/player-linux/RESULT.json",
-      "bytes": 1175275,
-      "sha256": "66e921ed5221e9b72665c5548a3c22b1ef7d172e4134bd149241d9d05a38fa44"
+      "bytes": 1143691,
+      "sha256": "fb1b745432be2ed452693cf86e3e497fb9904d14e8c05e0455074f5a2450ec75"
     },
     "linux-empire": {
       "path": "workplace/release172/player-empire/RESULT.json",
-      "bytes": 256463,
-      "sha256": "7a117eac9bce686be467abfbf079efef3e9154c7891164cb21c8c6f45f22daf5"
+      "bytes": 254106,
+      "sha256": "ca7e4f79092ec3f2198183a7cf95cefedf19e7b8049f22ac8f24780f73e52153"
     },
     "windows-wine": {
       "path": "workplace/music69-windows/full172/player-windows/RESULT.json",
-      "bytes": 251242,
-      "sha256": "780dc3c44f5ec6102d28594db0bde650892da47732e173d1df334e633cee1f67"
+      "bytes": 241687,
+      "sha256": "894ebe0a6f20625e00a5b1a3e97f8a0821244943f9902022998eba56912acb38"
     },
     "linux-battle": {
       "path": "workplace/release172/battle-linux/RESULT.json",
-      "bytes": 723251,
-      "sha256": "983e0708cf985b2a5c19628be7e5815acda11749a88b758b229976f8b15fd774"
+      "bytes": 723253,
+      "sha256": "b5d58618a3f192eb6962302c3119e251c85e94e935ec621572ede633bacd5f0b"
     },
     "linux-garrison": {
       "path": "workplace/release172/garrison-linux/RESULT.json",
-      "bytes": 653162,
-      "sha256": "3aa094de21906b24f626c651f1525f07a5b2662d3b61dd767353f1aa8f14fb34"
+      "bytes": 653207,
+      "sha256": "d2ddb8f14a6e6edfdaba64b5fad69180e90c1001a77447c28e1dc6e2572a87f0"
     },
     "linux-newgame-empire": {
       "path": "workplace/release172/newgame-empire/RESULT.json",
       "bytes": 34311,
-      "sha256": "5296779fd88e7a06bce2506034c22363ddd853acea9d532361b3b8b90d22f060"
+      "sha256": "6c3dfe058e4f5a3c3ffddf9a2f44251788000e38109c3ed0257b6d90166b09bc"
     },
     "linux-newgame-alliance": {
       "path": "workplace/release172/newgame-alliance/RESULT.json",
-      "bytes": 33107,
-      "sha256": "cdbf81e37b53596fa2d6699d40eb820cb2362d2dee0e71c3cfc2d0b68d1f01cf"
+      "bytes": 33132,
+      "sha256": "51f51bd2e36606133f7e316b53b5f289591f1356b830f6f2831dba796f6e36ee"
     },
     "windows-newgame-empire": {
       "path": "workplace/music69-windows/full172/newgame-empire/RESULT.json",
       "bytes": 34739,
-      "sha256": "6e504548ea44573b4aededc49bcdd6aa10d8d4353701a978dd6be5d94c65b371"
+      "sha256": "3f770a58f93c2e3e3246c98ce85f96dedb8e5311ce3e66e15027a592a52e4023"
     },
     "windows-newgame-alliance": {
       "path": "workplace/music69-windows/full172/newgame-alliance/RESULT.json",
       "bytes": 33512,
-      "sha256": "1d214bb28777f55c3316f79cf8da35f1a398355f5ddc4fb8cd275d2902c1986c"
+      "sha256": "65e5c409cc14fa6778f603f244ff9a4de69494944ef5391deb41a2bb957b8265"
     }
   },
   "promo": "沿用v.1.6.4推廣片，本版未重錄",
   "generators": {
-    "tools/scripts/new_game_full_receipt.py": "5e3bb858166692bf2cbc98208cb8558131a9633046a435f1ca74e0a62f1fa5bf",
+    "tools/scripts/new_game_full_receipt.py": "4abea5b680b0cb36643422ffa5510bf2672ef90040524ac381e1f6ec7d5feeb4",
     "tools/scripts/new_game_battle_gui.py": "b9b5711c32ed8fd5bff660d45ae3f778198980cc6e38808157dc5020e8e2308c",
     "tools/scripts/release_battle_gui.py": "d5fa1becdce9ead3c0e66d1022268b74fc7a8c65682495ba1b0a72c312864d31",
     "tools/scripts/release_garrison_gui.py": "f8db320400fea8fa7270ad43101f277961bbd366b5c3088d9e24b7e084614e54",

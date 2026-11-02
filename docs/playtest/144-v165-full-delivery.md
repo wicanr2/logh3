@@ -2,21 +2,21 @@
 
 2026-11-02，第172輪。修正內容見[驗收143](143-new-game-first-battle.md)，機器收據見[v165-full-delivery.json](../internals/data/v165-full-delivery.json)。
 
-從分支`fix/new-game-first-battle`的提交`caca2b8e`乾淨建置，建置時工作樹沒有未提交修改。來源1665檔；652個共用素材與v1.6.4逐檔相同，只有程式與說明檔改變。推廣片沿用v1.6.4，本版未重錄。
+從main的提交`0f6d0767`乾淨建置，建置時工作樹沒有未提交修改。`gin3.exe`與Linux的`gin3`和前一次從`caca2b8e`的建置逐位元組相同，封包只差內嵌的輸入雜湊。來源1665檔；652個共用素材與v1.6.4逐檔相同，只有程式與說明檔改變。推廣片沿用v1.6.4，本版未重錄。
 
 ## 封包
 
 | 平台 | 檔案 | bytes | SHA-256 |
 |---|---|---:|---|
-| Windows amd64 | `LOGH3-v.1.6.5-20261102-windows-amd64.zip` | 372490553 | `afe51a9ecb06939ff0fa6cf7763a0dc6723c498578df5043131bb3ab50a34e62` |
-| Linux x86_64 | `LOGH3-v.1.6.5-20261102-linux-x86_64.AppImage` | 372476408 | `70d017ff94aa948fa00f610944dc2726148655e00d716463e16dcf29c228e9d2` |
-| macOS通用 | `LOGH3-v.1.6.5-20261102-macos-universal.zip` | 382393230 | `628aac23a6f780a1f245294806ace2cfe12518b80b785a3c5c161088babf93ac` |
+| Windows amd64 | `LOGH3-v.1.6.5-20261102-windows-amd64.zip` | 372490554 | `6dd88f144cb70ea8b4eec63420edb59ae276f0ddc562fc00126cd6bb1bc50eaa` |
+| Linux x86_64 | `LOGH3-v.1.6.5-20261102-linux-x86_64.AppImage` | 372476408 | `4220ced089e26fae7f42b1021a8e5029a093c4d08187e71b84f8ba95cd3520b1` |
+| macOS通用 | `LOGH3-v.1.6.5-20261102-macos-universal.zip` | 382393235 | `c21d77ece7cd1f2575b7a53fc3ffcf0a354315557d9804d403e665e1f273503d` |
 
 位置在`dist-all/v.1.6.5-20261102/full/`，只限本機，未公開上傳。
 
 ## 驗收
 
-九條都是實際封包的正常入口，輸入只有滑鼠與鍵盤。AppImage走自動素材與預設XDG存檔，Windows用ZIP解出的`gin3.exe`。
+九條都在這次重打的實際封包上重跑，走正常入口，輸入只有滑鼠與鍵盤。AppImage走自動素材與預設XDG存檔，Windows用ZIP解出的`gin3.exe`。
 
 | 路徑 | 平台 | 結果 |
 |---|---|---|
