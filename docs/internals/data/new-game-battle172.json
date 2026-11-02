@@ -6,16 +6,18 @@
  "status": "limited; 新遊戲第一場不崩潰且有配置，不宣稱與原版同態",
  "comparison_level": "nearby-state",
  "sources_sha256": {
+  "internal/game/activeseat.go": "3eb13606818a574a760ec2d9388399f78d7b8b55f3771cddc53291e22505e6c4",
   "internal/game/annihilation.go": "73071ef59503147c4c876879c998dd362d685cc4ae541952b6952fc37e4bf6fb",
   "internal/game/battle.go": "871acae8eb5b5e448702c49e50a00eae6466dd450a50eb33c1c68bf4cb0565a2",
   "internal/game/fleetarrival.go": "ed2da7a6c2c17f9fdab099d70aad4f9e8df8068599e46d821e9506c23bc9290b",
-  "internal/game/fleetsave.go": "4d74694c3afbd3ad0346806ef550a11a4687e4aacd5d04af9b3c430a9e57a825",
-  "internal/game/game.go": "2196a5f9ac66db95658d575ed3e9c8fac960857544e6c08cd8596e4484283b58",
-  "internal/game/newgamebattle_test.go": "0d6038359abb6c5b469e64640046bd547ca00d1b092a8279d2fa23838b476c14",
+  "internal/game/fleetsave.go": "9e46434e342604aa7f3bea0174392d8bd236de7b1f7e29eac0db716d71a855ff",
+  "internal/game/game.go": "c97cbec4453cb205dca31aa3d7ec79f4bbfc420261bd723ce680f641d291b24a",
+  "internal/game/loadfaction.go": "e91fe4577440ac397996817d9464c8f2c710426549b35713bd66ec870b1baf70",
+  "internal/game/newgamebattle_test.go": "b0854017d95ccaad0d8d0470708d43e938f203738ee43625aafbd4406f8b7ba4",
   "internal/game/newgamebattle_normal_test.go": "1ce8dc9515a704c93f06b3e7798206b8bf5068986fbcf26b608ab2ff7fa2f89c",
   "internal/rules/annihilation.go": "26999de1f7b13de9ca026fa0797503fe611edfc74e0f2f88fc8b6a0b0a0b8ac0",
   "internal/rules/fleetarrival.go": "ac48d5c6c79f3f8d6d22bda7c4e20f7be2c00871794fa3b6baf2d96ac9fadfd7",
-  "tools/scripts/new_game_battle_gui.py": "38569b2e8847484e8e40ebdb5c1b19be40601b7712e0ba3dbf445dcd8a4e0fd0"
+  "tools/scripts/new_game_battle_gui.py": "b9b5711c32ed8fd5bff660d45ae3f778198980cc6e38808157dc5020e8e2308c"
  },
  "original_evidence": {
   "fcmd-base-fleet0.bin": {
@@ -62,29 +64,29 @@
   "wine_image": "yuan-wine-verify:noble-r2（wine-9.0，專案預設kol-wine-verify映像本機已不存在）"
  },
  "standard_tests": [
-  "ok  \tgithub.com/wicanr2/logh3/cmd/gin3\t34.736s",
+  "ok  \tgithub.com/wicanr2/logh3/cmd/gin3\t53.106s",
   "?   \tgithub.com/wicanr2/logh3/cmd/hd-pack\t[no test files]",
   "?   \tgithub.com/wicanr2/logh3/cmd/logh3\t[no test files]",
   "?   \tgithub.com/wicanr2/logh3/cmd/mapcolours\t[no test files]",
-  "ok  \tgithub.com/wicanr2/logh3/cmd/music-import\t0.365s",
-  "ok  \tgithub.com/wicanr2/logh3/cmd/music-tool\t0.003s",
+  "ok  \tgithub.com/wicanr2/logh3/cmd/music-import\t0.982s",
+  "ok  \tgithub.com/wicanr2/logh3/cmd/music-tool\t0.010s",
   "?   \tgithub.com/wicanr2/logh3/cmd/oradiff\t[no test files]",
   "?   \tgithub.com/wicanr2/logh3/cmd/play\t[no test files]",
-  "ok  \tgithub.com/wicanr2/logh3/cmd/worklist\t0.022s",
-  "ok  \tgithub.com/wicanr2/logh3/internal/ai\t0.021s",
-  "ok  \tgithub.com/wicanr2/logh3/internal/asset\t9.554s",
-  "ok  \tgithub.com/wicanr2/logh3/internal/audio\t0.016s",
-  "ok  \tgithub.com/wicanr2/logh3/internal/bootstrap\t32.021s",
-  "ok  \tgithub.com/wicanr2/logh3/internal/font\t0.022s",
-  "ok  \tgithub.com/wicanr2/logh3/internal/game\t58.565s",
-  "ok  \tgithub.com/wicanr2/logh3/internal/gfx\t0.025s",
-  "ok  \tgithub.com/wicanr2/logh3/internal/localize\t0.257s",
-  "ok  \tgithub.com/wicanr2/logh3/internal/presentation\t7.216s",
-  "ok  \tgithub.com/wicanr2/logh3/internal/rules\t2.180s",
-  "ok  \tgithub.com/wicanr2/logh3/internal/screen\t1.152s",
-  "ok  \tgithub.com/wicanr2/logh3/internal/ui\t0.046s"
+  "ok  \tgithub.com/wicanr2/logh3/cmd/worklist\t0.075s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/ai\t0.054s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/asset\t24.589s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/audio\t0.054s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/bootstrap\t51.181s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/font\t0.069s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/game\t75.560s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/gfx\t0.029s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/localize\t0.710s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/presentation\t15.799s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/rules\t4.568s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/screen\t2.623s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/ui\t0.126s"
  ],
- "standard_tests_sha256": "88a626774a149478a8c54efc5a08db65bd3798047e0dc232f3b2a3b1814c9671",
+ "standard_tests_sha256": "fe2a442da603e0c278548365c0a9920a74cb978051bd8849e821fe82d11a0f92",
  "runs": [
   {
    "name": "before-linux-empire",
@@ -126,6 +128,9 @@
    "returncode": 2,
    "battle_region": null,
    "battle_after_load": null,
+   "entry_view": null,
+   "own_flagships": null,
+   "camera_on_player": null,
    "saved_sha256": null,
    "last_state": null,
    "trace_sha256": "b0971797d0d3442d24d1f42c5c7783904f3009168e30287f84d8dff94ab5c08b",
@@ -186,6 +191,9 @@
    "returncode": 2,
    "battle_region": null,
    "battle_after_load": null,
+   "entry_view": null,
+   "own_flagships": null,
+   "camera_on_player": null,
    "saved_sha256": null,
    "last_state": null,
    "trace_sha256": "a6a59914bc0863ddc166e4bac20153f31462a4c31a8e37b787a7856cd5757e23",
@@ -207,10 +215,10 @@
    "inputs": 44
   },
   {
-   "name": "after-linux-empire",
+   "name": "r2-after-linux-empire",
    "binary": "工作樹建置的gin3-fixed",
-   "binary_sha256": "a75530be2d7870b0cb04c76d7c2e37a64441b2a0282326606e9e08de13e7ea09",
-   "driver_sha256": "38569b2e8847484e8e40ebdb5c1b19be40601b7712e0ba3dbf445dcd8a4e0fd0",
+   "binary_sha256": "6c5098ddee0382b9cba4db0f2f9873962db22378c29c98c39b990d979db8464a",
+   "driver_sha256": "b9b5711c32ed8fd5bff660d45ae3f778198980cc6e38808157dc5020e8e2308c",
    "command": [
     "/src/workplace/newgame172/gin3-fixed",
     "-intro=false",
@@ -221,9 +229,9 @@
     "-art",
     "/src/workplace/release171/extracted/squashfs-root/usr/bin/art",
     "-save",
-    "/src/workplace/newgame172/after-linux-empire/save",
+    "/src/workplace/newgame172/r2-after-linux-empire/save",
     "-frame-trace",
-    "/src/workplace/newgame172/after-linux-empire/FRAMES.jsonl",
+    "/src/workplace/newgame172/r2-after-linux-empire/FRAMES.jsonl",
     "-graphics",
     "hd",
     "-scale",
@@ -246,6 +254,17 @@
    "returncode": null,
    "battle_region": 15,
    "battle_after_load": true,
+   "entry_view": [
+    2,
+    78
+   ],
+   "own_flagships": [
+    [
+     256,
+     1740
+    ]
+   ],
+   "camera_on_player": true,
    "saved_sha256": {
     "ADMIRAL.DT0": "a5bd2fc243138952a32ba2d63bb11e03542e6093c6096b862ef0a89069659f07",
     "FLEET.DT0": "8ec28d11cc07966013a0a9ffff10bdc1cc1c1c4d5f29da276240b26ac00c116f",
@@ -253,10 +272,10 @@
     "SAVEDATA.IDX": "03d34167b821868f9e023ac373a7d502b4e2f127400c76b533c7f66e1458782e",
     "SHIP.DT0": "8664c3ffcb1ce4eee500f4832e0330a6edece521057add7e695210a51690762f",
     "STELLAR.DT0": "a2420d618d1dccc2f67423a8259d1528f2436b06b592d5903373e6f2a254264d",
-    "WORK.DT0": "8a3579c2c3bf263551106be5fb3a59afc457aedb432598c5a690e5f2bd2021e7"
+    "WORK.DT0": "fd4fe88bb475a2409c58ebcba2e9ed99db1c5e81db165068c167bd2d170cd283"
    },
    "last_state": "StateBattle",
-   "trace_sha256": "0f70f417efbb3013d1ad30c34c1dc120d947b6daf92562603223588f04797f92",
+   "trace_sha256": "5070fc500ebcdf07fc93cd4cf7834a1b0a537abe55fbd543461352f62ff2396d",
    "log_sha256": "27868a001c059f5870dffdf58d3ebc774190c6c8cfd95a3ce0cab386224c741f",
    "captures": [
     {
@@ -281,7 +300,7 @@
      "name": "battle-turn-02",
      "state": "StateBattle",
      "turn": 2,
-     "sha256": "0e5c6664852d9a5afbdb8d703fa0d16366a868b383fc1f2f9af8758c5aa55cb6"
+     "sha256": "93e3c626796696dfcb929a9d1048f112535ef9d7a856fab27990ce35b7484244"
     },
     {
      "name": "battle-turn-03",
@@ -293,7 +312,7 @@
      "name": "battle-turn-09",
      "state": "StateBattle",
      "turn": 9,
-     "sha256": "93e3c626796696dfcb929a9d1048f112535ef9d7a856fab27990ce35b7484244"
+     "sha256": "d85abbe722c87e876a09ca9b51ee3376a6c4c97a00097f6747dd0aad224e6b1d"
     },
     {
      "name": "after-battle",
@@ -317,10 +336,10 @@
    "inputs": 74
   },
   {
-   "name": "after-linux-alliance",
+   "name": "r2-after-linux-alliance",
    "binary": "工作樹建置的gin3-fixed",
-   "binary_sha256": "a75530be2d7870b0cb04c76d7c2e37a64441b2a0282326606e9e08de13e7ea09",
-   "driver_sha256": "38569b2e8847484e8e40ebdb5c1b19be40601b7712e0ba3dbf445dcd8a4e0fd0",
+   "binary_sha256": "6c5098ddee0382b9cba4db0f2f9873962db22378c29c98c39b990d979db8464a",
+   "driver_sha256": "b9b5711c32ed8fd5bff660d45ae3f778198980cc6e38808157dc5020e8e2308c",
    "command": [
     "/src/workplace/newgame172/gin3-fixed",
     "-intro=false",
@@ -331,9 +350,9 @@
     "-art",
     "/src/workplace/release171/extracted/squashfs-root/usr/bin/art",
     "-save",
-    "/src/workplace/newgame172/after-linux-alliance/save",
+    "/src/workplace/newgame172/r2-after-linux-alliance/save",
     "-frame-trace",
-    "/src/workplace/newgame172/after-linux-alliance/FRAMES.jsonl",
+    "/src/workplace/newgame172/r2-after-linux-alliance/FRAMES.jsonl",
     "-graphics",
     "hd",
     "-scale",
@@ -356,6 +375,17 @@
    "returncode": null,
    "battle_region": 13,
    "battle_after_load": true,
+   "entry_view": [
+    83,
+    84
+   ],
+   "own_flagships": [
+    [
+     1552,
+     1880
+    ]
+   ],
+   "camera_on_player": true,
    "saved_sha256": {
     "ADMIRAL.DT0": "73a03c24085b1e68ebdf67604b7fc2507c927ad19878919543dc87a47dfe0e20",
     "FLEET.DT0": "b492d4ff64cb2ea12c9e7be8eda2449eea09650a27a0272fd8eb5b114ac91585",
@@ -363,10 +393,10 @@
     "SAVEDATA.IDX": "03d34167b821868f9e023ac373a7d502b4e2f127400c76b533c7f66e1458782e",
     "SHIP.DT0": "0763803f104fa78d5275cf63206adcdc669dfed2f91fceedcc84db12abe26a79",
     "STELLAR.DT0": "749bdbb81faef0bf50b850859bfe61977ed456c6872e385d6f48bdf3c573493e",
-    "WORK.DT0": "ea72b54d9fd90aa1be8c3464e5d877ab08c985c4962915d606658f1e68087b18"
+    "WORK.DT0": "e50eefb2e89b6d492eec9df51ce53f134fa2f24194485cfacc8051671c75dfb9"
    },
    "last_state": "StateBattle",
-   "trace_sha256": "39f22c6065a1f85ee4e2659c170e5efa6f28d155ca274fbb60317b9ccbe9a44e",
+   "trace_sha256": "123897cbcb055f6537d55f65007b50e60ddcc176e61d89ad7a86e99f0b4917e5",
    "log_sha256": "27868a001c059f5870dffdf58d3ebc774190c6c8cfd95a3ce0cab386224c741f",
    "captures": [
     {
@@ -385,31 +415,31 @@
      "name": "battle-entry",
      "state": "StateBattle",
      "turn": 1,
-     "sha256": "3d4eb1da5a26ce444c9a7c1cfa270565384ac879406c170a05500235ae4e9107"
+     "sha256": "9e504ccfffe66403f7460de5c6d55fa090de534e5f17ddbd46afffcfc6eda9b5"
     },
     {
      "name": "battle-turn-02",
      "state": "StateBattle",
      "turn": 2,
-     "sha256": "7c7aa7e2325540c1c42915448fe3fc6895ee49a7f31531164d870b5ee1838686"
+     "sha256": "8208c472311d1fe03dfede92d761b102a0cb11ab20e8f0e5321152f3d51d7711"
     },
     {
      "name": "battle-turn-03",
      "state": "StateBattle",
      "turn": 3,
-     "sha256": "e8ed4ace41379ac98a7b72f09ce319e51b59a25f493fc4d2f55d3640298d0c7a"
+     "sha256": "8208c472311d1fe03dfede92d761b102a0cb11ab20e8f0e5321152f3d51d7711"
     },
     {
      "name": "battle-turn-09",
      "state": "StateBattle",
      "turn": 9,
-     "sha256": "a955f510912cce3e74daa53e62a8c56d5d208ee089d5578824adac0f5307d6e5"
+     "sha256": "8208c472311d1fe03dfede92d761b102a0cb11ab20e8f0e5321152f3d51d7711"
     },
     {
      "name": "after-battle",
      "state": "StateCommandPhase",
      "turn": null,
-     "sha256": "2aced1e3e73583d80709425ddfbbacce0bd966a5aac36c6a8f1fd1ee1785ac0a"
+     "sha256": "bb8e6a1db0cb9d6da4d6323546b5b2225401de08e0cdacadc28692552a5efff1"
     },
     {
      "name": "loaded",
@@ -467,6 +497,9 @@
    "returncode": 2,
    "battle_region": null,
    "battle_after_load": null,
+   "entry_view": null,
+   "own_flagships": null,
+   "camera_on_player": null,
    "saved_sha256": null,
    "last_state": null,
    "trace_sha256": "52a536c2f45c403a54b20f750e7bc45d2dfaa7d3113cf42ce2675d314d9fe379",
@@ -528,6 +561,9 @@
    "returncode": 2,
    "battle_region": null,
    "battle_after_load": null,
+   "entry_view": null,
+   "own_flagships": null,
+   "camera_on_player": null,
    "saved_sha256": null,
    "last_state": null,
    "trace_sha256": "66477ad4ac227724c4b546150f81492e08555c5059fdeebfff8721eeb2138703",
@@ -549,10 +585,10 @@
    "inputs": 44
   },
   {
-   "name": "after-windows-empire",
+   "name": "r2-after-windows-empire",
    "binary": "工作樹交叉編譯的gin3-fixed.exe，Wine",
-   "binary_sha256": "f6323d2b9008716dcb777df5614f27c20aac7adc2a848270407d81c2b2b3632e",
-   "driver_sha256": "38569b2e8847484e8e40ebdb5c1b19be40601b7712e0ba3dbf445dcd8a4e0fd0",
+   "binary_sha256": "eb76e891b4ee1fff17eb2356a47050a6590a93d32462cacf9089c1eb7f57090f",
+   "driver_sha256": "b9b5711c32ed8fd5bff660d45ae3f778198980cc6e38808157dc5020e8e2308c",
    "command": [
     "wine",
     "Z:\\out\\gin3-fixed.exe",
@@ -564,9 +600,9 @@
     "-art",
     "Z:\\pkg\\art",
     "-save",
-    "Z:\\out\\after-windows-empire\\save",
+    "Z:\\out\\r2-after-windows-empire\\save",
     "-frame-trace",
-    "Z:\\out\\after-windows-empire\\FRAMES.jsonl",
+    "Z:\\out\\r2-after-windows-empire\\FRAMES.jsonl",
     "-graphics",
     "original",
     "-scale",
@@ -589,6 +625,17 @@
    "returncode": null,
    "battle_region": 15,
    "battle_after_load": true,
+   "entry_view": [
+    2,
+    78
+   ],
+   "own_flagships": [
+    [
+     256,
+     1740
+    ]
+   ],
+   "camera_on_player": true,
    "saved_sha256": {
     "ADMIRAL.DT0": "a5bd2fc243138952a32ba2d63bb11e03542e6093c6096b862ef0a89069659f07",
     "FLEET.DT0": "8ec28d11cc07966013a0a9ffff10bdc1cc1c1c4d5f29da276240b26ac00c116f",
@@ -596,11 +643,11 @@
     "SAVEDATA.IDX": "03d34167b821868f9e023ac373a7d502b4e2f127400c76b533c7f66e1458782e",
     "SHIP.DT0": "8664c3ffcb1ce4eee500f4832e0330a6edece521057add7e695210a51690762f",
     "STELLAR.DT0": "a2420d618d1dccc2f67423a8259d1528f2436b06b592d5903373e6f2a254264d",
-    "WORK.DT0": "8a3579c2c3bf263551106be5fb3a59afc457aedb432598c5a690e5f2bd2021e7"
+    "WORK.DT0": "fd4fe88bb475a2409c58ebcba2e9ed99db1c5e81db165068c167bd2d170cd283"
    },
    "last_state": "StateBattle",
-   "trace_sha256": "e25d18224ed5356049f358f91ae97ee2ee9ae91bc75f960932d808f4bbcaf8ec",
-   "log_sha256": "201b8d1ff9d73df1739f79a612b4a9b5472f55ac0e651e47e6af4252d0e3e811",
+   "trace_sha256": "4a33a116869bb766635506d0db4d5df7fbad2216bf314d0eb4f71a422c4af907",
+   "log_sha256": "2ec7017df9bc57ba172d551bb3130aa73bd76313551a9ff4c6fab88decaf8266",
    "captures": [
     {
      "name": "strategy",
@@ -630,19 +677,19 @@
      "name": "battle-turn-03",
      "state": "StateBattle",
      "turn": 3,
-     "sha256": "a5359c729d08d2561f0f7e8eb2d7618b47eea0d6a1bf7e4a2c07f1e960b5c0ab"
+     "sha256": "41c784b660d95c6ad5c3d93ba2a75edf5988c1747361cdf0ae3581b7928d08b2"
     },
     {
      "name": "battle-turn-09",
      "state": "StateBattle",
      "turn": 9,
-     "sha256": "91b44d656b42247b29a98e4bb4f2a06cb2d2b2e0156067ab082c552c287fe7cc"
+     "sha256": "41c784b660d95c6ad5c3d93ba2a75edf5988c1747361cdf0ae3581b7928d08b2"
     },
     {
      "name": "after-battle",
      "state": "StateCommandPhase",
      "turn": null,
-     "sha256": "91b44d656b42247b29a98e4bb4f2a06cb2d2b2e0156067ab082c552c287fe7cc"
+     "sha256": "41c784b660d95c6ad5c3d93ba2a75edf5988c1747361cdf0ae3581b7928d08b2"
     },
     {
      "name": "loaded",
@@ -660,10 +707,10 @@
    "inputs": 74
   },
   {
-   "name": "after-windows-alliance",
+   "name": "r2-after-windows-alliance",
    "binary": "工作樹交叉編譯的gin3-fixed.exe，Wine",
-   "binary_sha256": "f6323d2b9008716dcb777df5614f27c20aac7adc2a848270407d81c2b2b3632e",
-   "driver_sha256": "38569b2e8847484e8e40ebdb5c1b19be40601b7712e0ba3dbf445dcd8a4e0fd0",
+   "binary_sha256": "eb76e891b4ee1fff17eb2356a47050a6590a93d32462cacf9089c1eb7f57090f",
+   "driver_sha256": "b9b5711c32ed8fd5bff660d45ae3f778198980cc6e38808157dc5020e8e2308c",
    "command": [
     "wine",
     "Z:\\out\\gin3-fixed.exe",
@@ -675,9 +722,9 @@
     "-art",
     "Z:\\pkg\\art",
     "-save",
-    "Z:\\out\\after-windows-alliance\\save",
+    "Z:\\out\\r2-after-windows-alliance\\save",
     "-frame-trace",
-    "Z:\\out\\after-windows-alliance\\FRAMES.jsonl",
+    "Z:\\out\\r2-after-windows-alliance\\FRAMES.jsonl",
     "-graphics",
     "original",
     "-scale",
@@ -700,6 +747,17 @@
    "returncode": null,
    "battle_region": 13,
    "battle_after_load": true,
+   "entry_view": [
+    83,
+    84
+   ],
+   "own_flagships": [
+    [
+     1552,
+     1880
+    ]
+   ],
+   "camera_on_player": true,
    "saved_sha256": {
     "ADMIRAL.DT0": "73a03c24085b1e68ebdf67604b7fc2507c927ad19878919543dc87a47dfe0e20",
     "FLEET.DT0": "b492d4ff64cb2ea12c9e7be8eda2449eea09650a27a0272fd8eb5b114ac91585",
@@ -707,10 +765,10 @@
     "SAVEDATA.IDX": "03d34167b821868f9e023ac373a7d502b4e2f127400c76b533c7f66e1458782e",
     "SHIP.DT0": "0763803f104fa78d5275cf63206adcdc669dfed2f91fceedcc84db12abe26a79",
     "STELLAR.DT0": "749bdbb81faef0bf50b850859bfe61977ed456c6872e385d6f48bdf3c573493e",
-    "WORK.DT0": "ea72b54d9fd90aa1be8c3464e5d877ab08c985c4962915d606658f1e68087b18"
+    "WORK.DT0": "e50eefb2e89b6d492eec9df51ce53f134fa2f24194485cfacc8051671c75dfb9"
    },
    "last_state": "StateBattle",
-   "trace_sha256": "7d4f36d212a5c476926a3e7346c231095c98b80c52815e4f243f8853f8e8ed8d",
+   "trace_sha256": "22a08915c4c5913966bdea01e6c87be3be974824f344a2af1770aaef45bd64d6",
    "log_sha256": "201b8d1ff9d73df1739f79a612b4a9b5472f55ac0e651e47e6af4252d0e3e811",
    "captures": [
     {
@@ -729,31 +787,31 @@
      "name": "battle-entry",
      "state": "StateBattle",
      "turn": 1,
-     "sha256": "0c82349a45614914fefbe412c0a173bb2c22dab4de0de44f1e498a8911cedb26"
+     "sha256": "894d46a55d40ad8d79d0167daddded221b8a427b51f681d1bcc56c76b2dfe518"
     },
     {
      "name": "battle-turn-02",
      "state": "StateBattle",
      "turn": 2,
-     "sha256": "fa8ecb7a4a4697498cffc5f2084c37bf3b32e0e29acb7fff8d09d436d025fb42"
+     "sha256": "11ec14a5b7c5e997563852beec8ebef8eebcb793fef398fe66e456895f845181"
     },
     {
      "name": "battle-turn-03",
      "state": "StateBattle",
      "turn": 3,
-     "sha256": "6a432486407626bc8cf72461ddfba2e1da38cc54b11ffb9c24a17f7aec311f55"
+     "sha256": "11ec14a5b7c5e997563852beec8ebef8eebcb793fef398fe66e456895f845181"
     },
     {
      "name": "battle-turn-09",
      "state": "StateBattle",
      "turn": 9,
-     "sha256": "7ce886ba91916fdf04d8e296a6dd3f91ff2a759c0f94768dc0fd634fedcc88d8"
+     "sha256": "11ec14a5b7c5e997563852beec8ebef8eebcb793fef398fe66e456895f845181"
     },
     {
      "name": "after-battle",
      "state": "StateCommandPhase",
      "turn": null,
-     "sha256": "fa8ecb7a4a4697498cffc5f2084c37bf3b32e0e29acb7fff8d09d436d025fb42"
+     "sha256": "81755e8f5d904dc4371b5028a16e4cf71e945580884865f02904bb111dae2dd8"
     },
     {
      "name": "loaded",

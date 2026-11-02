@@ -32,6 +32,10 @@ game.(*Game).Click(...)
 
 另有一個獨立的舊洞，也是這條路徑測出來的：`disbandFleet`只改typed表，原始表那一列留著。電腦在下一次同步前於同一格重編艦隊時，那一列不算fresh，新艦隊的`Scout`零值被當成池#0，`SyncFleets`回「艦艇池索引0的擁有者／艦種不符現況」。這會讓存檔失敗，也會讓`startBattle`不開戰直接返回。
 
+修掉崩潰之後，同盟新遊戲進場的鏡頭對到帝國艦隊，玩家艦隊不在畫面內。`initBattleWork`用`WORK+0x11`座位表找玩家那一方，而`work-796-01.json`量在主選單之前，`+0C..14`全是零，同盟就被當成座位0的帝國。這條路以前到不了，所以沒有露出來。
+
+原版在主選單之後就寫好這九個byte（[研究61](61-work-staff-is-faction-pairs.md)、[384](384-load-faction-selection.md)）。原版傾印`t260_post.bin`在回合0是`00 00 01 00 01 00 01 00 1F`，與保存事實[30](../internals/30-save-format.md)的帝國列相同。remake的讀檔路徑已經會寫，新遊戲路徑漏了。
+
 ## 原版怎麼配置
 
 原版建艦隊走`297B:03EB(槽, 1)`（[212](212-fleet-composition-template.md)），第二個參數非0就呼叫`297B:08D8(艦隊, 星域, 星域)`（[230](230-composition-change-refresh.md)）。新編艦隊在建立當下就配置，來源與目的都是自己的星域。
@@ -67,6 +71,7 @@ game.(*Game).Click(...)
 | 結論 | 等級 |
 |---|---|
 | 崩潰是`g.slot`為nil造成，路徑如上 | proven |
+| 新遊戲的`WORK+0C..14`帝國列 | proven，`t260_post`回合0傾印；同盟與對戰列沿研究384 |
 | 首都新編艦隊的中心與航向 | proven，兩份原版傾印 |
 | 同一星域多支新編艦隊的配置順序不是表位順序 | strong inference，由`t260_post`的環狀位置推得 |
 | 非首都新編艦隊用待命行星座標 | strong inference，靜態 |

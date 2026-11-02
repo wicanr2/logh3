@@ -17,6 +17,8 @@
 
 修正後四次都走完同一條路：進戰場、打完九回合、回指令畫面、存進度、取進度、再按實行，並進到下一場戰鬥。兩個陣營的七個存檔檔案在Linux與Wine之間逐位元組相同。
 
+驅動器在進場時檢查鏡頭：玩家旗艦要在28×18格的視窗內，四次都通過，帝國(256,1740)對視窗(2,78)，同盟(1552,1880)對視窗(83,84)。這項檢查是目視抓到問題才加的，第一輪同盟進場時鏡頭對到帝國艦隊，原因見研究450。
+
 戰場第1、9回合、戰後地圖與讀回後的畫面已目視：地點名稱正確（帝國艾爾・法西爾、同盟伊謝爾倫），回合數前進，讀回後日期與艦隊都在。敵方在索敵範圍外，所以進場時看不到。
 
 ## 測試
@@ -36,8 +38,10 @@
 | `TestLoadedGameFreshFleetArrivalIsPlaced` | 讀檔局新編艦隊到達後有座標與池索引 |
 | `TestPlacedFleetsKeepTheirPositions` | S3已配置的艦隊不被移動 |
 | `TestDisbandThenRebuildSameSlotSyncs` | 解散後同格重編可以同步 |
+| `TestNewGameWritesSeatControlBytes` | 三種模式的`WORK+0C..14`與保存事實30相同，帝國列也等於原版傾印 |
+| `TestNewGameBattleCameraFollowsPlayer` | 兩陣營進場鏡頭都對著玩家艦隊 |
 
-負向對照：拿掉修正後，`TestNewGameNaturalFirstBattle`以相同堆疊崩潰；拿掉`DisbandFleet`後，`TestDisbandThenRebuildSameSlotSyncs`回「艦艇池索引0越界或重複」。
+負向對照：拿掉修正後，`TestNewGameNaturalFirstBattle`以相同堆疊崩潰；拿掉`DisbandFleet`後，`TestDisbandThenRebuildSameSlotSyncs`回「艦艇池索引0越界或重複」；沒有寫座位時，座位測試三列都失敗，鏡頭測試同盟失敗。
 
 ## 限制
 
@@ -55,6 +59,6 @@ LOGH3_GUI_IMAGE=logh3-ebiten:20261030-r169 LOGH3_XVFB_SCRIPT=/src/tools/with-xvf
   --package $P --binary $P/gin3 --out /src/workplace/newgame172/before-linux-empire
 ```
 
-`--out`必須是尚不存在的目錄。同盟加`--menu-y 219 --target 151 216 --load-y 228`。修正版把`--binary`換成建置結果。Windows加`--windows --graphics original`，在Wine映像內以`tools/music_wine_entry.sh`執行，`--package`掛Windows封包目錄。
+`--out`必須是尚不存在的目錄。同盟加`--faction 1 --menu-y 219 --target 151 216 --load-y 228`。修正版把`--binary`換成建置結果。Windows加`--windows --graphics original`，在Wine映像內以`tools/music_wine_entry.sh`執行，`--package`掛Windows封包目錄。
 
 本機輸出在`workplace/newgame172/`，每次一個子目錄，含`RESULT.json`、`FRAMES.jsonl`、`game.log`與截圖。機器收據由`tools/scripts/new_game_battle_receipt.py`產生。

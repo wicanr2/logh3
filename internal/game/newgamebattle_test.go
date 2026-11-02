@@ -1,6 +1,7 @@
 package game
 
 import (
+	"bytes"
 	"encoding/binary"
 	"os"
 	"path/filepath"
@@ -634,4 +635,50 @@ func RunNewGameContinuesForTest(t *testing.T, res *Resources, menuRow, contested
 		t.Fatal(err)
 	}
 	fleetSaveEqual(t, g.slot.Fleets(g.res.Weights), g.fleets)
+}
+
+// 原版新遊戲依主選單寫 WORK+0C..14（`docs/internals/30`）。底稿量在選單之前，這幾格是零；
+// 帝國這一列與原版傾印 `t260_post`（回合 0）相同。
+func TestNewGameWritesSeatControlBytes(t *testing.T) {
+	for _, c := range []struct {
+		name string
+		want [9]byte
+		mk   func(g *Game)
+	}{
+		{"帝國", [9]byte{0, 0, 1, 0, 1, 0, 1, 0, 31}, func(g *Game) { g.startNewGame(0) }},
+		{"同盟", [9]byte{1, 0, 1, 0, 1, 1, 0, 31, 0}, func(g *Game) { g.startNewGame(1) }},
+		{"對戰", [9]byte{2, 0, 0, 0, 0, 0, 1, 0, 31}, func(g *Game) { g.startVersus() }},
+	} {
+		t.Run(c.name, func(t *testing.T) {
+			g := newTestGame(t)
+			g.versus = false
+			c.mk(g)
+			if got := g.workRecord()[0x0C:0x15]; !bytes.Equal(got, c.want[:]) {
+				t.Errorf("WORK+0C..14 = % x，原版 % x", got, c.want)
+			}
+		})
+	}
+}
+
+// 進場鏡頭要對著玩家自己的艦隊。同盟新遊戲曾因座位表是零而對到帝國那一支。
+func TestNewGameBattleCameraFollowsPlayer(t *testing.T) {
+	for _, faction := range []int{0, 1} {
+		g := newTestGame(t)
+		g.startNewGame(faction)
+		g.fleets = nil
+		g.monthSettlementPending = false
+		region, entry := marchEntry(t, g)
+		used := map[int]bool{}
+		own := newGameFleet(t, g, faction, 0, entry.From, used)
+		newGameFleet(t, g, 1-faction, 0, region, used)
+		arriveFrom(t, g, own, region)
+		g.startPlacedBattle(region)
+		if g.state != StateBattle {
+			t.Fatalf("陣營 %d：狀態 %v（saveErr=%v）", faction, g.state, g.saveErr)
+		}
+		f := g.fleets[fleetAt(t, g, own)]
+		if want := g.battleViewAt(f.X, f.Y); g.battleView != want {
+			t.Errorf("陣營 %d：鏡頭 %+v，玩家艦隊在 (%d,%d) 應該是 %+v", faction, g.battleView, f.X, f.Y, want)
+		}
+	}
 }

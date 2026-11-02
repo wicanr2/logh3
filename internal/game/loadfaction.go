@@ -32,13 +32,7 @@ func (g *Game) chooseLoadFaction(x, y int) {
 		g.faction, g.versus = oldFaction, oldVersus
 		return
 	}
-	// 原始九bytes，042F:009F..0111；保留其他WORK欄位。
-	control := [3][9]byte{
-		{0, 0, 1, 0, 1, 0, 1, 0, 31},
-		{1, 0, 1, 0, 1, 1, 0, 31, 0},
-		{2, 0, 0, 0, 0, 0, 1, 0, 31},
-	}
-	copy(g.mutableWork()[0x0C:0x15], control[mode][:])
+	g.writeSeatControl(mode)
 	if g.versus {
 		for f := 0; f < 2; f++ {
 			g.sides[f] = side{

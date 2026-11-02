@@ -14,12 +14,16 @@ p.add_argument('--graphics',choices=['hd','original'],default='hd')
 # 主選單列、占領目標與讀檔選陣營的落點；預設帝國往星域15，同盟用219／151,216／228往星域13。
 p.add_argument('--menu-y',type=int,default=210);p.add_argument('--target',type=int,nargs=2,default=[176,167])
 p.add_argument('--load-y',type=int,default=208);p.add_argument('--after-turns',type=int,default=3)
+p.add_argument('--appimage',action='store_true',help='實際AppImage，自動素材與預設XDG存檔')
+p.add_argument('--faction',type=int,choices=[0,1],default=0,help='玩家陣營，用來核對進場鏡頭')
 a=p.parse_args();out=Path(a.out);package=Path(a.package)
 assert os.getuid()==1000 and out.parent.stat().st_uid==1000 and not out.exists()
 assert package.is_dir();out.mkdir();trace=out/'FRAMES.jsonl';events=[];handles=[]
 env=dict(os.environ,HOME='/tmp',GOMAXPROCS='2',LP_NUM_THREADS='2',GOMEMLIMIT='1800MiB',GOGC='70')
 result=dict(passed=False,normal_entry=True,state_injection=False,seed_injection=False,time_injection=False,
-    script_flag=False,graphics=a.graphics,audio='off',events=events)
+    script_flag=False,graphics=a.graphics,audio='off',appimage=a.appimage,automatic_resources=a.appimage,events=events)
+save_dir=out/'config/logh3/save'if a.appimage else out/'save'
+if a.appimage:env.update(APPIMAGE_EXTRACT_AND_RUN='1',XDG_CONFIG_HOME=str(out/'config'))
 REPORTS={'StateOccupationReport','StateRebellionReport','StateRegionFlipReport','StateTurnWindow','StateTurnReport',
     'StateShipDelivery','StateAdmiralFateReport'}
 game=None;window=None
@@ -67,6 +71,8 @@ try:
         '-intro=false','-orig',path(package/'original'),'-data',path(package/'data'),'-art',path(package/'art'),
         '-save',path(out/'save'),'-frame-trace',path(trace),'-graphics',a.graphics,'-scale','1.5',
         '-poster=false','-locale','zh-TW','-ai','-1','-music','']
+    if a.appimage:
+        command=[a.binary,'-intro=false','-frame-trace',str(trace),'-graphics',a.graphics,'-poster=false','-locale','zh-TW','-music','']
     result.update(command=command,binary_sha256=sha(a.binary),driver_sha256=sha(__file__))
     log=(out/'game.log').open('x');handles.append(log)
     game=subprocess.Popen(command,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=not a.windows)
@@ -101,7 +107,13 @@ try:
     first=execute_until(lambda r:r['state']=='StateBattle',600,'開戰')
     result['states']=seen
     wait(lambda r:r['state']=='StateBattle'and r.get('battle_ready'),240)
-    capture('battle-entry');result['battle_region']=(observe().get('tactical')or{}).get('region')
+    capture('battle-entry');entry=observe().get('tactical')or{};result['battle_region']=entry.get('region')
+    # 進場鏡頭要看得到玩家旗艦：視窗28欄×18列，圖塊16×20。
+    own=[u for u in entry['units']if u['Faction']==a.faction and u['Squadron']==0]
+    assert own,('玩家沒有旗艦',entry['units'])
+    col,row_=entry['view'];seen=[col*16<=u['X']<(col+28)*16 and row_*20<=u['Y']<(row_+18)*20 for u in own]
+    result.update(entry_view=entry['view'],own_flagships=[[u['X'],u['Y']]for u in own],camera_on_player=any(seen))
+    assert any(seen),('進場鏡頭看不到玩家旗艦',entry['view'],result['own_flagships'])
     # 打完整場：有交火輸入就點，可以下令就按實行，直到離開戰場。
     until=time.monotonic()+1500;shots=set();finished=0
     while True:
@@ -125,9 +137,9 @@ try:
     capture('after-battle')
     # 正常存進度，再正常取進度。
     click(544,125);click(560,165);wait(lambda r:r['state']=='StateSaveGame',20);click(300,142);time.sleep(1)
-    saved=sorted(p.name for p in(out/'save').iterdir());result['saved_files']=saved
+    saved=sorted(p.name for p in save_dir.iterdir());result['saved_files']=saved
     assert sum(n.split('.')[0]in('STELLAR','PLANET','ADMIRAL','FLEET','SHIP','WORK')for n in saved)>=6,saved
-    result['saved_sha256']={n:sha(out/'save'/n)for n in saved}
+    result['saved_sha256']={n:sha(save_dir/n)for n in saved}
     click(300,122,3);wait(lambda r:r['state']=='StateCommandPhase',20)
     click(544,125);click(560,145);wait(lambda r:r['state']=='StateLoadGame',20)
     click(300,122);wait(lambda r:r['state']=='StateLoadFaction',20)

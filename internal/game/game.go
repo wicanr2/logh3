@@ -2053,6 +2053,12 @@ func (g *Game) startNewGame(faction int) {
 	g.music.BGM, g.music.Battle = 0, 0
 	g.slot = nil
 	g.arrivalFrom = nil
+	// `WorkTemplate`量在主選單之前，座位那幾格是零；原版選單之後就寫好了（規格159）。
+	if g.versus {
+		g.writeSeatControl(2)
+	} else {
+		g.writeSeatControl(faction)
+	}
 	g.armMonthSeats()
 	// 開機月底之前重算初始行星比例、態勢，再彙總及回充星域存量。
 	// 此時不分配回行星；情報窗與實行後分配是其他呼叫點（研究 352／規格 065）。

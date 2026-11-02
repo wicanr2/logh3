@@ -33,6 +33,9 @@ def run(name, binary):
         "returncode": d.get("pre_cleanup_returncode"),
         "battle_region": d.get("battle_region"),
         "battle_after_load": d.get("battle_after_load"),
+        "entry_view": d.get("entry_view"),
+        "own_flagships": d.get("own_flagships"),
+        "camera_on_player": d.get("camera_on_player"),
         "saved_sha256": d.get("saved_sha256"),
         "last_state": d.get("last_state"),
         "trace_sha256": d.get("trace_sha256"),
@@ -85,16 +88,16 @@ receipt = {
     "runs": [
         run("before-linux-empire", "v.1.6.4-20261031 AppImage解出的gin3"),
         run("before-linux-alliance", "v.1.6.4-20261031 AppImage解出的gin3"),
-        run("after-linux-empire", "工作樹建置的gin3-fixed"),
-        run("after-linux-alliance", "工作樹建置的gin3-fixed"),
+        run("r2-after-linux-empire", "工作樹建置的gin3-fixed"),
+        run("r2-after-linux-alliance", "工作樹建置的gin3-fixed"),
         run("before-windows-empire", "v.1.6.4-20261031 Windows封包的gin3.exe，Wine"),
         run("before-windows-alliance", "v.1.6.4-20261031 Windows封包的gin3.exe，Wine"),
-        run("after-windows-empire", "工作樹交叉編譯的gin3-fixed.exe，Wine"),
-        run("after-windows-alliance", "工作樹交叉編譯的gin3-fixed.exe，Wine"),
+        run("r2-after-windows-empire", "工作樹交叉編譯的gin3-fixed.exe，Wine"),
+        run("r2-after-windows-alliance", "工作樹交叉編譯的gin3-fixed.exe，Wine"),
     ],
     "saves_identical_across_platforms": {
-        f: json.loads((ROOT / f"after-linux-{f}" / "RESULT.json").read_text())["saved_sha256"]
-        == json.loads((ROOT / f"after-windows-{f}" / "RESULT.json").read_text())["saved_sha256"]
+        f: json.loads((ROOT / f"r2-after-linux-{f}" / "RESULT.json").read_text())["saved_sha256"]
+        == json.loads((ROOT / f"r2-after-windows-{f}" / "RESULT.json").read_text())["saved_sha256"]
         for f in ("empire", "alliance")
     },
     "limits": [

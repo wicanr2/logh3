@@ -8,13 +8,13 @@ import (
 
 // ensureSlot 在新遊戲第一次需要原始表時建出 Slot：保存或進戰場（規格009、159）。
 //
-// 拿量到的開局 `WORK` 當底稿，其餘的表就是目前手上的。remake 沒有模型的那些欄位
-// 會停在 796 年 1 月的初值。
+// 拿目前的 `WORK` 當底稿（開局樣板加上這一局寫過的欄位），其餘的表就是目前手上的。
+// remake 沒有模型的那些欄位會停在 796 年 1 月的初值。
 func (g *Game) ensureSlot() error {
 	if g.slot != nil {
 		return nil
 	}
-	if len(g.res.WorkTemplate) < rules.WorkRecord || g.res.Planets == nil {
+	if len(g.workRecord()) < rules.WorkRecord || g.res.Planets == nil {
 		return fmt.Errorf("新遊戲要建原始表得先給 WorkTemplate（`docs/spec/009`）")
 	}
 	g.slot = &rules.Slot{
@@ -22,7 +22,7 @@ func (g *Game) ensureSlot() error {
 		Admiral: g.res.Admiral,
 		Fleet:   make([]byte, rules.FleetCount*rules.FleetRecord),
 		Ship:    make([]byte, rules.ShipCount*rules.ShipRecord),
-		Work:    append([]byte(nil), g.res.WorkTemplate...),
+		Work:    append([]byte(nil), g.workRecord()...),
 	}
 	for i := range g.slot.Fleet {
 		g.slot.Fleet[i] = 0xFF

@@ -214,6 +214,8 @@ AI 沒有對應的指派常式**——`2D10:0038` 只換情報與內政兩個。
 | 同盟 | `01 00 01 00 01 01 00 1F 00` |
 | 對戰 | `02 00 00 00 00 00 01 00 1F` |
 
+新遊戲開局也是這張表：`t260_post.bin`回合0的傾印是帝國列（[`../re/450`](../re/450-new-fleet-placement-and-new-game-slot.md)）。remake的`work-796-01.json`量在主選單之前，這九格是零，所以`startNewGame`要自己寫。
+
 讀檔選擇寫入的三個位元組簽章：`A2 20 8F`、`A2 25 8F`、`C6 06 28 8F 1F`。
 完整指令、輸入與雜湊見[座位收據](data/load-seat-selection.json)及[原版重生工具](../../tools/load_seat_oracle.sh)。
 原始函式與IDA／CS:IP／線性位址分欄保留，本文以WORK位移及簽章定位。
