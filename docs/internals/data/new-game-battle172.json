@@ -1,0 +1,784 @@
+{
+ "schema": "logh3.new-game-first-battle.v1",
+ "date": "2026-11-02",
+ "base_head": "5b7c6c7e07ba061bab61b62acbdd3b7ff11ab403",
+ "worktree_dirty": true,
+ "status": "limited; 新遊戲第一場不崩潰且有配置，不宣稱與原版同態",
+ "comparison_level": "nearby-state",
+ "sources_sha256": {
+  "internal/game/annihilation.go": "73071ef59503147c4c876879c998dd362d685cc4ae541952b6952fc37e4bf6fb",
+  "internal/game/battle.go": "871acae8eb5b5e448702c49e50a00eae6466dd450a50eb33c1c68bf4cb0565a2",
+  "internal/game/fleetarrival.go": "ed2da7a6c2c17f9fdab099d70aad4f9e8df8068599e46d821e9506c23bc9290b",
+  "internal/game/fleetsave.go": "4d74694c3afbd3ad0346806ef550a11a4687e4aacd5d04af9b3c430a9e57a825",
+  "internal/game/game.go": "2196a5f9ac66db95658d575ed3e9c8fac960857544e6c08cd8596e4484283b58",
+  "internal/game/newgamebattle_test.go": "0d6038359abb6c5b469e64640046bd547ca00d1b092a8279d2fa23838b476c14",
+  "internal/game/newgamebattle_normal_test.go": "1ce8dc9515a704c93f06b3e7798206b8bf5068986fbcf26b608ab2ff7fa2f89c",
+  "internal/rules/annihilation.go": "26999de1f7b13de9ca026fa0797503fe611edfc74e0f2f88fc8b6a0b0a0b8ac0",
+  "internal/rules/fleetarrival.go": "ac48d5c6c79f3f8d6d22bda7c4e20f7be2c00871794fa3b6baf2d96ac9fadfd7",
+  "tools/scripts/new_game_battle_gui.py": "38569b2e8847484e8e40ebdb5c1b19be40601b7712e0ba3dbf445dcd8a4e0fd0"
+ },
+ "original_evidence": {
+  "fcmd-base-fleet0.bin": {
+   "location": "~/cht/dosgolem-workplace-archive/logh3/fcmd/",
+   "sha256": "3a077e0847f611d3db1cfd18a88c6bfb768fc4e24e7822e40e5251b6708704d7",
+   "fleet0": {
+    "region": 0,
+    "x": 336,
+    "y": 280,
+    "facing": 34
+   }
+  },
+  "t260_post.bin": {
+   "location": "~/cht/dosgolem-workplace-archive/logh3/",
+   "sha256": "4b4e6083be68a2ad4b86f9d93685642d99d7a1b33ad022f2c382ca45b03bb1da",
+   "fleets": [
+    {
+     "index": 28,
+     "region": 31,
+     "x": 1696,
+     "y": 1740,
+     "facing": 162
+    },
+    {
+     "index": 31,
+     "region": 31,
+     "x": 1728,
+     "y": 1708,
+     "facing": 160
+    },
+    {
+     "index": 23,
+     "region": 31,
+     "x": 1728,
+     "y": 1740,
+     "facing": 161
+    }
+   ]
+  }
+ },
+ "toolchain": {
+  "gui_image": "logh3-ebiten:20261030-r169",
+  "go_image": "golang:1.24-bookworm",
+  "wine_image": "yuan-wine-verify:noble-r2（wine-9.0，專案預設kol-wine-verify映像本機已不存在）"
+ },
+ "standard_tests": [
+  "ok  \tgithub.com/wicanr2/logh3/cmd/gin3\t34.736s",
+  "?   \tgithub.com/wicanr2/logh3/cmd/hd-pack\t[no test files]",
+  "?   \tgithub.com/wicanr2/logh3/cmd/logh3\t[no test files]",
+  "?   \tgithub.com/wicanr2/logh3/cmd/mapcolours\t[no test files]",
+  "ok  \tgithub.com/wicanr2/logh3/cmd/music-import\t0.365s",
+  "ok  \tgithub.com/wicanr2/logh3/cmd/music-tool\t0.003s",
+  "?   \tgithub.com/wicanr2/logh3/cmd/oradiff\t[no test files]",
+  "?   \tgithub.com/wicanr2/logh3/cmd/play\t[no test files]",
+  "ok  \tgithub.com/wicanr2/logh3/cmd/worklist\t0.022s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/ai\t0.021s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/asset\t9.554s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/audio\t0.016s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/bootstrap\t32.021s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/font\t0.022s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/game\t58.565s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/gfx\t0.025s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/localize\t0.257s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/presentation\t7.216s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/rules\t2.180s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/screen\t1.152s",
+  "ok  \tgithub.com/wicanr2/logh3/internal/ui\t0.046s"
+ ],
+ "standard_tests_sha256": "88a626774a149478a8c54efc5a08db65bd3798047e0dc232f3b2a3b1814c9671",
+ "runs": [
+  {
+   "name": "before-linux-empire",
+   "binary": "v.1.6.4-20261031 AppImage解出的gin3",
+   "binary_sha256": "b8edba3f0ca4d6ec33967c70b8cc24afb02c1d1d385f6ea4003eae965ce3e54b",
+   "driver_sha256": "38569b2e8847484e8e40ebdb5c1b19be40601b7712e0ba3dbf445dcd8a4e0fd0",
+   "command": [
+    "/src/workplace/release171/extracted/squashfs-root/usr/bin/gin3",
+    "-intro=false",
+    "-orig",
+    "/src/workplace/release171/extracted/squashfs-root/usr/bin/original",
+    "-data",
+    "/src/workplace/release171/extracted/squashfs-root/usr/bin/data",
+    "-art",
+    "/src/workplace/release171/extracted/squashfs-root/usr/bin/art",
+    "-save",
+    "/src/workplace/newgame172/before-linux-empire/save",
+    "-frame-trace",
+    "/src/workplace/newgame172/before-linux-empire/FRAMES.jsonl",
+    "-graphics",
+    "hd",
+    "-scale",
+    "1.5",
+    "-poster=false",
+    "-locale",
+    "zh-TW",
+    "-ai",
+    "-1",
+    "-music",
+    ""
+   ],
+   "state_injection": false,
+   "seed_injection": false,
+   "time_injection": false,
+   "script_flag": false,
+   "passed": false,
+   "panic": true,
+   "panic_head": "panic: runtime error: invalid memory address or nil pointer dereference\n[signal SIGSEGV: segmentation violation code=0x1 addr=0x40 pc=0x5974a4]\n\ngoroutine 29 [running]:\ngithub.com/wicanr2/logh3/internal/rules.(*Slot).fleet(...)\n\tgithub.com/wicanr2/logh3/internal/rules/save.go:577\ngithub.com/wicanr2/logh3/internal/rules.(*Slot).BattleFleetsFor(0x0, {0xc0065c0520, 0x2, 0x2f?})\n\tgithub.com/wicanr2/logh3/internal/rules/resolve.go:275 +0x84\ngithub.com/wicanr2/logh3/internal/game.(*Game).startBattle(0xc000724808, 0xf, 0x1)\n\tgithub.com/wicanr2/logh3/internal/game/battle.go:75 +0x608\ngithub.com/wicanr2/logh3/internal/game.(*Game).startPlacedBattle(...)\n\tgithub.com/wicanr2/logh3/internal/game/battle.go:23\ngithub.com/wicanr2/logh3/internal/game.(*Game).scanRegionsFrom.func1()\n\tgithub.com/wicanr2/logh3/internal/game/rebellion.go:116 +0x25\ngithub.com/wicanr2/logh3/internal/game.(*Game).dismissTurnReport(0xc000724808?)\n\tgithub.com/wicanr2/logh3/internal/game/turnreport.go:86 +0xcb\ngithub.com/wicanr2/logh3/internal/game.(*Game).click(0xc000724808, 0x230, 0x7d)\n\tgithub.com/wicanr2/logh3/internal/game/game.go:2844 +0xdac\ngithub.com/wicanr2/logh3/internal/game.(*Game).Click(0xc000724808, 0x230, 0x7d)\n\tgithub.com/wicanr2/logh3/internal/game/game.go:2437 +0x125\nmain.(*app).updateInput(0xc00093e008)\n\tgithub.com/wicanr2/logh3/cmd/gin3/toolbar.go:192 +0x4c5\nmain.(*app).Update(0xc00093e008)\n\tgithub.com/wicanr2/logh3/cmd/gin3/main.go:165 +0x1ea\nmain.(*startup).Update(0xc00002fd00?)\n\tgithub.com/wicanr2/logh3/cmd/gin3/startup.go:84 +0x1ba\ngithub.com/hajimehoshi/ebiten/v2.(*gameForUI).Update(0xc0000d",
+   "returncode": 2,
+   "battle_region": null,
+   "battle_after_load": null,
+   "saved_sha256": null,
+   "last_state": null,
+   "trace_sha256": "b0971797d0d3442d24d1f42c5c7783904f3009168e30287f84d8dff94ab5c08b",
+   "log_sha256": "31643ced4869ec3184916afab879f01e6ca2d0c1155135fa0cee9387d1f81c6d",
+   "captures": [
+    {
+     "name": "strategy",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "54571099d691d88025d5501f5fc3fc85fe7ae274cd83410e0bd7c99f48de6ca2"
+    },
+    {
+     "name": "ordered",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "29a8cfd3a35faf59be9cca3295a1862ab57221163d3773fbea3a5a0eb05f45dc"
+    }
+   ],
+   "inputs": 43
+  },
+  {
+   "name": "before-linux-alliance",
+   "binary": "v.1.6.4-20261031 AppImage解出的gin3",
+   "binary_sha256": "b8edba3f0ca4d6ec33967c70b8cc24afb02c1d1d385f6ea4003eae965ce3e54b",
+   "driver_sha256": "38569b2e8847484e8e40ebdb5c1b19be40601b7712e0ba3dbf445dcd8a4e0fd0",
+   "command": [
+    "/src/workplace/release171/extracted/squashfs-root/usr/bin/gin3",
+    "-intro=false",
+    "-orig",
+    "/src/workplace/release171/extracted/squashfs-root/usr/bin/original",
+    "-data",
+    "/src/workplace/release171/extracted/squashfs-root/usr/bin/data",
+    "-art",
+    "/src/workplace/release171/extracted/squashfs-root/usr/bin/art",
+    "-save",
+    "/src/workplace/newgame172/before-linux-alliance/save",
+    "-frame-trace",
+    "/src/workplace/newgame172/before-linux-alliance/FRAMES.jsonl",
+    "-graphics",
+    "hd",
+    "-scale",
+    "1.5",
+    "-poster=false",
+    "-locale",
+    "zh-TW",
+    "-ai",
+    "-1",
+    "-music",
+    ""
+   ],
+   "state_injection": false,
+   "seed_injection": false,
+   "time_injection": false,
+   "script_flag": false,
+   "passed": false,
+   "panic": true,
+   "panic_head": "panic: runtime error: invalid memory address or nil pointer dereference\n[signal SIGSEGV: segmentation violation code=0x1 addr=0x40 pc=0x5974a4]\n\ngoroutine 25 [running]:\ngithub.com/wicanr2/logh3/internal/rules.(*Slot).fleet(...)\n\tgithub.com/wicanr2/logh3/internal/rules/save.go:577\ngithub.com/wicanr2/logh3/internal/rules.(*Slot).BattleFleetsFor(0x0, {0xc003d77cb0, 0x2, 0x28?})\n\tgithub.com/wicanr2/logh3/internal/rules/resolve.go:275 +0x84\ngithub.com/wicanr2/logh3/internal/game.(*Game).startBattle(0xc000adc808, 0xd, 0x1)\n\tgithub.com/wicanr2/logh3/internal/game/battle.go:75 +0x608\ngithub.com/wicanr2/logh3/internal/game.(*Game).startPlacedBattle(...)\n\tgithub.com/wicanr2/logh3/internal/game/battle.go:23\ngithub.com/wicanr2/logh3/internal/game.(*Game).scanRegionsFrom.func1()\n\tgithub.com/wicanr2/logh3/internal/game/rebellion.go:116 +0x25\ngithub.com/wicanr2/logh3/internal/game.(*Game).dismissTurnReport(0xc000adc808?)\n\tgithub.com/wicanr2/logh3/internal/game/turnreport.go:86 +0xcb\ngithub.com/wicanr2/logh3/internal/game.(*Game).click(0xc000adc808, 0x230, 0x7d)\n\tgithub.com/wicanr2/logh3/internal/game/game.go:2844 +0xdac\ngithub.com/wicanr2/logh3/internal/game.(*Game).Click(0xc000adc808, 0x230, 0x7d)\n\tgithub.com/wicanr2/logh3/internal/game/game.go:2437 +0x125\nmain.(*app).updateInput(0xc000b7e308)\n\tgithub.com/wicanr2/logh3/cmd/gin3/toolbar.go:192 +0x4c5\nmain.(*app).Update(0xc000b7e308)\n\tgithub.com/wicanr2/logh3/cmd/gin3/main.go:165 +0x1ea\nmain.(*startup).Update(0xc00746bd00?)\n\tgithub.com/wicanr2/logh3/cmd/gin3/startup.go:84 +0x1ba\ngithub.com/hajimehoshi/ebiten/v2.(*gameForUI).Update(0xc0000d",
+   "returncode": 2,
+   "battle_region": null,
+   "battle_after_load": null,
+   "saved_sha256": null,
+   "last_state": null,
+   "trace_sha256": "a6a59914bc0863ddc166e4bac20153f31462a4c31a8e37b787a7856cd5757e23",
+   "log_sha256": "0fe626f1788270c93f5fed97e56256ac655757123d64f1ba4a6433b260824f1a",
+   "captures": [
+    {
+     "name": "strategy",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "e597d0432647e883e6b53f052a291d659244ace6764b7468d1877e087587a3a2"
+    },
+    {
+     "name": "ordered",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "bdad4cca8c9d87002371dcdec05ad211290dae172e3937b3a9eafe4b07f8b9fc"
+    }
+   ],
+   "inputs": 44
+  },
+  {
+   "name": "after-linux-empire",
+   "binary": "工作樹建置的gin3-fixed",
+   "binary_sha256": "a75530be2d7870b0cb04c76d7c2e37a64441b2a0282326606e9e08de13e7ea09",
+   "driver_sha256": "38569b2e8847484e8e40ebdb5c1b19be40601b7712e0ba3dbf445dcd8a4e0fd0",
+   "command": [
+    "/src/workplace/newgame172/gin3-fixed",
+    "-intro=false",
+    "-orig",
+    "/src/workplace/release171/extracted/squashfs-root/usr/bin/original",
+    "-data",
+    "/src/workplace/release171/extracted/squashfs-root/usr/bin/data",
+    "-art",
+    "/src/workplace/release171/extracted/squashfs-root/usr/bin/art",
+    "-save",
+    "/src/workplace/newgame172/after-linux-empire/save",
+    "-frame-trace",
+    "/src/workplace/newgame172/after-linux-empire/FRAMES.jsonl",
+    "-graphics",
+    "hd",
+    "-scale",
+    "1.5",
+    "-poster=false",
+    "-locale",
+    "zh-TW",
+    "-ai",
+    "-1",
+    "-music",
+    ""
+   ],
+   "state_injection": false,
+   "seed_injection": false,
+   "time_injection": false,
+   "script_flag": false,
+   "passed": true,
+   "panic": false,
+   "panic_head": null,
+   "returncode": null,
+   "battle_region": 15,
+   "battle_after_load": true,
+   "saved_sha256": {
+    "ADMIRAL.DT0": "a5bd2fc243138952a32ba2d63bb11e03542e6093c6096b862ef0a89069659f07",
+    "FLEET.DT0": "8ec28d11cc07966013a0a9ffff10bdc1cc1c1c4d5f29da276240b26ac00c116f",
+    "PLANET.DT0": "9b7cf6fab5c78ce7d23129a6d02f3901c6eb67d93f191a2e38f8d59188b58160",
+    "SAVEDATA.IDX": "03d34167b821868f9e023ac373a7d502b4e2f127400c76b533c7f66e1458782e",
+    "SHIP.DT0": "8664c3ffcb1ce4eee500f4832e0330a6edece521057add7e695210a51690762f",
+    "STELLAR.DT0": "a2420d618d1dccc2f67423a8259d1528f2436b06b592d5903373e6f2a254264d",
+    "WORK.DT0": "8a3579c2c3bf263551106be5fb3a59afc457aedb432598c5a690e5f2bd2021e7"
+   },
+   "last_state": "StateBattle",
+   "trace_sha256": "0f70f417efbb3013d1ad30c34c1dc120d947b6daf92562603223588f04797f92",
+   "log_sha256": "27868a001c059f5870dffdf58d3ebc774190c6c8cfd95a3ce0cab386224c741f",
+   "captures": [
+    {
+     "name": "strategy",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "54571099d691d88025d5501f5fc3fc85fe7ae274cd83410e0bd7c99f48de6ca2"
+    },
+    {
+     "name": "ordered",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "29a8cfd3a35faf59be9cca3295a1862ab57221163d3773fbea3a5a0eb05f45dc"
+    },
+    {
+     "name": "battle-entry",
+     "state": "StateBattle",
+     "turn": 1,
+     "sha256": "58e27896b7a8f444809048a699a37c0dd4fe5ee75b209724176dfccbb327460a"
+    },
+    {
+     "name": "battle-turn-02",
+     "state": "StateBattle",
+     "turn": 2,
+     "sha256": "0e5c6664852d9a5afbdb8d703fa0d16366a868b383fc1f2f9af8758c5aa55cb6"
+    },
+    {
+     "name": "battle-turn-03",
+     "state": "StateBattle",
+     "turn": 3,
+     "sha256": "93e3c626796696dfcb929a9d1048f112535ef9d7a856fab27990ce35b7484244"
+    },
+    {
+     "name": "battle-turn-09",
+     "state": "StateBattle",
+     "turn": 9,
+     "sha256": "93e3c626796696dfcb929a9d1048f112535ef9d7a856fab27990ce35b7484244"
+    },
+    {
+     "name": "after-battle",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "e13952188a7f2db901f7882c47aa9d2bd0117da3f5a930f6ae90c8d868b81d71"
+    },
+    {
+     "name": "loaded",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "448a7153fbcd17ac80b33d976834cc7bc10bfbc6feedb5df3cc15ba6100b4b7f"
+    },
+    {
+     "name": "after-load",
+     "state": "StateBattle",
+     "turn": 1,
+     "sha256": "e270a2f93afe8c53312fa359a42b4628705ed9a0c857dd3516d398ee45152022"
+    }
+   ],
+   "inputs": 74
+  },
+  {
+   "name": "after-linux-alliance",
+   "binary": "工作樹建置的gin3-fixed",
+   "binary_sha256": "a75530be2d7870b0cb04c76d7c2e37a64441b2a0282326606e9e08de13e7ea09",
+   "driver_sha256": "38569b2e8847484e8e40ebdb5c1b19be40601b7712e0ba3dbf445dcd8a4e0fd0",
+   "command": [
+    "/src/workplace/newgame172/gin3-fixed",
+    "-intro=false",
+    "-orig",
+    "/src/workplace/release171/extracted/squashfs-root/usr/bin/original",
+    "-data",
+    "/src/workplace/release171/extracted/squashfs-root/usr/bin/data",
+    "-art",
+    "/src/workplace/release171/extracted/squashfs-root/usr/bin/art",
+    "-save",
+    "/src/workplace/newgame172/after-linux-alliance/save",
+    "-frame-trace",
+    "/src/workplace/newgame172/after-linux-alliance/FRAMES.jsonl",
+    "-graphics",
+    "hd",
+    "-scale",
+    "1.5",
+    "-poster=false",
+    "-locale",
+    "zh-TW",
+    "-ai",
+    "-1",
+    "-music",
+    ""
+   ],
+   "state_injection": false,
+   "seed_injection": false,
+   "time_injection": false,
+   "script_flag": false,
+   "passed": true,
+   "panic": false,
+   "panic_head": null,
+   "returncode": null,
+   "battle_region": 13,
+   "battle_after_load": true,
+   "saved_sha256": {
+    "ADMIRAL.DT0": "73a03c24085b1e68ebdf67604b7fc2507c927ad19878919543dc87a47dfe0e20",
+    "FLEET.DT0": "b492d4ff64cb2ea12c9e7be8eda2449eea09650a27a0272fd8eb5b114ac91585",
+    "PLANET.DT0": "dda527f0101add23e9145d5ac974e716c880e15f5129e614677ca52fb70a4568",
+    "SAVEDATA.IDX": "03d34167b821868f9e023ac373a7d502b4e2f127400c76b533c7f66e1458782e",
+    "SHIP.DT0": "0763803f104fa78d5275cf63206adcdc669dfed2f91fceedcc84db12abe26a79",
+    "STELLAR.DT0": "749bdbb81faef0bf50b850859bfe61977ed456c6872e385d6f48bdf3c573493e",
+    "WORK.DT0": "ea72b54d9fd90aa1be8c3464e5d877ab08c985c4962915d606658f1e68087b18"
+   },
+   "last_state": "StateBattle",
+   "trace_sha256": "39f22c6065a1f85ee4e2659c170e5efa6f28d155ca274fbb60317b9ccbe9a44e",
+   "log_sha256": "27868a001c059f5870dffdf58d3ebc774190c6c8cfd95a3ce0cab386224c741f",
+   "captures": [
+    {
+     "name": "strategy",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "e597d0432647e883e6b53f052a291d659244ace6764b7468d1877e087587a3a2"
+    },
+    {
+     "name": "ordered",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "bdad4cca8c9d87002371dcdec05ad211290dae172e3937b3a9eafe4b07f8b9fc"
+    },
+    {
+     "name": "battle-entry",
+     "state": "StateBattle",
+     "turn": 1,
+     "sha256": "3d4eb1da5a26ce444c9a7c1cfa270565384ac879406c170a05500235ae4e9107"
+    },
+    {
+     "name": "battle-turn-02",
+     "state": "StateBattle",
+     "turn": 2,
+     "sha256": "7c7aa7e2325540c1c42915448fe3fc6895ee49a7f31531164d870b5ee1838686"
+    },
+    {
+     "name": "battle-turn-03",
+     "state": "StateBattle",
+     "turn": 3,
+     "sha256": "e8ed4ace41379ac98a7b72f09ce319e51b59a25f493fc4d2f55d3640298d0c7a"
+    },
+    {
+     "name": "battle-turn-09",
+     "state": "StateBattle",
+     "turn": 9,
+     "sha256": "a955f510912cce3e74daa53e62a8c56d5d208ee089d5578824adac0f5307d6e5"
+    },
+    {
+     "name": "after-battle",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "2aced1e3e73583d80709425ddfbbacce0bd966a5aac36c6a8f1fd1ee1785ac0a"
+    },
+    {
+     "name": "loaded",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "0783d6a07b11a842059e8c460e211c7ade395b3897fa11e45dfc011e8ded2965"
+    },
+    {
+     "name": "after-load",
+     "state": "StateBattle",
+     "turn": 1,
+     "sha256": "a31794adaed836db54ae4018ef80c14bf13e23eaf9b8aebb6c778009f30575f4"
+    }
+   ],
+   "inputs": 74
+  },
+  {
+   "name": "before-windows-empire",
+   "binary": "v.1.6.4-20261031 Windows封包的gin3.exe，Wine",
+   "binary_sha256": "f364dfc3ff2a6f97ec0eef02c5573ce44bb0a939e05baa67c68a00d65bdb463f",
+   "driver_sha256": "38569b2e8847484e8e40ebdb5c1b19be40601b7712e0ba3dbf445dcd8a4e0fd0",
+   "command": [
+    "wine",
+    "Z:\\pkg\\gin3.exe",
+    "-intro=false",
+    "-orig",
+    "Z:\\pkg\\original",
+    "-data",
+    "Z:\\pkg\\data",
+    "-art",
+    "Z:\\pkg\\art",
+    "-save",
+    "Z:\\out\\before-windows-empire\\save",
+    "-frame-trace",
+    "Z:\\out\\before-windows-empire\\FRAMES.jsonl",
+    "-graphics",
+    "original",
+    "-scale",
+    "1.5",
+    "-poster=false",
+    "-locale",
+    "zh-TW",
+    "-ai",
+    "-1",
+    "-music",
+    ""
+   ],
+   "state_injection": false,
+   "seed_injection": false,
+   "time_injection": false,
+   "script_flag": false,
+   "passed": false,
+   "panic": true,
+   "panic_head": "panic: runtime error: invalid memory address or nil pointer dereference\n[signal 0xc0000005 code=0x0 addr=0x40 pc=0x591684]\n\ngoroutine 25 [running]:\ngithub.com/wicanr2/logh3/internal/rules.(*Slot).fleet(...)\n\tgithub.com/wicanr2/logh3/internal/rules/save.go:577\ngithub.com/wicanr2/logh3/internal/rules.(*Slot).BattleFleetsFor(0x0, {0xc000bf6260, 0x2, 0x2f?})\n\tgithub.com/wicanr2/logh3/internal/rules/resolve.go:275 +0x84\ngithub.com/wicanr2/logh3/internal/game.(*Game).startBattle(0xc000ce2808, 0xf, 0x1)\n\tgithub.com/wicanr2/logh3/internal/game/battle.go:75 +0x608\ngithub.com/wicanr2/logh3/internal/game.(*Game).startPlacedBattle(...)\n\tgithub.com/wicanr2/logh3/internal/game/battle.go:23\ngithub.com/wicanr2/logh3/internal/game.(*Game).scanRegionsFrom.func1()\n\tgithub.com/wicanr2/logh3/internal/game/rebellion.go:116 +0x25\ngithub.com/wicanr2/logh3/internal/game.(*Game).dismissTurnReport(0xc000ce2808?)\n\tgithub.com/wicanr2/logh3/internal/game/turnreport.go:86 +0xcb\ngithub.com/wicanr2/logh3/internal/game.(*Game).click(0xc000ce2808, 0x230, 0x7d)\n\tgithub.com/wicanr2/logh3/internal/game/game.go:2844 +0xdac\ngithub.com/wicanr2/logh3/internal/game.(*Game).Click(0xc000ce2808, 0x230, 0x7d)\n\tgithub.com/wicanr2/logh3/internal/game/game.go:2437 +0x125\nmain.(*app).updateInput(0xc000600308)\n\tgithub.com/wicanr2/logh3/cmd/gin3/toolbar.go:192 +0x4c5\nmain.(*app).Update(0xc000600308)\n\tgithub.com/wicanr2/logh3/cmd/gin3/main.go:165 +0x1ea\nmain.(*startup).Update(0xc0037d5d20?)\n\tgithub.com/wicanr2/logh3/cmd/gin3/startup.go:84 +0x1ba\ngithub.com/hajimehoshi/ebiten/v2.(*gameForUI).Update(0xc0000d40e0)\n\tgithub.com/haj",
+   "returncode": 2,
+   "battle_region": null,
+   "battle_after_load": null,
+   "saved_sha256": null,
+   "last_state": null,
+   "trace_sha256": "52a536c2f45c403a54b20f750e7bc45d2dfaa7d3113cf42ce2675d314d9fe379",
+   "log_sha256": "f5030f61f77651b724c79a35cc35a856a68eab57fcf30db5e95909c8edaba760",
+   "captures": [
+    {
+     "name": "strategy",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "f89f4582ac7adb3a570b79f04742cb7307d39a0d35269273b8b76c0bcfb61a33"
+    },
+    {
+     "name": "ordered",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "da2db64669e0069f92f96e4a3d3e383f1d52ff689203908d355d4562af3cb15e"
+    }
+   ],
+   "inputs": 43
+  },
+  {
+   "name": "before-windows-alliance",
+   "binary": "v.1.6.4-20261031 Windows封包的gin3.exe，Wine",
+   "binary_sha256": "f364dfc3ff2a6f97ec0eef02c5573ce44bb0a939e05baa67c68a00d65bdb463f",
+   "driver_sha256": "38569b2e8847484e8e40ebdb5c1b19be40601b7712e0ba3dbf445dcd8a4e0fd0",
+   "command": [
+    "wine",
+    "Z:\\pkg\\gin3.exe",
+    "-intro=false",
+    "-orig",
+    "Z:\\pkg\\original",
+    "-data",
+    "Z:\\pkg\\data",
+    "-art",
+    "Z:\\pkg\\art",
+    "-save",
+    "Z:\\out\\before-windows-alliance\\save",
+    "-frame-trace",
+    "Z:\\out\\before-windows-alliance\\FRAMES.jsonl",
+    "-graphics",
+    "original",
+    "-scale",
+    "1.5",
+    "-poster=false",
+    "-locale",
+    "zh-TW",
+    "-ai",
+    "-1",
+    "-music",
+    ""
+   ],
+   "state_injection": false,
+   "seed_injection": false,
+   "time_injection": false,
+   "script_flag": false,
+   "passed": false,
+   "panic": true,
+   "panic_head": "panic: runtime error: invalid memory address or nil pointer dereference\n[signal 0xc0000005 code=0x0 addr=0x40 pc=0x591684]\n\ngoroutine 21 [running]:\ngithub.com/wicanr2/logh3/internal/rules.(*Slot).fleet(...)\n\tgithub.com/wicanr2/logh3/internal/rules/save.go:577\ngithub.com/wicanr2/logh3/internal/rules.(*Slot).BattleFleetsFor(0x0, {0xc002257f00, 0x2, 0x28?})\n\tgithub.com/wicanr2/logh3/internal/rules/resolve.go:275 +0x84\ngithub.com/wicanr2/logh3/internal/game.(*Game).startBattle(0xc000a21008, 0xd, 0x1)\n\tgithub.com/wicanr2/logh3/internal/game/battle.go:75 +0x608\ngithub.com/wicanr2/logh3/internal/game.(*Game).startPlacedBattle(...)\n\tgithub.com/wicanr2/logh3/internal/game/battle.go:23\ngithub.com/wicanr2/logh3/internal/game.(*Game).scanRegionsFrom.func1()\n\tgithub.com/wicanr2/logh3/internal/game/rebellion.go:116 +0x25\ngithub.com/wicanr2/logh3/internal/game.(*Game).dismissTurnReport(0xc000a21008?)\n\tgithub.com/wicanr2/logh3/internal/game/turnreport.go:86 +0xcb\ngithub.com/wicanr2/logh3/internal/game.(*Game).click(0xc000a21008, 0x230, 0x7d)\n\tgithub.com/wicanr2/logh3/internal/game/game.go:2844 +0xdac\ngithub.com/wicanr2/logh3/internal/game.(*Game).Click(0xc000a21008, 0x230, 0x7d)\n\tgithub.com/wicanr2/logh3/internal/game/game.go:2437 +0x125\nmain.(*app).updateInput(0xc00044e308)\n\tgithub.com/wicanr2/logh3/cmd/gin3/toolbar.go:192 +0x4c5\nmain.(*app).Update(0xc00044e308)\n\tgithub.com/wicanr2/logh3/cmd/gin3/main.go:165 +0x1ea\nmain.(*startup).Update(0xc003525d20?)\n\tgithub.com/wicanr2/logh3/cmd/gin3/startup.go:84 +0x1ba\ngithub.com/hajimehoshi/ebiten/v2.(*gameForUI).Update(0xc0006f2310)\n\tgithub.com/haj",
+   "returncode": 2,
+   "battle_region": null,
+   "battle_after_load": null,
+   "saved_sha256": null,
+   "last_state": null,
+   "trace_sha256": "66477ad4ac227724c4b546150f81492e08555c5059fdeebfff8721eeb2138703",
+   "log_sha256": "346f278aea8f58eed92c41845b26b15c005946869886ad596fb1459f9d89f1dd",
+   "captures": [
+    {
+     "name": "strategy",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "2174baba565ca8353e4dc2e98c2a4c44334a1db35f97cbc2046c692b252f8bc9"
+    },
+    {
+     "name": "ordered",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "c8dbee7c334a2809477e3dcc62e1029de174c2be86354f80ea212009361a9b3d"
+    }
+   ],
+   "inputs": 44
+  },
+  {
+   "name": "after-windows-empire",
+   "binary": "工作樹交叉編譯的gin3-fixed.exe，Wine",
+   "binary_sha256": "f6323d2b9008716dcb777df5614f27c20aac7adc2a848270407d81c2b2b3632e",
+   "driver_sha256": "38569b2e8847484e8e40ebdb5c1b19be40601b7712e0ba3dbf445dcd8a4e0fd0",
+   "command": [
+    "wine",
+    "Z:\\out\\gin3-fixed.exe",
+    "-intro=false",
+    "-orig",
+    "Z:\\pkg\\original",
+    "-data",
+    "Z:\\pkg\\data",
+    "-art",
+    "Z:\\pkg\\art",
+    "-save",
+    "Z:\\out\\after-windows-empire\\save",
+    "-frame-trace",
+    "Z:\\out\\after-windows-empire\\FRAMES.jsonl",
+    "-graphics",
+    "original",
+    "-scale",
+    "1.5",
+    "-poster=false",
+    "-locale",
+    "zh-TW",
+    "-ai",
+    "-1",
+    "-music",
+    ""
+   ],
+   "state_injection": false,
+   "seed_injection": false,
+   "time_injection": false,
+   "script_flag": false,
+   "passed": true,
+   "panic": false,
+   "panic_head": null,
+   "returncode": null,
+   "battle_region": 15,
+   "battle_after_load": true,
+   "saved_sha256": {
+    "ADMIRAL.DT0": "a5bd2fc243138952a32ba2d63bb11e03542e6093c6096b862ef0a89069659f07",
+    "FLEET.DT0": "8ec28d11cc07966013a0a9ffff10bdc1cc1c1c4d5f29da276240b26ac00c116f",
+    "PLANET.DT0": "9b7cf6fab5c78ce7d23129a6d02f3901c6eb67d93f191a2e38f8d59188b58160",
+    "SAVEDATA.IDX": "03d34167b821868f9e023ac373a7d502b4e2f127400c76b533c7f66e1458782e",
+    "SHIP.DT0": "8664c3ffcb1ce4eee500f4832e0330a6edece521057add7e695210a51690762f",
+    "STELLAR.DT0": "a2420d618d1dccc2f67423a8259d1528f2436b06b592d5903373e6f2a254264d",
+    "WORK.DT0": "8a3579c2c3bf263551106be5fb3a59afc457aedb432598c5a690e5f2bd2021e7"
+   },
+   "last_state": "StateBattle",
+   "trace_sha256": "e25d18224ed5356049f358f91ae97ee2ee9ae91bc75f960932d808f4bbcaf8ec",
+   "log_sha256": "201b8d1ff9d73df1739f79a612b4a9b5472f55ac0e651e47e6af4252d0e3e811",
+   "captures": [
+    {
+     "name": "strategy",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "f89f4582ac7adb3a570b79f04742cb7307d39a0d35269273b8b76c0bcfb61a33"
+    },
+    {
+     "name": "ordered",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "da2db64669e0069f92f96e4a3d3e383f1d52ff689203908d355d4562af3cb15e"
+    },
+    {
+     "name": "battle-entry",
+     "state": "StateBattle",
+     "turn": 1,
+     "sha256": "ea1add14eca5555f4e2b203c60e4ed409a39b709dc4a8fdf74d87d1a9d6c49c7"
+    },
+    {
+     "name": "battle-turn-02",
+     "state": "StateBattle",
+     "turn": 2,
+     "sha256": "41c784b660d95c6ad5c3d93ba2a75edf5988c1747361cdf0ae3581b7928d08b2"
+    },
+    {
+     "name": "battle-turn-03",
+     "state": "StateBattle",
+     "turn": 3,
+     "sha256": "a5359c729d08d2561f0f7e8eb2d7618b47eea0d6a1bf7e4a2c07f1e960b5c0ab"
+    },
+    {
+     "name": "battle-turn-09",
+     "state": "StateBattle",
+     "turn": 9,
+     "sha256": "91b44d656b42247b29a98e4bb4f2a06cb2d2b2e0156067ab082c552c287fe7cc"
+    },
+    {
+     "name": "after-battle",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "91b44d656b42247b29a98e4bb4f2a06cb2d2b2e0156067ab082c552c287fe7cc"
+    },
+    {
+     "name": "loaded",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "ab10e62873801e9c53c6396805561279446f61f76a84342506b70ee398e653b0"
+    },
+    {
+     "name": "after-load",
+     "state": "StateBattle",
+     "turn": 1,
+     "sha256": "a9c3a0748dec94d9ea0825a324cd52348294e37895ca11e15a54daac9ddf105a"
+    }
+   ],
+   "inputs": 74
+  },
+  {
+   "name": "after-windows-alliance",
+   "binary": "工作樹交叉編譯的gin3-fixed.exe，Wine",
+   "binary_sha256": "f6323d2b9008716dcb777df5614f27c20aac7adc2a848270407d81c2b2b3632e",
+   "driver_sha256": "38569b2e8847484e8e40ebdb5c1b19be40601b7712e0ba3dbf445dcd8a4e0fd0",
+   "command": [
+    "wine",
+    "Z:\\out\\gin3-fixed.exe",
+    "-intro=false",
+    "-orig",
+    "Z:\\pkg\\original",
+    "-data",
+    "Z:\\pkg\\data",
+    "-art",
+    "Z:\\pkg\\art",
+    "-save",
+    "Z:\\out\\after-windows-alliance\\save",
+    "-frame-trace",
+    "Z:\\out\\after-windows-alliance\\FRAMES.jsonl",
+    "-graphics",
+    "original",
+    "-scale",
+    "1.5",
+    "-poster=false",
+    "-locale",
+    "zh-TW",
+    "-ai",
+    "-1",
+    "-music",
+    ""
+   ],
+   "state_injection": false,
+   "seed_injection": false,
+   "time_injection": false,
+   "script_flag": false,
+   "passed": true,
+   "panic": false,
+   "panic_head": null,
+   "returncode": null,
+   "battle_region": 13,
+   "battle_after_load": true,
+   "saved_sha256": {
+    "ADMIRAL.DT0": "73a03c24085b1e68ebdf67604b7fc2507c927ad19878919543dc87a47dfe0e20",
+    "FLEET.DT0": "b492d4ff64cb2ea12c9e7be8eda2449eea09650a27a0272fd8eb5b114ac91585",
+    "PLANET.DT0": "dda527f0101add23e9145d5ac974e716c880e15f5129e614677ca52fb70a4568",
+    "SAVEDATA.IDX": "03d34167b821868f9e023ac373a7d502b4e2f127400c76b533c7f66e1458782e",
+    "SHIP.DT0": "0763803f104fa78d5275cf63206adcdc669dfed2f91fceedcc84db12abe26a79",
+    "STELLAR.DT0": "749bdbb81faef0bf50b850859bfe61977ed456c6872e385d6f48bdf3c573493e",
+    "WORK.DT0": "ea72b54d9fd90aa1be8c3464e5d877ab08c985c4962915d606658f1e68087b18"
+   },
+   "last_state": "StateBattle",
+   "trace_sha256": "7d4f36d212a5c476926a3e7346c231095c98b80c52815e4f243f8853f8e8ed8d",
+   "log_sha256": "201b8d1ff9d73df1739f79a612b4a9b5472f55ac0e651e47e6af4252d0e3e811",
+   "captures": [
+    {
+     "name": "strategy",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "2174baba565ca8353e4dc2e98c2a4c44334a1db35f97cbc2046c692b252f8bc9"
+    },
+    {
+     "name": "ordered",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "c8dbee7c334a2809477e3dcc62e1029de174c2be86354f80ea212009361a9b3d"
+    },
+    {
+     "name": "battle-entry",
+     "state": "StateBattle",
+     "turn": 1,
+     "sha256": "0c82349a45614914fefbe412c0a173bb2c22dab4de0de44f1e498a8911cedb26"
+    },
+    {
+     "name": "battle-turn-02",
+     "state": "StateBattle",
+     "turn": 2,
+     "sha256": "fa8ecb7a4a4697498cffc5f2084c37bf3b32e0e29acb7fff8d09d436d025fb42"
+    },
+    {
+     "name": "battle-turn-03",
+     "state": "StateBattle",
+     "turn": 3,
+     "sha256": "6a432486407626bc8cf72461ddfba2e1da38cc54b11ffb9c24a17f7aec311f55"
+    },
+    {
+     "name": "battle-turn-09",
+     "state": "StateBattle",
+     "turn": 9,
+     "sha256": "7ce886ba91916fdf04d8e296a6dd3f91ff2a759c0f94768dc0fd634fedcc88d8"
+    },
+    {
+     "name": "after-battle",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "fa8ecb7a4a4697498cffc5f2084c37bf3b32e0e29acb7fff8d09d436d025fb42"
+    },
+    {
+     "name": "loaded",
+     "state": "StateCommandPhase",
+     "turn": null,
+     "sha256": "b07c025561cd0e0a312f145017e6ee9111cff6e32ca60c6f0d700bd7ed60ed2c"
+    },
+    {
+     "name": "after-load",
+     "state": "StateBattle",
+     "turn": 1,
+     "sha256": "10e12d36005f2540218b65dce34be814f108edd5291e206bff9e60a356373d93"
+    }
+   ],
+   "inputs": 74
+  }
+ ],
+ "saves_identical_across_platforms": {
+  "empire": true,
+  "alliance": true
+ },
+ "limits": [
+  "Windows只在Wine驗證，沒有實機",
+  "同一星域多支新編艦隊的避讓順序依表位，與原版不同，未對拍",
+  "非首都新編艦隊的待命行星分支只有靜態證據",
+  "使用者確認第169輪的閃退發生在進戰場，與本輪同一個崩潰"
+ ]
+}

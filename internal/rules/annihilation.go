@@ -78,3 +78,29 @@ func (s *Slot) AnnihilateFleet(i int) {
 	r[fleetUnused] = 0xFF
 	r[fleetAdjutant] = 0xFF
 }
+
+// DisbandFleet 是 `297B:025D` 對原始表做的事（`docs/re/329` §一，規格159）：
+//
+//	艦隊記錄 +0x04（提督）與 +0x05（副官） ← FF。
+//	前 +0x0F 組與 +0x38 的索敵分遣隊走 `2AD2:018C`：艦艇 +0x01 ← FF，+0x38 遠指標清 0。
+//
+// 艘數還回星域與提督的旗標由 Disband 做。這一列要當場作廢：電腦可能在下一次同步之前
+// 就在同一格重編，那時留著舊列會讓新艦隊被當成舊艦隊同步。
+func (s *Slot) DisbandFleet(i int) {
+	r := s.fleet(i)
+	if r == nil || r[fleetUnused] == 0xFF {
+		return
+	}
+	void := func(ship int) {
+		if rec := s.ShipAt(ship); len(rec) == ShipRecord {
+			rec[shipOwner] = 0xFF
+			clear(rec[0x38:0x3C])
+		}
+	}
+	for g := 0; g < int(r[fleetGroups]) && g < fleetSlotN; g++ {
+		o := fleetSlots + g*4
+		void(int(r[o]) | int(r[o+1])<<8)
+	}
+	void(int(r[fleetScout]) | int(r[fleetScout+1])<<8)
+	r[fleetUnused], r[fleetAdjutant] = 0xFF, 0xFF
+}

@@ -3,23 +3,32 @@ package rules
 import "encoding/binary"
 
 // PlaceFleetArrival接回113A:0648→297B:08D8，限完整原池與有效入口（規格088）。
-// 地形、其他艦隊與槽表沿既有戰略定位規則；現在位置與集結點分開保存。
+// 入口表查不到時回 false；待命行星那條分支由呼叫端決定（規格159）。
 func (s *Slot) PlaceFleetArrival(f *Fleet, from int, entries *BattleEntries, place *StrategicPlacement) bool {
-	if s == nil || f == nil || place == nil || place.Slots == nil ||
-		len(s.Fleet) != FleetCount*FleetRecord || len(s.Ship) != ShipCount*ShipRecord ||
-		f.Index < 0 || f.Index >= FleetCount {
+	if f == nil {
 		return false
 	}
 	e, ok := entries.EntryFor(f.Region, from)
 	if !ok {
-		return false // 缺入口的原版fallback未取得動態驗收，不猜補。
+		return false
+	}
+	return s.PlaceFleetAt(f, PlanetSite{X: e.X, Y: e.Y}, place)
+}
+
+// PlaceFleetAt 是 297B:0ABF 定出中心之後的部分：避讓、朝向與 297B:08D8 的欄位重設。
+// 地形、其他艦隊與槽表沿既有戰略定位規則；現在位置與集結點分開保存。
+func (s *Slot) PlaceFleetAt(f *Fleet, site PlanetSite, place *StrategicPlacement) bool {
+	if s == nil || f == nil || place == nil || place.Slots == nil ||
+		len(s.Fleet) != FleetCount*FleetRecord || len(s.Ship) != ShipCount*ShipRecord ||
+		f.Index < 0 || f.Index >= FleetCount {
+		return false
 	}
 	for _, g := range f.Composition {
 		if g.Pool < 0 || g.Pool >= ShipCount {
 			return false
 		}
 	}
-	facing := placeStrategicFleet(f, PlanetSite{X: e.X, Y: e.Y}, nil, place)
+	facing := placeStrategicFleet(f, site, nil, place)
 	r := s.fleet(f.Index)
 	r[0x3A], r[0x3B], r[0x48], r[0x5A], r[0x5B] = 255, 0, 4, 255, 255
 	f.Action = 4

@@ -11843,3 +11843,19 @@ scout_promo沿166完整故事片，保留雙國徽底圖、百年對峙、雙主
 提交前再次逐項核對已凍結產品及發行工具SHA，與v1.6.4已驗封包一致，沿用前輪標準21套件、五條正常玩家路徑及完整影片驗收，不重複建置。35份新檔最大為README原窗PNG約1.2MB，沒有dist-all、org_game或workplace進待提交清單；既有修改均屬本輪來源。CONTEXT補提交範圍，建置收據保持原始HEAD及dirty來源，不回填成事後commit。以一般推送更新origin/main，遠端核對以本輪最後回報的提交ID為準。完整版與含原版音畫的影片只留本機，未建立或移動tag／Release，Windows未知閃退、Mac真機、FUSE與#48限制不變。
 
 暫存檢查核對71份檔案，沒有有效Git hook或憑證樣式字串。兩份Windows日誌CMD保留已驗CRLF位元組；Git以cr-at-eol辨認行尾後檢查尾空白、檔尾空行及tab前空格，避免將必要CRLF誤判為尾空白。
+
+## 2026-11-02：第172輪，新遊戲第一場戰鬥崩潰
+
+使用者提供Windows崩潰截圖。開工核對主機gh認證、Issue快照及verify，282條零失效、1manual、126一致、155歷史，#48仍開。git身分wicanr2@gmail.com，工作樹乾淨。
+
+`addr=0x40`是`Slot.Fleet`的長度欄位，接收者nil。`startNewGame`把`g.slot`設成nil，只有存讀檔才會建，沒存過檔的新遊戲第一場戰鬥就崩潰。第169輪走讀檔S1，所以沒重現。先寫失敗測試，堆疊與截圖相同，再用`tools/scripts/new_game_battle_gui.py`讓v1.6.4的Linux執行檔與Windows EXE走純玩家路徑，兩邊都重現。
+
+單補nil判斷只會得到空戰場。探針另外測出存過檔的新遊戲與讀檔局新編艦隊兩軍都疊在(0,0)：到達時池索引是-1，`PlaceFleetArrival`安靜回false。原版傾印`fcmd-base-fleet0`與`t260_post`證實新編艦隊在建立當下就配置，入口表只有首都兩筆來源等於自己；反組譯`297B:0ABF`確認查不到入口時用待命行星，`0DEA:1759`不判斷0xFF。
+
+實作：`ensureSlot`從`SaveSlot`抽出，戰場入口也呼叫；到達時沒有原池先記來源，有原池而池索引-1先同步；戰場入口補配置零值座標的艦隊。第一版把來源記號放在`rules.Fleet`，`TestSaveLiveFleetStateLoop`抓到typed艦隊與存檔不等，改放`Game`。`TestBattleScanContinuesToNextRegion`的夾具沒有入口表，建池改成有入口表才做。
+
+純玩家路徑跑到第80回合存檔時測出獨立舊洞：`disbandFleet`只改typed表，電腦同格重編時`Scout`零值被當池#0，同步失敗。新增`Slot.DisbandFleet`照`297B:025D`當場作廢那一列。這個洞在讀檔局同樣存在，開戰前同步失敗會讓`startBattle`直接返回。
+
+驗收：標準21套件16PASS／5無測試／0失敗。使用者要求驗證完才打包，所以把路徑延伸到打完九回合、存進度、取進度、再開戰，並補上同盟與對戰模式。v1.6.4兩平台兩陣營都崩潰；修正版四次都走完，七個存檔檔案跨平台逐位元組相同，負向對照兩組相符。專案預設的kol-wine-verify映像本機已不存在，沿第171輪用yuan-wine-verify:noble-r2。容器全用--rm，沒有殘留。
+
+沒有開或改GitHub Issue。使用者回覆閃退發生在進戰場，所以第169輪與這次是同一個崩潰，並要求驗證完後commit、push、重打完整版。

@@ -798,6 +798,9 @@ type Game struct {
 	// 存檔寫出要靠它——`WORK` 那 230 bytes 只解出三個欄位，
 	// 其餘得原樣抄回去（`docs/spec/009`）。
 	slot *rules.Slot
+	// arrivalFrom 是新遊戲還沒有原池時到達的艦隊來源星域（艦隊表位置 → 星域）。
+	// 建池時用它補到達配置（規格159）；`rules.Fleet` 與存檔同版面，不放這種暫存。
+	arrivalFrom map[int]int
 
 	// faction 是玩家陣營：0 帝國、1 同盟。主選單前兩列各選一邊
 	// （`docs/re/61`）。
@@ -1370,6 +1373,10 @@ func (g *Game) disbandFleet(i int) {
 		return
 	}
 	f := g.fleets[i]
+	delete(g.arrivalFrom, f.Index)
+	if g.slot != nil {
+		g.slot.DisbandFleet(f.Index)
+	}
 	g.mutableAdmirals()
 	rules.Disband(f, g.regionRecord(f.Region), g.admiralRecord)
 	g.fleets = append(g.fleets[:i], g.fleets[i+1:]...)
@@ -2045,6 +2052,7 @@ func (g *Game) startNewGame(faction int) {
 	// `docs/re/274` §4）——**音源那一格不清**，它是開機偵測的結果。
 	g.music.BGM, g.music.Battle = 0, 0
 	g.slot = nil
+	g.arrivalFrom = nil
 	g.armMonthSeats()
 	// 開機月底之前重算初始行星比例、態勢，再彙總及回充星域存量。
 	// 此時不分配回行星；情報窗與實行後分配是其他呼叫點（研究 352／規格 065）。
@@ -2167,6 +2175,7 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.monthSettlementPending = false
 	g.budgetTaxRefreshed = false
 	g.slot = sl
+	g.arrivalFrom = nil
 	g.res.Admiral = sl.Admiral
 	g.admirals = nil
 	g.applyAdmiralOverrides()
@@ -3348,26 +3357,8 @@ func (g *Game) SaveSlot(dir string, index int) error {
 	if g.monthSettlementPending {
 		return fmt.Errorf("月初報告尚未結算，請關閉訂造報告後再存檔")
 	}
-	if g.slot == nil {
-		// 新遊戲：拿量到的開局 `WORK` 當底稿，其餘的表就是目前手上的。
-		// remake 沒有模型的那些欄位會停在 796 年 1 月的初值
-		// （`docs/spec/009`）。
-		if len(g.res.WorkTemplate) < rules.WorkRecord || g.res.Planets == nil {
-			return fmt.Errorf("新遊戲要存檔得先給 WorkTemplate（`docs/spec/009`）")
-		}
-		g.slot = &rules.Slot{
-			Stellar: g.res.Stellar, Planets: g.res.Planets,
-			Admiral: g.res.Admiral,
-			Fleet:   make([]byte, rules.FleetCount*rules.FleetRecord),
-			Ship:    make([]byte, rules.ShipCount*rules.ShipRecord),
-			Work:    append([]byte(nil), g.res.WorkTemplate...),
-		}
-		for i := range g.slot.Fleet {
-			g.slot.Fleet[i] = 0xFF
-		}
-		for i := range g.slot.Ship {
-			g.slot.Ship[i] = 0xFF
-		}
+	if err := g.ensureSlot(); err != nil {
+		return err
 	}
 	if err := g.syncFleetTables(); err != nil {
 		return err

@@ -90,6 +90,7 @@ func (g *Game) annihilateFleet(i int) {
 	if g.slot != nil {
 		g.slot.AnnihilateFleet(f.Index)
 	}
+	delete(g.arrivalFrom, f.Index)
 	g.fleets = append(g.fleets[:i], g.fleets[i+1:]...)
 	if len(g.res.Stellar) > 0 {
 		rules.RecountRegionFleets(g.res.Stellar, g.fleets)

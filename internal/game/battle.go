@@ -27,9 +27,19 @@ func (g *Game) startBattle(region int, placed bool) {
 	g.flagshipTransferTried = nil
 	g.battleFinishing, g.battleFinishEnded = false, false
 	g.battleOccupation = nil
+	// 新遊戲沒存過檔就開戰時還沒有原池（規格159）。沒有入口表的話下面就返回了，不必建。
+	if g.res.Entries != nil {
+		if err := g.ensureSlot(); err != nil {
+			g.saveErr = err
+			return
+		}
+	}
 	if err := g.syncFleetTables(); err != nil {
 		g.saveErr = err
 		return
+	}
+	if placed {
+		g.placeUnplacedFleets()
 	}
 	if g.battlePromotionPaths == nil {
 		g.cacheBattlePromotionPaths()

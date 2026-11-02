@@ -24,6 +24,8 @@ IDA873條原始bytes與19項附加語意。完整088仍DRAFT，原085限定128�
 正式55檔雙跑相同，兩AI原池／typed順位／完整存讀已驗；只有55個+30 byte改變，五張畫面保持。
 SHIP剩214個指標bytes、WORK14／FLEET27與初始一像素仍待驗，完整088維持DRAFT。
 
+缺入口的待命行星分支、新編艦隊配置與新遊戲建池由[159](159-new-game-first-battle.md)接手。
+
 工作項 [#89](https://github.com/wicanr2/logh3/issues/89)；它是[#79](https://github.com/wicanr2/logh3/issues/79)
 正常玩家第三階段同態配對的上游閘門。證據：[研究382](../re/382-normal-battle-player-entry.md)、
 [完整收據](../internals/data/battle-normal-entry.json)、[第四十四輪](../goal/2026-10-03-battle-normal-entry-round-44.md)。
