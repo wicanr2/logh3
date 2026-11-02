@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import plistlib
 import struct
+import subprocess
 import zipfile
 
 import new_game_full_release as release
@@ -93,16 +94,22 @@ def main():
         assert not a['panic']and not b['panic']and a['battle_after_load']and b['battle_after_load']
         assert a['saved_sha256']==b['saved_sha256'],f
         new[f]=dict(battle_region=a['battle_region'],saves_identical_across_platforms=True,saved_sha256=a['saved_sha256'])
-    regression={n:read(p/'RESULT.json')['saved']==read(q/'RESULT.json')['saved']for n,p,q in[
-        ('linux-alliance',BATCH/'player-linux',ROOT/'workplace/release171/player-linux'),
-        ('linux-empire',BATCH/'player-empire',ROOT/'workplace/release171/player-empire'),
-        ('windows-wine',WINE/'player-windows',ROOT/'workplace/music69-windows/full171/player-windows')]}
-    assert all(regression.values()),regression
+    # 回歸路徑是新遊戲直接存檔：除了WORK+0C..14（規格159刻意寫入），六表與v1.6.4逐位元組相同。
+    regression={}
+    for n,p,q,b in[('linux-alliance',BATCH/'player-linux',ROOT/'workplace/release171/player-linux',BATCH/'baseline-alliance.json'),
+                   ('linux-empire',BATCH/'player-empire',ROOT/'workplace/release171/player-empire',BATCH/'baseline-empire.json'),
+                   ('windows-wine',WINE/'player-windows',ROOT/'workplace/music69-windows/full171/player-windows',WINE/'baseline-alliance.json')]:
+        now,old=read(p/'RESULT.json')['saved'],read(q/'RESULT.json')['saved']
+        assert now==read(b)['saved'],n
+        assert{k for k in now if now[k]!=old[k]}=={'WORK.DT0'},n
+        regression[n]=dict(other_tables_identical=True,work_differs_only_in_seat_control=True,baseline=record(b))
+    garrison_now,garrison_old=read(BATCH/'garrison-linux/RESULT.json')['saved'],read(ROOT/'workplace/release171/garrison-linux/RESULT.json')['saved']
+    regression['linux-garrison']=dict(identical=garrison_now==garrison_old,changed=sorted(k for k in garrison_now if garrison_now[k]!=garrison_old[k]))
     (OUT/'SHA256SUMS.txt').write_text(''.join(r['sha256']+'  '+str(Path(r['path']).relative_to(OUT.relative_to(ROOT)))+'\n'for r in artifacts))
     tests=GO_TESTS.read_text().splitlines()
     assert sum(t.startswith('ok')for t in tests)==16 and sum('no test files'in t for t in tests)==5 and not any('FAIL'in t for t in tests)
     receipt=dict(version=VERSION,passed=True,rights='含原版與衍生音畫，只限本機完整版；未公開上傳',
-        head=inputs['head'],branch='fix/new-game-first-battle',product_sources_clean=True,
+        head=inputs['head'],branch=subprocess.check_output(['git','rev-parse','--abbrev-ref','HEAD'],text=True).strip(),product_sources_clean=True,
         working_tree_at_prepare=inputs['working_tree'],inputs=record(STAGE/'INPUTS.json'),
         source_files=len(inputs['source_files']),common_files=len(common),common_identical_to='v.1.6.4-20261031',artifacts=artifacts,
         checks=checks,macos=dict(slices=slices,toolchain=(release.MAC/'TOOLCHAIN.txt').read_text(),native_execution=False),
@@ -112,10 +119,10 @@ def main():
                      prior_crash_root='第169輪閃退已定位：新遊戲未存檔進第一場戰鬥，見docs/playtest/143'),
         standard_tests=dict(command='go test ./cmd/... ./internal/...',passed=True,packages=21,with_tests=16,no_tests=5,
                             log=record(GO_TESTS),scope='不等同DOS全局同態或Windows真機驗收'),
-        new_game=new,regression_saves_identical_to_v164=regression,player_receipts=players,
+        new_game=new,regression_against_v164=regression,player_receipts=players,
         promo='沿用v.1.6.4推廣片，本版未重錄',
         generators={str(p.relative_to(ROOT)):sha(p)for p in[Path(__file__).resolve(),ROOT/'tools/scripts/new_game_battle_gui.py',
-            ROOT/'tools/scripts/release_battle_gui.py',ROOT/'tools/scripts/release_garrison_gui.py',ROOT/'tools/scripts/poster_frame_gui.py',ROOT/'tools/release.sh']},
+            ROOT/'tools/scripts/release_battle_gui.py',ROOT/'tools/scripts/release_garrison_gui.py',ROOT/'tools/scripts/poster_frame_gui.py',ROOT/'tools/scripts/new_game_player_baseline.py',ROOT/'tools/release.sh']},
         toolchain=dict(release=dict(image='logh3-release:20261031-r171',id='sha256:c300ac10ae82519c285808ad33c9b6d1086239ae701d5f0bc879ecc9e70286fa'),
             macos=dict(image='cok-osxcross:go1.24.13-sdk15.5-r1',id='sha256:a2dc911a8709192604ffe6e4936dd3fd74fecc5fbc63996fbe75058edfa00980'),
             wine=dict(image='yuan-wine-verify:noble-r2',id='sha256:31664639bb8cce681b29c9b06765a2f19ca5fb88468ad3fd8ed1645771d8f7b2')),

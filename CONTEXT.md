@@ -1,4 +1,4 @@
-<!-- 第172輪：修正新遊戲沒存過檔就開第一場戰鬥的崩潰與新編艦隊配置。交付仍是v.1.6.4-20261031，該封包含此崩潰。#48正式讀回重建及DOS整段同態仍未完成。 -->
+<!-- 第172輪：修正新遊戲沒存過檔就開第一場戰鬥的崩潰、新編艦隊配置與同盟進場鏡頭，交付v.1.6.5-20261102三平台完整版。來源在fix/new-game-first-battle，未合併main，未打tag。#48正式讀回重建及DOS整段同態仍未完成。 -->
 # CONTEXT — 銀河英雄傳說III SP 專案目前真相
 
 本檔保存目前真相；剩餘工作的權威是 GitHub 上的 `worklist` Issue。
@@ -6,7 +6,7 @@
 
 ## 現況一覽
 
-**目前修正（2026-11-02，第172輪）**：使用者提供Windows堆疊。沒存過檔的新遊戲開第一場戰鬥時`g.slot`是nil，`BattleFleetsFor`崩潰；v1.6.4的Linux與Windows（Wine）正式執行檔都以純玩家輸入重現，星域15、2支艦隊。[159限定CONFORMED](docs/spec/159-new-game-first-battle.md)：進戰場建原池，新編艦隊照`297B:0ABF`配置（首都中心與航向符合原版傾印），解散當場作廢原始表那一列，新遊戲依模式寫`WORK+0C..14`讓同盟進場鏡頭對著玩家。修正版兩平台兩陣營同一路徑打完九回合、存進度取進度後再開戰，七個存檔檔案跨平台逐位元組相同；標準21套件16PASS／5無測試／0失敗。v1.6.4封包仍含此崩潰。Windows未驗實機；使用者確認第169輪的閃退也發生在進戰場，是同一個崩潰。[狀態表172](docs/goal/2026-11-02-new-game-first-battle-round-172.md)、[研究450](docs/re/450-new-fleet-placement-and-new-game-slot.md)、[驗收143](docs/playtest/143-new-game-first-battle.md)、[機器收據](docs/internals/data/new-game-battle172.json)。
+**目前交付（2026-11-02，第172輪）**：使用者提供Windows堆疊。沒存過檔的新遊戲開第一場戰鬥時`g.slot`是nil，`BattleFleetsFor`崩潰；v1.6.4的Linux與Windows（Wine）正式執行檔都以純玩家輸入重現，星域15、2支艦隊。[159限定CONFORMED](docs/spec/159-new-game-first-battle.md)：進戰場建原池，新編艦隊照`297B:0ABF`配置（首都中心與航向符合原版傾印），解散當場作廢原始表那一列，新遊戲依模式寫`WORK+0C..14`讓同盟進場鏡頭對著玩家。修正版兩平台兩陣營同一路徑打完九回合、存進度取進度後再開戰，七個存檔檔案跨平台逐位元組相同；標準21套件16PASS／5無測試／0失敗。v.1.6.5-20261102三平台完整版已從`caca2b8e`乾淨建置，九條正常路徑通過，652共用素材與v1.6.4相同，見[交付144](docs/playtest/144-v165-full-delivery.md)；推廣片沿用v1.6.4。來源在`fix/new-game-first-battle`，未合併main，未打tag。Windows未驗實機；使用者確認第169輪的閃退也發生在進戰場，是同一個崩潰。[狀態表172](docs/goal/2026-11-02-new-game-first-battle-round-172.md)、[研究450](docs/re/450-new-fleet-placement-and-new-game-slot.md)、[驗收143](docs/playtest/143-new-game-first-battle.md)、[機器收據](docs/internals/data/new-game-battle172.json)。
 
 **目前交付（2026-10-31，第171輪）**：`v.1.6.4-20261031`三平台本機完整版已重建，Windows ZIP、Linux AppImage、macOS通用ZIP逐檔核對通過。1663凍結來源、652共用素材一致，83人物預縮保持顯示RGBA與原始HD。標準21套件16PASS／5無測試，實包Linux兩陣營、Windows Wine、P索敵／實際64點行軍、前線換提督／當地領船／出擊共五條正常路徑通過；同盟跨平台六表相同。完整影片保留雙國徽故事、主角動畫與原有完整交戰，重錄前線整軍並補P與行軍，37段126.883333秒1080p60、7613格、21352320 bytes；單曲配樂、40音效、SNR37.35dB、無黑幀、字幕及目視通過。README補兩張實包原圖。macOS未真機、Linux未驗FUSE、169未知Windows閃退保持。交付只本機，舊版／tag／Release保留；169至171來源依後續push授權提交至main。打包收據仍綁建置時HEAD與來源SHA，提交不重新打包。[唯一狀態表171](docs/goal/2026-10-31-full-p-scout-march-promo-round-171.md)、[驗收142](docs/playtest/142-v164-full-scout-march-promo.md)、[機器收據](docs/internals/data/v164-full-delivery.json)。
 

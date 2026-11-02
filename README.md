@@ -4,7 +4,7 @@
 
 選擇銀河帝國或自由行星同盟，從財政、生產與提督任命安排戰略，再親自指揮艦隊迎戰。從亞姆力札會戰重新下令，讓你的戰術改變局勢。
 
-**目前本機完整版為 v.1.6.4-20261031。** P索敵顯示指揮P與範圍圈，指定位置後回到原視窗；敵我行軍改為整隊下令。圖片按需載入，發行人物圖預縮，保留原始HD。Windows ZIP、Linux AppImage與macOS通用ZIP均包含三組銀河海報及五語名言輪替。[本次封包與影片驗收](docs/playtest/142-v164-full-scout-march-promo.md) · [海報與語系](#海報與語系)
+**目前本機完整版為 v.1.6.5-20261102。** 修正沒存過檔的新遊戲開第一場戰鬥會閃退的問題，[修正版封包驗收](docs/playtest/144-v165-full-delivery.md)。v.1.6.4起，P索敵顯示指揮P與範圍圈，指定位置後回到原視窗；敵我行軍改為整隊下令。圖片按需載入，發行人物圖預縮，保留原始HD。Windows ZIP、Linux AppImage與macOS通用ZIP均包含三組銀河海報及五語名言輪替。[本次封包與影片驗收](docs/playtest/142-v164-full-scout-march-promo.md) · [海報與語系](#海報與語系)
 
 完整版也包含滑鼠重繪延遲與按鈕、下拉選項的hover修正。滑鼠移至頂端後，可從工具列直接切換思源黑體等既有字型及戰略AI。[操作驗收](docs/playtest/134-pointer-toolbar.md)
 
@@ -40,7 +40,7 @@ GitHub 公開引擎仍為 [v.1.5.0-20261019](https://github.com/wicanr2/logh3/re
 
 | 本機內容 | 路徑 |
 |---|---|
-| 三平台 v.1.6.4 完整版，Linux為AppImage | `dist-all/v.1.6.4-20261031/full/` |
+| 三平台 v.1.6.5 完整版，Linux為AppImage | `dist-all/v.1.6.5-20261102/full/` |
 | v.1.6.4 完整故事推廣片 | `dist-all/v.1.6.4-20261031/promo/` |
 | 三平台 v.1.5.0 公開引擎、來源與校驗檔 | `dist-all/v.1.5.0-20261019/release/` |
 
