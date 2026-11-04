@@ -11913,3 +11913,36 @@ scout_promo沿166完整故事片，保留雙國徽底圖、百年對峙、雙主
 - 計畫內的路徑全部移除，受版控檔案刪除數為0，文件與程式的路徑引用沒有指向已刪檔案。
 
 逐檔清單與執行工具在`workplace/cleanup-20261104/`。作業在一次性非root Docker容器內執行，容器以`--rm`收尾，沒有動映像或volume。本筆與CONTEXT同次提交推送。
+
+## 2026-11-04：本機磁碟清理第二輪
+
+使用者再要求節省空間，選擇刪可重建副本、壓縮冷資料與硬連結合併。沒有改產品程式、素材或版本，沒有動Issue。專案由22 GB降到9.1 GB。
+
+| 項目 | 檔數 | 釋放 |
+|---|---:|---:|
+| `dist-all/v.1.6.5/full`兩個解壓目錄（逐檔CRC與zip相同） | 1,320 | 812.2 MB |
+| 冷資料壓入封存檔 | 133,764 | 淨8.35 GiB（9.81 GiB壓到1.45 GiB） |
+| 相同檔案改為硬連結（256 KB以上、未受版控） | 3,902個路徑 | 3.51 GiB |
+
+封存內容是歷史JSON與文字收據、`decomp/diff`向量、WAV與PCM、記憶體傾印及舊來源副本。`oracle`、`ida`、`toolchains`、`gomodcache`、現行打包批次、`*-full`測試批次、`gm-build*`與來源目錄、存檔、文件或程式直接指名的檔案，以及程式指名且不超過64 MB的目錄都留在原位。已壓縮格式不進封存。
+
+要讀封存內容或重跑舊工具前先還原。`decomp/tools/check_diff.sh`、`hero130`、`promo139`等歷史工具指向的目錄有部分內容在封存內，共17個目錄。在儲存庫根目錄執行：
+
+```sh
+docker run --rm --network none -u "$(id -u):$(id -g)" --memory 2g --cpus 2 --pids-limit 32 \
+  --log-opt max-size=10m --log-opt max-file=3 \
+  -v "$PWD:/home/anr2/cht/logh3" python:3.13-slim python -I \
+  /home/anr2/cht/logh3/workplace/cleanup-20261104/round2/round2.py \
+  restore logh3 --prefix workplace/decomp/diff/3CA4_000D
+```
+
+可用`--path`指定單檔，`--destination`指定其他目錄。省略`--path`與`--prefix`時還原全部。工具拒絕覆寫內容不同的既有檔案。
+
+驗證：
+- 封存檔先解到獨立目錄，133,764檔逐檔核對SHA-256、權限與時間戳記，原檔未變動，通過後才刪散檔。收據在`workplace/cold-evidence-20261104-restore-check.json`。上面的還原指令也實跑過。
+- v.1.6.5的`SHA256SUMS`3項與第一輪清理前相同。硬連結全部同inode。
+- `tools/go.sh run ./cmd/worklist verify`輸出與第一輪清理前相同，282條、0條斷言不成立。
+- `TestWindows*ImportPlayerDecode`四組、`TestTitlePlayerMusic`、`TestBMGWholeFileParses`、`TestTitle350Original`通過。`TestBMGEngagementMatchesOracle`跳過，`TestTitle350Original`記錄缺`title68-r96-*`，這些收據不在`workplace/oracle`，也不在這兩輪的任何清單，是清理前就缺的既有狀況。
+- 受版控檔案刪除數為0，文件與程式的路徑引用沒有指向已封存的檔案。驗證重生的`gocache`之後清掉，目錄保留。
+
+部分相同檔案現在是硬連結，要原地修改先複製。逐檔清單與工具在`workplace/cleanup-20261104/round2/`。作業在一次性非root Docker容器內執行，容器以`--rm`收尾，沒有動映像或volume。本筆與CONTEXT同次提交推送。
