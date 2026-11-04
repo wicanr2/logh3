@@ -11881,3 +11881,35 @@ scout_promo沿166完整故事片，保留雙國徽底圖、百年對峙、雙主
 中途session重啟，兩個背景工作回報結束碼-1。實際讀結果：Wine那批已正常跑完，Linux容器仍在執行，改用Monitor等到結束。-1是回報假象，不是驗證失敗。
 
 打包後的收據與文件更新留在工作樹，未提交。
+
+## 2026-11-04：本機磁碟清理
+
+使用者要求只留必要檔案以節省硬碟，並裁定舊版交付只留清單與文字收據、歷史擷取刪除但留文字收據。沒有改產品程式、素材或版本，沒有動Issue。
+
+刪除53,562檔，釋放48.43 GiB，專案由71 GB降到22 GB。
+
+| 類別 | 檔數 | 釋放 GiB |
+|---|---:|---:|
+| 解壓與暫存封包副本 | 17,375 | 24.28 |
+| `dist-all`舊版封包、影片與截圖 | 1,571 | 6.68 |
+| 歷史截圖、錄音與錄影 | 18,891 | 6.01 |
+| `workplace`舊封包 | 23 | 3.67 |
+| 舊測試執行檔 | 314 | 2.64 |
+| 與保留檔案相同的副本 | 1,067 | 2.06 |
+| 建置快取 | 12,629 | 1.73 |
+| Wine環境 | 1,692 | 1.35 |
+
+保留v.1.6.5全部、v.1.6.4 promo、v.1.6.1 release、原版資料、`oracle`、`decomp`、`ida`、`toolchains`、`gomodcache`、`release172`（AppDir除外）、`package92-v.1.6.5-20261102-release172`、`macos-release172`（快取除外）、`music69-windows/full172`與`*-full`測試批次、`gm-build*`、`launch128/concept`、原始音樂與美術來源、文字收據與文件直接連到的檔案。
+
+重跑限制：
+- `new_game_full_release.py`的BASE（`release171/extracted`）與PARENT（v.1.6.4 AppImage）已刪，原樣重跑會停在前置檢查。下一版打包以`workplace/release172/extracted/squashfs-root`與v.1.6.5 AppImage為基底。
+- 第148、168輪的restore在來源ZIP已刪時無法還原。
+- `workplace/gocache`內容已清但目錄保留，因為`tools/release.sh`直接掛載它，目錄不存在時dockerd會以root建立。
+
+驗證：
+- v.1.6.5的`SHA256SUMS`3項，清理前後雜湊都相符。
+- `tools/go.sh run ./cmd/worklist verify`清理前後都是282條、0條斷言不成立。
+- `TestWindows*ImportPlayerDecode`四組通過，沒有skip。`tools/gui.sh`預設的`logh3-ebiten:2`本機已不存在，這次以`LOGH3_GUI_IMAGE=logh3-ebiten:20261030-r169`執行。驗證重生的快取之後清掉。
+- 計畫內的路徑全部移除，受版控檔案刪除數為0，文件與程式的路徑引用沒有指向已刪檔案。
+
+逐檔清單與執行工具在`workplace/cleanup-20261104/`。作業在一次性非root Docker容器內執行，容器以`--rm`收尾，沒有動映像或volume。本筆與CONTEXT同次提交推送。
