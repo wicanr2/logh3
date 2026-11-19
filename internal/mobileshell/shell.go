@@ -58,9 +58,10 @@ type Shell struct {
 	taps        [][2]float64
 	nativeTouch bool
 	// lay 是上一次 Draw 的版面，觸控換算用；u 是畫布像素／邏輯像素。
-	lay   screenLayout
-	u     float64
-	sharp sharp
+	lay       screenLayout
+	u         float64
+	sharp     sharp
+	lastState game.State
 	// uploaded 是已上傳到 screen 的 HD 畫面世代。
 	uploaded uint64
 	// drawn 是上一次真的畫出去的內容摘要；一樣就不重畫（省電，也省模擬器的軟體繪圖）。
@@ -192,6 +193,11 @@ func (s *Shell) Update() error {
 	}
 	if g.Quit() {
 		return ebiten.Termination
+	}
+	// 狀態切換寫進 logcat：模擬器腳本靠它等畫面，不必猜秒數。
+	if st := g.State(); st != s.lastState {
+		s.lastState = st
+		log.Printf("logh3: 狀態 %v", st)
 	}
 	snd.beforeTick(g)
 	g.Tick(time.Second / time.Duration(ebiten.TPS()))

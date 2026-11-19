@@ -9,7 +9,7 @@
 # 輸入腳本一行一個指令：`wait 秒`、`tap x y`（裝置像素，預設橫向 1280×576）、`press x y`（按住 300 ms）、`back`、`shot 名字`、
 # `waitlog 字串`（等 logcat 出現該字串，最多 120 秒；用來等「載入完成」再送輸入）、
 # `restart`（強制停止 App、清 logcat、重新啟動；驗證存檔跨啟動保留）、
-# `touches`（顯示觸控點）、`rec 名稱`／`recstop 名稱`（screenrecord 錄影，存到輸出目錄）。
+# `clearlog`（清 logcat，之後的 waitlog 只看新的；殼會印「logh3: 狀態 StateXxx」）、`touches`（顯示觸控點）、`rec 名稱`／`recstop 名稱`（screenrecord 錄影，存到輸出目錄）。
 # 輕觸與錄影的毫秒時間記在 events-ms.txt，剪接用。
 # 不給腳本時只開機、安裝、啟動，每 10 秒截一張共 9 張。
 set -euo pipefail
@@ -54,10 +54,11 @@ if [ -f /input.txt ]; then
   while read -r cmd a b; do
     case "$cmd" in
       wait) sleep "$a" ;;
-      waitlog) for i in $(seq 1 120); do adb logcat -d </dev/null | grep -q "$a" && break; sleep 1; done
-               echo "$(( $(date +%s) - s0 )) 秒 看到 $a" | tee -a /out/timeline.txt ;;
+      waitlog) pat="$a${b:+ $b}"; for i in $(seq 1 180); do adb logcat -d </dev/null | grep -q "$pat" && break; sleep 1; done
+               echo "$(( $(date +%s) - s0 )) 秒 看到 $pat" | tee -a /out/timeline.txt ;;
       tap) echo "tap $a $b $(date +%s%3N)" >> /out/events-ms.txt
            adb shell input tap "$a" "$b" </dev/null; sleep 1 ;;
+      clearlog) adb logcat -c </dev/null ;;
       touches) adb shell settings put system show_touches 1 </dev/null ;;
       rec) adb shell screenrecord --bit-rate 12000000 "/sdcard/$a.mp4" </dev/null & recpid=$!
            echo "rec $a $(date +%s%3N)" >> /out/events-ms.txt; sleep 1 ;;
