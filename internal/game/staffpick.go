@@ -112,16 +112,75 @@ func (g *Game) staffPickRightClick() bool {
 // 與動稅率檔位同一條）：收據 `fcmd-taxstaff-decide` 裡預估徵稅額 10341 → 10763、
 // 成長率 3.2% → 3.3%、右上角的稅收與首都摘要都跟著變——因為稅率算式乘的就是
 // 那一位的能力（`taxRateAdmiral`）。
+//
+// 換**軍事**專任參謀之後，建造計劃那一份已開著的計劃改用新那一位的營運算單價
+// （`docs/spec/037`）；生產計劃每一幀由 `nextPlan` 現算，不必另外處理。
+// 原版換完是否當場重算單價沒有收據（unknown），這裡取與內政那一顆一致的「立刻反映」。
+//
+// 回到 `back` 那一張：情報收集、徵稅／預算／生產計劃的清單是疊上去的，
+// 底層狀態本來就是 `back`；建造計劃那條路的清單是一張自己的畫面
+// （`StateAdmiralList`），決定之後要回建造計劃。
 func (g *Game) staffPickDecide() {
-	post := g.staff.post
+	post, back := g.staff.post, g.staff.back
 	if g.staff.detail >= 0 {
 		rules.SetStaffAdmiral(g.mutableWork(), post, g.faction, g.staff.detail)
 	}
 	g.staff = staffPick{}
-	if post == rules.PostDomestic {
-		g.refreshBlend(g.faction, g.blend[g.faction])
-		g.refreshCapitalSnap()
+	if back != 0 && g.state != back {
+		g.state = back
 	}
+	switch post {
+	case rules.PostDomestic:
+		g.refreshBlend(g.faction, g.blend[g.faction])
+		// 預算計劃（月初報告那條路）印的是 `monthReport`，要跟著重算，
+		// 與在這一張動稅率檔位（`stepTaxLevel`）同一條。
+		if g.state == StateBudgetPlan {
+			g.refreshMonthReport()
+			if g.monthSettlementPending {
+				g.budgetTaxRefreshed = true
+			}
+		}
+		g.refreshCapitalSnap()
+	case rules.PostMilitary:
+		if g.plan != nil {
+			g.plan.StaffOps = g.staffOps(g.faction)
+		}
+	}
+}
+
+// beginBuildPlanStaffDetail 是建造計劃那條路（`StateAdmiralList`）點了清單一列：
+// 疊上同一張提督詳細資料，第三顆鈕是「決定」，換**軍事**專任參謀
+// （strong inference，見 `productionPlanClick`）。中止回清單，決定回建造計劃。
+func (g *Game) beginBuildPlanStaffDetail(admiral int) {
+	if admiral < 0 || g.res.Screens["screen-admiral-detail"] == nil {
+		return
+	}
+	g.staff = staffPick{detailOn: true, post: rules.PostMilitary, back: StateBuildPlan, detail: admiral}
+}
+
+// buildPlanAdmiralAt 回建造計劃那張「待命中提督資料」（`screen-admiral-list`）
+// 上畫面 y 那一列的提督索引；不在清單上回 −1。列與捲動沿用 `setListRows`。
+func (g *Game) buildPlanAdmiralAt(y int) int {
+	spec := g.res.AdmiralList
+	if spec == nil {
+		return -1
+	}
+	g.setListRows(spec)
+	for _, w := range spec.Windows {
+		if w == nil || w.List == nil {
+			continue
+		}
+		l := w.List
+		if l.Pitch <= 0 || y < l.Y {
+			return -1
+		}
+		row := (y - l.Y) / l.Pitch
+		if row < 0 || row >= l.Rows || row >= len(g.listIndex) {
+			return -1
+		}
+		return g.listIndex[row]
+	}
+	return -1
 }
 
 // staffListAt 回滑鼠落在清單第幾列；不在回 −1。列的版面與

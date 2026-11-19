@@ -2838,9 +2838,16 @@ func (g *Game) click(x, y int) {
 			g.state = StateAdmiralDetail
 		}
 	case StateAdmiralList:
+		// 詳細資料開著時由它先吃（中止／決定，#62 的同一套）。
+		if g.staffPickClick(x, y) {
+			return
+		}
 		if dir := g.standbyScrollAt(x, y); dir != 0 {
 			g.standbyStep(dir)
+			return
 		}
+		// 點一列 → 提督詳細資料，「決定」換軍事專任參謀。
+		g.beginBuildPlanStaffDetail(g.buildPlanAdmiralAt(y))
 	case StateRegionInfo:
 		// 左鍵只認「結束」（熱區 `0DA2`），其餘不動。
 		if s := g.res.RegionInfo; s != nil && s.ButtonAt(x, y) {
@@ -3524,6 +3531,10 @@ func (g *Game) Frame() (result *gfx.Framebuffer) {
 		fb, _ := screen.MainGameWithBoard(g.res.AdmiralList, g.res.Font, g.playerStarMap(),
 			g.res.Faces, g.res.Cursor, g.drawBoardPanels)
 		g.drawSpecStaff(fb, g.res.AdmiralList)
+		// 點了一列之後的提督詳細資料（換軍事專任參謀）疊在清單上。
+		if g.staff.on() {
+			g.drawStaffPick(fb)
+		}
 		return fb
 	case StateBudgetPlan:
 		g.applyStaffFaces(g.res.BudgetPlan)
@@ -3535,6 +3546,12 @@ func (g *Game) Frame() (result *gfx.Framebuffer) {
 			g.res.Faces, g.res.Cursor, g.drawBoardPanels, g.afterWindow)
 		g.drawSpecStaff(fb, g.res.BudgetPlan)
 		g.drawBudget(fb)
+		// 參謀任命的清單與詳細資料（與徵稅計劃同一份熱區 `ds:14A8`，換內政
+		// 專任參謀）。這一張走自己的分支，少了這一段清單就是隱形的：
+		// 點了參謀之後畫面不變，後面的點擊全被看不見的清單吃掉。
+		if g.staff.on() {
+			g.drawStaffPick(fb)
+		}
 		return fb
 	case StateBuildPlan:
 		g.liveCursor(g.res.BuildPlan)

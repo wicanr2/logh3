@@ -1,6 +1,9 @@
 package game
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
@@ -88,6 +91,44 @@ func (g *Game) planScreenClick(x, y int) bool {
 			g.state = StateCommandPhase
 			return true
 		}
+		return g.productionPlanClick(x, y)
+	}
+	return false
+}
+
+// productionPlanClick 是生產計劃的七列箭頭與「參謀」。
+//
+// 生產計劃與月初那條路的建造計劃共用同一份熱區清單 `ds:26E2`（`docs/re/343`
+// §一，proven 位元組：7 列 × 2 箭頭 ＋ 參謀 ＋ 結束），所以命中測試直接借
+// 建造計劃的規格（`screen-build-plan` 的 hotspots，滑鼠座標）。
+//
+//   - 箭頭改的是兩張共用的那一份百分比 `g.pct`（`docs/spec/004`「百分比兩張共用」），
+//     建造費仍是次月份預估那一組，畫面每一幀由 `nextPlan` 重算。
+//   - 參謀換**軍事**專任參謀（strong inference，規格 064 §三個入口）：同一份清單的
+//     那一顆在建造計劃上開的是同一張「待命中提督資料」，而這兩張的署名與單價都是
+//     軍事專任參謀（`docs/spec/037`）。原版寫哪一格沒有收據。
+func (g *Game) productionPlanClick(x, y int) bool {
+	if g.res.BuildPlan == nil {
+		return false
+	}
+	act := g.res.BuildPlan.HitTest(x, y-mouseDY)
+	var row int
+	switch {
+	case strings.HasPrefix(act, "inc-"), strings.HasPrefix(act, "dec-"):
+		p := g.nextPlan()
+		changed := false
+		if _, err := fmt.Sscanf(act, "inc-%d", &row); err == nil {
+			changed = p.Inc(row)
+		} else if _, err := fmt.Sscanf(act, "dec-%d", &row); err == nil {
+			changed = p.Dec(row)
+		}
+		if changed {
+			g.pct = p.Pct
+		}
+		return true
+	case act == "admiral-list":
+		g.beginStaffPick(rules.PostMilitary, g.state)
+		return true
 	}
 	return false
 }

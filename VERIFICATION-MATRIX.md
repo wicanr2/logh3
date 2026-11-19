@@ -130,6 +130,7 @@
 |---|---|---|
 | 資料段裡的熱區清單 | **25 份全部掃出**（含每個按鈕的中文標籤） | [`docs/internals/23`](docs/internals/23-hotspot-lists.md) |
 | 清單 ↔ 畫面的對應 | **27 處命中測試呼叫端全部掃出**，其中 14 處讀得出按鈕標籤（[`data/hittest-sites.json`](docs/internals/data/hittest-sites.json)）；清單位移寫死在呼叫端，兩者由呼叫點綁死（[`docs/re/16`](docs/re/16-window-list-right-button.md)、[`docs/re/156`](docs/re/156-hotspot-lists-from-call-sites.md)） | 同上 |
+| 計劃畫面的參謀任命與生產額度分配 | 已修正，未打包 | [145](docs/playtest/145-staff-pick-plan-screens.md)、[451](docs/re/451-staff-pick-plan-screens.md)、[064](docs/spec/064-staff-appointment.md)及[機器收據](docs/internals/data/staff-pick173.json)；兩陣營正常X11路徑42張截圖目視，三支測試含存檔讀回。 |
 | 系統游標、讀檔取消、四字型、HD音色及啟動進度 | 完成：v.1.3.0本機交付與機械驗證；人耳及真機仍由#69追蹤 | [驗證120](docs/playtest/120-system-dialog-polish.md)及[交付索引](docs/internals/data/system-dialog-polish.json) |
 | 名將戰術加成、三平台完整遊戲及史詩推廣片 | 完成：名將協同、三平台完整版、新片及GitHub引擎Release | [驗證119](docs/playtest/119-hero-ai-release-promo.md)及[來源索引](docs/internals/data/hero-ai-release-promo.json) |
 | 三劇本目錄修正與S1實際戰鬥推廣片 | 完成 | [驗收110](docs/playtest/110-hd-interface-s1-promo.md) |

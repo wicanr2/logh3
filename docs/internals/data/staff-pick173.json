@@ -1,0 +1,232 @@
+{
+ "round": 173,
+ "date": "2026-11-19",
+ "base_commit": "0d6ad6aa",
+ "gui_image": "logh3-ebiten:20261030-r169",
+ "gui_tool": "tools/staff_pick_gui.sh",
+ "input": "X11 xdotool，無 direct-entry",
+ "factions": [
+  "empire",
+  "alliance"
+ ],
+ "source_sha256": {
+  "internal/game/planscreens.go": "eec0f97f011793f327da6f071935ff83e09945d54f3d89136e7b2e7fa7d2600f",
+  "internal/game/staffpick.go": "5272d73cdc7f880d43f09297fb5c2ec339d39c5b551fec2e5140a408be0d55ef",
+  "internal/game/game.go": "24991e372129dc7e1d10a64baf54a9364fa8a2a55c0d90506c98846fcf440436",
+  "internal/game/controlhover.go": "5288f7dd35ab9a6a6cc8d667a2865964cb51bf4b862975f9bdbd69fbeedf9358",
+  "internal/game/staffpick_test.go": "603f79c7465f7a2315c8db3d222cea778dd6f0c9732363a884f384e2bddf6f5f",
+  "tools/staff_pick_gui.sh": "5f80c6cc2e36859f2c4f1a942c6768b64b1a242be37590cd778a7f8294ededef"
+ },
+ "screenshots": [
+  {
+   "path": "workplace/staff173/gui/alliance-00-month-report.png",
+   "sha256": "fbdef3602910fba1a67fc02c3e0ac496a89b6d291a4a499b067e77dcdccbb9aa",
+   "bytes": 14180
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-01-budget.png",
+   "sha256": "7f12e0aed70453fd295a47147364c11b382e4cd53a33928f8a6726a0d1c88269",
+   "bytes": 14558
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-02-budget-staff-list.png",
+   "sha256": "5d6bd79af6054460539165171648e038a344688b494266b71d84ddefd71917d9",
+   "bytes": 18056
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-03-budget-staff-detail.png",
+   "sha256": "3f82e661ba3d2b00bd54c3e6cfb97c12656f1737c2aa9599115e46a5d5c6ab23",
+   "bytes": 15041
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-04-budget-staff-decided.png",
+   "sha256": "8007a430282d4c83cc4c52099be0baf8aa5da1912fa4ad1fed44f09e314edff5",
+   "bytes": 15675
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-05-budget-end.png",
+   "sha256": "79cddec65876268ed6ad4dc4488f59c492531ae0deb953033c4c652550b37b94",
+   "bytes": 16532
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-06-ship-order.png",
+   "sha256": "1123aa841b3e6ceff2b90ff7dfa693dc6be972d8e61e76a070096c5fd147af40",
+   "bytes": 16960
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-07-build-plan.png",
+   "sha256": "697c56d959114ded2a5ea0a2dc020e02d02973b0eeca60e3137af2697373c5e2",
+   "bytes": 13206
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-08-build-staff-list.png",
+   "sha256": "7a7dcbf848d7177382328da1c1289386d28a93710cc77e7d53446ebe261e849e",
+   "bytes": 14197
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-09-build-staff-detail.png",
+   "sha256": "2c3eb465f2446fe5168cad00823f65f15a2fd2bfdf54ba67ef2763ce4658289c",
+   "bytes": 13407
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-10-build-staff-decided.png",
+   "sha256": "533a8196c172ecdd94387ce4b345701c89e16d6ae6e523a58c33caa6b1abf67e",
+   "bytes": 13014
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-11-build-commit.png",
+   "sha256": "499a4de62fbd8c2289b240266dae254a4c7a4195ce5c7394ca3c2021b76ccc7a",
+   "bytes": 15436
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-12-rclick1.png",
+   "sha256": "94769f19bc17ce10b0fb827543b176c6a14fc8d60feae4f425c44423f13cd90e",
+   "bytes": 21873
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-13-rclick2.png",
+   "sha256": "94769f19bc17ce10b0fb827543b176c6a14fc8d60feae4f425c44423f13cd90e",
+   "bytes": 21873
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-14-strategy-menu.png",
+   "sha256": "7fd509b198edeb350acd9ec44ece9586e3793c427bcaa650d9ab41664f246568",
+   "bytes": 22228
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-15-production.png",
+   "sha256": "0d2bb9d4eb2e289e0637da3dedb74b4bb9bc621ecafbbcf2a05726cfbc95797e",
+   "bytes": 13341
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-16-production-dec0.png",
+   "sha256": "9664b3260da356c5360bb17d75d64a30cc16cb19e1ef4602c22879c61a71216e",
+   "bytes": 14734
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-17-production-staff-list.png",
+   "sha256": "6b16515fdded6dea34e06408323dc8ba96bb950b95123ac3520117bbc835fdd3",
+   "bytes": 14156
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-18-production-staff-detail.png",
+   "sha256": "85619fd70f1b37b4de43f35e3529a46fc1e7a28823e638e72142e3c9bbc796d4",
+   "bytes": 13370
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-19-production-staff-decided.png",
+   "sha256": "6185e84805d1a2740699d3c8af3ad711a6df55e438494656e1a5a8987897aef2",
+   "bytes": 13660
+  },
+  {
+   "path": "workplace/staff173/gui/alliance-20-production-end.png",
+   "sha256": "a289f99617281c69fa7dcbdefc93438b0720e2c9c9c3462cf0582d7493720127",
+   "bytes": 21839
+  },
+  {
+   "path": "workplace/staff173/gui/empire-00-month-report.png",
+   "sha256": "b5b00feb945fa8d5135d0ad932e14b6a55b0ce9259c00aa6078a66bbf71d456f",
+   "bytes": 14509
+  },
+  {
+   "path": "workplace/staff173/gui/empire-01-budget.png",
+   "sha256": "74ecbdb5f502e6afa2b2f2b052569e3856b52abf70fabc9a8d16d52587c7e55e",
+   "bytes": 14908
+  },
+  {
+   "path": "workplace/staff173/gui/empire-02-budget-staff-list.png",
+   "sha256": "864c323cd35c682b5d77954840d7db4d23b59b3c5e4b0a3fa04ade881de6ca66",
+   "bytes": 18655
+  },
+  {
+   "path": "workplace/staff173/gui/empire-03-budget-staff-detail.png",
+   "sha256": "22f0877ec74df5a73f20759bf7caa7f231b80ea3a38b870eaa3d67fa23890255",
+   "bytes": 15402
+  },
+  {
+   "path": "workplace/staff173/gui/empire-04-budget-staff-decided.png",
+   "sha256": "d6828dd508a6c7fa544b8866658a8ff1d0a60137ff830b95998acc2f32ea46fc",
+   "bytes": 15818
+  },
+  {
+   "path": "workplace/staff173/gui/empire-05-budget-end.png",
+   "sha256": "1aa102fe6877d02245cefebc5f4704c58a793945275e7e914de01c1ba9859bd1",
+   "bytes": 16695
+  },
+  {
+   "path": "workplace/staff173/gui/empire-06-ship-order.png",
+   "sha256": "d5cead052c887c3dae0093003ee51491d8d324029613be0acea5ccf735b68ab0",
+   "bytes": 16755
+  },
+  {
+   "path": "workplace/staff173/gui/empire-07-build-plan.png",
+   "sha256": "fd1d4929819e8dda6c1e7122f0754cc6e5af0d752386a5e7a50a2a7b811d82fa",
+   "bytes": 13116
+  },
+  {
+   "path": "workplace/staff173/gui/empire-08-build-staff-list.png",
+   "sha256": "e60727f49707d3bb536aa707162c960fd25bf3fefd4931920d71e7f639280a82",
+   "bytes": 14734
+  },
+  {
+   "path": "workplace/staff173/gui/empire-09-build-staff-detail.png",
+   "sha256": "c5113c271847f581e675b9c2bb51838979f97de9a515a4dc7db13b2d7c0d0ba8",
+   "bytes": 14407
+  },
+  {
+   "path": "workplace/staff173/gui/empire-10-build-staff-decided.png",
+   "sha256": "8e9f61822dcb9006a94fe7778d50d043836672b00a4c98801385b016b54352f1",
+   "bytes": 13501
+  },
+  {
+   "path": "workplace/staff173/gui/empire-11-build-commit.png",
+   "sha256": "92f444323e80913eec38315779570837bd6e848b55d0581d137f7eadd05010a4",
+   "bytes": 15938
+  },
+  {
+   "path": "workplace/staff173/gui/empire-12-rclick1.png",
+   "sha256": "76f69ee2c8dd5e0886cea464f7fd8db9e727e042e9497f06522b9b970e1d8684",
+   "bytes": 21894
+  },
+  {
+   "path": "workplace/staff173/gui/empire-13-rclick2.png",
+   "sha256": "76f69ee2c8dd5e0886cea464f7fd8db9e727e042e9497f06522b9b970e1d8684",
+   "bytes": 21894
+  },
+  {
+   "path": "workplace/staff173/gui/empire-14-strategy-menu.png",
+   "sha256": "303d315c21c6b46af039d3c655c343b139ee0841c409d0509c969f23abaf4486",
+   "bytes": 22253
+  },
+  {
+   "path": "workplace/staff173/gui/empire-15-production.png",
+   "sha256": "29c175d6ff6a5b514aea934c4fb50ea63927f380d44b8306e0a1c53d08332728",
+   "bytes": 13817
+  },
+  {
+   "path": "workplace/staff173/gui/empire-16-production-dec0.png",
+   "sha256": "9a4d88da998f8a9e2b6f68919c31d8c3805f5fe70c9c2e5fc0ee60ed225a914b",
+   "bytes": 15281
+  },
+  {
+   "path": "workplace/staff173/gui/empire-17-production-staff-list.png",
+   "sha256": "ac15d692b0baabb3fa7947640be42d43fb4a324ef98d3f664cd8a9252d88a288",
+   "bytes": 14773
+  },
+  {
+   "path": "workplace/staff173/gui/empire-18-production-staff-detail.png",
+   "sha256": "b25926c617417c884ce05518a877975a413f22fe9b408c47fbd49ecac79a21b0",
+   "bytes": 14125
+  },
+  {
+   "path": "workplace/staff173/gui/empire-19-production-staff-decided.png",
+   "sha256": "7fae8091e417c886aeb864c2ab64643a06eacdd0087e82af7202ba3ea9b81eb1",
+   "bytes": 13920
+  },
+  {
+   "path": "workplace/staff173/gui/empire-20-production-end.png",
+   "sha256": "466ce3c0e24ab4d0efbdc7dfe06abc67f94169a108ff1e2cddc16e989b4ac777",
+   "bytes": 22002
+  }
+ ]
+}

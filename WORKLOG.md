@@ -11946,3 +11946,19 @@ docker run --rm --network none -u "$(id -u):$(id -g)" --memory 2g --cpus 2 --pid
 - 受版控檔案刪除數為0，文件與程式的路徑引用沒有指向已封存的檔案。驗證重生的`gocache`之後清掉，目錄保留。
 
 部分相同檔案現在是硬連結，要原地修改先複製。逐檔清單與工具在`workplace/cleanup-20261104/round2/`。作業在一次性非root Docker容器內執行，容器以`--rm`收尾，沒有動映像或volume。本筆與CONTEXT同次提交推送。
+
+## 2026-11-19：第173輪，計劃畫面的參謀任命與生產額度分配
+
+使用者轉來玩家回報：菜單頁面與月結頁面的生產計劃參謀、生產額度分配點擊無效，換不了參謀；徵稅計劃的參謀在報告頁面換不了，戰略頁面可以。要求修正並結案。開工時主機Issue快照與verify完成，102張Issue、1張OPEN（#48），282條零失效斷言。起點main `0d6ad6aa`，工作樹乾淨，git身分符合。
+
+真因三個：次月份預算計劃在`Frame`走自己的分支，沒呼叫`drawStaffPick`，清單開了卻看不見，之後的點擊全被隱形清單吃掉；生產計劃的`planScreenClick`只認「結束」；建造計劃的參謀開`StateAdmiralList`，只處理捲動。徵稅計劃走預設分支所以正常。建造計劃各列合計100%時「加」不動是原版行為，不改。
+
+dosgolem專用副本`~/cht/dosgolem-logh3/`不在本機。詢問使用者後裁決：先依推論實作，不跑原版；結案做到修正、驗證、開關worklist Issue、commit與push，不打包。生產與建造計劃那一顆換軍事專任參謀，依據是兩張署名都是軍事參謀、單價由軍事參謀營運決定、另外兩格已有入口，標strong inference，補收據的步驟寫在研究451 §五。
+
+修改`planscreens.go`、`staffpick.go`、`game.go`、`controlhover.go`。新增`TestBudgetPlanStaffPick`、`TestProductionPlanArrowsAndStaff`、`TestBuildPlanStaffPick`，月初兩支跑兩陣營，三支都在回戰略地圖後存檔讀回`WORK.DT0`。第一版存檔斷言放在月初報告裡，被既有的「月初報告尚未結算」守門擋下，改成關報告後再存。負向對照把`game.go`換回`0d6ad6aa`，兩支測試分別報出疊層沒畫與點列沒開詳細資料。標準`tools/gui.sh test -p 2 ./cmd/... ./internal/...`21套件16PASS／5無測試，`internal/game`在測試定稿後另跑一次通過。`tools/gui.sh`預設的`logh3-ebiten:2`本機不存在，沿用`logh3-ebiten:20261030-r169`。
+
+新增`tools/staff_pick_gui.sh`，Xvfb真實X11輸入，兩陣營各一局連續走預算、建造、生產三個入口，42張截圖逐張目視，雜湊記在`docs/internals/data/staff-pick173.json`。既有原版像素比對（`fcmd-staff-*`、`fcmd-taxstaff-*`、`budget1`、`admirals1`）因`workplace/oracle/`下沒有收據而skip，11-04兩輪清理清單裡也查不到這幾份。
+
+範圍外觀察：預算計劃單位列兩陣營都印「億帝國馬克」；建造計劃清單點列後選中那一列沒塗色2。都沒有原版收據可判，未改。
+
+本輪容器都以`--rm`結束。文件：規格064（三個新入口限定CONFORMED）、研究451、驗收145、狀態表173、internals 30補入口對照。

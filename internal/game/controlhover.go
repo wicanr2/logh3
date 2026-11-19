@@ -51,6 +51,15 @@ func (g *Game) hoverControlBounds() image.Rectangle {
 		}
 		return image.Rectangle{}
 	}
+	if g.state == StateProductionPlan && g.res.BuildPlan != nil && !g.staff.on() {
+		// 與建造計劃共用熱區清單 `ds:26E2`（七列箭頭、參謀、結束）。
+		for _, h := range g.res.BuildPlan.Hotspots {
+			r := image.Rect(h.X, h.Y+mouseDY, h.X+h.W, h.Y+h.H+mouseDY)
+			if !h.Disabled && point.In(r) {
+				return r
+			}
+		}
+	}
 	if g.state == StateTaxPlan || g.state == StateBudgetPlan || g.state == StateProductionPlan {
 		boxes := []planBox{planProdEnd}
 		if g.state != StateProductionPlan {
