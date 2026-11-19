@@ -50,8 +50,15 @@ type Shell struct {
 	// 一次輕觸可能整個落在兩格之間，取樣看不到（模擬器上實測漏接）。
 	taps        [][2]float64
 	nativeTouch bool
-	// lastW 是上一次 Draw 的邏輯畫布寬，觸控座標換算用。
-	lastW int
+	// lay 是上一次 Draw 的版面，觸控換算用；u 是畫布像素／邏輯像素。
+	lay   screenLayout
+	u     float64
+	sharp sharp
+	// drawn 是上一次真的畫出去的內容摘要；一樣就不重畫（省電，也省模擬器的軟體繪圖）。
+	drawn uint64
+	// basePal 是側欄用的調色盤：遊戲本體的，不跟開頭動畫的灰階變色。
+	basePal    [gfx.Colors]color.RGBA
+	basePalSet bool
 
 	style     *sideStyle
 	sideCache map[string]*ebiten.Image
@@ -61,8 +68,11 @@ type Shell struct {
 // sideBand 是原版畫面左右兩條的底色（深藍，接近原版視窗外框的色系）。
 var sideBand = color.RGBA{0, 0, 0x30, 0xff}
 
-// NewShell 建一個還沒設定目錄的殼。
-func NewShell() *Shell { return &Shell{} }
+// NewShell 建一個還沒設定目錄的殼。畫面不每格清除：內容沒變的格直接沿用上一格。
+func NewShell() *Shell {
+	ebiten.SetScreenClearedEveryFrame(false)
+	return &Shell{}
+}
 
 // Configure 設定目錄並在背景開始載入；重複呼叫只認第一次。
 func (s *Shell) Configure(cfg Config) {
@@ -141,17 +151,16 @@ func (s *Shell) Update() error {
 	}
 	g.Tick(time.Second / time.Duration(ebiten.TPS()))
 	for i := 0; i < back; i++ {
-		x, y := g.MousePosition()
-		g.RightClick(x, y)
+		backClick(g)
 	}
 	// M1 第一步：輕觸＝移過去再左鍵（觸控板模式與側欄在後續步驟）。
 	for _, t := range taps {
-		s.tap(g, int(t[0]*float64(s.lastW)), int(t[1]*float64(gfx.Height)))
+		s.tap(g, t[0]*float64(s.lay.lw), t[1]*float64(gfx.Height))
 	}
-	if !native {
+	if !native && s.u > 0 {
 		for _, id := range inpututil.AppendJustReleasedTouchIDs(nil) {
 			tx, ty := inpututil.TouchPositionInPreviousTick(id)
-			s.tap(g, tx, ty)
+			s.tap(g, float64(tx)/s.u, float64(ty)/s.u)
 		}
 	}
 	return nil
@@ -163,63 +172,71 @@ func (s *Shell) TapLogical(x, y int) {
 	g := s.g
 	s.mu.Unlock()
 	if g != nil {
-		s.tap(g, x, y)
+		s.tap(g, float64(x), float64(y))
 	}
 }
 
-// tap 是一次輕觸：側欄按鈕優先，其次是原版畫面（移過去再左鍵）。
-func (s *Shell) tap(g *game.Game, x, y int) {
-	if b, ok := sideButtonAt(sideButtons(s.lastW, g.State()), x, y); ok {
+// tap 是一次輕觸（邏輯座標）：側欄按鈕優先，其次是畫面上的原版區塊（換回原版座標後
+// 移過去再左鍵）。
+func (s *Shell) tap(g *game.Game, x, y float64) {
+	if b, ok := sideButtonAt(s.buttons(g), int(x), int(y)); ok {
 		runSide(g, b)
 		return
 	}
-	if gx, gy, ok := s.gamePoint(x, y); ok {
+	if gx, gy, ok := s.lay.toGame(x, y); ok {
 		g.Click(gx, gy)
 	}
 }
 
-// Layout 用固定的邏輯畫布高度 480，寬度隨螢幕比例，原版畫面置中。
-func (s *Shell) Layout(outsideW, outsideH int) (int, int) {
-	return LogicalSize(outsideW, outsideH)
+func (s *Shell) buttons(g *game.Game) []sideButton {
+	var cmds []sideCmd
+	if s.style != nil {
+		cmds = s.style.cmds
+	}
+	return sideButtons(s.lay, stateView{copyProt: g.State() == game.StateCopyProtection, battle: g.State() == game.StateBattle}, cmds)
 }
 
-// LogicalSize 回邏輯畫布：高 480，寬依螢幕比例但不小於 640。
-func LogicalSize(outsideW, outsideH int) (int, int) {
-	if outsideW <= 0 || outsideH <= 0 {
+// Layout 回實際像素大小的畫布：外部尺寸（dp）乘裝置縮放。每個區塊在 Draw 裡
+// 只縮放一次，點陣字不會先縮到邏輯畫布再被系統放大第二次。
+func (s *Shell) Layout(outsideW, outsideH int) (int, int) {
+	f := ebiten.Monitor().DeviceScaleFactor()
+	if f <= 0 {
+		f = 1
+	}
+	w, h := int(float64(outsideW)*f), int(float64(outsideH)*f)
+	if w <= 0 || h <= 0 {
 		return gfx.Width, gfx.Height
 	}
-	w := outsideW * gfx.Height / outsideH
+	return w, h
+}
+
+// LogicalWidth 回畫布對應的邏輯寬：高 480，寬依比例但不小於 640。
+func LogicalWidth(canvasW, canvasH int) int {
+	if canvasW <= 0 || canvasH <= 0 {
+		return gfx.Width
+	}
+	w := canvasW * gfx.Height / canvasH
 	if w < gfx.Width {
 		w = gfx.Width
 	}
-	return w, gfx.Height
+	return w
 }
 
-// gameOrigin 回原版畫面在邏輯畫布上的左上角（水平置中）。
-func gameOrigin(logicalW int) int { return (logicalW - gfx.Width) / 2 }
-
-// gamePoint 把邏輯畫布座標換成原版 640×480 座標；落在畫面外回 ok=false。
-func (s *Shell) gamePoint(x, y int) (int, int, bool) {
-	gx := x - gameOrigin(s.lastW)
-	if gx < 0 || gx >= gfx.Width || y < 0 || y >= gfx.Height {
-		return 0, 0, false
-	}
-	return gx, y, true
-}
-
-// Draw 把原版畫面畫在中央。
+// Draw 依版面畫原版區塊與側欄。
 func (s *Shell) Draw(screen *ebiten.Image) {
-	s.lastW = screen.Bounds().Dx()
+	cw, ch := screen.Bounds().Dx(), screen.Bounds().Dy()
+	s.u = float64(ch) / float64(gfx.Height)
+	lw := LogicalWidth(cw, ch)
 	s.mu.Lock()
-	g, loading, err := s.g, s.loading, s.loadErr
+	g, err := s.g, s.loadErr
 	s.mu.Unlock()
-	screen.Fill(sideBand) // 左右兩條的底色；側欄控制之後畫在這裡
 	if g == nil {
-		// 載入中維持黑畫面；失敗塗暗紅，錯誤內容在 logcat（原版字型的訊息畫面在後續步驟）。
-		_ = loading
+		screen.Fill(sideBand)
+		// 載入中維持底色；失敗塗暗紅，錯誤內容在 logcat。
 		if err != nil {
 			screen.Fill(color.RGBA{0x60, 0, 0, 0xff})
 		}
+		s.lay = computeLayout(lw, false)
 		return
 	}
 	if s.screen == nil {
@@ -231,14 +248,68 @@ func (s *Shell) Draw(screen *ebiten.Image) {
 		r, gg, b := p.RGB8(i)
 		s.pal[i] = color.RGBA{r, gg, b, 255}
 	}
-	fb := g.Frame()
+	switch g.State() {
+	case game.StateIntro, game.StateTitle, game.StateEnding:
+	default:
+		s.basePal, s.basePalSet = s.pal, true
+	}
+	// 觸控沒有游標：不畫原版的滑鼠指標（觸控板模式時再畫）。
+	fb := g.FrameWithoutCursor()
+	s.lay = computeLayout(lw, g.PlainStrategic())
+	buttons := s.buttons(g)
+	sum := frameSum(fb.Pix, s.pal, cw, ch, s.lay, buttons)
+	if sum == s.drawn {
+		return // 與上一格完全相同：畫面不每格清除，直接沿用
+	}
+	s.drawn = sum
 	for i, v := range fb.Pix {
 		c := s.pal[v]
 		s.buf[i*4], s.buf[i*4+1], s.buf[i*4+2], s.buf[i*4+3] = c.R, c.G, c.B, 255
 	}
 	s.screen.WritePixels(s.buf)
-	op := &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(float64(gameOrigin(s.lastW)), 0)
-	screen.DrawImage(s.screen, op)
-	s.drawSide(screen, sideButtons(s.lastW, g.State()), s.pal)
+	screen.Fill(sideBand)
+	for _, r := range s.lay.regions {
+		s.sharp.draw(screen, s.screen, r.src, r.x*s.u, r.y*s.u, r.scale*s.u)
+	}
+	s.drawSide(screen, buttons, s.sidePalette(), s.u)
+}
+
+// frameSum 是這一格要畫的內容摘要（FNV-1a）：原版色號、調色盤、畫布大小、版面與按鈕。
+func frameSum(pix []uint8, pal [gfx.Colors]color.RGBA, cw, ch int, lay screenLayout, buttons []sideButton) uint64 {
+	h := uint64(14695981039346656037)
+	mix := func(b byte) { h ^= uint64(b); h *= 1099511628211 }
+	for _, v := range pix {
+		mix(v)
+	}
+	for _, c := range pal {
+		mix(c.R)
+		mix(c.G)
+		mix(c.B)
+	}
+	for _, v := range []int{cw, ch, lay.lw, len(lay.regions), len(buttons)} {
+		mix(byte(v))
+		mix(byte(v >> 8))
+	}
+	if lay.strategic {
+		mix(1)
+	}
+	for _, b := range buttons {
+		mix(byte(b.x))
+		mix(byte(b.y))
+		mix(byte(b.act))
+	}
+	return h
+}
+
+// sidePalette 回側欄用的調色盤：看過遊戲本體就用它，否則用主選單的。
+func (s *Shell) sidePalette() [gfx.Colors]color.RGBA {
+	if s.basePalSet || s.style == nil {
+		return s.basePal
+	}
+	var out [gfx.Colors]color.RGBA
+	for i := range out {
+		r, g, b := s.style.menuPal.RGB8(i)
+		out[i] = color.RGBA{r, g, b, 255}
+	}
+	return out
 }

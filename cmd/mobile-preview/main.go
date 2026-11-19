@@ -10,6 +10,7 @@ import (
 	"image"
 	"image/png"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -23,7 +24,19 @@ type preview struct {
 	ticks  int
 	w, h   int
 	taps   map[int][2]int
+	mid    map[int]string
 	frames int
+}
+
+func save(screen *ebiten.Image, path string) {
+	b := screen.Bounds()
+	img := image.NewRGBA(b)
+	screen.ReadPixels(img.Pix)
+	if f, err := os.Create(path); err == nil {
+		_ = png.Encode(f, img)
+		f.Close()
+	}
+	fmt.Println("截圖", path)
 }
 
 func (p *preview) Update() error {
@@ -40,6 +53,12 @@ func (p *preview) Update() error {
 func (p *preview) Draw(screen *ebiten.Image) {
 	p.Shell.Draw(screen)
 	p.frames++
+	for t, path := range p.mid {
+		if p.ticks >= t { // Update 與 Draw 不一一對應，取到了那一格之後的第一次 Draw
+			save(screen, path)
+			delete(p.mid, t)
+		}
+	}
 	if p.shot != "" && p.ticks >= p.after {
 		b := screen.Bounds()
 		img := image.NewRGBA(b)
@@ -58,12 +77,23 @@ func main() {
 	orig := flag.String("orig", "org_game/extracted", "原版檔目錄")
 	data := flag.String("data", "docs/internals/data", "資料目錄")
 	shot := flag.String("shot", "", "跑到 -after 格之後截圖並結束")
+	shots := flag.String("shots", "", "中途截圖「格數:檔名,…」（檔名放在 -shot 同目錄）")
 	after := flag.Int("after", 120, "截圖前跑幾格")
 	taps := flag.String("taps", "", "輕觸序列「格數:x:y,…」，座標是邏輯畫布（高 480）")
 	flag.Parse()
 	s := mobileshell.NewShell()
 	s.Configure(mobileshell.Config{Orig: *orig, Data: *data, Save: os.TempDir()})
-	p := &preview{Shell: s, shot: *shot, after: *after, taps: map[int][2]int{}}
+	p := &preview{Shell: s, shot: *shot, after: *after, taps: map[int][2]int{}, mid: map[int]string{}}
+	for _, item := range strings.Split(*shots, ",") {
+		var t int
+		var name string
+		if i := strings.IndexByte(item, ':'); i > 0 {
+			if _, err := fmt.Sscanf(item[:i], "%d", &t); err == nil {
+				name = item[i+1:]
+				p.mid[t] = filepath.Join(filepath.Dir(*shot), name)
+			}
+		}
+	}
 	for _, item := range strings.Split(*taps, ",") {
 		var t, x, y int
 		if _, err := fmt.Sscanf(item, "%d:%d:%d", &t, &x, &y); err == nil {

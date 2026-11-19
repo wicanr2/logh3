@@ -4741,6 +4741,12 @@ func (g *Game) WarmResources() {
 	}
 }
 
+// PlainStrategic 回「戰略地圖介面上沒有任何視窗疊著」。行動版殼只在這時把地圖
+// 與右側面板裁開重排（規格161）；其他狀態照原版整張顯示。只讀，不改狀態。
+func (g *Game) PlainStrategic() bool {
+	return g.state == StateCommandPhase && !g.listOverlayOn() && !g.msgOn
+}
+
 // commandSpec 回這個命令階段狀態的規格；沒有就回 nil。
 func (g *Game) commandSpec(s State) *screen.MainGameSpec {
 	name, ok := screenSpecName[s]

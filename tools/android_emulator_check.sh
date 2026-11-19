@@ -7,7 +7,8 @@
 # 預設 20:9 的 1280×576、240 dpi：軟體 OpenGL 在 2400×1080 會讓系統介面未回應、對話框蓋住畫面。
 # 解析度可用 LOGH3_EMU_W／LOGH3_EMU_H（直向寬高）、LOGH3_EMU_DPI 改。
 # 輸入腳本一行一個指令：`wait 秒`、`tap x y`（裝置像素，預設橫向 1280×576）、`press x y`（按住 300 ms）、`back`、`shot 名字`、
-# `waitlog 字串`（等 logcat 出現該字串，最多 120 秒；用來等「載入完成」再送輸入）。
+# `waitlog 字串`（等 logcat 出現該字串，最多 120 秒；用來等「載入完成」再送輸入）、
+# `restart`（強制停止 App、清 logcat、重新啟動；驗證存檔跨啟動保留）。
 # 不給腳本時只開機、安裝、啟動，每 10 秒截一張共 9 張。
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -20,7 +21,7 @@ script="${3:-}"
 extra=()
 if [[ -n "$script" ]]; then script="$(cd "$(dirname "$script")" && pwd)/$(basename "$script")"; extra+=(-v "$script:/input.txt:ro"); fi
 kvm_gid="$(getent group kvm | cut -d: -f3)"
-exec timeout 1800 docker run --rm --network none --memory 6g --cpus 4 --pids-limit 2048 \
+exec timeout 1800 docker run --rm --network none --memory 6g --cpus "${LOGH3_EMU_CPUS:-6}" --pids-limit 2048 \
   --log-opt max-size=10m --log-opt max-file=3 -u "$(id -u):$(id -g)" \
   --device /dev/kvm --group-add "$kvm_gid" \
   -v "$apk:/app.apk:ro" -v "$out:/out" "${extra[@]}" "$IMAGE" bash -c '
@@ -32,7 +33,7 @@ W=${LOGH3_EMU_W:-576}; H=${LOGH3_EMU_H:-1280}; D=${LOGH3_EMU_DPI:-240}
 sed -i "s/^hw.lcd.width=.*/hw.lcd.width=$W/; s/^hw.lcd.height=.*/hw.lcd.height=$H/; s/^hw.lcd.density=.*/hw.lcd.density=$D/; s/^hw.ramSize=.*/hw.ramSize=4096/" "$cfg"
 grep -q "^hw.ramSize" "$cfg" || echo "hw.ramSize=4096" >> "$cfg"
 emulator -avd logh3 -no-window -no-audio -no-snapshot -no-boot-anim -gpu swiftshader_indirect \
-  -accel on -memory 4096 >/out/emulator.log 2>&1 &
+  -accel on -memory 4096 -cores 4 >/out/emulator.log 2>&1 &
 t0=$(date +%s)
 adb wait-for-device
 until [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d "\r")" = 1 ]; do sleep 2; done
@@ -55,6 +56,8 @@ if [ -f /input.txt ]; then
                echo "$(( $(date +%s) - s0 )) 秒 看到 $a" | tee -a /out/timeline.txt ;;
       tap) adb shell input tap "$a" "$b" </dev/null; sleep 1 ;;
       press) adb shell input swipe "$a" "$b" "$a" "$b" 300 </dev/null; sleep 1 ;;
+      restart) adb shell am force-stop tw.logh3.app </dev/null; adb logcat -c </dev/null
+               adb shell am start -n tw.logh3.app/.MainActivity </dev/null >/dev/null; echo "$(( $(date +%s) - s0 )) 秒 重新啟動" | tee -a /out/timeline.txt ;;
       back) adb shell input keyevent KEYCODE_BACK </dev/null; sleep 1 ;;
       shot) shot "$a" ;;
       ""|\#*) ;;

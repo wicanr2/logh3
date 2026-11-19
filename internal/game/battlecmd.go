@@ -199,6 +199,10 @@ func (g *Game) commandMenuClick(x, y int) bool {
 
 // 正常Input的純移動摘要依規格088及研究389；命令選單沿023既有範圍。
 
+// BattleIdle 回戰場在輸入階段、而且沒有任何選單或視窗開著（只讀）。行動版的
+// 「退回」用它判斷有沒有東西可關：戰場上空按右鍵在原版是捲視野，不是退回（規格161）。
+func (g *Game) BattleIdle() bool { return g.battleInputIdle() }
+
 func (g *Game) battleInputIdle() bool {
 	return g.state == StateBattle && g.battlePhase == screen.BattlePhaseInput &&
 		!g.fortressEngagement &&
