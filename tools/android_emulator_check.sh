@@ -67,6 +67,10 @@ else
   for i in 1 2 3 4 5 6 7 8 9; do sleep 10; shot "t$i"; done
 fi
 adb logcat -d > /out/logcat.txt 2>&1 || true
+# 殺程序的原因（am_kill、lmk）在 events 緩衝區；記憶體摘要用來分辨記憶體壓力與 CPU 飢餓。
+adb logcat -d -b events > /out/events.txt 2>&1 || true
+adb shell dumpsys meminfo -s > /out/meminfo.txt 2>&1 || true
+adb shell cat /proc/meminfo > /out/proc-meminfo.txt 2>&1 || true
 adb emu kill >/dev/null 2>&1 || true
 wait || true
 '

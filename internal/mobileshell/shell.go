@@ -26,9 +26,10 @@ import (
 
 // Config 是 Java 端在啟動時傳進來的目錄。
 type Config struct {
-	Orig string // 原版遊戲檔
-	Data string // 畫面規格與資料（docs/internals/data 的發行複本）
-	Save string // 存檔目錄（App 私有目錄）
+	Orig  string // 原版遊戲檔
+	Data  string // 畫面規格與資料（docs/internals/data 的發行複本）
+	Save  string // 存檔目錄（App 私有目錄）
+	Music string // 原版配樂與音效 OGG（可空：沒有聲音）
 }
 
 // Shell 是 ebiten.Game。目錄還沒設定、或還在載入時畫載入畫面。
@@ -38,6 +39,7 @@ type Shell struct {
 	loading bool
 	loadErr error
 	g       *game.Game
+	snd     *sound
 
 	screen *ebiten.Image
 	buf    []byte
@@ -92,8 +94,17 @@ func (s *Shell) Configure(cfg Config) {
 		} else {
 			log.Printf("logh3: 載入完成 %v", time.Since(start).Round(time.Millisecond))
 		}
+		var snd *sound
+		if err == nil {
+			snd = newSound(cfg.Music)
+			if snd != nil && snd.sfx.Have() == 28 {
+				if e := g.EnableSoundEffects(true); e != nil {
+					log.Printf("logh3: 音效：%v", e)
+				}
+			}
+		}
 		s.mu.Lock()
-		s.g, s.loadErr, s.loading = g, err, false
+		s.g, s.loadErr, s.loading, s.snd = g, err, false, snd
 		s.style = newSideStyle(res)
 		s.mu.Unlock()
 	}()
@@ -140,7 +151,7 @@ func loadGame(cfg Config) (*game.Game, *game.Resources, error) {
 // Update 推進遊戲並處理觸控。
 func (s *Shell) Update() error {
 	s.mu.Lock()
-	g, back, taps, native := s.g, s.back, s.taps, s.nativeTouch
+	g, back, taps, native, snd := s.g, s.back, s.taps, s.nativeTouch, s.snd
 	s.back, s.taps = 0, nil
 	s.mu.Unlock()
 	if g == nil {
@@ -149,7 +160,9 @@ func (s *Shell) Update() error {
 	if g.Quit() {
 		return ebiten.Termination
 	}
+	snd.beforeTick(g)
 	g.Tick(time.Second / time.Duration(ebiten.TPS()))
+	snd.afterTick(g)
 	for i := 0; i < back; i++ {
 		backClick(g)
 	}

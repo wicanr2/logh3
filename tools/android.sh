@@ -70,7 +70,13 @@ case "${1:-}" in
       if [[ "$f" == ui-locales.tsv ]]; then cp -p "$ROOT/internal/localize/ui.tsv" "$dest/full/data/$f"
       else cp -p "$ROOT/docs/internals/data/$f" "$dest/full/data/$f"; fi
     done
-    echo "原版 $(ls "$dest/full/original" | wc -l) 檔、data $(ls "$dest/full/data" | wc -l) 檔"
+    # 原版配樂與音效：桌面完整版音樂目錄根層的 OGG（HD 音色庫的子目錄不放）。
+    music="$ROOT/workplace/release172/extracted/squashfs-root/usr/bin/music"
+    if [[ -d "$music" ]]; then
+      mkdir -p "$dest/full/music"
+      cp -p "$music"/*.ogg "$dest/full/music/"
+    fi
+    echo "原版 $(ls "$dest/full/original" | wc -l) 檔、data $(ls "$dest/full/data" | wc -l) 檔、music $(ls "$dest/full/music" 2>/dev/null | wc -l) 檔"
     ;;
   apk)
     aar="${2:?用法: tools/android.sh apk <AAR目錄> <輸出目錄> [完整版素材目錄]}"
