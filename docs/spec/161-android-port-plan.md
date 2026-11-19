@@ -1,6 +1,6 @@
 # 161：Android 版規劃
 
-狀態：**DRAFT**（2026-11-19，第174輪）。只有規劃，沒有任何 Android 程式碼。發行方式與行動版版面已裁決；繪製分層設計、觸控對應待核准。
+狀態：**READY**（2026-11-19 使用者核准版面、繪製分層、觸控對應與分期）。第175輪起實作 M1，進度見[狀態表175](../goal/2026-11-19-android-m1-round-175.md)。
 相關：[160](160-on-demand-asset-loading.md)（按需載入是 Android 版的前提）。
 
 ## 目前事實
@@ -17,6 +17,10 @@
 
 ## 移植阻礙（已確認）
 
+0. **實作時的結構（第175輪）**：`cmd/gin3` 原地不動，被 105 份文件與多支工具以路徑引用，整個搬移屬大型重構。
+   行動版另起 `internal/mobileshell`（殼）與 `mobile`（只露出給 Java 的 `Start`、`Back`），不會編到
+   `cmd/gin3`，所以下面第 1 項的 ALSA 問題實際不會發生；第 2、3 項由新殼直接處理。
+   只編 64 位元：`internal/ai/tactical.go` 等處以 `1<<62` 當哨兵值，32 位元版會溢位或算出不同結果。
 1. **音效裝置偵測會讓 Android 編不過。** `cmd/gin3/audio_device_linux.go` 標 `//go:build linux`，
    用 cgo 連 ALSA。`GOOS=android` 也符合 `linux` 標籤，會去找 `alsa.pc`。要改成 `linux && !android`，
    Android 走 `audio_device_other.go`。
@@ -167,6 +171,7 @@
 | A4 | 觸控輸入，依核准後的提案分 M1、M2 | 兩陣營正常玩家路徑可用觸控走完：月初報告、命令、清單、戰場、存讀檔 |
 | A5 | 生命週期、音訊暫停、記憶體與發熱 | 實機切背景再回來不崩潰、不丟進度 |
 | A6 | 簽章與發行包結構 | 比照 `dist-all/<版本>/{full,release}/`，完整版只留本機 |
+| A7 | 重拍推廣片（使用者 2026-11-19 要求）：加入 Android 版實機或模擬器畫面 | Android 版完成之後 |
 
 ## 驗證方式
 

@@ -11982,3 +11982,13 @@ Android只寫規劃（規格161），核對了ebitenmobile、mobile.SetGame、ot
 使用者要求觸控操作介面與Gemini討論（`agy`）。用`gemini-4-neon-high`、plan模式、sandbox在scratchpad執行兩輪，只送介面機制說明。第一輪後查證三點再回送：原版地圖左鍵本來就是兩段、Ebitengine Android鍵盤表沒有返回鍵、`exp/textinput`在Android無輸入法；另查到只有防拷問答讀鍵盤。收斂成虛擬指標層、直接觸控與觸控板兩模式、側欄控制、M1先做觸控板的提案，寫入規格161待使用者核准。原文存`workplace/android174/`。
 
 使用者裁決行動版版面：主畫面只剩戰略地圖與戰場兩種滿版，其他資訊改原版風格跳出視窗；戰場看更多格（約40×18）、戰略地圖整張滿高、點星域跳摘要卡加側欄開選單。與Gemini第三輪討論，它指出原版計劃視窗會蓋住地圖，只從640×480裁切會帶到殘片，改成世界層與面板視窗層分開、遊戲回報視窗矩形，桌面照原座標合成須逐像素不變；地圖靠左留卡片槽；戰場寬視野要改鏡頭邊界、點擊範圍與小地圖框，「畫面內才觸發」的邏輯標待查證。寫入規格161並更新提案頁面。
+
+## 2026-11-19：第175輪，Android M1 起步
+
+使用者核准規格161並交代之後自己做、不用Gemini，另要求Android版完成後重拍推廣片。唯讀參考 `~/cht/rich2` 的Android流程（ebitenmobile bind → Gradle），不改它的檔案與映像；建自己的 `logh3-android:20261119-r1` 與 `logh3-android-emulator:api35-20261119-r1`。SDK層原想重用rich2的快取但沒有命中，重新下載。主機有 `/dev/kvm`，模擬器帶KVM。
+
+`cmd/gin3` 被105份文件與多支工具以路徑引用，整個搬移屬大型重構，改成另起 `internal/mobileshell` 與 `mobile`。綁定時依序遇到：x/tools v0.25.0在Go 1.26編不過（換Go 1.24.13）、gomobile吞掉 `go list` 錯誤寫空go.mod（先補整張模組圖，網路下載驗checksum，go.sum唯讀未改）、gobind不能轉回傳兩值的函式（殼移到internal）、32位元 `1<<62` 溢位（只編64位元）、javac預設US-ASCII（設UTF-8）。
+
+模擬器畫面一直全黑。先以為是開頭動畫偏暗、再以為是快速輕觸被漏接，都沒證實；加上載入與繪製紀錄後在logcat看到第一格就panic：外部尺寸+Inf。真因是Activity沒呼叫 `Seq.setContext`，Ebitengine取不到螢幕密度。補上後主選單正常、輕觸換算正確。2400×1080加軟體OpenGL會讓系統介面未回應，測試改1280×576並關系統動畫。
+
+新增 `tools/android.sh`、`tools/android_emulator_check.sh`、`cmd/mobile-preview`（桌面預覽行動版殼）與殼的座標測試。下一步是自繪數字鍵盤，否則過不了防拷問答。容器都以 `--rm` 結束。
