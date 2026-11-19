@@ -1,0 +1,527 @@
+{
+  "version": "v.1.7.0-20261119",
+  "passed": true,
+  "rights": "含原版與衍生音畫，只限本機完整版；未公開上傳",
+  "head": "56fbbc9be1c472e8349efbe7cd2e9c706df51329",
+  "product_sources_clean": true,
+  "working_tree_at_prepare": "",
+  "inputs": {
+    "path": "workplace/package92-v.1.7.0-20261119-release177/INPUTS.json",
+    "bytes": 436658,
+    "sha256": "1d16cb2d44d866e0a22cd861b2a3bd514e9c32016917bd403201120b1690c434"
+  },
+  "source_files": 1679,
+  "common_files": 652,
+  "common_identical_to": "v.1.6.5-20261102",
+  "artifacts": [
+    {
+      "path": "dist-all/v.1.7.0-20261119/full/LOGH3-v.1.7.0-20261119-windows-amd64.zip",
+      "bytes": 372498347,
+      "sha256": "1d0893ca199372712ffadd5bf25ee0d59bb7f06773a211dcd2de0b0ba00ec7f1"
+    },
+    {
+      "path": "dist-all/v.1.7.0-20261119/full/LOGH3-v.1.7.0-20261119-macos-universal.zip",
+      "bytes": 382408901,
+      "sha256": "d1fc4257ceb28e1aab193aadcf3cdee547176362636ade2207032145b2731885"
+    },
+    {
+      "path": "dist-all/v.1.7.0-20261119/full/LOGH3-v.1.7.0-20261119-linux-x86_64.AppImage",
+      "bytes": 372488696,
+      "sha256": "aa8d9270fedb06096beadf17d05a15da403632289e6635166633c67d8246ddef"
+    },
+    {
+      "path": "dist-all/v.1.7.0-20261119/full/LOGH3-v.1.7.0-20261119-android.apk",
+      "bytes": 158250692,
+      "sha256": "ac1d63ca7d7ecfd7c2c1adef8053104d789a97b77c6a20207f32121f5bd668f9"
+    },
+    {
+      "path": "dist-all/v.1.7.0-20261119/promo/LOGH3-v.1.7.0-20261119-promo.mp4",
+      "bytes": 22798102,
+      "sha256": "5b41152325afa053ae08f5fc6df82bfe68beea736477dbeb06c705bd259c205b"
+    }
+  ],
+  "checks": {
+    "windows-amd64": {
+      "crc": true,
+      "manifest_files": 659,
+      "permissions": true,
+      "utf8_names": true
+    },
+    "macos-universal": {
+      "crc": true,
+      "manifest_files": 659,
+      "permissions": true,
+      "utf8_names": true
+    }
+  },
+  "macos": {
+    "slices": [
+      {
+        "architecture": "amd64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 4096,
+        "bytes": 17741352,
+        "sha256": "24440dfbfed86c6ce820affe63d5620231f978ba7b145538a712454000ec22c5"
+      },
+      {
+        "architecture": "arm64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [
+          {
+            "ad_hoc": true,
+            "flags": 131074,
+            "algorithm": "sha256",
+            "code_pages": 4113,
+            "code_limit": 16844576,
+            "all_page_hashes_match": true
+          }
+        ],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 17760256,
+        "bytes": 16976306,
+        "sha256": "6ed062c19e97184b2280160bef98f0fd4c6762be59a02ed5ea4dfd9d2b6f8076"
+      }
+    ],
+    "toolchain": "go version go1.24.13 linux/amd64\nDebian clang version 19.1.7 (3+b1)\nTarget: x86_64-apple-darwin24.5\nThread model: posix\nInstalledDir: /usr/lib/llvm-19/bin\nDebian clang version 19.1.7 (3+b1)\nTarget: arm64-apple-darwin24.5\nThread model: posix\nInstalledDir: /usr/lib/llvm-19/bin\n",
+    "native_execution": false
+  },
+  "linux": {
+    "actual_appimage": true,
+    "extract_and_run": true,
+    "fuse_execution": false,
+    "offset": 944632,
+    "runtime_sha256": "1cc49bcf1e2ccd593c379adb17c9f85a36d619088296504de95b1d06215aebbf",
+    "appdir_manifest": {
+      "path": "workplace/release177/APPDIR-MANIFEST.json",
+      "bytes": 139883,
+      "sha256": "6476ac89785cf63c11e5dcf36ea3e60a01ac04e9c07a13d60457388b8666470e"
+    },
+    "dependencies": {
+      "libraries": {
+        "libX11.so.6": {
+          "bytes": 1318408,
+          "sha256": "688d7edc1a02a0e7993722d57a42821b22435e249071554625a5ec4784787d3d",
+          "mode": "0o644"
+        },
+        "libXau.so.6": {
+          "bytes": 14496,
+          "sha256": "833aa73cf8f645330907d5923fcbf380e0895ab2551d522b41b0308747a51e27",
+          "mode": "0o644"
+        },
+        "libXcursor.so.1": {
+          "bytes": 47768,
+          "sha256": "dd642a6a142df39d4243001a30bb8d09ef2bbbd35df6c2d226a12ee70cdadaa8",
+          "mode": "0o644"
+        },
+        "libXdmcp.so.6": {
+          "bytes": 22728,
+          "sha256": "911ecd1cf42f310e788652f2719803bb4632e077b6e292af31b876c836bba264",
+          "mode": "0o644"
+        },
+        "libXext.so.6": {
+          "bytes": 81568,
+          "sha256": "32471a718f4cfef053aae4b84154ebb34ad16996d5db5dd6254e41e5fb36079e",
+          "mode": "0o644"
+        },
+        "libXfixes.so.3": {
+          "bytes": 26736,
+          "sha256": "a9e0b36916394b36351fbb017a80e5ec09c0454e6f1bf1125cb2b66cb1bbc6e6",
+          "mode": "0o644"
+        },
+        "libXi.so.6": {
+          "bytes": 76160,
+          "sha256": "b5ecdc4892a59349238f5c5ed560c1634af7e2fc3c82a533345a7712fd2fbdd6",
+          "mode": "0o644"
+        },
+        "libXinerama.so.1": {
+          "bytes": 18592,
+          "sha256": "4329e3bfa8febba3f0f540165a6e806b32ee48fc4f7467c228f833216bdeddfe",
+          "mode": "0o644"
+        },
+        "libXrandr.so.2": {
+          "bytes": 47416,
+          "sha256": "8f8f1266a55b55b78d32e91a453af585467b77fcef6d1cb00d44d7427c4b3c6e",
+          "mode": "0o644"
+        },
+        "libXrender.so.1": {
+          "bytes": 47608,
+          "sha256": "5cd723d723504af24d297cf9bc87156c0e023f4becbee2ce8432555cbaa73836",
+          "mode": "0o644"
+        },
+        "libXxf86vm.so.1": {
+          "bytes": 22816,
+          "sha256": "242c90bf3a361485e38412c54ebdc6fa045607bc0c959300ee24a35aa1f21094",
+          "mode": "0o644"
+        },
+        "libasound.so.2": {
+          "bytes": 1079888,
+          "sha256": "9dabddc79cc29b4f69058ac7d94ac11e82a4d6d8cc8c9148cb8377705790c7ea",
+          "mode": "0o644"
+        },
+        "libbsd.so.0": {
+          "bytes": 84840,
+          "sha256": "c34693b27401e6e74d7ac32184c79bfb0cca936d3b1be990d435124a6a5686f5",
+          "mode": "0o644"
+        },
+        "libmd.so.0": {
+          "bytes": 47312,
+          "sha256": "9e8462f7650da0b39ecfe1680fa87fe393f0710b324250931ab36fa0135b14cc",
+          "mode": "0o644"
+        },
+        "libxcb.so.1": {
+          "bytes": 166824,
+          "sha256": "35e218293d7c1f65b765337b92c6425f3495e80f5973058d8847fa08258cb97e",
+          "mode": "0o644"
+        }
+      },
+      "packages": {
+        "libx11-6": "2:1.8.4-2+deb12u2",
+        "libxau6": "1:1.0.9-1",
+        "libxcursor1": "1:1.2.1-1",
+        "libxdmcp6": "1:1.1.2-3",
+        "libxext6": "2:1.3.4-1+b1",
+        "libxfixes3": "1:6.0.0-2",
+        "libxi6": "2:1.8-1+b1",
+        "libxinerama1": "2:1.1.4-3",
+        "libxrandr2": "2:1.5.2-2+b1",
+        "libxrender1": "1:0.9.10-1.1",
+        "libxxf86vm1": "1:1.1.4-1+b2",
+        "libasound2": "1.2.8-1+b1",
+        "libbsd0": "0.11.7-2",
+        "libmd0": "1.0.4-2",
+        "libxcb1": "1.15-1"
+      },
+      "glibc_requirements": {
+        "libX11.so.6": "2.34",
+        "libXau.so.6": "2.4",
+        "libXcursor.so.1": "2.4",
+        "libXdmcp.so.6": "2.4",
+        "libXext.so.6": "2.14",
+        "libXfixes.so.3": "2.14",
+        "libXi.so.6": "2.14",
+        "libXinerama.so.1": "2.4",
+        "libXrandr.so.2": "2.14",
+        "libXrender.so.1": "2.14",
+        "libXxf86vm.so.1": "2.4",
+        "libasound.so.2": "2.34",
+        "libbsd.so.0": "2.33",
+        "libmd.so.0": "2.33",
+        "libxcb.so.1": "2.14",
+        "gin3": "2.34"
+      },
+      "host_requirements": "x86_64、主機glibc、X11或XWayland、OpenGL/GPU驅動、音效服務；不附主機驅動"
+    }
+  },
+  "windows": {
+    "pe_amd64": true,
+    "wine": true,
+    "native_execution": false
+  },
+  "android": {
+    "package": {
+      "path": "full/LOGH3-v.1.7.0-20261119-android.apk",
+      "bytes": 158250692,
+      "sha256": "ac1d63ca7d7ecfd7c2c1adef8053104d789a97b77c6a20207f32121f5bd668f9"
+    },
+    "abis": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "min_sdk": 21,
+    "signing": "本機發行金鑰workplace/android-state/release.keystore，不進Git",
+    "apksigner": "Verifies\nVerified using v1 scheme (JAR signing): true\nVerified using v2 scheme (APK Signature Scheme v2): true\nVerified using v3 scheme (APK Signature Scheme v3): false\nVerified using v3.1 scheme (APK Signature Scheme v3.1): false\nVerified using v4 scheme (APK Signature Scheme v4): false\nVerified for SourceStamp: false\nNumber of signers: 1\nSigner #1 certificate DN: CN=LOGH3 remake (local), O=local, C=TW\nSigner #1 certificate SHA-256 digest: b90d5052a7f148285ada4259a742352b49381d9a6bbb07ade435c13d6f574ef9\nSigner #1 certificate SHA-1 digest: 19b9a01a3df06dffd7b5b42a12c0827123f1f5ef\nSigner #1 certificate MD5 digest: d13f387b48d0cdcb48a3590e59fc0697\nSigner #1 key algorithm: RSA\nSigner #1 key size (bits): 4096\nSigner #1 public key SHA-256 digest: f0d95b62f937a4e1006fe2b27688dc6902a49ee18f18c277a9bb6d918a344aab\nSigner #1 public key SHA-1 digest: 62a261358461652a8240b2ad124e86a21268e51e\nSigner #1 public key MD5 digest: 48c1587730d372c1e6412aa2fb32baa6\n",
+    "assets": {
+      "files": 531,
+      "from_common": 369
+    },
+    "built_from": "e51caa7d；桌面封包凍結於56fbbc9b，其間的產品來源變更只在internal/mobileshell（桌面不引用）",
+    "source_changed_after_freeze": [
+      "internal/mobileshell/layout.go",
+      "internal/mobileshell/shell.go",
+      "internal/mobileshell/sidebar.go"
+    ],
+    "emulator": {
+      "saveload-alliance": {
+        "folder": "workplace/release177/emu-saveload2",
+        "timeline": "開機 36 秒\n安裝完成 58 秒\n6 秒 看到 載入完成\n7 秒 看到 狀態 StateIntro\n10 秒 看到 狀態 StateMainMenu\n13 秒 看到 狀態 StateCopyProtection\n15 秒 截圖 a-copyprot\n24 秒 截圖 b-month-report\n32 秒 截圖 c-strategic\n33 秒 看到 狀態 StateSysMenu\n35 秒 看到 狀態 StateSaveGame\n36 秒 截圖 d-savelist\n41 秒 截圖 e-saved\n41 秒 重新啟動\n42 秒 看到 載入完成\n44 秒 看到 狀態 StateIntro\n47 秒 看到 狀態 StateMainMenu\n49 秒 看到 狀態 StateCopyProtection\n54 秒 看到 狀態 StateLoadGame\n55 秒 截圖 f-loadlist\n57 秒 看到 狀態 StateLoadFaction\n59 秒 看到 狀態 StateCommandPhase\n64 秒 截圖 g-loaded\n",
+        "shots": {
+          "a-copyprot.png": "3d4c4e420d843e9aab5b49929eee8ff51ad511cb3fa7c6e7a48e830aa6a51a1e",
+          "b-month-report.png": "3dd729eebcbe99cc89b75da2d0ba249032f3d06f3093973e9cc561b6fdf193bc",
+          "c-strategic.png": "ba4a4acd4ceb378001136cd9014f65c0d321c280951613752bf1da1d518bd145",
+          "d-savelist.png": "82a2639dae0e21a7e49a3784f3a1d9ac7ea6d440f1133abb74a0ce1060de711a",
+          "e-saved.png": "def735867eaf820e0af3260dae25e1b021eb27c673a12a29051f9d113f6c045c",
+          "f-loadlist.png": "d30d747bf01358609ecd950e20d14a0714fd7a8202852b296c6004be5fe26aef",
+          "g-loaded.png": "ba4a4acd4ceb378001136cd9014f65c0d321c280951613752bf1da1d518bd145"
+        }
+      },
+      "promo-recording": {
+        "folder": "workplace/promo177/emu-rec2",
+        "timeline": "開機 49 秒\n安裝完成 59 秒\n8 秒 看到 載入完成\n8 秒 看到 狀態 StateIntro\n12 秒 看到 狀態 StateMainMenu\n15 秒 看到 狀態 StateCopyProtection\n20 秒 看到 狀態 StateLoadGame\n23 秒 看到 狀態 StateLoadFaction\n25 秒 看到 狀態 StateCommandPhase\n31 秒 截圖 s3\n66 秒 看到 狀態 StateTurnReport\n274 秒 看到 狀態 StateBattle\n282 秒 截圖 battle\n320 秒 截圖 end\n",
+        "shots": {
+          "battle.png": "2f8992495975db49f8732d0a813015349eb122a664e2bae3c1810387af7242b1",
+          "end.png": "e4c2ce698b90fb4cbeda87cc7f5a5378a9cf34f7fb12747d7e96282939524284",
+          "s3.png": "125d1d7d69b1ffc13cbb7f4689590ac3b0793fbbc5421dc10f79a2dc3a783a13"
+        }
+      }
+    },
+    "native_device": false
+  },
+  "standard_tests": {
+    "command": "go test ./cmd/... ./internal/...",
+    "passed": true,
+    "with_tests": 17,
+    "no_tests": 6,
+    "log": {
+      "path": "workplace/release177/standard-tests.txt",
+      "bytes": 1247,
+      "sha256": "d28b697445622315593666354dd7eecb0576a211ae172ffc733e4e28403649ea"
+    }
+  },
+  "new_game": {
+    "empire": {
+      "battle_region": 15,
+      "saves_identical": [
+        "AppImage",
+        "Wine",
+        "行動版殼",
+        "v1.6.5"
+      ],
+      "saved_sha256": {
+        "ADMIRAL.DT0": "a5bd2fc243138952a32ba2d63bb11e03542e6093c6096b862ef0a89069659f07",
+        "FLEET.DT0": "8ec28d11cc07966013a0a9ffff10bdc1cc1c1c4d5f29da276240b26ac00c116f",
+        "PLANET.DT0": "9b7cf6fab5c78ce7d23129a6d02f3901c6eb67d93f191a2e38f8d59188b58160",
+        "SAVEDATA.IDX": "03d34167b821868f9e023ac373a7d502b4e2f127400c76b533c7f66e1458782e",
+        "SHIP.DT0": "8664c3ffcb1ce4eee500f4832e0330a6edece521057add7e695210a51690762f",
+        "STELLAR.DT0": "a2420d618d1dccc2f67423a8259d1528f2436b06b592d5903373e6f2a254264d",
+        "WORK.DT0": "fd4fe88bb475a2409c58ebcba2e9ed99db1c5e81db165068c167bd2d170cd283"
+      }
+    },
+    "alliance": {
+      "battle_region": 13,
+      "saves_identical": [
+        "AppImage",
+        "Wine",
+        "行動版殼",
+        "v1.6.5"
+      ],
+      "saved_sha256": {
+        "ADMIRAL.DT0": "73a03c24085b1e68ebdf67604b7fc2507c927ad19878919543dc87a47dfe0e20",
+        "FLEET.DT0": "b492d4ff64cb2ea12c9e7be8eda2449eea09650a27a0272fd8eb5b114ac91585",
+        "PLANET.DT0": "dda527f0101add23e9145d5ac974e716c880e15f5129e614677ca52fb70a4568",
+        "SAVEDATA.IDX": "03d34167b821868f9e023ac373a7d502b4e2f127400c76b533c7f66e1458782e",
+        "SHIP.DT0": "0763803f104fa78d5275cf63206adcdc669dfed2f91fceedcc84db12abe26a79",
+        "STELLAR.DT0": "749bdbb81faef0bf50b850859bfe61977ed456c6872e385d6f48bdf3c573493e",
+        "WORK.DT0": "e50eefb2e89b6d492eec9df51ce53f134fa2f24194485cfacc8051671c75dfb9"
+      }
+    }
+  },
+  "garrison": {
+    "saved_identical_to_v165": true,
+    "receipt": {
+      "path": "workplace/release177/garrison-linux/RESULT.json",
+      "bytes": 653363,
+      "sha256": "12391881972464827b08d1a4d2a695eac9e921d306b734d7cab2cf8126b86b0f"
+    }
+  },
+  "staff_pick": {
+    "empire": {
+      "folder": "workplace/release177/staff-linux",
+      "screenshots": {
+        "empire-00-month-report.png": "6eddd84692ae5eb06f840db2ea8d6262a52cf565be8a503f8f91f006be6d079c",
+        "empire-01-budget.png": "15519d71c62fb638c6e71609cef592ffbc79f39745040431bdba6ca4b1ab5e4b",
+        "empire-02-budget-staff-list.png": "efbb8a2baa155c88b49a1cace43a16b42df1d32beb069576f190598e136ebe43",
+        "empire-03-budget-staff-detail.png": "eeb34c2488ec799fb524d9d9cc95152842c35abdf22dddaaed03c6ebd0fd33cf",
+        "empire-04-budget-staff-decided.png": "cbcc5639b1ca017c030e17f45f3abd6472d11891004727596b8b0dbe633aa356",
+        "empire-05-budget-end.png": "1c77885d3d976e25df70b3e392764b5aef628a7d31dde43fa818e918b4a363ac",
+        "empire-06-ship-order.png": "f6d47a201472bb79f83ef6b25385b9dbfa11ce9fad917f88cd850aae5e2d9dbb",
+        "empire-07-build-plan.png": "df2e5bf0112623155722c6e1e4cd9e6e1ac269b770aadaaef75073359f2aa6f1",
+        "empire-08-build-staff-list.png": "e181cd08a7e950dde5a1cec80e9e55b3f9464305e966f2d623bd5ab5d0085434",
+        "empire-09-build-staff-detail.png": "d83b4da8adc0667310215fb4abf06f9ecb5bea7ec83c06d144fe17ad6c94168d",
+        "empire-10-build-staff-decided.png": "2f9d07987db5ead32247b0f5f1a55e95f96942478eb9b7361e2fdb6765447b0f",
+        "empire-11-build-commit.png": "ae4abb7c2c26149dbf5d0cc89c51d08c3aa898c802884fcc3575e8cd55a9ee5f",
+        "empire-12-rclick1.png": "0851d1275cfe1cddb75884e57fb26f186238ca354d625baa2dece20dba6b4e92",
+        "empire-13-rclick2.png": "0851d1275cfe1cddb75884e57fb26f186238ca354d625baa2dece20dba6b4e92",
+        "empire-14-strategy-menu.png": "6e8b837b454a2bf64412fc1c2eb58e221f23d87011ffc516223130f1f255834c",
+        "empire-15-production.png": "aa13fddbc4ac90092a28e715e7a9cad7e0b4c6465199456c79e03825b0ac65e2",
+        "empire-16-production-dec0.png": "8aad420064991cb299b13d40d495dfdcee0afa4a84b69189bace553d9a9c0828",
+        "empire-17-production-staff-list.png": "10234a3d9b2ca39f81bc87f8a2e706bda91792696b76eaccb44903f8c24c87d7",
+        "empire-18-production-staff-detail.png": "b72bf78bd3412fb79b17366dab999bd4ee0f4cf85bae3f090119d4e0a785d057",
+        "empire-19-production-staff-decided.png": "4be7f7a32aa14245899d7d9e695a4673e35e5f703b45ab233e39d74775d0562d",
+        "empire-20-production-end.png": "c7ac7fb8f708ad6708b6d792ce3c5076003b8464ac8a42fee0cbbd2c1f916087"
+      },
+      "visual": "預算、建造、生產三入口更換參謀前後已逐張目視"
+    },
+    "alliance": {
+      "folder": "workplace/release177/staff-linux-2",
+      "screenshots": {
+        "alliance-00-month-report.png": "7ce074b62e164566fea67aed47c78d2e75e31fb17553f2ec6d115cd767bcc568",
+        "alliance-01-budget.png": "0343734fced0c94334e6c82e4f1d9e2a1c58fbec484766d3e4c863b7979206e5",
+        "alliance-02-budget-staff-list.png": "7aecedba3a4f5790b2ec1b1a2a35225e16caf9a18ae75d8b11da09158a754f7a",
+        "alliance-03-budget-staff-detail.png": "1c1db1d88b91d03986ec10c740c2036168de637081e436723f302b50dc3953a1",
+        "alliance-04-budget-staff-decided.png": "5ca21d075799bf8317eb176ccc7c9c0a04731309e4a6555556540deaf289148c",
+        "alliance-05-budget-end.png": "f9806c11d3870daa98d21c5f89a914a07e37127283579836f710f24399a781c6",
+        "alliance-06-ship-order.png": "d8495f0c45da868f09247889d613b17c1e031c2c184c14e07d21ada355b59787",
+        "alliance-07-build-plan.png": "5fc6bf04c65fc697281e41eb1b0cc426d78bf7cddc3f9993175185de472786eb",
+        "alliance-08-build-staff-list.png": "47cc5c482feb57274959f2ae89faade3e9aea23fc29745392df624795ceb45a7",
+        "alliance-09-build-staff-detail.png": "c1f2d007a203b29fcc116b893d08ca580557f182db3e93cf7b6002968f98ae95",
+        "alliance-10-build-staff-decided.png": "0a69fecbc5ee3e36c1c1b574bc9a6abda7494af85ae0fb664f2eb9e39ca6823b",
+        "alliance-11-build-commit.png": "5831abe008743a6fdd48efcbf32c9db97b1c2d5cf8dfbbe98e730e720cd5c8fd",
+        "alliance-12-rclick1.png": "5d360a029ea195348b9351deebd8fc216b11ec2ca414c385265d6f260408c2d0",
+        "alliance-13-rclick2.png": "5d360a029ea195348b9351deebd8fc216b11ec2ca414c385265d6f260408c2d0",
+        "alliance-14-strategy-menu.png": "65b768dde59957e677a59f7a3aca0f57362b91fb6e4be693d98e845e0e810df8",
+        "alliance-15-production.png": "35776926ceb2c4638ab66021f9e4fa43629ab60090ab42a9b4c87893017158de",
+        "alliance-16-production-dec0.png": "fca50a469c3fa7faa161850f58d96d68d686856ef014e95f82abf288d8661b41",
+        "alliance-17-production-staff-list.png": "345d88a7605c17d8fff76dddb868ee50891207f0e79b3393c05bebf166a180d0",
+        "alliance-18-production-staff-detail.png": "e9c2cb01aa6a4d3328d35d82975bafcd395d1d1f3ab38717cfd565f75cba73cb",
+        "alliance-19-production-staff-decided.png": "919742cc50ec8fdbe180ee6a107995348cc2fe83d68d3a9676d0bf25a1eec85f",
+        "alliance-20-production-end.png": "2c6c6cfe72a2a23b28f2eeedf45766f312959ec876f931b99c18925690be320e"
+      },
+      "visual": "預算、建造、生產三入口更換參謀前後已逐張目視"
+    }
+  },
+  "mobile_shell_full_battle": {
+    "test": "TestMobileNewGameFullBattle（LOGH3_MOBILE_E2E=1）",
+    "log": {
+      "path": "workplace/release177/mobile-e2e.log",
+      "bytes": 1351,
+      "sha256": "aae90f44a38c77fbb42cffbf7264f093fa82a8366d2e2a35a8665db9bdb53ca6"
+    },
+    "results": {
+      "TestMobileNewGameFullBattle-alliance.json": "b04f3ea9ff0128e72eabaf7514b22dfb6c2d0e2408cf83e83e1b07224dbf8d51",
+      "TestMobileNewGameFullBattle-empire-16x9.json": "2539f651210d11930bb6801cfb77abfaa759051300bf4c1910638ffa03710e79",
+      "TestMobileNewGameFullBattle-empire.json": "71590c3348f95712165c946ce4fce00996e7dfce77b706ef65c74bfec9745d71"
+    }
+  },
+  "player_receipts": {
+    "linux-newgame-empire": {
+      "path": "workplace/release177/newgame-empire/RESULT.json",
+      "bytes": 34386,
+      "sha256": "5d1c91cf9a403a3c4032859b27542651e0f26968fac7c0a5c6c65620861d8ac3"
+    },
+    "linux-newgame-alliance": {
+      "path": "workplace/release177/newgame-alliance/RESULT.json",
+      "bytes": 33107,
+      "sha256": "a70cf02820ec6af2a89a6901db57a678fdf65d8a1710007e65df0252dc424e2f"
+    },
+    "linux-garrison": {
+      "path": "workplace/release177/garrison-linux/RESULT.json",
+      "bytes": 653363,
+      "sha256": "12391881972464827b08d1a4d2a695eac9e921d306b734d7cab2cf8126b86b0f"
+    },
+    "windows-newgame-empire": {
+      "path": "workplace/music69-windows/full177/newgame-empire/RESULT.json",
+      "bytes": 34739,
+      "sha256": "f17f8320bd4ba96b0d4020c77fc8cf80dbcd9c8fd1bc254c036216e9cbb86e10"
+    },
+    "windows-newgame-alliance": {
+      "path": "workplace/music69-windows/full177/newgame-alliance/RESULT.json",
+      "bytes": 33512,
+      "sha256": "0eed2e385d924148f6e5a50294b6ea37e9de91c060a45b4b28c552f174b8ff35"
+    }
+  },
+  "promo": {
+    "file": {
+      "path": "dist-all/v.1.7.0-20261119/promo/LOGH3-v.1.7.0-20261119-promo.mp4",
+      "bytes": 22798102,
+      "sha256": "5b41152325afa053ae08f5fc6df82bfe68beea736477dbeb06c705bd259c205b"
+    },
+    "audit": {
+      "passed": true,
+      "file": "LOGH3-v.1.7.0-20261119-promo.mp4",
+      "sha256": "5b41152325afa053ae08f5fc6df82bfe68beea736477dbeb06c705bd259c205b",
+      "bytes": 22798102,
+      "frames": 9131,
+      "seconds": 152.18333333333334,
+      "old_frames_psnr_min": 37.03,
+      "old_frames_samples": 26,
+      "black_segments": 0,
+      "audio": {
+        "rms": 0.09477,
+        "peak": 0.84549,
+        "old_part_snr_db": 37.53,
+        "new_part_rms": 0.1389
+      },
+      "grid": "72a2f2f6918357f5a162a8cb534bae0e748c088294456f626b007e822aafbe59",
+      "visual_review": "已目視（第177輪）：AUDIT-GRID全部格；Android段（140.5秒）與結尾字卡（151.5秒）原尺寸；開頭兩張字卡版號為v.1.7.0-20261119。配樂交界前後以0.5秒窗量音量：BGM_3F從零開始，開頭1.25秒與3.0秒附近的短暫無聲是原曲休止（單獨解碼原曲同位置也是0），不是混音缺口。沒有人耳驗收。"
+    }
+  },
+  "generators": {
+    "tools/scripts/v170_full_receipt.py": "52860b07323c43ea78d9545e99abe21899e1559aa101a9027c2bd4633b550134",
+    "tools/scripts/v170_full_release.py": "f4383f1bf24a955df991d23bc9da87539ba3ceb95a5ed9f5ca73aaf08748e820",
+    "tools/scripts/v170_promo.py": "a6658749044fc174265dbe37286be9fe464098436d9cb8fdac62733b3d2dea81",
+    "tools/scripts/new_game_battle_gui.py": "b9b5711c32ed8fd5bff660d45ae3f778198980cc6e38808157dc5020e8e2308c",
+    "tools/scripts/release_garrison_gui.py": "f8db320400fea8fa7270ad43101f277961bbd366b5c3088d9e24b7e084614e54",
+    "tools/staff_pick_gui.sh": "6f679b24c5bd3aae170c39ad57408a96ab8f3152d3af007ebb0a8b8bb2ca996b",
+    "tools/android.sh": "c97abcc7e4719a9339bf94c89274ed76703158e9cc354b56d8afcc8d10d39312",
+    "tools/android_emulator_check.sh": "a955d4b09e4714ee5563a7f26b52ebbcdca6733ca09ae1ed2865fe702fd3b710",
+    "tools/release.sh": "c0ea8f57514c1ab818b1d0ab6771eb5b9d07f5f3b306d587b617ab3e3acdf766"
+  },
+  "toolchain": {
+    "release": {
+      "image": "logh3-release:20261031-r171",
+      "id": "sha256:c300ac10ae82519c285808ad33c9b6d1086239ae701d5f0bc879ecc9e70286fa"
+    },
+    "macos": {
+      "image": "cok-osxcross:go1.24.13-sdk15.5-r1",
+      "id": "sha256:a2dc911a8709192604ffe6e4936dd3fd74fecc5fbc63996fbe75058edfa00980"
+    },
+    "wine": {
+      "image": "yuan-wine-verify:noble-r2",
+      "id": "sha256:31664639bb8cce681b29c9b06765a2f19ca5fb88468ad3fd8ed1645771d8f7b2"
+    },
+    "android": {
+      "image": "logh3-android:20261119-r1"
+    },
+    "emulator": {
+      "image": "logh3-android-emulator:api35-20261119-r1"
+    }
+  },
+  "limitations": [
+    "Windows只在Wine驗證，未上實機",
+    "macOS未真機",
+    "Linux未測FUSE啟動",
+    "Android只在模擬器驗證，未上實機；沒有人耳聽配樂",
+    "Wine同盟戰後截圖仍是戰場畫面（狀態已是戰略畫面，v1.6.5同樣），判為Wine截圖時視窗未重繪",
+    "無新增DOS同態宣稱"
+  ]
+}
