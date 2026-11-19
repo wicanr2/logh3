@@ -59,6 +59,9 @@ android {
         }
     }
 
+    // release 建置預設跑 lintVital，要另外抓 lint 套件；離線建置關掉（只有一支 Activity，沒有規則可檢）。
+    lint { checkReleaseBuilds false }
+
     packaging {
         jniLibs { useLegacyPackaging = false }
     }
