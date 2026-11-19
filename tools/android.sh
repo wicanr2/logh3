@@ -7,6 +7,9 @@
 #   tools/android.sh stage <目錄>    # 完整版素材：<目錄>/full/{original,data,music,art}（只留本機）
 #   tools/android.sh apk <AAR目錄> <輸出目錄> [完整版素材目錄]
 #                                   # Gradle 包 APK；第一次要 LOGH3_ANDROID_NETWORK=default 抓 AGP
+#   tools/android.sh release-apk <AAR目錄> <輸出目錄> <完整版素材目錄> <版號> <versionCode>
+#                                   # 發行金鑰簽的 release APK；金鑰第一次自動建在
+#                                   # workplace/android-state/release.keystore（密碼 release.pass），不進 Git
 #
 # 踩過的坑（2026-11-19，第175輪），都已處理在下面：
 # - ebitenmobile 要與 go.mod 的 Ebitengine 同版（v2.8.8），Go 要用 1.24：它依賴的
@@ -58,26 +61,25 @@ case "${1:-}" in
         ls -l /out/logh3.aar'
     ;;
   stage)
-    # 完整版：原版檔＋執行期資料。data 的檔案清單沿用桌面發行版（v.1.6.5 的 99 檔），
-    # 內容取目前的 docs/internals/data；ui-locales.tsv 照桌面打包從 internal/localize/ui.tsv 複製。
+    # 完整版：原版檔＋執行期資料＋原版配樂＋HD 圖，都取自桌面發行版的共用素材。
     dest="${2:?用法: tools/android.sh stage <目錄>}"
     [[ ! -e "$dest/full" ]] || { echo "$dest/full 已存在，拒絕覆寫" >&2; exit 2; }
-    list="$ROOT/workplace/release172/extracted/squashfs-root/usr/bin/data"
+    # 素材來源預設上一版發行包解開的目錄；發行時指定該版的共用素材（LOGH3_ANDROID_BASE）。
+    base="${LOGH3_ANDROID_BASE:-$ROOT/workplace/release172/extracted/squashfs-root/usr/bin}"
+    list="$base/data"
     [[ -d "$list" && -d "$ROOT/org_game/extracted" ]] || { echo "缺發行清單或原版檔" >&2; exit 2; }
     mkdir -p "$dest/full/original" "$dest/full/data"
     cp -p "$ROOT"/org_game/extracted/* "$dest/full/original/"
-    for f in $(ls "$list"); do
-      if [[ "$f" == ui-locales.tsv ]]; then cp -p "$ROOT/internal/localize/ui.tsv" "$dest/full/data/$f"
-      else cp -p "$ROOT/docs/internals/data/$f" "$dest/full/data/$f"; fi
-    done
+    # data 直接取素材來源的那一份，與桌面同版號的封包相同。
+    cp -p "$list"/* "$dest/full/data/"
     # 原版配樂與音效：桌面完整版音樂目錄根層的 OGG（HD 音色庫的子目錄不放）。
-    music="$ROOT/workplace/release172/extracted/squashfs-root/usr/bin/music"
+    music="$base/music"
     if [[ -d "$music" ]]; then
       mkdir -p "$dest/full/music"
       cp -p "$music"/*.ogg "$dest/full/music/"
     fi
     # HD 圖：桌面完整版的 art 目錄，海報（畫在畫面兩側，行動版兩側是側欄）不放。
-    art="$ROOT/workplace/release172/extracted/squashfs-root/usr/bin/art"
+    art="$base/art"
     if [[ -d "$art" ]]; then
       mkdir -p "$dest/full/art"
       (cd "$art" && tar --exclude=./poster -cf - .) | (cd "$dest/full/art" && tar -xf -)
@@ -85,9 +87,14 @@ case "${1:-}" in
     echo "HD 圖 $(find "$dest/full/art" -type f 2>/dev/null | wc -l) 檔"
     echo "原版 $(ls "$dest/full/original" | wc -l) 檔、data $(ls "$dest/full/data" | wc -l) 檔、music $(ls "$dest/full/music" 2>/dev/null | wc -l) 檔"
     ;;
-  apk)
+  apk|release-apk)
+    mode="$1"
     aar="${2:?用法: tools/android.sh apk <AAR目錄> <輸出目錄> [完整版素材目錄]}"
     out="${3:?}"; full="${4:-}"
+    version="${5:-dev}"; vcode="${6:-1}"
+    if [[ "$mode" == release-apk ]]; then
+      [[ -n "$full" && "$version" != dev ]] || { echo "release-apk 要給素材目錄、版號與 versionCode" >&2; exit 2; }
+    fi
     aar="$(cd "$aar" && pwd)"; mkdir -p "$out"; out="$(cd "$out" && pwd)"
     [[ -f "$aar/logh3.aar" ]] || { echo "缺 $aar/logh3.aar" >&2; exit 2; }
     [[ ! -e "$out/app-build" ]] || { echo "$out/app-build 已存在，拒絕覆寫" >&2; exit 2; }
@@ -103,11 +110,25 @@ case "${1:-}" in
         [ -f /state/debug.keystore ] || keytool -genkeypair -keystore /state/debug.keystore -storepass android \
           -keypass android -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 \
           -dname "CN=Android Debug,O=Android,C=US" >/dev/null 2>&1
+        task=assembleDebug; rel=""
+        if [ "'"$mode"'" = release-apk ]; then
+          if [ ! -f /state/release.keystore ]; then
+            umask 077
+            head -c 32 /dev/urandom | base64 | tr -d "/+=\n" | head -c 32 > /state/release.pass
+            keytool -genkeypair -keystore /state/release.keystore -storetype PKCS12 \
+              -storepass "$(cat /state/release.pass)" -keypass "$(cat /state/release.pass)" -alias logh3 \
+              -keyalg RSA -keysize 4096 -validity 36500 -dname "CN=LOGH3 remake (local),O=local,C=TW" >/dev/null 2>&1
+            echo "已建立發行金鑰 /state/release.keystore"
+          fi
+          task=assembleRelease
+          rel="-Plogh3ReleaseKeystore=/state/release.keystore -Plogh3ReleasePassFile=/state/release.pass"
+        fi
         gradle '"${offline[*]}"' --no-daemon --stacktrace --max-workers=3 -p /src/android \
           --project-cache-dir /out/gradle-project-cache \
           -Plogh3Aar=/aar/logh3.aar -Plogh3BuildDir=/out/app-build -Plogh3DebugKeystore=/state/debug.keystore \
-          '"${fullarg[*]}"' assembleDebug 2>&1 | grep -v "Picked up JAVA_TOOL_OPTIONS" | tail -25
-        ls -l /out/app-build/outputs/apk/debug/'
+          -Plogh3Version='"$version"' -Plogh3VersionCode='"$vcode"' $rel \
+          '"${fullarg[*]}"' $task 2>&1 | grep -v "Picked up JAVA_TOOL_OPTIONS" | tail -25
+        ls -l /out/app-build/outputs/apk/*/'
     ;;
   *)
     sed -n '2,12p' "$0"; exit 2 ;;

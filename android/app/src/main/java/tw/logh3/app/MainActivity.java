@@ -56,7 +56,7 @@ public final class MainActivity extends Activity {
                     deleteTree(root);
                     copyAssetTree("full", root);
                     try (OutputStream out = new FileOutputStream(stamp)) {
-                        out.write(STAGE_STAMP.getBytes("UTF-8"));
+                        out.write(stageStamp().getBytes("UTF-8"));
                     }
                 }
                 File save = new File(getFilesDir(), "save");
@@ -102,6 +102,17 @@ public final class MainActivity extends Activity {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
+    // 戳記帶 App 的更新時間：覆蓋安裝新版後重新展開素材（存檔在另一個目錄，不受影響）。
+    private String stageStamp() {
+        long t = 0;
+        try {
+            t = getPackageManager().getPackageInfo(getPackageName(), 0).lastUpdateTime;
+        } catch (android.content.pm.PackageManager.NameNotFoundException e) {
+            // 讀不到就只看素材版本
+        }
+        return STAGE_STAMP + "@" + t;
+    }
+
     private boolean stampMatches(File stamp) {
         if (!stamp.isFile()) {
             return false;
@@ -109,7 +120,7 @@ public final class MainActivity extends Activity {
         try (InputStream in = new java.io.FileInputStream(stamp)) {
             byte[] b = new byte[64];
             int n = in.read(b);
-            return n > 0 && new String(b, 0, n, "UTF-8").equals(STAGE_STAMP);
+            return n > 0 && new String(b, 0, n, "UTF-8").equals(stageStamp());
         } catch (IOException e) {
             return false;
         }

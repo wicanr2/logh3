@@ -16,7 +16,7 @@ android {
         applicationId 'tw.logh3.app'
         minSdk 21
         targetSdk 35
-        versionCode 1
+        versionCode ((project.findProperty('logh3VersionCode') ?: '1') as int)
         versionName (project.findProperty('logh3Version') ?: 'dev')
         // 只有 64 位元：規則碼假設 int 為 64 位元（tools/android.sh 註解）。
         ndk { abiFilters 'arm64-v8a', 'x86_64' }
@@ -34,12 +34,28 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        // 發行金鑰只在本機（workplace/android-state，不進 Git）；密碼放在旁邊的檔案。
+        // 之後每一版都用同一把簽，才能覆蓋安裝、保留 App 內存檔。
+        if (project.hasProperty('logh3ReleaseKeystore')) {
+            release {
+                storeFile file(project.property('logh3ReleaseKeystore'))
+                storePassword file(project.property('logh3ReleasePassFile')).text.trim()
+                keyAlias 'logh3'
+                keyPassword file(project.property('logh3ReleasePassFile')).text.trim()
+            }
+        }
     }
 
     buildTypes {
         debug {
             debuggable true
             signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled false
+            if (project.hasProperty('logh3ReleaseKeystore')) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 
