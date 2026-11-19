@@ -95,8 +95,13 @@ type sharp struct{ tmp map[image.Point]*ebiten.Image }
 
 func (sh *sharp) draw(dst, src *ebiten.Image, sr image.Rectangle, x, y, scale float64) {
 	k := int(scale)
-	if k < 1 {
-		k = 1
+	if k <= 1 {
+		// 不到兩倍（HD 來源常是縮小）：直接線性，縮小時 Ebitengine 會用 mipmap。
+		op := &ebiten.DrawImageOptions{Filter: ebiten.FilterLinear}
+		op.GeoM.Scale(scale, scale)
+		op.GeoM.Translate(x, y)
+		dst.DrawImage(src.SubImage(sr).(*ebiten.Image), op)
+		return
 	}
 	size := image.Pt(sr.Dx()*k, sr.Dy()*k)
 	if sh.tmp == nil {

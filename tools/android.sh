@@ -4,7 +4,7 @@
 #   tools/android.sh image          # 建工具鏈映像（需要網路，只在第一次或改 Dockerfile 時）
 #   tools/android.sh deps           # 補齊模組快取（需要網路，只在 go.mod 變動後）
 #   tools/android.sh aar <輸出目錄>  # 離線綁定 AAR（mobile 套件）
-#   tools/android.sh stage <目錄>    # 完整版素材：<目錄>/full/{original,data}（只留本機）
+#   tools/android.sh stage <目錄>    # 完整版素材：<目錄>/full/{original,data,music,art}（只留本機）
 #   tools/android.sh apk <AAR目錄> <輸出目錄> [完整版素材目錄]
 #                                   # Gradle 包 APK；第一次要 LOGH3_ANDROID_NETWORK=default 抓 AGP
 #
@@ -76,6 +76,13 @@ case "${1:-}" in
       mkdir -p "$dest/full/music"
       cp -p "$music"/*.ogg "$dest/full/music/"
     fi
+    # HD 圖：桌面完整版的 art 目錄，海報（畫在畫面兩側，行動版兩側是側欄）不放。
+    art="$ROOT/workplace/release172/extracted/squashfs-root/usr/bin/art"
+    if [[ -d "$art" ]]; then
+      mkdir -p "$dest/full/art"
+      (cd "$art" && tar --exclude=./poster -cf - .) | (cd "$dest/full/art" && tar -xf -)
+    fi
+    echo "HD 圖 $(find "$dest/full/art" -type f 2>/dev/null | wc -l) 檔"
     echo "原版 $(ls "$dest/full/original" | wc -l) 檔、data $(ls "$dest/full/data" | wc -l) 檔、music $(ls "$dest/full/music" 2>/dev/null | wc -l) 檔"
     ;;
   apk)

@@ -27,7 +27,7 @@ import tw.logh3.mobile.Mobile;
  */
 public final class MainActivity extends Activity {
     // 解開的內容改版時提高這個數字，舊的就會重解。
-    private static final String STAGE_STAMP = "full-2"; // 2：加入 music
+    private static final String STAGE_STAMP = "full-3"; // 2：加入 music；3：加入 HD 圖
 
     private EbitenView view;
     private final ExecutorService worker = Executors.newSingleThreadExecutor();
@@ -64,9 +64,11 @@ public final class MainActivity extends Activity {
                     throw new IOException("無法建立存檔目錄");
                 }
                 File music = new File(root, "music");
+                File art = new File(root, "art");
                 Mobile.start(new File(root, "original").getAbsolutePath(),
                         new File(root, "data").getAbsolutePath(), save.getAbsolutePath(),
-                        music.isDirectory() ? music.getAbsolutePath() : "");
+                        music.isDirectory() ? music.getAbsolutePath() : "",
+                        art.isDirectory() ? art.getAbsolutePath() : "");
                 runOnUiThread(this::showGame);
             } catch (IOException e) {
                 runOnUiThread(() -> status.setText("遊戲資料準備失敗：" + e.getMessage()));

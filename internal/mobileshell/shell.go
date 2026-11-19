@@ -11,8 +11,10 @@ package mobileshell
 
 import (
 	"fmt"
+	"image"
 	"image/color"
 	"log"
+	"os"
 	"path/filepath"
 	"sync"
 	"time"
@@ -22,6 +24,7 @@ import (
 	"github.com/wicanr2/logh3/internal/bootstrap"
 	"github.com/wicanr2/logh3/internal/game"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/presentation"
 )
 
 // Config 是 Java 端在啟動時傳進來的目錄。
@@ -30,6 +33,7 @@ type Config struct {
 	Data  string // 畫面規格與資料（docs/internals/data 的發行複本）
 	Save  string // 存檔目錄（App 私有目錄）
 	Music string // 原版配樂與音效 OGG（可空：沒有聲音）
+	Art   string // HD 圖（桌面完整版的 art 目錄，不含海報；可空：原版畫面）
 }
 
 // Shell 是 ebiten.Game。目錄還沒設定、或還在載入時畫載入畫面。
@@ -40,6 +44,7 @@ type Shell struct {
 	loadErr error
 	g       *game.Game
 	snd     *sound
+	hd      *presentation.Renderer
 
 	screen *ebiten.Image
 	buf    []byte
@@ -56,6 +61,8 @@ type Shell struct {
 	lay   screenLayout
 	u     float64
 	sharp sharp
+	// uploaded 是已上傳到 screen 的 HD 畫面世代。
+	uploaded uint64
 	// drawn 是上一次真的畫出去的內容摘要；一樣就不重畫（省電，也省模擬器的軟體繪圖）。
 	drawn uint64
 	// basePal 是側欄用的調色盤：遊戲本體的，不跟開頭動畫的灰階變色。
@@ -87,7 +94,7 @@ func (s *Shell) Configure(cfg Config) {
 	s.mu.Unlock()
 	go func() {
 		start := time.Now()
-		g, res, err := loadGame(cfg)
+		g, res, hd, err := loadGame(cfg)
 		// stderr 在 Android 上會進 logcat；載入失敗不能只是一片黑。
 		if err != nil {
 			log.Printf("logh3: 載入失敗：%v", err)
@@ -104,7 +111,7 @@ func (s *Shell) Configure(cfg Config) {
 			}
 		}
 		s.mu.Lock()
-		s.g, s.loadErr, s.loading, s.snd = g, err, false, snd
+		s.g, s.loadErr, s.loading, s.snd, s.hd = g, err, false, snd, hd
 		s.style = newSideStyle(res)
 		s.mu.Unlock()
 	}()
@@ -131,21 +138,47 @@ func (s *Shell) Back() {
 	s.mu.Unlock()
 }
 
-func loadGame(cfg Config) (*game.Game, *game.Resources, error) {
+func loadGame(cfg Config) (*game.Game, *game.Resources, *presentation.Renderer, error) {
 	res, err := bootstrap.Load(cfg.Orig, cfg.Data)
 	if err != nil {
-		return nil, nil, fmt.Errorf("載入原版資料：%w", err)
+		return nil, nil, nil, fmt.Errorf("載入原版資料：%w", err)
 	}
 	if err := bootstrap.LoadIntro(res, cfg.Orig); err != nil {
-		return nil, nil, err
+		return nil, nil, nil, err
 	}
 	if cfg.Save != "" {
 		if err := bootstrap.UseSaveDir(res, filepath.Clean(cfg.Save)); err != nil {
-			return nil, nil, err
+			return nil, nil, nil, err
 		}
 	}
+	hd := loadHD(cfg.Art, res)
 	g, err := game.New(res)
-	return g, res, err
+	return g, res, hd, err
+}
+
+// loadHD 載入 HD 呈現器（與桌面同一個 presentation.Renderer、同樣預設「原版強化」
+// 字型）。沒有目錄或載入失敗就用原版畫面，並說出原因。
+func loadHD(dir string, res *game.Resources) *presentation.Renderer {
+	if dir == "" {
+		return nil
+	}
+	if _, err := os.Stat(filepath.Join(dir, "face")); err != nil {
+		log.Printf("logh3: 沒有 HD 圖目錄 %s，用原版畫面", dir)
+		return nil
+	}
+	hd, err := presentation.Load(dir, res.Faces)
+	if err == nil {
+		err = hd.SetFontStyle("classic")
+	}
+	if err != nil {
+		log.Printf("logh3: HD 圖載入失敗，用原版畫面：%v", err)
+		return nil
+	}
+	res.Faces.ArtworkPrefix = "face"
+	// 戰場投影地板在背景先算好（桌面 startWarmUp 同一件事，規格160）。
+	go hd.Warm()
+	log.Printf("logh3: HD 圖 %d 張人物", hd.Count())
+	return hd
 }
 
 // Update 推進遊戲並處理觸控。
@@ -241,7 +274,7 @@ func (s *Shell) Draw(screen *ebiten.Image) {
 	s.u = float64(ch) / float64(gfx.Height)
 	lw := LogicalWidth(cw, ch)
 	s.mu.Lock()
-	g, err := s.g, s.loadErr
+	g, err, hd := s.g, s.loadErr, s.hd
 	s.mu.Unlock()
 	if g == nil {
 		screen.Fill(sideBand)
@@ -251,10 +284,6 @@ func (s *Shell) Draw(screen *ebiten.Image) {
 		}
 		s.lay = computeLayout(lw, false)
 		return
-	}
-	if s.screen == nil {
-		s.screen = ebiten.NewImage(gfx.Width, gfx.Height)
-		s.buf = make([]byte, gfx.Width*gfx.Height*4)
 	}
 	p := g.Palette()
 	for i := range s.pal {
@@ -270,19 +299,43 @@ func (s *Shell) Draw(screen *ebiten.Image) {
 	fb := g.FrameWithoutCursor()
 	s.lay = computeLayout(lw, g.PlainStrategic())
 	buttons := s.buttons(g)
-	sum := frameSum(fb.Pix, s.pal, cw, ch, s.lay, buttons)
+	// 來源畫面：HD 是原版座標的 3 倍（presentation.Scale），區塊座標一起乘上去。
+	var hdGen uint64
+	if hd != nil {
+		frame := hd.Render(fb, p)
+		hdGen = hd.Generation()
+		if s.screen == nil || s.screen.Bounds().Dx() != frame.Bounds().Dx() {
+			s.screen = ebiten.NewImage(frame.Bounds().Dx(), frame.Bounds().Dy())
+			s.uploaded = 0
+		}
+		if s.uploaded != hdGen {
+			s.screen.WritePixels(frame.Pix)
+			s.uploaded = hdGen
+		}
+	}
+	sum := frameSum(fb.Pix, s.pal, cw, ch, s.lay, buttons) ^ hdGen*0x9E3779B97F4A7C15
 	if sum == s.drawn {
 		return // 與上一格完全相同：畫面不每格清除，直接沿用
 	}
 	s.drawn = sum
-	for i, v := range fb.Pix {
-		c := s.pal[v]
-		s.buf[i*4], s.buf[i*4+1], s.buf[i*4+2], s.buf[i*4+3] = c.R, c.G, c.B, 255
+	srcScale := 1
+	if hd != nil {
+		srcScale = presentation.Scale
+	} else {
+		if s.screen == nil || s.screen.Bounds().Dx() != gfx.Width {
+			s.screen = ebiten.NewImage(gfx.Width, gfx.Height)
+			s.buf = make([]byte, gfx.Width*gfx.Height*4)
+		}
+		for i, v := range fb.Pix {
+			c := s.pal[v]
+			s.buf[i*4], s.buf[i*4+1], s.buf[i*4+2], s.buf[i*4+3] = c.R, c.G, c.B, 255
+		}
+		s.screen.WritePixels(s.buf)
 	}
-	s.screen.WritePixels(s.buf)
 	screen.Fill(sideBand)
 	for _, r := range s.lay.regions {
-		s.sharp.draw(screen, s.screen, r.src, r.x*s.u, r.y*s.u, r.scale*s.u)
+		src := image.Rect(r.src.Min.X*srcScale, r.src.Min.Y*srcScale, r.src.Max.X*srcScale, r.src.Max.Y*srcScale)
+		s.sharp.draw(screen, s.screen, src, r.x*s.u, r.y*s.u, r.scale*s.u/float64(srcScale))
 	}
 	s.drawSide(screen, buttons, s.sidePalette(), s.u)
 }
