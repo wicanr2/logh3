@@ -120,12 +120,21 @@ func (r *Renderer) projectionSprite(c gfx.DrawCommand) *projectionSprite {
 }
 
 // The projection floor is immutable and independent of scene, palette and
-// faction. Prepare it at asset load instead of repeating the trigonometry for
-// every source frame. Direct renderers used by tests can initialize it lazily.
+// faction. Compute it once on first use (or from Warm in the background) instead
+// of repeating the trigonometry for every source frame (規格160).
 func (r *Renderer) projectionGrid() *image.RGBA {
-	if r.grid != nil {
-		return r.grid
+	r.gridOnce.Do(func() { r.grid = buildProjectionGrid() })
+	return r.grid
+}
+
+// Warm 在背景先算好戰場才用得到的固定資源（規格160）。可以與繪製並行。
+func (r *Renderer) Warm() {
+	if r != nil {
+		r.projectionGrid()
 	}
+}
+
+func buildProjectionGrid() *image.RGBA {
 	im := image.NewRGBA(image.Rect(0, 0, 624*Scale, 224*Scale))
 	for y := 0; y < im.Rect.Dy(); y++ {
 		for x := 0; x < im.Rect.Dx(); x++ {
@@ -140,6 +149,5 @@ func (r *Renderer) projectionGrid() *image.RGBA {
 			im.Pix[o+3] = 255
 		}
 	}
-	r.grid = im
 	return im
 }

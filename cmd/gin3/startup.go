@@ -90,6 +90,7 @@ func (s *startup) Update() error {
 	if a != nil {
 		s.game = a
 		a.prepareWindow(s.scale)
+		a.startWarmUp()
 		return nil // 完成當格不把載入期間的按鍵或點擊送進遊戲。
 	}
 	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {

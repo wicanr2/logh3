@@ -6,48 +6,143 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sync"
 
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
 )
 
-// LoadCommandScreens 讀命令階段那一批畫面的規格，順便把它們要的星域地圖
-// 各建一份。
+// LoadCommandScreens 登記命令階段那一批畫面的規格與星域地圖，**不先解析**
+// （規格160）：每張規格第一次用到才讀 JSON，每組星域色第一次用到才建地圖。
 //
-// 為什麼要建好幾份：情報報告的地圖跟著**治安**換色、星系資料又是另一組
+// 為什麼要建好幾份地圖：情報報告的地圖跟著**治安**換色、星系資料又是另一組
 // （選中的星域畫成色 7、首都不重塗），共用一張會整片對不上。
 // 哪一張用哪一組寫在規格的 `map.colours`。
-func LoadCommandScreens(dataDir, regionsPath string, bit, rgn []byte) (
-	map[string]*screen.MainGameSpec, map[string]*asset.Image, error) {
-	specs := make(map[string]*screen.MainGameSpec, len(screenSpecName))
+//
+// 這裡只確認每個規格檔存在，缺檔仍在啟動時報錯；JSON 格式由
+// `TestCommandScreensAllParse` 逐張解析把關。
+func LoadCommandScreens(dataDir, regionsPath string, bit, rgn []byte) (*ScreenSet, *StarMapSet, error) {
+	set := &ScreenSet{dir: dataDir, specs: map[string]*screen.MainGameSpec{}, failed: map[string]bool{}}
 	for _, name := range screenSpecName {
-		if specs[name] != nil {
-			continue
-		}
-		s, err := screen.LoadMainGameSpec(filepath.Join(dataDir, name+".json"))
-		if err != nil {
+		if _, err := os.Stat(filepath.Join(dataDir, name+".json")); err != nil {
 			return nil, nil, fmt.Errorf("讀 %s：%w", name, err)
 		}
-		specs[name] = s
 	}
-	maps := map[string]*asset.Image{}
-	for _, s := range specs {
-		f := s.Map.Colours
-		if f == "" || maps[f] != nil {
+	maps := &StarMapSet{regionsPath: regionsPath, bit: bit, rgn: rgn,
+		images: map[string]*asset.Image{}, failed: map[string]bool{}}
+	return set, maps, nil
+}
+
+// ScreenSet 是按需解析的畫面規格表。同一個名字只解析一次，之後回同一個
+// 指標（畫面程式會改規格裡的列與字碼，必須是同一份）。可以從背景預熱，所以上鎖。
+type ScreenSet struct {
+	mu     sync.Mutex
+	dir    string
+	specs  map[string]*screen.MainGameSpec
+	failed map[string]bool
+}
+
+// NewScreenSet 用已經解析好的規格建表（測試與工具用）。
+func NewScreenSet(specs map[string]*screen.MainGameSpec) *ScreenSet {
+	return &ScreenSet{specs: specs, failed: map[string]bool{}}
+}
+
+// Get 回某張規格；檔案不在或解析失敗回 nil，失敗只印一次、不每幀重試。
+func (s *ScreenSet) Get(name string) *screen.MainGameSpec {
+	if s == nil {
+		return nil
+	}
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if spec, ok := s.specs[name]; ok {
+		return spec
+	}
+	if s.dir == "" || s.failed[name] {
+		return nil
+	}
+	spec, err := screen.LoadMainGameSpec(filepath.Join(s.dir, name+".json"))
+	if err != nil {
+		s.failed[name] = true
+		fmt.Fprintf(os.Stderr, "畫面規格 %s：%v\n", name, err)
+		return nil
+	}
+	s.specs[name] = spec
+	return spec
+}
+
+// Warm 把還沒解析的規格全部解析一次（背景預熱，規格160），回這一趟新解析的
+// 規格要用的星域色。只讀自己剛建的規格，不碰畫面執行緒已經拿去改的那幾份。
+func (s *ScreenSet) Warm() []string {
+	if s == nil {
+		return nil
+	}
+	var colours []string
+	for _, name := range s.Names() {
+		s.mu.Lock()
+		_, done := s.specs[name]
+		s.mu.Unlock()
+		if done {
 			continue
 		}
-		cols, err := screen.LoadRegionColours(regionsPath, f)
-		if err != nil {
-			return nil, nil, fmt.Errorf("讀星域色 %s：%w", f, err)
+		if spec := s.Get(name); spec != nil && spec.Map.Colours != "" {
+			colours = append(colours, spec.Map.Colours)
 		}
-		img, err := asset.BuildStarMap(bit, rgn, cols, 16, 20, 20)
-		if err != nil {
-			return nil, nil, fmt.Errorf("建地圖 %s：%w", f, err)
-		}
-		maps[f] = img
 	}
-	return specs, maps, nil
+	return colours
+}
+
+// Names 回所有命令階段畫面的規格名（不重複）。
+func (s *ScreenSet) Names() []string {
+	seen := map[string]bool{}
+	out := make([]string, 0, len(screenSpecName))
+	for _, name := range screenSpecName {
+		if !seen[name] {
+			seen[name] = true
+			out = append(out, name)
+		}
+	}
+	return out
+}
+
+// StarMapSet 是按需建立的「照某一組星域色重建的地圖」，key 是規格的 `map.colours`。
+type StarMapSet struct {
+	mu          sync.Mutex
+	regionsPath string
+	bit, rgn    []byte
+	images      map[string]*asset.Image
+	failed      map[string]bool
+}
+
+// NewStarMapSet 用已經建好的地圖建表（測試用）。
+func NewStarMapSet(images map[string]*asset.Image) *StarMapSet {
+	return &StarMapSet{images: images, failed: map[string]bool{}}
+}
+
+// Get 回某一組星域色的地圖；建不出來回 nil，只印一次。
+func (m *StarMapSet) Get(colours string) *asset.Image {
+	if m == nil || colours == "" {
+		return nil
+	}
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	if img, ok := m.images[colours]; ok {
+		return img
+	}
+	if m.regionsPath == "" || m.failed[colours] {
+		return nil
+	}
+	cols, err := screen.LoadRegionColours(m.regionsPath, colours)
+	if err == nil {
+		var img *asset.Image
+		if img, err = asset.BuildStarMap(m.bit, m.rgn, cols, 16, 20, 20); err == nil {
+			m.images[colours] = img
+			return img
+		}
+	}
+	m.failed[colours] = true
+	fmt.Fprintf(os.Stderr, "星域地圖 %s：%v\n", colours, err)
+	return nil
 }
 
 // LoadRegionRecords 湊出 796 年 1 月的執行期星域記錄（一筆 126 bytes）。

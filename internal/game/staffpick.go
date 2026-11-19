@@ -54,7 +54,7 @@ func (s staffPick) on() bool { return s.listOn || s.detailOn }
 // beginStaffPick 從情報收集（之後還有徵稅計劃）的「參謀」鈕進來。
 // **不切 `g.state`**——清單與詳細是疊在底層畫面上的。
 func (g *Game) beginStaffPick(post int, back State) {
-	if g.res.Screens["screen-standby-admirals"] == nil {
+	if g.res.Screens.Get("screen-standby-admirals") == nil {
 		return
 	}
 	staff := rules.StaffAdmirals(g.workRecord(), g.faction)
@@ -152,7 +152,7 @@ func (g *Game) staffPickDecide() {
 // 疊上同一張提督詳細資料，第三顆鈕是「決定」，換**軍事**專任參謀
 // （strong inference，見 `productionPlanClick`）。中止回清單，決定回建造計劃。
 func (g *Game) beginBuildPlanStaffDetail(admiral int) {
-	if admiral < 0 || g.res.Screens["screen-admiral-detail"] == nil {
+	if admiral < 0 || g.res.Screens.Get("screen-admiral-detail") == nil {
 		return
 	}
 	g.staff = staffPick{detailOn: true, post: rules.PostMilitary, back: StateBuildPlan, detail: admiral}
@@ -186,7 +186,7 @@ func (g *Game) buildPlanAdmiralAt(y int) int {
 // staffListAt 回滑鼠落在清單第幾列；不在回 −1。列的版面與
 // 「待命中提督資料」那張相同（`screen-standby-admirals` 的 overlay）。
 func (g *Game) staffListAt(y int) int {
-	spec := g.res.Screens["screen-standby-admirals"]
+	spec := g.res.Screens.Get("screen-standby-admirals")
 	if spec == nil || spec.Windows["overlay"] == nil || spec.Windows["overlay"].List == nil {
 		return -1
 	}
@@ -208,7 +208,7 @@ func (g *Game) drawStaffPick(fb *gfx.Framebuffer) {
 		g.drawStaffList(fb)
 	}
 	if g.staff.detailOn {
-		if spec := g.res.Screens["screen-admiral-detail"]; spec != nil && spec.Windows["overlay"] != nil {
+		if spec := g.res.Screens.Get("screen-admiral-detail"); spec != nil && spec.Windows["overlay"] != nil {
 			w := *spec.Windows["overlay"]
 			// 第三顆鈕在這條路上是「決定」不是「出擊」（`SetBoxCodes` 自己
 			// copy-on-write，不會污染出擊那條路）。
@@ -223,7 +223,7 @@ func (g *Game) drawStaffPick(fb *gfx.Framebuffer) {
 // drawStaffList 畫「待命中提督資料」：與 `drawAdjList` 同一張規格，
 // 但標題不用換（副官那條路才要改成「待命中副官資料」）。
 func (g *Game) drawStaffList(fb *gfx.Framebuffer) {
-	spec := g.res.Screens["screen-standby-admirals"]
+	spec := g.res.Screens.Get("screen-standby-admirals")
 	if spec == nil || spec.Windows["overlay"] == nil {
 		return
 	}

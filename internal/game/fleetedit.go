@@ -109,7 +109,7 @@ func (g *Game) editorMessage(r rules.EditResult) {
 // editorFormationRowAt 回畫面座標落在陣形清單的哪一項；沒有回 -1
 // （`screen-formation` 的 `formation` 視窗那 8 列反白條）。
 func (g *Game) editorFormationRowAt(x, y int) int {
-	spec := g.res.Screens["screen-formation"]
+	spec := g.res.Screens.Get("screen-formation")
 	if spec == nil || spec.Windows["formation"] == nil {
 		return -1
 	}
@@ -157,7 +157,7 @@ func (g *Game) editorView(admiral, adjutant int) screen.CompositionView {
 // `formation` 視窗，反白跟游標）。出擊那條路整張畫面規格就是它，這裡給
 // 「變更 → 編組」那條用。
 func (g *Game) drawEditorFormationMenu(fb *gfx.Framebuffer) {
-	spec := g.res.Screens["screen-formation"]
+	spec := g.res.Screens.Get("screen-formation")
 	if spec == nil || spec.Windows["formation"] == nil {
 		return
 	}

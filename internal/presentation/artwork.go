@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/gfx"
@@ -49,6 +50,8 @@ type Renderer struct {
 	starCache                           map[[32]byte]*image.RGBA
 	hull                                *image.RGBA
 	grid                                *image.RGBA
+	gridOnce                            sync.Once
+	fontDirs                            map[string]string // 還沒載入的字型圖集目錄（規格160）
 	projected                           map[[32]byte]*projectionSprite
 	animationCache                      map[[32]byte]*image.RGBA
 	ships                               map[string]*image.RGBA
@@ -146,9 +149,10 @@ func LoadWithProgress(dir string, faces *asset.AMG, progress func(done, total in
 		return nil, err
 	}
 	r.fonts = map[string]*fontAtlas{"serif": r.font}
-	r.fonts["sans"], err = loadFontAtlas(filepath.Join(dir, "font-sans"))
-	if err != nil {
-		return nil, err
+	// 黑體圖集只有玩家選了才載入（規格160）：索引 2.2 MB、約一萬六千字，
+	// 預設的原版強化與明體主題都用不到。這裡只登記目錄。
+	if _, statErr := os.Stat(filepath.Join(dir, "font-sans", "MANIFEST.json")); statErr == nil {
+		r.fontDirs = map[string]string{"sans": filepath.Join(dir, "font-sans")}
 	}
 	r.fontStyle = "classic"
 	r.theme = r.font != nil
@@ -166,7 +170,8 @@ func LoadWithProgress(dir string, faces *asset.AMG, progress func(done, total in
 		for key, source := range ships {
 			r.artSources["ship/"+key] = source
 		}
-		r.projectionGrid()
+		// 投影地板不在載入時算（規格160）：只有戰場投影用得到，首次使用時算一次，
+		// 主選單之後由 Warm 在背景先算好，進戰場不必等。
 	}
 	return r, nil
 }

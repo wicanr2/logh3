@@ -337,7 +337,7 @@ type Resources struct {
 	AdmiralList *screen.MainGameSpec
 
 	// Screens 是命令階段那一批畫面的規格，key 是規格名（見 screenSpecName）。
-	Screens map[string]*screen.MainGameSpec
+	Screens *ScreenSet
 
 	StarMap *asset.Image
 
@@ -354,7 +354,7 @@ type Resources struct {
 	// StarMaps 是「照某一組星域色重建的地圖」，key 是規格的 `map.colours`
 	// 欄位名。空字串那一份就是 StarMap（勢力色）。情報報告用治安色、
 	// 星系資料又是另一組，所以不能共用同一張。
-	StarMaps  map[string]*asset.Image
+	StarMaps  *StarMapSet
 	Admiral   []byte               // ADMIRAL.DT*，防拷問答的答案在裡面
 	Promotion *rules.PromotionSpec // 108：40個功績門檻及兩陣營12級軍階
 
@@ -4732,6 +4732,15 @@ func (g *Game) drawLeftSummary(fb *gfx.Framebuffer) {
 	g.res.RegionPanel.Draw(fb, g.res.Font, g.hoverSnap, g.faction)
 }
 
+// WarmResources 在背景先解析命令階段的畫面規格與星域地圖（規格160），讓之後
+// 第一次開那張畫面不必等。可以與 Update／Frame 並行：兩張表都上鎖，
+// 這裡只碰自己新建的項目。
+func (g *Game) WarmResources() {
+	for _, colours := range g.res.Screens.Warm() {
+		g.res.StarMaps.Get(colours)
+	}
+}
+
 // commandSpec 回這個命令階段狀態的規格；沒有就回 nil。
 func (g *Game) commandSpec(s State) *screen.MainGameSpec {
 	name, ok := screenSpecName[s]
@@ -4744,7 +4753,7 @@ func (g *Game) commandSpec(s State) *screen.MainGameSpec {
 			name = n
 		}
 	}
-	return g.res.Screens[name]
+	return g.res.Screens.Get(name)
 }
 
 // starMapFor 回這張規格要用的地圖。**不能共用同一張**：情報報告的地圖
@@ -4762,7 +4771,7 @@ func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
 		return g.playerStarMap()
 	}
 	if spec.Map.Colours != "" && g.res.StarMaps != nil {
-		if m := g.res.StarMaps[spec.Map.Colours]; m != nil {
+		if m := g.res.StarMaps.Get(spec.Map.Colours); m != nil {
 			return m
 		}
 	}
@@ -5050,7 +5059,7 @@ func (g *Game) rankCodes(rank int, faction ...int) []uint16 {
 		}
 		return g.res.Promotion.RankCodes(f, rank)
 	}
-	s := g.res.Screens["screen-admiral-list-view"]
+	s := g.res.Screens.Get("screen-admiral-list-view")
 	if s == nil || rank < 0 {
 		return nil
 	}

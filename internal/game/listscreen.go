@@ -484,7 +484,7 @@ func (g *Game) drawListScreenOverlays(fb *gfx.Framebuffer) {
 	}
 	g.drawAdmiralDetailOverlay(fb, g.lst.detail, false, g.lst.detailOwn)
 	if g.lst.bio {
-		if spec := g.res.Screens["screen-admiral-bio"]; spec != nil && spec.Windows["bio"] != nil && g.res.BioPanel != nil {
+		if spec := g.res.Screens.Get("screen-admiral-bio"); spec != nil && spec.Windows["bio"] != nil && g.res.BioPanel != nil {
 			spec.Windows["bio"].Draw(fb, g.res.Font, 3, g.res.Faces)
 			if i := g.lst.detail; i < len(g.res.Biographies) {
 				g.res.BioPanel.Draw(fb, g.res.Font, g.res.Biographies[i])
@@ -501,7 +501,7 @@ func (g *Game) drawListScreenOverlays(fb *gfx.Framebuffer) {
 // （熱區 `1FAE`）；own ＝ 印現在位置與狀態（`：待命中／執勤中／出擊中`），
 // 否則現在位置印 ＊＊＊＊＊＊＊＊、沒有狀態（敵將那張）。
 func (g *Game) drawAdmiralDetailOverlay(fb *gfx.Framebuffer, admiral int, sortie, own bool) {
-	spec := g.res.Screens["screen-admiral-detail"]
+	spec := g.res.Screens.Get("screen-admiral-detail")
 	if spec == nil || spec.Windows["overlay"] == nil {
 		return
 	}

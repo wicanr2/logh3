@@ -48,7 +48,7 @@ func TestSettingsBugUnavailablePlayerPath(t *testing.T) {
 		// 設定窗的空白底色，還原後仍核原完整SHA，不更新原版golden。
 		original := bytes.Clone(fb.Pix)
 		r := game.EnemyVisibilityButtonBounds()
-		fill := res.Screens["screen-settings"].Windows["overlay"].Frame.Fill
+		fill := res.Screens.Get("screen-settings").Windows["overlay"].Frame.Fill
 		for y := r.Min.Y; y < r.Max.Y; y++ {
 			for x := r.Min.X; x < r.Max.X; x++ {
 				original[y*gfx.Width+x] = fill

@@ -8,6 +8,7 @@ import (
 	"math"
 	"os"
 	"path/filepath"
+	"sync"
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -44,6 +45,61 @@ type approvedPosterArt struct {
 	overlay       *ebiten.Image
 	rotation      *posterQuoteRotation
 	quoteError    error
+
+	// 規格160：底圖與艦影在背景解碼，畫面執行緒只拿解好的圖上傳貼圖，不再
+	// 在第一格同步讀檔、驗雜湊、解 PNG（v1.6.5 量到 0.5–1.3 秒的停頓）。
+	decodeMu sync.Mutex
+	pending  map[string]bool
+	decoded  map[string]image.Image
+	inflight sync.WaitGroup
+}
+
+// prefetch 在背景解一張核定圖；已經在解或已經解好就不重複。
+func (art *approvedPosterArt) prefetch(name string) {
+	file := art.files[name]
+	if file == nil {
+		return
+	}
+	art.decodeMu.Lock()
+	if art.pending == nil {
+		art.pending, art.decoded = map[string]bool{}, map[string]image.Image{}
+	}
+	if art.pending[name] {
+		art.decodeMu.Unlock()
+		return
+	}
+	art.pending[name] = true
+	art.inflight.Add(1)
+	art.decodeMu.Unlock()
+	go func() {
+		defer art.inflight.Done()
+		im := file.image()
+		art.decodeMu.Lock()
+		art.decoded[name] = im
+		art.decodeMu.Unlock()
+	}()
+}
+
+// take 回背景解好的圖並交出所有權；還沒解好回 ready=false 並確保已經在解。
+// 解碼失敗回 (nil, true)，之後不再重試。
+func (art *approvedPosterArt) take(name string) (image.Image, bool) {
+	art.prefetch(name)
+	art.decodeMu.Lock()
+	defer art.decodeMu.Unlock()
+	im, ok := art.decoded[name]
+	if ok && im != nil {
+		// 交出去之後就是貼圖的事了；換組再回來時貼圖已釋放，要能重解。
+		delete(art.decoded, name)
+		delete(art.pending, name)
+	}
+	return im, ok
+}
+
+// wait 等背景解碼都結束（無頭截圖用，讓 -shot 的畫面與同步解碼時相同）。
+func (art *approvedPosterArt) wait() {
+	if art != nil {
+		art.inflight.Wait()
+	}
 }
 
 func loadApprovedPosterArt(art string) (*approvedPosterArt, error) {
@@ -113,7 +169,7 @@ func (a *app) drawApprovedPoster(screen, game *ebiten.Image) {
 	if art.baseTextures[i] == nil {
 		im := art.bases[i]
 		if im == nil {
-			im = art.files[fmt.Sprintf("base-v%d.png", i+1)].image()
+			im, _ = art.take(posterBaseName(i))
 		}
 		if im != nil {
 			for n, texture := range art.baseTextures {
@@ -129,7 +185,7 @@ func (a *app) drawApprovedPoster(screen, game *ebiten.Image) {
 	if art.hullTexture == nil {
 		im := art.hulls
 		if im == nil {
-			im = art.files["hulls.png"].image()
+			im, _ = art.take("hulls.png")
 		}
 		if im != nil {
 			art.hullTexture = ebiten.NewImageFromImage(im)
@@ -139,6 +195,9 @@ func (a *app) drawApprovedPoster(screen, game *ebiten.Image) {
 	base := art.baseTextures[i]
 	if base != nil {
 		screen.DrawImage(base, nil)
+	} else {
+		// 底圖還在背景解碼（規格160）：先塗黑，遊戲畫面照常畫在中間。
+		screen.Fill(color.Black)
 	}
 	v := a.posterViewport()
 	op := &ebiten.DrawImageOptions{Filter: ebiten.FilterLinear}

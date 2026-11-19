@@ -153,7 +153,7 @@ func (g *Game) fleetChangeOrgClick(x, y int) {
 		}
 		return
 	}
-	g.fleetEditorClick(g.res.Screens["screen-fleet-composition"], x, y)
+	g.fleetEditorClick(g.res.Screens.Get("screen-fleet-composition"), x, y)
 }
 
 // closeFleetChangeOrg 關掉編組那張回艦隊視窗。
@@ -174,7 +174,7 @@ func (g *Game) fleetChangeOrgRightClick(x, y int) {
 		g.fcmd.formOn = false
 		return
 	}
-	g.fleetEditorRightClick(g.res.Screens["screen-fleet-composition"], x, y)
+	g.fleetEditorRightClick(g.res.Screens.Get("screen-fleet-composition"), x, y)
 }
 
 // drawFleetChange 畫小選單與（開著的話）子視窗。
@@ -204,7 +204,7 @@ var fleetChangeCloseCodes = []uint16{0xB5B2, 0xA7F4}
 // 的 overlay，少了「艦隊編號」、「確認」印成「結束」（`fcmd-change-adj` 與
 // `fleet1e` 只差這兩顆鈕與游標）。
 func (g *Game) drawFleetChangeAdj(fb *gfx.Framebuffer) {
-	spec := g.res.Screens["screen-fleet-org"]
+	spec := g.res.Screens.Get("screen-fleet-org")
 	if spec == nil || spec.Windows["overlay"] == nil {
 		return
 	}
@@ -231,7 +231,7 @@ func (g *Game) drawFleetChangeAdj(fb *gfx.Framebuffer) {
 // drawFleetChangeOrg 把這一支的艦隊組成疊上去：`screen-fleet-composition` 的
 // overlay（第 0 列選取）＋ 這一支的編制與所在星域的待命部隊。
 func (g *Game) drawFleetChangeOrg(fb *gfx.Framebuffer) {
-	spec := g.res.Screens["screen-fleet-composition"]
+	spec := g.res.Screens.Get("screen-fleet-composition")
 	if spec == nil || spec.Windows["overlay"] == nil || g.res.CompositionPanel == nil {
 		return
 	}

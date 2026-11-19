@@ -41,7 +41,7 @@ func (g *Game) adjAdmiral() int {
 // adjMenuRowAt 回畫面座標落在 變更／卸任 的哪一列（`screen-fleet-adjutant` 的
 // `menu` 視窗那兩列反白條）；沒有回 -1。
 func (g *Game) adjMenuRowAt(x, y int) int {
-	spec := g.res.Screens["screen-fleet-adjutant"]
+	spec := g.res.Screens.Get("screen-fleet-adjutant")
 	if spec == nil || spec.Windows["menu"] == nil {
 		return -1
 	}
@@ -90,7 +90,7 @@ func (g *Game) openAdjList() {
 
 // adjListPage 是清單一頁幾列（規格的 `list.rows`，原版 16）。
 func (g *Game) adjListPage() int {
-	spec := g.res.Screens["screen-standby-admirals"]
+	spec := g.res.Screens.Get("screen-standby-admirals")
 	if spec == nil || spec.Windows["overlay"] == nil || spec.Windows["overlay"].List == nil {
 		return 16
 	}
@@ -100,7 +100,7 @@ func (g *Game) adjListPage() int {
 // adjListScrollAt 回畫面座標落在清單右緣的 ▲（-1）或 ▼（+1）上；沒有回 0
 // （那兩顆是 overlay 的 14 × 20 小框，最上面那顆 ▲、最下面那顆 ▼）。
 func (g *Game) adjListScrollAt(x, y int) int {
-	spec := g.res.Screens["screen-standby-admirals"]
+	spec := g.res.Screens.Get("screen-standby-admirals")
 	return admiralScrollAt(spec, x, y)
 }
 
@@ -154,7 +154,7 @@ func (g *Game) adjListScroll(dir int) {
 // adjListRowAt 回畫面座標落在清單的第幾列（`screen-standby-admirals` 的 list
 // 那十六列）；不在清單上回 -1。
 func (g *Game) adjListRowAt(x, y int) int {
-	spec := g.res.Screens["screen-standby-admirals"]
+	spec := g.res.Screens.Get("screen-standby-admirals")
 	if spec == nil || spec.Windows["overlay"] == nil || spec.Windows["overlay"].List == nil {
 		return -1
 	}
@@ -259,7 +259,7 @@ func (g *Game) setAdjutant(adj int) {
 // drawAdjPick 把小選單、清單、詳細資料疊在艦隊編成視窗上。
 func (g *Game) drawAdjPick(fb *gfx.Framebuffer) {
 	if g.adj.menuOn {
-		if spec := g.res.Screens["screen-fleet-adjutant"]; spec != nil && spec.Windows["menu"] != nil {
+		if spec := g.res.Screens.Get("screen-fleet-adjutant"); spec != nil && spec.Windows["menu"] != nil {
 			w := spec.Windows["menu"]
 			w.SetHoverRow(w.HoverRowAt(g.mouseX, g.mouseY))
 			w.Draw(fb, g.res.Font, 3, g.res.Faces)
@@ -269,7 +269,7 @@ func (g *Game) drawAdjPick(fb *gfx.Framebuffer) {
 		g.drawAdjList(fb)
 	}
 	if g.adj.detailOn {
-		if spec := g.res.Screens["screen-admiral-detail"]; spec != nil && spec.Windows["overlay"] != nil {
+		if spec := g.res.Screens.Get("screen-admiral-detail"); spec != nil && spec.Windows["overlay"] != nil {
 			w := spec.Windows["overlay"]
 			w.Draw(fb, g.res.Font, 3, g.res.Faces)
 			w.DrawFactionText(fb, g.res.Font, g.faction)
@@ -284,7 +284,7 @@ var adjListTitleCodes = []uint16{0xB0C6, 0xA978}
 // drawAdjList 畫「待命中副官資料」：`screen-standby-admirals` 的 overlay，
 // 標題「提督」換成「副官」，列是候選，從first起顯示最多十六列。
 func (g *Game) drawAdjList(fb *gfx.Framebuffer) {
-	spec := g.res.Screens["screen-standby-admirals"]
+	spec := g.res.Screens.Get("screen-standby-admirals")
 	if spec == nil || spec.Windows["overlay"] == nil {
 		return
 	}

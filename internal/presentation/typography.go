@@ -45,7 +45,7 @@ type fontAtlas struct {
 func (r *Renderer) FontStyles() []string {
 	styles := []string{"original", "classic"}
 	for _, style := range []string{"serif", "sans"} {
-		if r.fonts[style] != nil {
+		if r.fonts[style] != nil || r.fontDirs[style] != "" {
 			styles = append(styles, style)
 		}
 	}
@@ -63,6 +63,18 @@ func (r *Renderer) SetFontStyle(style string) error {
 	switch style {
 	case "original", "classic":
 	case "serif", "sans":
+		if r.fonts[style] == nil && r.fontDirs[style] != "" {
+			// 首次選用才載入（規格160）；失敗就維持原字型並回報。
+			atlas, err := loadFontAtlas(r.fontDirs[style])
+			delete(r.fontDirs, style) // 成功失敗都只試一次，失敗就不再列出
+			if err != nil {
+				return fmt.Errorf("字型圖集 %s：%w", style, err)
+			}
+			if r.fonts == nil {
+				r.fonts = map[string]*fontAtlas{}
+			}
+			r.fonts[style] = atlas
+		}
 		if r.fonts[style] == nil {
 			return fmt.Errorf("缺少字型圖集：%s", style)
 		}

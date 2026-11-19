@@ -485,9 +485,10 @@ func main() {
 			}
 			if audioContext != nil && sounds.Have() == 28 {
 				player := newEffectPlayer(audioContext, sounds)
-				if err := player.validate(); err != nil {
-					fmt.Fprintln(os.Stderr, "音效：", err)
-				} else if err := g.EnableSoundEffects(true); err != nil {
+				// 啟動只確認 28 段都在（上面的 Have）。開檔、取樣率與完整解碼都在主選單
+				// 之後由 startWarmUp 背景做；壞檔時下一次播放回錯誤，updateEffects
+				// 照原規則關掉音效（規格160）。
+				if err := g.EnableSoundEffects(true); err != nil {
 					fmt.Fprintln(os.Stderr, "音效：", err)
 				} else {
 					a.effects = player
@@ -602,6 +603,7 @@ func main() {
 			return nil, fmt.Errorf("locale: %s", a.localeError)
 		}
 		a.setPalette(g.Palette())
+		a.startPosterPrefetch()
 		report(7, "載入完成")
 		return a, nil
 	}
