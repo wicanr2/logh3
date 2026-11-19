@@ -11992,3 +11992,5 @@ Android只寫規劃（規格161），核對了ebitenmobile、mobile.SetGame、ot
 模擬器畫面一直全黑。先以為是開頭動畫偏暗、再以為是快速輕觸被漏接，都沒證實；加上載入與繪製紀錄後在logcat看到第一格就panic：外部尺寸+Inf。真因是Activity沒呼叫 `Seq.setContext`，Ebitengine取不到螢幕密度。補上後主選單正常、輕觸換算正確。2400×1080加軟體OpenGL會讓系統介面未回應，測試改1280×576並關系統動畫。
 
 新增 `tools/android.sh`、`tools/android_emulator_check.sh`、`cmd/mobile-preview`（桌面預覽行動版殼）與殼的座標測試。下一步是自繪數字鍵盤，否則過不了防拷問答。容器都以 `--rm` 結束。
+
+第175輪續：加側欄（`internal/mobileshell/sidebar.go`）。按鈕樣式取原版命令列（capital-panel.json 的 buttons），字碼全取自已核對的規格資料（全形數字、決定、退、回、格）。桌面預覽 `cmd/mobile-preview` 先驗：數字鍵盤輸入138進入月初報告。模擬器上輕觸時有時無，確認是逐格取樣漏接（模擬器每秒十幾格，adb的輕觸落在兩格之間）；改由Java的ACTION_UP排進Go佇列後，觸控輸入138、決定、兩下退回到戰略地圖全數通過，返回鍵在地圖上不動作與原版一致。新增側欄配置測試。

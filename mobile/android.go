@@ -9,7 +9,10 @@ import (
 
 var shell = mobileshell.NewShell()
 
-func init() { ebitenmobile.SetGame(shell) }
+func init() {
+	shell.UseNativeTouch()
+	ebitenmobile.SetGame(shell)
+}
 
 // Start 由 Java 在 Activity 建立時呼叫，傳入三個目錄。重複呼叫只認第一次。
 func Start(orig, data, save string) {
@@ -18,3 +21,6 @@ func Start(orig, data, save string) {
 
 // Back 由 Java 的返回手勢呼叫：排一次右鍵，下一格消費。
 func Back() { shell.Back() }
+
+// Tap 由 Java 在手指放開時呼叫，nx、ny 是在遊戲畫面元件上的比例位置（0–1）。
+func Tap(nx, ny float64) { shell.QueueTap(nx, ny) }

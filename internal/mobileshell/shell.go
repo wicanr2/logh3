@@ -45,8 +45,17 @@ type Shell struct {
 
 	// back 由 Java 的返回手勢寫入（任何執行緒），Update 消費成一次右鍵。
 	back int
+	// taps 是 Java 送來的「手指放開」位置（0–1 的比例座標），Update 消費。
+	// nativeTouch 為真時只走這條，不看 Ebitengine 的逐格觸控取樣：慢的機器上
+	// 一次輕觸可能整個落在兩格之間，取樣看不到（模擬器上實測漏接）。
+	taps        [][2]float64
+	nativeTouch bool
 	// lastW 是上一次 Draw 的邏輯畫布寬，觸控座標換算用。
 	lastW int
+
+	style     *sideStyle
+	sideCache map[string]*ebiten.Image
+	sidePal   [gfx.Colors]color.RGBA
 }
 
 // sideBand 是原版畫面左右兩條的底色（深藍，接近原版視窗外框的色系）。
@@ -66,7 +75,7 @@ func (s *Shell) Configure(cfg Config) {
 	s.mu.Unlock()
 	go func() {
 		start := time.Now()
-		g, err := loadGame(cfg)
+		g, res, err := loadGame(cfg)
 		// stderr 在 Android 上會進 logcat；載入失敗不能只是一片黑。
 		if err != nil {
 			log.Printf("logh3: 載入失敗：%v", err)
@@ -75,8 +84,23 @@ func (s *Shell) Configure(cfg Config) {
 		}
 		s.mu.Lock()
 		s.g, s.loadErr, s.loading = g, err, false
+		s.style = newSideStyle(res)
 		s.mu.Unlock()
 	}()
+}
+
+// UseNativeTouch 改由 QueueTap 收輕觸（Android 由 Java 送），不再看逐格取樣。
+func (s *Shell) UseNativeTouch() {
+	s.mu.Lock()
+	s.nativeTouch = true
+	s.mu.Unlock()
+}
+
+// QueueTap 排一次輕觸；nx、ny 是在遊戲畫面元件上的比例位置（0–1）。任何執行緒可呼叫。
+func (s *Shell) QueueTap(nx, ny float64) {
+	s.mu.Lock()
+	s.taps = append(s.taps, [2]float64{nx, ny})
+	s.mu.Unlock()
 }
 
 // Back 是 Android 返回手勢：排一次右鍵。
@@ -86,27 +110,28 @@ func (s *Shell) Back() {
 	s.mu.Unlock()
 }
 
-func loadGame(cfg Config) (*game.Game, error) {
+func loadGame(cfg Config) (*game.Game, *game.Resources, error) {
 	res, err := bootstrap.Load(cfg.Orig, cfg.Data)
 	if err != nil {
-		return nil, fmt.Errorf("載入原版資料：%w", err)
+		return nil, nil, fmt.Errorf("載入原版資料：%w", err)
 	}
 	if err := bootstrap.LoadIntro(res, cfg.Orig); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	if cfg.Save != "" {
 		if err := bootstrap.UseSaveDir(res, filepath.Clean(cfg.Save)); err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 	}
-	return game.New(res)
+	g, err := game.New(res)
+	return g, res, err
 }
 
 // Update 推進遊戲並處理觸控。
 func (s *Shell) Update() error {
 	s.mu.Lock()
-	g, back := s.g, s.back
-	s.back = 0
+	g, back, taps, native := s.g, s.back, s.taps, s.nativeTouch
+	s.back, s.taps = 0, nil
 	s.mu.Unlock()
 	if g == nil {
 		return nil
@@ -120,10 +145,13 @@ func (s *Shell) Update() error {
 		g.RightClick(x, y)
 	}
 	// M1 第一步：輕觸＝移過去再左鍵（觸控板模式與側欄在後續步驟）。
-	for _, id := range inpututil.AppendJustReleasedTouchIDs(nil) {
-		tx, ty := inpututil.TouchPositionInPreviousTick(id)
-		if x, y, ok := s.gamePoint(tx, ty); ok {
-			g.Click(x, y)
+	for _, t := range taps {
+		s.tap(g, int(t[0]*float64(s.lastW)), int(t[1]*float64(gfx.Height)))
+	}
+	if !native {
+		for _, id := range inpututil.AppendJustReleasedTouchIDs(nil) {
+			tx, ty := inpututil.TouchPositionInPreviousTick(id)
+			s.tap(g, tx, ty)
 		}
 	}
 	return nil
@@ -134,7 +162,15 @@ func (s *Shell) TapLogical(x, y int) {
 	s.mu.Lock()
 	g := s.g
 	s.mu.Unlock()
-	if g == nil {
+	if g != nil {
+		s.tap(g, x, y)
+	}
+}
+
+// tap 是一次輕觸：側欄按鈕優先，其次是原版畫面（移過去再左鍵）。
+func (s *Shell) tap(g *game.Game, x, y int) {
+	if b, ok := sideButtonAt(sideButtons(s.lastW, g.State()), x, y); ok {
+		runSide(g, b)
 		return
 	}
 	if gx, gy, ok := s.gamePoint(x, y); ok {
@@ -204,4 +240,5 @@ func (s *Shell) Draw(screen *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(gameOrigin(s.lastW)), 0)
 	screen.DrawImage(s.screen, op)
+	s.drawSide(screen, sideButtons(s.lastW, g.State()), s.pal)
 }

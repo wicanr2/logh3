@@ -2,6 +2,7 @@ package tw.logh3.app;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -72,7 +73,20 @@ public final class MainActivity extends Activity {
     }
 
     private void showGame() {
-        view = new EbitenView(this);
+        view = new EbitenView(this) {
+            @Override
+            public boolean onTouchEvent(MotionEvent e) {
+                // 手指放開時把位置排進 Go 的佇列（規格161）：慢的機器上，輕觸可能整個
+                // 落在兩格之間，Ebitengine 的逐格取樣看不到。
+                int action = e.getActionMasked();
+                if ((action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP)
+                        && getWidth() > 0 && getHeight() > 0) {
+                    int i = e.getActionIndex();
+                    Mobile.tap(e.getX(i) / getWidth(), e.getY(i) / getHeight());
+                }
+                return super.onTouchEvent(e);
+            }
+        };
         setContentView(view);
         immersive();
     }

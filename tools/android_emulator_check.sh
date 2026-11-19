@@ -6,7 +6,8 @@
 # 迴圈裡的 adb 一律接 </dev/null：adb shell 會吃掉 while read 的標準輸入，後面的指令就消失了。
 # 預設 20:9 的 1280×576、240 dpi：軟體 OpenGL 在 2400×1080 會讓系統介面未回應、對話框蓋住畫面。
 # 解析度可用 LOGH3_EMU_W／LOGH3_EMU_H（直向寬高）、LOGH3_EMU_DPI 改。
-# 輸入腳本一行一個指令：`wait 秒`、`tap x y`（裝置像素，預設橫向 1280×576）、`press x y`（按住 300 ms）、`back`、`shot 名字`。
+# 輸入腳本一行一個指令：`wait 秒`、`tap x y`（裝置像素，預設橫向 1280×576）、`press x y`（按住 300 ms）、`back`、`shot 名字`、
+# `waitlog 字串`（等 logcat 出現該字串，最多 120 秒；用來等「載入完成」再送輸入）。
 # 不給腳本時只開機、安裝、啟動，每 10 秒截一張共 9 張。
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -50,6 +51,8 @@ if [ -f /input.txt ]; then
   while read -r cmd a b; do
     case "$cmd" in
       wait) sleep "$a" ;;
+      waitlog) for i in $(seq 1 120); do adb logcat -d </dev/null | grep -q "$a" && break; sleep 1; done
+               echo "$(( $(date +%s) - s0 )) 秒 看到 $a" | tee -a /out/timeline.txt ;;
       tap) adb shell input tap "$a" "$b" </dev/null; sleep 1 ;;
       press) adb shell input swipe "$a" "$b" "$a" "$b" 300 </dev/null; sleep 1 ;;
       back) adb shell input keyevent KEYCODE_BACK </dev/null; sleep 1 ;;
