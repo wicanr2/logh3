@@ -37,12 +37,14 @@ type sideButton struct {
 	act        sideAction
 	value      byte
 	gx, gy     int
+	gw         int // 原版按鈕寬（命令列三鈕）
 }
 
 // sideCmd 是原版命令列的一顆按鈕：字碼與它在原版畫面上的中心點。
 type sideCmd struct {
 	codes  []uint16
 	gx, gy int
+	w      int
 }
 
 const (
@@ -88,7 +90,7 @@ func sideButtons(lay screenLayout, state interface {
 	if lay.strategic {
 		for i, c := range cmds {
 			out = append(out, sideButton{x: colX, y: 60 + i*(btnH+12), w: colW, h: btnH,
-				codes: c.codes, act: actGameClick, gx: c.gx, gy: c.gy})
+				codes: c.codes, act: actGameClick, gx: c.gx, gy: c.gy, gw: c.w})
 		}
 	}
 	if state.isBattle() {
@@ -184,7 +186,7 @@ func newSideStyle(res *game.Resources) *sideStyle {
 	b := res.CapitalPanel.Buttons
 	st := &sideStyle{frame: ui.FrameOf(b.Fill, b.Order, b.Layers), ink: b.Ink, shadow: b.Shadow, fnt: res.Font}
 	for _, it := range b.Items {
-		st.cmds = append(st.cmds, sideCmd{codes: it.Codes, gx: it.X + b.W/2, gy: b.Y + b.H/2})
+		st.cmds = append(st.cmds, sideCmd{codes: it.Codes, gx: it.X + b.W/2, gy: b.Y + b.H/2, w: b.W})
 	}
 	if res.Menu != nil {
 		st.menuPal = res.Menu.Palette()

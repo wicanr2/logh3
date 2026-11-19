@@ -13,7 +13,14 @@ out="${LOGH3_STAFF_GUI_OUT:-/src/workplace/staff173/gui}"
 mkdir -p "$out"
 game_pid=''
 trap 'if [[ -n "$game_pid" ]]; then kill "$game_pid" 2>/dev/null || true; wait "$game_pid" 2>/dev/null || true; fi' EXIT
-go build -o /tmp/logh3-staff-gui ./cmd/gin3
+# LOGH3_STAFF_GUI_BIN 指定發行包解開的 gin3 時，不重編，素材由執行檔旁的目錄自動尋找（發行驗證用）。
+bin="${LOGH3_STAFF_GUI_BIN:-}"
+res=()
+if [[ -z "$bin" ]]; then
+  go build -o /tmp/logh3-staff-gui ./cmd/gin3
+  bin=/tmp/logh3-staff-gui
+  res=(-orig /orig -data /src/docs/internals/data)
+fi
 
 click_at() { # <鍵 1/3> <x> <y>
   xdotool mousemove --window "$window_id" "$2" "$3"
@@ -31,7 +38,7 @@ shot() { # <名字>
 for faction in empire alliance; do
   row=210
   [[ "$faction" == alliance ]] && row=230
-  /tmp/logh3-staff-gui -orig /orig -data /src/docs/internals/data -intro=false -scale 1 \
+  "$bin" "${res[@]}" -intro=false -scale 1 \
     -save "/tmp/logh3-staff-save-$faction" > "$out/$faction.log" 2>&1 &
   game_pid=$!
   window_id="$(xdotool search --sync --onlyvisible --all --pid "$game_pid" --name '^銀河英雄傳說III SP$' | head -1)"

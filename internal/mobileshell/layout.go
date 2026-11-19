@@ -121,3 +121,15 @@ func (sh *sharp) draw(dst, src *ebiten.Image, sr image.Rectangle, x, y, scale fl
 	op.GeoM.Translate(x, y)
 	dst.DrawImage(tmp, op)
 }
+
+// fromGame 是 toGame 的反向：原版座標落在哪一塊、對應的邏輯座標（取該像素中心）。
+// 不在任何區塊上（例如戰略版面裁掉的命令列）回 ok=false。
+func (l screenLayout) fromGame(gx, gy int) (float64, float64, bool) {
+	p := image.Pt(gx, gy)
+	for _, r := range l.regions {
+		if p.In(r.src) {
+			return r.x + (float64(gx-r.src.Min.X)+0.5)*r.scale, r.y + (float64(gy-r.src.Min.Y)+0.5)*r.scale, true
+		}
+	}
+	return 0, 0, false
+}
