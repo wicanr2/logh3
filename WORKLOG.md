@@ -11978,3 +11978,5 @@ v1.6.5 Linux發行版在本機容器熱快取下到「載入完成」約0.8秒�
 Android只寫規劃（規格161），核對了ebitenmobile、mobile.SetGame、oto Android驅動、`os.UserConfigDir`在Android的行為，以及ALSA cgo標籤、入口、路徑、觸控、原版檔五個阻礙。商店大小限制與模擬器能否在Docker內跑標為待查證。
 
 使用者裁決Android發行比照桌面：完整版內含原版檔供自己玩、只留本機，release版在App內匯入原版檔；並同意commit與push。量測用的`workplace/perf174/base` worktree已移除，容器都以`--rm`結束。
+
+使用者要求觸控操作介面與Gemini討論（`agy`）。用`gemini-4-neon-high`、plan模式、sandbox在scratchpad執行兩輪，只送介面機制說明。第一輪後查證三點再回送：原版地圖左鍵本來就是兩段、Ebitengine Android鍵盤表沒有返回鍵、`exp/textinput`在Android無輸入法；另查到只有防拷問答讀鍵盤。收斂成虛擬指標層、直接觸控與觸控板兩模式、側欄控制、M1先做觸控板的提案，寫入規格161待使用者核准。原文存`workplace/android174/`。
